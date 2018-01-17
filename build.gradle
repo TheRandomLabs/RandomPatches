@@ -48,4 +48,3 @@ task setManifest(type: Jar, dependsOn: classes) {
 }
 
 assemble.dependsOn setManifest
-build.dependsOn signJar
