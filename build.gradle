@@ -1,0 +1,51 @@
+buildscript {
+	repositories {
+		jcenter()
+		maven {
+			url = "http://files.minecraftforge.net/maven"
+		}
+	}
+	dependencies {
+		classpath "net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT"
+	}
+}
+
+apply plugin: "net.minecraftforge.gradle.forge"
+
+version = "1.12.2-1.0.0.0"
+group = "com.therandomlabs.randompatches"
+archivesBaseName = "randompatches"
+
+sourceCompatibility = targetCompatibility = "1.8"
+compileJava {
+	sourceCompatibility = targetCompatibility = "1.8"
+}
+
+minecraft {
+	version = "1.12.2-latest"
+	runDir = "run"
+	mappings = "snapshot_20180117"
+
+	replace "@VERSION@", project.version
+}
+
+processResources {
+	//This will ensure that this task is redone when the versions change.
+	inputs.property "version", project.version
+	inputs.property "mcversion", project.minecraft.version
+
+	//Replace version and mcversion in mcmod.info
+	from(sourceSets.main.resources.srcDirs) {
+		include "mcmod.info"
+		expand "version": project.version, "mcversion": project.minecraft.version
+	}
+}
+
+task setManifest(type: Jar, dependsOn: classes) {
+	manifest.attributes "Manifest-Version": "1.0"
+	manifest.attributes "FMLCorePluginContainsFMLMod": "false"
+	manifest.attributes "FMLCorePlugin": "com.therandomlabs.randompatches.RPCore"
+}
+
+assemble.dependsOn setManifest
+build.dependsOn signJar

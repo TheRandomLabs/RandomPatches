@@ -1,0 +1,40 @@
+package com.therandomlabs.randompatches;
+
+import java.util.List;
+import com.google.common.collect.ImmutableList;
+import com.google.common.eventbus.EventBus;
+import net.minecraft.launchwrapper.Launch;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.DummyModContainer;
+import net.minecraftforge.fml.common.LoadController;
+import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.common.ModMetadata;
+
+public class RPCoreContainer extends DummyModContainer {
+	private static final ModMetadata metadata = new ModMetadata();
+
+	public RPCoreContainer() {
+		super(metadata);
+		metadata.modId = RandomPatches.MODID;
+		metadata.name = RandomPatches.NAME;
+		metadata.description = RandomPatches.DESCRIPTION;
+		metadata.version = RandomPatches.VERSION;
+		metadata.url = RandomPatches.URL;
+		metadata.updateJSON = RandomPatches.UPDATE_JSON;
+		metadata.authorList.add(RandomPatches.AUTHOR);
+	}
+
+	@Override
+	public boolean registerBus(EventBus bus, LoadController controller) {
+		if((boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment")) {
+			Loader.instance().setActiveModContainer(this);
+			MinecraftForge.EVENT_BUS.register(new RPEventHandler());
+		}
+		return true;
+	}
+
+	@Override
+	public List<String> getOwnedPackages() {
+		return ImmutableList.of("com.therandomlabs.randompatches");
+	}
+}
