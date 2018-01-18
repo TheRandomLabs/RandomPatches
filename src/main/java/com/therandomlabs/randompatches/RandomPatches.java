@@ -4,7 +4,7 @@ public final class RandomPatches {
 	public static final String MODID = "randompatches";
 	public static final String NAME = "RandomPatches";
 	public static final String VERSION = "@VERSION@";
-	public static final String DESCRIPTION = "A bunch of random patches for Minecraft.";
+	public static final String DESCRIPTION = "A bunch of miscellaneous patches for Minecraft.";
 	public static final String URL = "https://minecraft.curseforge.com/projects/randompatches";
 	public static final String AUTHOR = "TheRandomLabs";
 	public static final String UPDATE_JSON =

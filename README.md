@@ -1,5 +1,5 @@
 # RandomPatches
-A bunch of random patches for Minecraft.
+A bunch of miscellaneous patches for Minecraft.
 
 Currently, it just increases the hardcoded read and login timeouts so slower computers can connect to servers.
 
