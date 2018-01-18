@@ -29,22 +29,9 @@ minecraft {
 	replace "@VERSION@", project.version
 }
 
-processResources {
-	//This will ensure that this task is redone when the versions change.
-	inputs.property "version", project.version
-	inputs.property "mcversion", project.minecraft.version
-
-	//Replace version and mcversion in mcmod.info
-	from(sourceSets.main.resources.srcDirs) {
-		include "mcmod.info"
-		expand "version": project.version, "mcversion": project.minecraft.version
+jar {
+	manifest {
+		attributes "Manifest-Version": "1.0"
+		attributes "FMLCorePlugin": "com.therandomlabs.randompatches.RPCore"
 	}
 }
-
-task setManifest(type: Jar, dependsOn: classes) {
-	manifest.attributes "Manifest-Version": "1.0"
-	manifest.attributes "FMLCorePluginContainsFMLMod": "false"
-	manifest.attributes "FMLCorePlugin": "com.therandomlabs.randompatches.RPCore"
-}
-
-assemble.dependsOn setManifest
