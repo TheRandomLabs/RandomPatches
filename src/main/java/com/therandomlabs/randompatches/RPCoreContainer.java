@@ -9,6 +9,8 @@ import net.minecraftforge.fml.common.DummyModContainer;
 import net.minecraftforge.fml.common.LoadController;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.ModMetadata;
+import net.minecraftforge.fml.common.versioning.InvalidVersionSpecificationException;
+import net.minecraftforge.fml.common.versioning.VersionRange;
 
 public class RPCoreContainer extends DummyModContainer {
 	private static final ModMetadata metadata = new ModMetadata();
@@ -31,6 +33,16 @@ public class RPCoreContainer extends DummyModContainer {
 			MinecraftForge.EVENT_BUS.register(new RPEventHandler());
 		}
 		return true;
+	}
+
+	@Override
+	public VersionRange acceptableMinecraftVersionRange() {
+		try {
+			return VersionRange.createFromVersionSpec(RandomPatches.MINECRAFT_VERSIONS);
+		} catch(InvalidVersionSpecificationException ex) {
+			ex.printStackTrace();
+		}
+		return null;
 	}
 
 	@Override

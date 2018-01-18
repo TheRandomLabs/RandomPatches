@@ -33,5 +33,6 @@ jar {
 	manifest {
 		attributes "Manifest-Version": "1.0"
 		attributes "FMLCorePlugin": "com.therandomlabs.randompatches.RPCore"
+		attributes "FMLCorePluginContainsMod": "true"
 	}
 }
