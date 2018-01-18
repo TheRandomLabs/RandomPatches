@@ -4,6 +4,7 @@ import java.util.Map;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
 
 @IFMLLoadingPlugin.Name(RandomPatches.NAME)
+@IFMLLoadingPlugin.MCVersion(RandomPatches.MINECRAFT_VERSIONS)
 @IFMLLoadingPlugin.TransformerExclusions({"com.therandomlabs.randompatches"})
 public class RPCore implements IFMLLoadingPlugin {
 	@Override

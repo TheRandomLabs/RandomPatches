@@ -13,6 +13,7 @@ import net.minecraft.launchwrapper.IClassTransformer;
 public class RPTransformer implements IClassTransformer {
 	private static final List<String> classNames = Arrays.asList(
 			"net.minecraft.network.NetHandlerPlayServer",
+			"net.minecraft.network.NetHandlerLoginServer",
 			"net.minecraftforge.fml.common.network.internal.FMLNetworkHandler"
 	);
 
@@ -60,10 +61,23 @@ public class RPTransformer implements IClassTransformer {
 		}
 	}
 
+	public static void patchNetHandlerLoginServer(ClassNode node) {
+		final MethodNode methodNode = findMethod(node, "func_73660_a", "update");
+		for(int i = 0; i < methodNode.instructions.size(); i++) {
+			final AbstractInsnNode instruction = methodNode.instructions.get(i);
+			if(instruction.getType() == AbstractInsnNode.LDC_INSN) {
+				final LdcInsnNode ldc = (LdcInsnNode) instruction;
+				if(new Integer(600).equals(ldc.cst)) {
+					ldc.cst = RPConfig.loginTimeout;
+				}
+			}
+		}
+	}
+
 	public static void patchFMLNetworkHandler(ClassNode node) {
 		if(!RPConfig.patchForgeDefaultTimeouts) {
-			System.setProperty("fml.readTimeout", Long.toString(RPConfig.readTimeout));
-			System.setProperty("fml.loginTimeout", Long.toString(RPConfig.loginTimeout));
+			System.setProperty("fml.readTimeout", Integer.toString(RPConfig.readTimeout));
+			System.setProperty("fml.loginTimeout", Integer.toString(RPConfig.loginTimeout));
 			return;
 		}
 
@@ -74,9 +88,9 @@ public class RPTransformer implements IClassTransformer {
 			if(instruction.getType() == AbstractInsnNode.LDC_INSN) {
 				final LdcInsnNode ldc = (LdcInsnNode) instruction;
 				if("30".equals(ldc.cst)) {
-					ldc.cst = Long.toString(RPConfig.readTimeout);
+					ldc.cst = Integer.toString(RPConfig.readTimeout);
 				} else if("600".equals(ldc.cst)) {
-					ldc.cst = Long.toString(RPConfig.loginTimeout);
+					ldc.cst = Integer.toString(RPConfig.loginTimeout);
 				}
 			}
 		}
