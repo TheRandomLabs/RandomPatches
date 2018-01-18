@@ -9,7 +9,7 @@ public final class RandomPatches {
 	public static final String AUTHOR = "TheRandomLabs";
 	public static final String UPDATE_JSON =
 			"https://raw.githubusercontent.com/TheRandomLabs/RandomPatches/misc/versions.json";
-	public static final String MINECRAFT_VERSIONS = "[1.7,1.13)";
+	public static final String MINECRAFT_VERSIONS = "[1.8,1.13)";
 
 	private RandomPatches() {}
 }
