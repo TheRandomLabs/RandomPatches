@@ -18,9 +18,9 @@ public class RPConfig {
 			config = new Configuration(path.toFile());
 		}
 
-		readTimeout = getLong("readTimeout", "server", 600, 1, Integer.MAX_VALUE,
+		readTimeout = getLong("readTimeout", "server", 60, 1, Integer.MAX_VALUE,
 				"The read timeout.");
-		loginTimeout = getLong("loginTimeout", "server", 600, 1, Integer.MAX_VALUE,
+		loginTimeout = getLong("loginTimeout", "server", 300, 1, Integer.MAX_VALUE,
 				"The login timeout.");
 		patchForgeDefaultTimeouts = getBoolean("patchForgeDefaultTimeouts", "server", false,
 				"Whether to patch the default Forge timeouts rather than forcibly changing " +
