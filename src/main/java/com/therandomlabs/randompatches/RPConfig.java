@@ -18,7 +18,7 @@ public class RPConfig {
 			config = new Configuration(path.toFile());
 		}
 
-		readTimeout = getInt("readTimeout", "timeouts", 60, 1, Integer.MAX_VALUE,
+		readTimeout = getInt("readTimeout", "timeouts", 80, 1, Integer.MAX_VALUE,
 				"The read timeout.");
 		loginTimeout = getInt("loginTimeout", "timeouts", 300, 1, Integer.MAX_VALUE,
 				"The login timeout.");
