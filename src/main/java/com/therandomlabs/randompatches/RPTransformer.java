@@ -61,6 +61,12 @@ public class RPTransformer implements IClassTransformer {
 	}
 
 	public static void patchFMLNetworkHandler(ClassNode node) {
+		if(!RPConfig.patchForgeDefaultTimeouts) {
+			System.setProperty("fml.readTimeout", Long.toString(RPConfig.readTimeout));
+			System.setProperty("fml.loginTimeout", Long.toString(RPConfig.loginTimeout));
+			return;
+		}
+
 		final MethodNode methodNode = findMethod(node, "<clinit>");
 
 		for(int i = 0; i < methodNode.instructions.size(); i++) {
