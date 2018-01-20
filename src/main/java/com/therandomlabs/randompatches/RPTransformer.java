@@ -24,7 +24,7 @@ public class RPTransformer implements IClassTransformer {
 				if(className.equals(transformedName)) {
 					RPConfig.init();
 
-					System.out.println("Patching: " + className);
+					System.out.println("Patching class: " + className);
 
 					final ClassReader reader = new ClassReader(basicClass);
 					final ClassNode node = new ClassNode();
@@ -49,7 +49,9 @@ public class RPTransformer implements IClassTransformer {
 	}
 
 	public static void patchNetHandlerPlayServer(ClassNode node) {
-		final MethodNode methodNode = findMethod(node, "func_73660_a", "update");
+		final MethodNode methodNode = findUpdateMethod(node);
+		System.out.println("Patching method: " + methodNode.name);
+
 		for(int i = 0; i < methodNode.instructions.size(); i++) {
 			final AbstractInsnNode instruction = methodNode.instructions.get(i);
 			if(instruction.getType() == AbstractInsnNode.LDC_INSN) {
@@ -62,7 +64,9 @@ public class RPTransformer implements IClassTransformer {
 	}
 
 	public static void patchNetHandlerLoginServer(ClassNode node) {
-		final MethodNode methodNode = findMethod(node, "func_73660_a", "update");
+		final MethodNode methodNode = findUpdateMethod(node);
+		System.out.println("Patching method: " + methodNode.name);
+
 		for(int i = 0; i < methodNode.instructions.size(); i++) {
 			final AbstractInsnNode instruction = methodNode.instructions.get(i);
 			if(instruction.getType() == AbstractInsnNode.LDC_INSN) {
@@ -102,6 +106,18 @@ public class RPTransformer implements IClassTransformer {
 				if(name.equals(methodNode.name)) {
 					return methodNode;
 				}
+			}
+		}
+		return null;
+	}
+
+	public static MethodNode findUpdateMethod(ClassNode node) {
+		for(MethodNode methodNode : node.methods) {
+			if(methodNode.name.equals("func_73660_a") || methodNode.name.equals("upate")) {
+				return methodNode;
+			}
+			if(methodNode.desc.equals("()V") && !methodNode.name.equals("b")) {
+				return methodNode;
 			}
 		}
 		return null;
