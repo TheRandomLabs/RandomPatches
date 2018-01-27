@@ -113,7 +113,7 @@ public class RPTransformer implements IClassTransformer {
 
 	public static MethodNode findUpdateMethod(ClassNode node) {
 		for(MethodNode methodNode : node.methods) {
-			if(methodNode.name.equals("func_73660_a") || methodNode.name.equals("upate")) {
+			if(methodNode.name.equals("func_73660_a") || methodNode.name.equals("update")) {
 				return methodNode;
 			}
 			if(methodNode.desc.equals("()V") && !methodNode.name.equals("b")) {
