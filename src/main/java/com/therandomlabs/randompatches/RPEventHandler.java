@@ -14,7 +14,7 @@ public class RPEventHandler {
 
 	@SubscribeEvent
 	public void guiOpenEvent(GuiOpenEvent event) {
-		if(!registeredRpreloadclient) {
+		if(RPConfig.rpreloadclient && !registeredRpreloadclient) {
 			registerRpreloadclient();
 			registeredRpreloadclient = true;
 		}
@@ -40,6 +40,8 @@ public class RPEventHandler {
 	}
 
 	public static void registerCommands(CommandHandler handler) {
-		handler.registerCommand(new CommandRpreload(false));
+		if(RPConfig.rpreload) {
+			handler.registerCommand(new CommandRpreload(false));
+		}
 	}
 }
