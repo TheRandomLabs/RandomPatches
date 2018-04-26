@@ -8,7 +8,9 @@ import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
 public class RPCore implements IFMLLoadingPlugin {
 	@Override
 	public String[] getASMTransformerClass() {
-		return new String[] {"com.therandomlabs.randompatches.RPTransformer"};
+		return new String[] {
+				"com.therandomlabs.randompatches.RPTransformer"
+		};
 	}
 
 	@Override

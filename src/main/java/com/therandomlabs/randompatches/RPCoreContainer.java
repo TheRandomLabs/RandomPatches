@@ -3,7 +3,6 @@ package com.therandomlabs.randompatches;
 import java.util.List;
 import com.google.common.collect.ImmutableList;
 import com.google.common.eventbus.EventBus;
-import net.minecraft.launchwrapper.Launch;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.DummyModContainer;
 import net.minecraftforge.fml.common.LoadController;
@@ -28,10 +27,8 @@ public class RPCoreContainer extends DummyModContainer {
 
 	@Override
 	public boolean registerBus(EventBus bus, LoadController controller) {
-		if((boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment")) {
-			Loader.instance().setActiveModContainer(this);
-			MinecraftForge.EVENT_BUS.register(new RPEventHandler());
-		}
+		Loader.instance().setActiveModContainer(this);
+		MinecraftForge.EVENT_BUS.register(new RPEventHandler());
 		return true;
 	}
 
