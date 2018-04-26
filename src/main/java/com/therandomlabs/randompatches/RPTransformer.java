@@ -101,8 +101,6 @@ public class RPTransformer implements IClassTransformer {
 
 	public static void patchFMLNetworkHandler(ClassNode node) {
 		if(!RPConfig.patchForgeDefaultTimeouts) {
-			System.setProperty("fml.readTimeout", Integer.toString(RPConfig.readTimeout));
-			System.setProperty("fml.loginTimeout", Integer.toString(RPConfig.loginTimeout));
 			return;
 		}
 
@@ -113,21 +111,9 @@ public class RPTransformer implements IClassTransformer {
 			if(instruction.getType() == AbstractInsnNode.LDC_INSN) {
 				final LdcInsnNode ldc = (LdcInsnNode) instruction;
 				if("30".equals(ldc.cst)) {
-					methodNode.instructions.insertBefore(ldc, new FieldInsnNode(
-							Opcodes.GETSTATIC,
-							"com/therandomlabs/randompatches/RPConfig",
-							"readTimeoutString",
-							"S"
-					));
-					methodNode.instructions.remove(ldc);
+					ldc.cst = Integer.toString(RPConfig.readTimeout);
 				} else if("600".equals(ldc.cst)) {
-					methodNode.instructions.insertBefore(ldc, new FieldInsnNode(
-							Opcodes.GETSTATIC,
-							"com/therandomlabs/randompatches/RPConfig",
-							"loginTimeoutString",
-							"S"
-					));
-					methodNode.instructions.remove(ldc);
+					ldc.cst = Integer.toString(RPConfig.loginTimeout);
 				}
 			}
 		}

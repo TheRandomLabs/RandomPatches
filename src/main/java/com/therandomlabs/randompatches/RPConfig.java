@@ -9,12 +9,10 @@ public class RPConfig {
 	private static Configuration config;
 
 	public static int readTimeout;
-	//So I don't have to do the conversions in bytecode
+	//So I don't have to do the conversion in bytecode
 	public static long readTimeoutMillis;
-	public static String readTimeoutString;
 
 	public static int loginTimeout;
-	public static String loginTimeoutString;
 
 	public static boolean patchForgeDefaultTimeouts;
 
@@ -34,16 +32,19 @@ public class RPConfig {
 		readTimeout = getInt("readTimeout", "timeouts", 80, 1, Integer.MAX_VALUE,
 				"The read timeout.");
 		readTimeoutMillis = readTimeout * 1000L;
-		readTimeoutString = Integer.toString(readTimeout);
 
 		loginTimeout = getInt("loginTimeout", "timeouts", 900, 1, Integer.MAX_VALUE,
 				"The login timeout.");
-		loginTimeoutString = Integer.toString(loginTimeout);
 
 		patchForgeDefaultTimeouts = getBoolean("patchForgeDefaults", "timeouts", false,
 				"Whether to patch the default Forge timeouts rather than forcibly changing " +
 				"their values. Set this to true if you want to be able to use -Dfml.readTimeout " +
 				"and -Dfml.loginTimeout in the JVM arguments.");
+
+		if(!patchForgeDefaultTimeouts) {
+			System.setProperty("fml.readTimeout", Integer.toString(RPConfig.readTimeout));
+			System.setProperty("fml.loginTimeout", Integer.toString(RPConfig.loginTimeout));
+		}
 
 		forceTitleScreenOnDisconnect = getBoolean("forceTitleScreenOnDisconnect", "misc", false,
 				"Forces Minecraft to show the title screen on disconnect, rather than the " +
