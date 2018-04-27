@@ -16,6 +16,6 @@ public class RPClientEventHandler {
 	}
 
 	public static void registerRpreloadclient() {
-		ClientCommandHandler.instance.registerCommand(new CommandRpreload(true));
+		ClientCommandHandler.instance.registerCommand(new CommandRPReload(true));
 	}
 }

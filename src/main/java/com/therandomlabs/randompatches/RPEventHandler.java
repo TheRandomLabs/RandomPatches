@@ -25,7 +25,7 @@ public class RPEventHandler {
 
 	public static void registerCommands(CommandHandler handler) {
 		if(RPConfig.rpreload) {
-			handler.registerCommand(new CommandRpreload(false));
+			handler.registerCommand(new CommandRPReload(false));
 		}
 	}
 

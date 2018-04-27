@@ -6,10 +6,10 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentString;
 
-public class CommandRpreload extends CommandBase {
+public class CommandRPReload extends CommandBase {
 	private final boolean client;
 
-	public CommandRpreload(boolean client) {
+	public CommandRPReload(boolean client) {
 		this.client = client;
 	}
 
