@@ -120,10 +120,6 @@ public class RPTransformer implements IClassTransformer {
 	}
 
 	public static void patchGuiIngameMenu(ClassNode node) {
-		if(!RPConfig.forceTitleScreenOnDisconnect) {
-			return;
-		}
-
 		final MethodNode methodNode = findMethod(node, "actionPerformed", "a");
 
 		for(int i = 0, frames = 0; i < methodNode.instructions.size(); i++) {

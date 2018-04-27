@@ -29,6 +29,9 @@ public class RPCoreContainer extends DummyModContainer {
 	public boolean registerBus(EventBus bus, LoadController controller) {
 		Loader.instance().setActiveModContainer(this);
 		MinecraftForge.EVENT_BUS.register(new RPEventHandler());
+		if(RPEventHandler.shouldRegisterClient()) {
+			MinecraftForge.EVENT_BUS.register(new RPClientEventHandler());
+		}
 		return true;
 	}
 

@@ -22,11 +22,14 @@ public class RPConfig {
 	public static boolean rpreloadclient;
 
 	public static void reload() {
+		boolean shouldSetProperties = false;
+
 		if(config == null) {
 			final Path path = Paths.get("config", RandomPatches.MODID + ".cfg");
 			config = new Configuration(path.toFile());
 		} else {
 			config.load();
+			shouldSetProperties = true;
 		}
 
 		readTimeout = getInt("readTimeout", "timeouts", 80, 1, Integer.MAX_VALUE,
@@ -41,7 +44,7 @@ public class RPConfig {
 				"their values. Set this to true if you want to be able to use -Dfml.readTimeout " +
 				"and -Dfml.loginTimeout in the JVM arguments.");
 
-		if(!patchForgeDefaultTimeouts) {
+		if(!patchForgeDefaultTimeouts || shouldSetProperties) {
 			System.setProperty("fml.readTimeout", Integer.toString(RPConfig.readTimeout));
 			System.setProperty("fml.loginTimeout", Integer.toString(RPConfig.loginTimeout));
 		}
