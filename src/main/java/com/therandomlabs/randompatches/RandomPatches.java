@@ -1,5 +1,7 @@
 package com.therandomlabs.randompatches;
 
+import net.minecraft.launchwrapper.Launch;
+
 public final class RandomPatches {
 	public static final String MODID = "randompatches";
 	public static final String NAME = "RandomPatches";
@@ -12,4 +14,8 @@ public final class RandomPatches {
 	public static final String MINECRAFT_VERSIONS = "[1.10,1.13)";
 
 	private RandomPatches() {}
+
+	public static boolean isDeobfuscated() {
+		return (boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment");
+	}
 }

@@ -1,7 +1,6 @@
 package com.therandomlabs.randompatches;
 
 import net.minecraft.command.CommandHandler;
-import net.minecraft.launchwrapper.Launch;
 import net.minecraft.world.DimensionType;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -17,7 +16,7 @@ public class RPEventHandler {
 			registerCommands(handler);
 		}
 
-		if((boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment")) {
+		if(RandomPatches.isDeobfuscated()) {
 			System.out.println("Patched read timeout: " + FMLNetworkHandler.READ_TIMEOUT);
 			System.out.println("Patched login timeout: " + FMLNetworkHandler.LOGIN_TIMEOUT);
 		}
