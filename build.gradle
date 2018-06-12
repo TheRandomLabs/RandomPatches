@@ -44,8 +44,6 @@ task signJar(type: SignJar, dependsOn: reobfJar) {
 		project.hasProperty("keyStore")
 	}
 
-	dependsOn reobf
-
 	keyStore = project.findProperty("keyStore")
 	alias = project.findProperty("keyStoreAlias")
 	storePass = project.findProperty("keyStorePass")
