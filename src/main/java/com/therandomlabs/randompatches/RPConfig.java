@@ -8,8 +8,10 @@ import net.minecraftforge.common.config.Property;
 public class RPConfig {
 	private static Configuration config;
 
+	public static int keepAlivePacketInterval;
+	public static long keepAlivePacketIntervalMillis;
+
 	public static int readTimeout;
-	//So I don't have to do the conversion in bytecode
 	public static long readTimeoutMillis;
 
 	public static int loginTimeout;
@@ -22,32 +24,28 @@ public class RPConfig {
 	public static boolean rpreloadclient;
 
 	public static void reload() {
-		boolean shouldSetProperties = false;
-
 		if(config == null) {
 			final Path path = Paths.get("config", RandomPatches.MODID + ".cfg");
 			config = new Configuration(path.toFile());
 		} else {
 			config.load();
-			shouldSetProperties = true;
 		}
 
-		readTimeout = getInt("readTimeout", "timeouts", 80, 1, Integer.MAX_VALUE,
-				"The read timeout.");
+		keepAlivePacketInterval = getInt("keepAlivePacketInterval", "timeouts", 15, 1,
+				Integer.MAX_VALUE, "The interval at which the server sends the KeepAlive packet.");
+		keepAlivePacketIntervalMillis = keepAlivePacketInterval * 1000L;
+
+		readTimeout = getInt("readTimeout", "timeouts", 90, 1, Integer.MAX_VALUE,
+				"The read timeout. This is the time it takes for a client to be disconnected " +
+				"after not responding to a KeepAlive packet. This figure is " +
+				"automatically rounded up to a product of keepAlivePacketInterval.");
 		readTimeoutMillis = readTimeout * 1000L;
 
 		loginTimeout = getInt("loginTimeout", "timeouts", 900, 1, Integer.MAX_VALUE,
 				"The login timeout.");
 
-		patchForgeDefaultTimeouts = getBoolean("patchForgeDefaults", "timeouts", false,
-				"Whether to patch the default Forge timeouts rather than forcibly changing " +
-				"their values. Set this to true if you want to be able to use -Dfml.readTimeout " +
-				"and -Dfml.loginTimeout in the JVM arguments.");
-
-		if(!patchForgeDefaultTimeouts || shouldSetProperties) {
-			System.setProperty("fml.readTimeout", Integer.toString(RPConfig.readTimeout));
-			System.setProperty("fml.loginTimeout", Integer.toString(RPConfig.loginTimeout));
-		}
+		System.setProperty("fml.readTimeout", Integer.toString(RPConfig.readTimeout));
+		System.setProperty("fml.loginTimeout", Integer.toString(RPConfig.loginTimeout));
 
 		forceTitleScreenOnDisconnect = getBoolean("forceTitleScreenOnDisconnect", "misc", false,
 				"Forces Minecraft to show the title screen on disconnect, rather than the " +

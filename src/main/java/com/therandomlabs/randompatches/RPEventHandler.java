@@ -4,7 +4,6 @@ import net.minecraft.command.CommandHandler;
 import net.minecraft.world.DimensionType;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.network.internal.FMLNetworkHandler;
 
 public class RPEventHandler {
 	@SubscribeEvent
@@ -14,11 +13,6 @@ public class RPEventHandler {
 			final CommandHandler handler =
 					((CommandHandler) event.getWorld().getMinecraftServer().getCommandManager());
 			registerCommands(handler);
-		}
-
-		if(RandomPatches.isDeobfuscated()) {
-			System.out.println("Patched read timeout: " + FMLNetworkHandler.READ_TIMEOUT);
-			System.out.println("Patched login timeout: " + FMLNetworkHandler.LOGIN_TIMEOUT);
 		}
 	}
 

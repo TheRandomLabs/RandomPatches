@@ -15,6 +15,7 @@ import org.objectweb.asm.tree.InsnNode;
 import org.objectweb.asm.tree.JumpInsnNode;
 import org.objectweb.asm.tree.LabelNode;
 import org.objectweb.asm.tree.LdcInsnNode;
+import org.objectweb.asm.tree.MethodInsnNode;
 import org.objectweb.asm.tree.MethodNode;
 import org.objectweb.asm.tree.VarInsnNode;
 
@@ -22,7 +23,6 @@ public class RPTransformer implements IClassTransformer {
 	private static final List<String> classNames = Arrays.asList(
 			"net.minecraft.network.NetHandlerPlayServer",
 			"net.minecraft.network.NetHandlerLoginServer",
-			"net.minecraftforge.fml.common.network.internal.FMLNetworkHandler",
 			"net.minecraft.client.gui.GuiIngameMenu"
 	);
 
@@ -65,35 +65,134 @@ public class RPTransformer implements IClassTransformer {
 		return basicClass;
 	}
 
+	/*
+		What I'm trying to accomplish:
+
+		final long KEEP_ALIVE_PACKET_INTERVAL = 15000L;
+		final long READ_TIMEOUT = 90000L;
+
+		long lastPingTime;
+		long keepAliveID;
+		boolean shouldDisconnect;
+
+		void update() {
+			final long currentTime = currentTimeMillis();
+
+			if(currentTime - lastPingTime >= KEEP_ALIVE_PACKET_INTERVAL) {
+				if(shouldDisconnect) {
+					if(currentTime - lastPingTime >= READ_TIMEOUT) {
+						disconnect(new TextComponentTranslation("disconnect.timeout"));
+					}
+				} else {
+					shouldDisconnect = true;
+					lastPingTime = currentTime;
+					keepAliveID = currentTime;
+					sendPacket(new SPacketKeepAlive(keepAliveID));
+				}
+			}
+		}
+	*/
 	public static boolean patchNetHandlerPlayServer(ClassNode node) {
 		final MethodNode methodNode = findUpdateMethod(node);
 
-		LdcInsnNode toPatch = null;
+		final boolean deobfuscated = "update".equals(methodNode.name);
+		final String LAST_PING_TIME = deobfuscated ? "field_194402_f" : "g";
+
+		boolean getLastPingTimeFound = false;
+		LdcInsnNode keepAliveInterval = null;
+		JumpInsnNode ifeq = null;
+		MethodInsnNode sendPacket = null;
+		boolean invokeVirtualFound = false;
 
 		for(int i = 0; i < methodNode.instructions.size(); i++) {
 			final AbstractInsnNode instruction = methodNode.instructions.get(i);
-			if(instruction.getType() == AbstractInsnNode.LDC_INSN) {
-				final LdcInsnNode ldc = (LdcInsnNode) instruction;
-				if(new Long(15000L).equals(ldc.cst)) {
-					toPatch = ldc;
-					break;
+
+			if(!getLastPingTimeFound) {
+				if(instruction.getOpcode() == Opcodes.GETFIELD &&
+						LAST_PING_TIME.equals(((FieldInsnNode) instruction).name)) {
+					getLastPingTimeFound = true;
+				}
+
+				continue;
+			}
+
+			if(keepAliveInterval == null) {
+				if(instruction.getType() == AbstractInsnNode.LDC_INSN) {
+					keepAliveInterval = (LdcInsnNode) instruction;
+				}
+
+				continue;
+			}
+
+			if(ifeq == null) {
+				if(instruction.getOpcode() == Opcodes.IFEQ) {
+					ifeq = (JumpInsnNode) instruction;
+				}
+
+				continue;
+			}
+
+			if(sendPacket == null) {
+				if(instruction.getOpcode() == Opcodes.INVOKEVIRTUAL) {
+					//Find the second invokevirtual after the ifeq
+
+					if(invokeVirtualFound) {
+						sendPacket = (MethodInsnNode) instruction;
+						break;
+					}
+
+					invokeVirtualFound = true;
 				}
 			}
 		}
 
-		if(toPatch == null) {
+		if(sendPacket == null) {
 			return false;
 		}
 
-		final FieldInsnNode getReadTimeout = new FieldInsnNode(
+		final FieldInsnNode getKeepAliveInterval = new FieldInsnNode(
+				Opcodes.GETSTATIC,
+				"com/therandomlabs/randompatches/RPConfig",
+				"keepAlivePacketIntervalMillis",
+				"J"
+		);
+
+		methodNode.instructions.insert(keepAliveInterval, getKeepAliveInterval);
+		methodNode.instructions.remove(keepAliveInterval);
+
+		final LabelNode label = new LabelNode();
+
+		final VarInsnNode loadCurrentTime = new VarInsnNode(Opcodes.LLOAD, 1);
+
+		final VarInsnNode loadThis = new VarInsnNode(Opcodes.ALOAD, 0);
+		final FieldInsnNode getPreviousTime2 = new FieldInsnNode(
+				Opcodes.GETFIELD,
+				"net/minecraft/network/NetHandlerPlayServer",
+				LAST_PING_TIME,
+				"J"
+		);
+
+		final InsnNode subtract = new InsnNode(Opcodes.LSUB);
+
+		final FieldInsnNode getReadTimeoutMillis = new FieldInsnNode(
 				Opcodes.GETSTATIC,
 				"com/therandomlabs/randompatches/RPConfig",
 				"readTimeoutMillis",
 				"J"
 		);
 
-		methodNode.instructions.insert(toPatch, getReadTimeout);
-		methodNode.instructions.remove(toPatch);
+		final InsnNode compare = new InsnNode(Opcodes.LCMP);
+		final JumpInsnNode jumpIfNotLarger = new JumpInsnNode(Opcodes.IFLT, label);
+
+		methodNode.instructions.insert(ifeq, loadCurrentTime);
+		methodNode.instructions.insert(loadCurrentTime, loadThis);
+		methodNode.instructions.insert(loadThis, getPreviousTime2);
+		methodNode.instructions.insert(getPreviousTime2, subtract);
+		methodNode.instructions.insert(subtract, getReadTimeoutMillis);
+		methodNode.instructions.insert(getReadTimeoutMillis, compare);
+		methodNode.instructions.insert(compare, jumpIfNotLarger);
+
+		methodNode.instructions.insert(sendPacket, label);
 
 		return true;
 	}
@@ -127,43 +226,6 @@ public class RPTransformer implements IClassTransformer {
 
 		methodNode.instructions.insert(toPatch, getLoginTimeout);
 		methodNode.instructions.remove(toPatch);
-
-		return true;
-	}
-
-	public static boolean patchFMLNetworkHandler(ClassNode node) {
-		if(!RPConfig.patchForgeDefaultTimeouts) {
-			return true;
-		}
-
-		final MethodNode methodNode = findMethod(node, "<clinit>");
-
-		LdcInsnNode readTimeout = null;
-		LdcInsnNode loginTimeout = null;
-
-		for(int i = 0; i < methodNode.instructions.size(); i++) {
-			final AbstractInsnNode instruction = methodNode.instructions.get(i);
-			if(instruction.getType() == AbstractInsnNode.LDC_INSN) {
-				final LdcInsnNode ldc = (LdcInsnNode) instruction;
-
-				if("30".equals(ldc.cst)) {
-					readTimeout = ldc;
-				} else if("600".equals(ldc.cst)) {
-					loginTimeout = ldc;
-				}
-
-				if(readTimeout != null && loginTimeout != null) {
-					break;
-				}
-			}
-		}
-
-		if(readTimeout == null || loginTimeout == null) {
-			return false;
-		}
-
-		readTimeout.cst = Integer.toString(RPConfig.readTimeout);
-		loginTimeout.cst = Integer.toString(RPConfig.loginTimeout);
 
 		return true;
 	}
@@ -228,7 +290,7 @@ public class RPTransformer implements IClassTransformer {
 		MethodNode update = null;
 
 		for(MethodNode methodNode : node.methods) {
-			if(methodNode.name.equals("func_73660_a") || methodNode.name.equals("update")) {
+			if(methodNode.name.equals("update")) {
 				update = methodNode;
 				break;
 			}
