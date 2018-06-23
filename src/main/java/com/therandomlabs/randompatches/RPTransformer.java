@@ -94,38 +94,33 @@ public class RPTransformer implements IClassTransformer {
 	*/
 	public static boolean patchNetHandlerPlayServer(ClassNode node) {
 		final MethodNode methodNode = findUpdateMethod(node);
-
 		final boolean deobfuscated = "update".equals(methodNode.name);
-		final String LAST_PING_TIME = deobfuscated ? "field_194402_f" : "g";
 
-		boolean getLastPingTimeFound = false;
+		final String LAST_PING_TIME = deobfuscated ? "field_194402_f" : "g";
+		final String SEND_PACKET = deobfuscated ? "sendPacket" : "a";
+
 		LdcInsnNode keepAliveInterval = null;
 		JumpInsnNode ifeq = null;
 		MethodInsnNode sendPacket = null;
-		boolean invokeVirtualFound = false;
 
 		for(int i = 0; i < methodNode.instructions.size(); i++) {
 			final AbstractInsnNode instruction = methodNode.instructions.get(i);
 
-			if(!getLastPingTimeFound) {
-				if(instruction.getOpcode() == Opcodes.GETFIELD &&
-						LAST_PING_TIME.equals(((FieldInsnNode) instruction).name)) {
-					getLastPingTimeFound = true;
-				}
-
-				continue;
-			}
-
 			if(keepAliveInterval == null) {
 				if(instruction.getType() == AbstractInsnNode.LDC_INSN) {
 					keepAliveInterval = (LdcInsnNode) instruction;
+
+					if(!((Long) 15000L).equals(keepAliveInterval.cst)) {
+						keepAliveInterval = null;
+					}
 				}
 
 				continue;
 			}
 
 			if(ifeq == null) {
-				if(instruction.getOpcode() == Opcodes.IFEQ) {
+				if(instruction.getOpcode() == Opcodes.IFEQ &&
+						instruction.getPrevious().getOpcode() == Opcodes.GETFIELD) {
 					ifeq = (JumpInsnNode) instruction;
 				}
 
@@ -134,14 +129,13 @@ public class RPTransformer implements IClassTransformer {
 
 			if(sendPacket == null) {
 				if(instruction.getOpcode() == Opcodes.INVOKEVIRTUAL) {
-					//Find the second invokevirtual after the ifeq
+					sendPacket = (MethodInsnNode) instruction;
 
-					if(invokeVirtualFound) {
-						sendPacket = (MethodInsnNode) instruction;
+					if(SEND_PACKET.equals(sendPacket.name)) {
 						break;
 					}
 
-					invokeVirtualFound = true;
+					sendPacket = null;
 				}
 			}
 		}
@@ -165,7 +159,7 @@ public class RPTransformer implements IClassTransformer {
 		final VarInsnNode loadCurrentTime = new VarInsnNode(Opcodes.LLOAD, 1);
 
 		final VarInsnNode loadThis = new VarInsnNode(Opcodes.ALOAD, 0);
-		final FieldInsnNode getPreviousTime2 = new FieldInsnNode(
+		final FieldInsnNode getPreviousTime = new FieldInsnNode(
 				Opcodes.GETFIELD,
 				"net/minecraft/network/NetHandlerPlayServer",
 				LAST_PING_TIME,
@@ -186,8 +180,8 @@ public class RPTransformer implements IClassTransformer {
 
 		methodNode.instructions.insert(ifeq, loadCurrentTime);
 		methodNode.instructions.insert(loadCurrentTime, loadThis);
-		methodNode.instructions.insert(loadThis, getPreviousTime2);
-		methodNode.instructions.insert(getPreviousTime2, subtract);
+		methodNode.instructions.insert(loadThis, getPreviousTime);
+		methodNode.instructions.insert(getPreviousTime, subtract);
 		methodNode.instructions.insert(subtract, getReadTimeoutMillis);
 		methodNode.instructions.insert(getReadTimeoutMillis, compare);
 		methodNode.instructions.insert(compare, jumpIfNotLarger);
