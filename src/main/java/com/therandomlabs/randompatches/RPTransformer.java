@@ -94,10 +94,20 @@ public class RPTransformer implements IClassTransformer {
 	*/
 	public static boolean patchNetHandlerPlayServer(ClassNode node) {
 		final MethodNode methodNode = findUpdateMethod(node);
-		final boolean deobfuscated = "update".equals(methodNode.name);
 
-		final String LAST_PING_TIME = deobfuscated ? "field_194402_f" : "g";
-		final String SEND_PACKET = deobfuscated ? "sendPacket" : "a";
+		final String LAST_PING_TIME;
+		final String SEND_PACKET;
+
+		if("update".equals(methodNode.name)) {
+			LAST_PING_TIME = "field_194402_f";
+			SEND_PACKET = "sendPacket";
+		} else if("func_73660_a".equals(methodNode.name)) {
+			LAST_PING_TIME = "field_194402_f";
+			SEND_PACKET = "func_147359_a";
+		} else {
+			LAST_PING_TIME = "field_194402_f";
+			SEND_PACKET = "a";
+		}
 
 		LdcInsnNode keepAliveInterval = null;
 		JumpInsnNode ifeq = null;
@@ -225,7 +235,7 @@ public class RPTransformer implements IClassTransformer {
 	}
 
 	public static boolean patchGuiIngameMenu(ClassNode node) {
-		final MethodNode methodNode = findMethod(node, "actionPerformed", "a");
+		final MethodNode methodNode = findMethod(node, "actionPerformed", "func_146284_a", "a");
 
 		AbstractInsnNode toPatch = null;
 
