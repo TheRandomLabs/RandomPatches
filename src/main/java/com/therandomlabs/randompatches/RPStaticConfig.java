@@ -79,15 +79,15 @@ public class RPStaticConfig {
 				Comments.READ_TIMEOUT);
 
 		removeOldProperties();
-		config.save();
 		onReload();
+		config.save();
 	}
 
 	public static void onReload() {
 		if(readTimeout < keepAlivePacketInterval) {
 			readTimeout = keepAlivePacketInterval * 2;
 		} else if(readTimeout % keepAlivePacketInterval != 0) {
-			readTimeout = keepAlivePacketInterval / readTimeout + 1;
+			readTimeout = readTimeout / keepAlivePacketInterval + 1;
 		}
 
 		keepAlivePacketIntervalMillis = keepAlivePacketInterval * 1000L;

@@ -1,14 +1,10 @@
 package com.therandomlabs.randompatches.event;
 
-import com.therandomlabs.randompatches.CommandRPReload;
 import com.therandomlabs.randompatches.RPConfig;
-import com.therandomlabs.randompatches.RPStaticConfig;
 import com.therandomlabs.randompatches.RandomPatches;
-import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.relauncher.Side;
 
 public class RPClientEventHandler {
 	private static boolean clientInitialized;
@@ -24,11 +20,11 @@ public class RPClientEventHandler {
 	public void guiOpenEvent(GuiOpenEvent event) {
 		if(!clientInitialized) {
 			clientInitialized = true;
-			initializeClient();
+			initialize();
 		}
 	}
 
-	public static void initializeClient() {
+	public static void initialize() {
 		RPConfig.reload();
 	}
 }

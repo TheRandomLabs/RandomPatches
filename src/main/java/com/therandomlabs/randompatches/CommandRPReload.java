@@ -4,6 +4,8 @@ import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextFormatting;
 
 public class CommandRPReload extends CommandBase {
 	@Override
@@ -28,7 +30,8 @@ public class CommandRPReload extends CommandBase {
 			RPStaticConfig.reload();
 			notifyCommandListener(sender, this, "RandomPatches configuration reloaded.");
 		} else {
-			//TODO
+			sender.sendMessage(new TextComponentString(TextFormatting.RED +
+					"Use the provided GUI to modify the client configuration."));
 		}
 	}
 }
