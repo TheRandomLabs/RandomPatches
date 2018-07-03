@@ -4,23 +4,16 @@ import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.text.TextComponentString;
 
 public class CommandRPReload extends CommandBase {
-	private final boolean client;
-
-	public CommandRPReload(boolean client) {
-		this.client = client;
-	}
-
 	@Override
 	public String getName() {
-		return client ? "rpreloadclient" : "rpreload";
+		return "rpreload";
 	}
 
 	@Override
 	public int getRequiredPermissionLevel() {
-		return client ? 0 : 4;
+		return 4;
 	}
 
 	@Override
@@ -31,12 +24,11 @@ public class CommandRPReload extends CommandBase {
 	@Override
 	public void execute(MinecraftServer server, ICommandSender sender, String[] args)
 			throws CommandException {
-		RPConfig.reload();
-		if(client) {
-			sender.sendMessage(
-					new TextComponentString("Successfully reloaded RandomPatches config!"));
+		if(server.isDedicatedServer()) {
+			RPStaticConfig.reload();
+			notifyCommandListener(sender, this, "RandomPatches configuration reloaded.");
 		} else {
-			notifyCommandListener(sender, this, "Successfully reloaded RandomPatches config!");
+			//TODO
 		}
 	}
 }

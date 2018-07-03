@@ -1,83 +1,126 @@
 package com.therandomlabs.randompatches;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+import java.util.HashMap;
+import java.util.Map;
+import net.minecraft.crash.CrashReport;
+import net.minecraft.util.ReportedException;
+import net.minecraftforge.common.config.Config;
+import net.minecraftforge.common.config.ConfigCategory;
+import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
+import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
+@Config(modid = RandomPatches.MODID, name = RandomPatches.MODID, category = "")
+@Config.LangKey("randompatches.config.title")
 public class RPConfig {
-	private static Configuration config;
+	public static class Misc {
+		@Config.LangKey("randompatches.config.misc.forceTitleScreenOnDisconnect")
+		@Config.Comment(RPStaticConfig.Comments.FORCE_TITLE_SCREEN_ON_DISCONNECT)
+		public boolean forceTitleScreenOnDisconnect =
+				RPStaticConfig.Defaults.FORCE_TITLE_SCREEN_ON_DISCONNECT;
 
-	public static int keepAlivePacketInterval;
-	public static long keepAlivePacketIntervalMillis;
+		@Config.RequiresWorldRestart
+		@Config.LangKey("randompatches.config.commands.rpreload")
+		@Config.Comment(RPStaticConfig.Comments.RPRELOAD)
+		public boolean rpreload = RPStaticConfig.Defaults.RPRELOAD;
+	}
 
-	public static int readTimeout;
-	public static long readTimeoutMillis;
+	public static class Timeouts {
+		@Config.RangeInt(min = 1)
+		@Config.LangKey("randompatches.config.timeouts.keepAlivePacketInterval")
+		@Config.Comment(RPStaticConfig.Comments.KEEP_ALIVE_PACKET_INTERVAL)
+		public int keepAlivePacketInterval = RPStaticConfig.Defaults.KEEP_ALIVE_PACKET_INTERVAL;
 
-	public static int loginTimeout;
+		@Config.RangeInt(min = 1)
+		@Config.LangKey("randompatches.config.timeouts.loginTimeout")
+		@Config.Comment(RPStaticConfig.Comments.LOGIN_TIMEOUT)
+		public int loginTimeout = RPStaticConfig.Defaults.LOGIN_TIMEOUT;
 
-	public static boolean patchForgeDefaultTimeouts;
+		@Config.RangeInt(min = 1)
+		@Config.LangKey("randompatches.config.timeouts.readTimeout")
+		@Config.Comment(RPStaticConfig.Comments.READ_TIMEOUT)
+		public int readTimeout = RPStaticConfig.Defaults.READ_TIMEOUT;
+	}
 
-	public static boolean forceTitleScreenOnDisconnect;
+	@Config.LangKey("randompatches.config.misc")
+	@Config.Comment(RPStaticConfig.MISC_COMMENT)
+	public static Misc misc = new Misc();
 
-	public static boolean rpreload;
-	public static boolean rpreloadclient;
+	@Config.LangKey("randompatches.config.timeouts")
+	@Config.Comment(RPStaticConfig.TIMEOUTS_COMMENT)
+	public static Timeouts timeouts = new Timeouts();
+
+	private static final Method GET_CONFIGURATION = ReflectionHelper.findMethod(ConfigManager.class,
+			"getConfiguration", "getConfiguration", String.class, String.class);
 
 	public static void reload() {
-		if(config == null) {
-			final Path path = Paths.get("config", RandomPatches.MODID + ".cfg");
-			config = new Configuration(path.toFile());
-		} else {
-			config.load();
+		ConfigManager.sync(RandomPatches.MODID, Config.Type.INSTANCE);
+
+		try {
+			modifyConfig();
+			copyValuesToStatic();
+		} catch(Exception ex) {
+			throw new ReportedException(new CrashReport("Error while modifying config", ex));
 		}
 
-		keepAlivePacketInterval = getInt("keepAlivePacketInterval", "timeouts", 15, 1,
-				Integer.MAX_VALUE, "The interval at which the server sends the KeepAlive packet.");
-		keepAlivePacketIntervalMillis = keepAlivePacketInterval * 1000L;
+		RPStaticConfig.onReload();
+	}
 
-		readTimeout = getInt("readTimeout", "timeouts", 90, 1, Integer.MAX_VALUE,
-				"The read timeout. This is the time it takes for a client to be disconnected " +
-				"after not responding to a KeepAlive packet. This figure is " +
-				"automatically rounded up to a product of keepAlivePacketInterval.");
-		readTimeoutMillis = readTimeout * 1000L;
+	private static void modifyConfig() throws Exception {
+		final Configuration config = (Configuration) GET_CONFIGURATION.invoke(null,
+				RandomPatches.MODID, RandomPatches.MODID);
 
-		loginTimeout = getInt("loginTimeout", "timeouts", 900, 1, Integer.MAX_VALUE,
-				"The login timeout.");
+		final Map<Property, String> comments = new HashMap<>();
 
-		System.setProperty("fml.readTimeout", Integer.toString(RPConfig.readTimeout));
-		System.setProperty("fml.loginTimeout", Integer.toString(RPConfig.loginTimeout));
+		//Remove old elements
+		for(String name : config.getCategoryNames()) {
+			final ConfigCategory category = config.getCategory(name);
 
-		forceTitleScreenOnDisconnect = getBoolean("forceTitleScreenOnDisconnect", "misc", false,
-				"Forces Minecraft to show the title screen on disconnect, rather than the " +
-				"Multiplayer or Realms menu.");
+			category.getValues().forEach((key, property) -> {
+				final String comment = property.getComment();
 
-		rpreload = getBoolean("rpreload", "commands", true, "Enables the /rpreload command, " +
-				"which reloads the configuration. This command is server-sided. This " +
-				"configuration option only takes effect after a world restart.");
-		rpreloadclient = getBoolean("rpreloadclient", "commands", true, "Enables the " +
-				"/rpreloadclient command, which reloads the configuration. This command is " +
-				"client-sided. This configuration option only takes effect after a Minecraft " +
-				"restart.");
+				if(comment == null || comment.isEmpty()) {
+					category.remove(key);
+					return;
+				}
+
+				//Add default value to comment
+				comments.put(property, comment);
+				property.setComment(comment + "\n" + "Default: " + property.getDefault());
+			});
+
+			if(category.getValues().isEmpty() || category.getComment() == null) {
+				config.removeCategory(category);
+			}
+		}
 
 		config.save();
+
+		//Remove default values from comments so they don't show up in the configuration GUI
+		for(String name : config.getCategoryNames()) {
+			config.getCategory(name).getValues().forEach((key, property) ->
+					property.setComment(comments.get(property)));
+		}
 	}
 
-	private static int getInt(String name, String category, int defaultValue, int minValue,
-			int maxValue, String comment) {
-		final Property prop = config.get(category, name, defaultValue);
-		prop.setMinValue(minValue);
-		prop.setMaxValue(maxValue);
-		prop.setComment(comment + " [default: " + defaultValue + ", range: " + minValue + "-" +
-				maxValue + "]");
-		prop.setRequiresMcRestart(true);
-		return prop.getInt(defaultValue);
-	}
+	private static void copyValuesToStatic() throws Exception {
+		for(Field field : RPConfig.class.getDeclaredFields()) {
+			final int modifiers = field.getModifiers();
 
-	private static boolean getBoolean(String name, String category, boolean defaultValue,
-			String comment) {
-		final Property prop = config.get(category, name, defaultValue);
-		prop.setComment(comment + " [default: " + defaultValue + "]");
-		prop.setRequiresMcRestart(true);
-		return prop.getBoolean(defaultValue);
+			if(!Modifier.isPublic(modifiers) || Modifier.isFinal(modifiers)) {
+				continue;
+			}
+
+			final Object object = field.get(null);
+
+			for(Field property : object.getClass().getDeclaredFields()) {
+				final Object value = property.get(object);
+				RPStaticConfig.class.getDeclaredField(property.getName()).set(null, value);
+			}
+		}
 	}
 }

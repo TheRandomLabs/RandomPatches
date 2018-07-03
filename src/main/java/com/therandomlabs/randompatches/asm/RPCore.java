@@ -1,6 +1,7 @@
-package com.therandomlabs.randompatches;
+package com.therandomlabs.randompatches.asm;
 
 import java.util.Map;
+import com.therandomlabs.randompatches.RandomPatches;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
 
 @IFMLLoadingPlugin.Name(RandomPatches.NAME)
@@ -9,13 +10,13 @@ public class RPCore implements IFMLLoadingPlugin {
 	@Override
 	public String[] getASMTransformerClass() {
 		return new String[] {
-				"com.therandomlabs.randompatches.RPTransformer"
+				"com.therandomlabs.randompatches.asm.RPTransformer"
 		};
 	}
 
 	@Override
 	public String getModContainerClass() {
-		return "com.therandomlabs.randompatches.RPCoreContainer";
+		return "com.therandomlabs.randompatches.asm.RPCoreContainer";
 	}
 
 	@Override
