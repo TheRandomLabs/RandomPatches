@@ -19,12 +19,10 @@ public class RPTransformer implements IClassTransformer {
 	static {
 		RPEventHandler.initialize();
 
-		register("net.minecraft.network.NetHandlerPlayServer", PlayServerTransformer.INSTANCE);
-		register("net.minecraft.network.NetHandlerLoginServer", LoginServerTransformer.INSTANCE);
-		register("net.minecraft.client.gui.GuiIngameMenu", IngameMenuTransformer.INSTANCE);
+		register();
 
 		if(FMLInjectionData.data()[4].equals("1.12.2")) {
-			RandomPatches.LOGGER.debug("Test");
+			registerOnePointTwelve();
 		}
 	}
 
@@ -51,7 +49,17 @@ public class RPTransformer implements IClassTransformer {
 		return writer.toByteArray();
 	}
 
-	public static void register(String className, Transformer transformer) {
+	private static void register(String className, Transformer transformer) {
 		TRANSFORMERS.put(className, transformer);
+	}
+
+	private static void register() {
+		register("net.minecraft.network.NetHandlerPlayServer", PlayServerTransformer.INSTANCE);
+		register("net.minecraft.network.NetHandlerLoginServer", LoginServerTransformer.INSTANCE);
+		register("net.minecraft.client.gui.GuiIngameMenu", IngameMenuTransformer.INSTANCE);
+	}
+
+	private static void registerOnePointTwelve() {
+		//TODO
 	}
 }
