@@ -87,7 +87,7 @@ public class RPStaticConfig {
 		if(readTimeout < keepAlivePacketInterval) {
 			readTimeout = keepAlivePacketInterval * 2;
 		} else if(readTimeout % keepAlivePacketInterval != 0) {
-			readTimeout = readTimeout / keepAlivePacketInterval + 1;
+			readTimeout = keepAlivePacketInterval * (readTimeout / keepAlivePacketInterval + 1);
 		}
 
 		keepAlivePacketIntervalMillis = keepAlivePacketInterval * 1000L;
