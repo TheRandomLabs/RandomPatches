@@ -1,5 +1,6 @@
 package com.therandomlabs.randompatches.asm.transformer;
 
+import com.therandomlabs.randompatches.RandomPatches;
 import com.therandomlabs.randompatches.asm.Transformer;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.AbstractInsnNode;
@@ -23,8 +24,19 @@ public class PlayServerTransformer extends Transformer {
 			return false;
 		}
 
-		//if(!transformProcessPlayer(findMethod(node, "processPlayer", )))
-		return true;
+		if(!RandomPatches.IS_ONE_TWELVE_TWO) {
+			return true;
+		}
+
+		if(!transformProcessPlayer(findMethod(node,
+				"(Lnet/minecraft/network/play/client/CPacketPlayer;)V", "(Llk;)V", "processPlayer",
+				"func_147347_a"))) {
+			return false;
+		}
+
+		return transformProcessVehicleMove(findMethod(node,
+				"(Lnet/minecraft/network/play/client/CPacketVehicleMove;)V", "(Lll;)V",
+				"processVehicleMove", "func_184338_a"));
 	}
 
 	/* Expected result:
@@ -144,5 +156,13 @@ public class PlayServerTransformer extends Transformer {
 		method.instructions.insert(sendPacket, label);
 
 		return true;
+	}
+
+	private static boolean transformProcessPlayer(MethodNode method) {
+		return true; //TODO
+	}
+
+	private static boolean transformProcessVehicleMove(MethodNode method) {
+		return true; //TODO
 	}
 }

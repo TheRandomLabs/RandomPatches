@@ -38,7 +38,9 @@ public class RPStaticConfig {
 
 	public static final String CLIENT_COMMENT = "Options related to client-sided features.";
 	public static final String MISC_COMMENT = "Options that don't fit into any other categories.";
-	public static final String TIMEOUTS_COMMENT = "Options related to disconnect timeouts.";
+	public static final String SPEED_LIMITS_COMMENT =
+			"Options related to the movement speed limits.";
+	public static final String TIMEOUTS_COMMENT = "Options related to the disconnect timeouts.";
 
 	//Commands
 
@@ -80,6 +82,10 @@ public class RPStaticConfig {
 
 		rpreload = getBoolean("rpreload", "misc", Defaults.RPRELOAD, Comments.RPRELOAD, true,
 				false);
+
+		config.addCustomCategoryComment("speedLimits", SPEED_LIMITS_COMMENT);
+
+		//TODO
 
 		config.addCustomCategoryComment("timeouts", TIMEOUTS_COMMENT);
 

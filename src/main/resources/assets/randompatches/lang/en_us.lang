@@ -8,7 +8,7 @@ randompatches.config.misc.tooltip=Options that don't fit into any other categori
 randompatches.config.misc.rpreload=/rpreload
 
 randompatches.config.timeouts=Disconnect timeouts
-randompatches.config.timeouts.tooltip=Options related to disconnect timeouts.
+randompatches.config.timeouts.tooltip=Options related to the disconnect timeouts.
 randompatches.config.timeouts.keepAlivePacketInterval=KeepAlive packet interval
 randompatches.config.timeouts.loginTimeout=Login timeout
 randompatches.config.timeouts.readTimeout=Read timeout

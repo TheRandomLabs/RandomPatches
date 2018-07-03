@@ -10,7 +10,21 @@ public abstract class Transformer {
 
 	public static MethodNode findMethod(ClassNode node, String descriptor, String name,
 			String obfuscatedName) {
-		return findMethod(node, descriptor, null, name, obfuscatedName);
+		return findMethod(node, descriptor, descriptor, name, obfuscatedName);
+	}
+
+	public static MethodNode findMethod(ClassNode node, String descriptor,
+			String obfuscatedDescriptor, String name, String obfuscatedName) {
+		for(MethodNode method : node.methods) {
+			if(name.equals(method.name) || obfuscatedName.equals(method.name)) {
+				if(descriptor.equals(method.desc) || obfuscatedDescriptor.equals(method.desc)) {
+					RandomPatches.LOGGER.debug("Patching method: " + method.name);
+					return method;
+				}
+			}
+		}
+
+		return null;
 	}
 
 	public static MethodNode findMethod(ClassNode node, String descriptor,

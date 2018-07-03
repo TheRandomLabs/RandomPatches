@@ -4,6 +4,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import net.minecraft.launchwrapper.Launch;
 import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraftforge.fml.relauncher.FMLInjectionData;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -23,6 +24,8 @@ public final class RandomPatches {
 
 	public static final boolean IS_DEOBFUSCATED =
 			(boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment");
+
+	public static final boolean IS_ONE_TWELVE_TWO = FMLInjectionData.data()[4].equals("1.12.2");
 
 	public static final Logger LOGGER = LogManager.getLogger(MODID);
 

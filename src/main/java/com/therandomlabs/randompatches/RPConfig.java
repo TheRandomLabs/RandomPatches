@@ -39,6 +39,10 @@ public class RPConfig {
 		public boolean rpreload = RPStaticConfig.Defaults.RPRELOAD;
 	}
 
+	public static class SpeedLimits {
+		//TODO
+	}
+
 	public static class Timeouts {
 		@Config.RangeInt(min = 1)
 		@Config.LangKey("randompatches.config.timeouts.keepAlivePacketInterval")
@@ -63,6 +67,10 @@ public class RPConfig {
 	@Config.LangKey("randompatches.config.misc")
 	@Config.Comment(RPStaticConfig.MISC_COMMENT)
 	public static Misc misc = new Misc();
+
+	@Config.LangKey("randompatches.config.speedLimits")
+	@Config.Comment(RPStaticConfig.SPEED_LIMITS_COMMENT)
+	public static SpeedLimits speedLimits = new SpeedLimits();
 
 	@Config.LangKey("randompatches.config.timeouts")
 	@Config.Comment(RPStaticConfig.TIMEOUTS_COMMENT)
