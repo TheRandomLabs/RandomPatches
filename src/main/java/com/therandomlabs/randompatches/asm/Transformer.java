@@ -1,5 +1,6 @@
 package com.therandomlabs.randompatches.asm;
 
+import java.util.regex.Pattern;
 import com.therandomlabs.randompatches.RandomPatches;
 import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.MethodNode;
@@ -7,10 +8,17 @@ import org.objectweb.asm.tree.MethodNode;
 public abstract class Transformer {
 	public abstract boolean transform(ClassNode node);
 
-	public static MethodNode findMethod(ClassNode node, String... names) {
+	public static MethodNode findMethod(ClassNode node, String descriptor, String name,
+			String obfuscatedName) {
+		return findMethod(node, descriptor, null, name, obfuscatedName);
+	}
+
+	public static MethodNode findMethod(ClassNode node, String descriptor,
+			Pattern obfuscatedDescriptor, String name, String obfuscatedName) {
 		for(MethodNode method : node.methods) {
-			for(String name : names) {
-				if(name.equals(method.name)) {
+			if(name.equals(method.name) || obfuscatedName.equals(method.name)) {
+				if(descriptor.equals(method.desc) || (obfuscatedDescriptor != null &&
+						obfuscatedDescriptor.matcher(method.desc).matches())) {
 					RandomPatches.LOGGER.debug("Patching method: " + method.name);
 					return method;
 				}

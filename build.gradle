@@ -35,8 +35,8 @@ minecraft {
 jar {
 	manifest {
 		attributes "Manifest-Version": "1.0"
-		attributes "FMLCorePlugin": "com.therandomlabs.randompatches.RPCore"
-		attributes "FMLCorePluginContainsMod": "true"
+		attributes "FMLCorePlugin": "com.therandomlabs.randompatches.asm.RPCore"
+		attributes "FMLCorePluginContainsMod": "false"
 	}
 }
 

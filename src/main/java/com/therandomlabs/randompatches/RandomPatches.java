@@ -3,7 +3,7 @@ package com.therandomlabs.randompatches;
 import java.net.MalformedURLException;
 import java.net.URL;
 import net.minecraft.launchwrapper.Launch;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TextComponentTranslation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -13,8 +13,7 @@ public final class RandomPatches {
 	public static final String VERSION = "@VERSION@";
 	public static final String AUTHOR = "TheRandomLabs";
 	public static final String DESCRIPTION = "A bunch of miscellaneous patches for Minecraft.";
-	public static final String LOGO_FILE =
-			new ResourceLocation(MODID, "textures/logo.png").getResourcePath();
+	public static final String LOGO_FILE = "assets/" + MODID + "/logo.png";
 	public static final String PROJECT_URL =
 			"https://minecraft.curseforge.com/projects/randompatches";
 	public static final String UPDATE_JSON =
@@ -38,4 +37,8 @@ public final class RandomPatches {
 	}
 
 	private RandomPatches() {}
+
+	public static String localize(String key, Object... args) {
+		return new TextComponentTranslation(key, args).getFormattedText();
+	}
 }

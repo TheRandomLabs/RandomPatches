@@ -17,6 +17,16 @@ public class PlayServerTransformer extends Transformer {
 	public static final String LAST_PING_TIME = "field_194402_f";
 	public static final String SEND_PACKET = getName("sendPacket", "a");
 
+	@Override
+	public boolean transform(ClassNode node) {
+		if(!transformUpdate(findUpdateMethod(node))) {
+			return false;
+		}
+
+		//if(!transformProcessPlayer(findMethod(node, "processPlayer", )))
+		return true;
+	}
+
 	/* Expected result:
 
 	final long KEEP_ALIVE_PACKET_INTERVAL = 15000L;
@@ -43,10 +53,7 @@ public class PlayServerTransformer extends Transformer {
 		}
 	} */
 
-	@Override
-	public boolean transform(ClassNode node) {
-		final MethodNode method = findUpdateMethod(node);
-
+	private static boolean transformUpdate(MethodNode method) {
 		LdcInsnNode keepAliveInterval = null;
 		JumpInsnNode ifeq = null;
 		MethodInsnNode sendPacket = null;

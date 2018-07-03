@@ -1,5 +1,6 @@
 package com.therandomlabs.randompatches.asm.transformer;
 
+import java.util.regex.Pattern;
 import com.therandomlabs.randompatches.asm.Transformer;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.AbstractInsnNode;
@@ -15,7 +16,8 @@ import org.objectweb.asm.tree.VarInsnNode;
 public class IngameMenuTransformer extends Transformer {
 	@Override
 	public boolean transform(ClassNode node) {
-		final MethodNode method = findMethod(node, "actionPerformed", "a");
+		final MethodNode method = findMethod(node, "(Lnet/minecraft/client/gui/GuiButton;)V",
+				Pattern.compile("\\(L[a-z]{3};\\)V"), "actionPerformed", "a");
 
 		AbstractInsnNode toPatch = null;
 

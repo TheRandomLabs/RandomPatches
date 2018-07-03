@@ -18,7 +18,7 @@ public class LanguageListTransformer extends Transformer {
 			return true;
 		}
 
-		final MethodNode method = findMethod(node, "elementClicked", "a");
+		final MethodNode method = findMethod(node, "(IZII)V", "elementClicked", "a");
 
 		MethodInsnNode refreshResources = null;
 

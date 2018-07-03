@@ -1,9 +1,11 @@
 package com.therandomlabs.randompatches.asm;
 
+import java.io.File;
 import java.net.URL;
 import java.util.List;
 import com.google.common.collect.ImmutableList;
 import com.google.common.eventbus.EventBus;
+import com.therandomlabs.randompatches.RPConfig;
 import com.therandomlabs.randompatches.RandomPatches;
 import com.therandomlabs.randompatches.event.RPClientEventHandler;
 import com.therandomlabs.randompatches.event.RPEventHandler;
@@ -34,6 +36,34 @@ public class RPCoreContainer extends DummyModContainer {
 	}
 
 	@Override
+	public File getSource() {
+		return RPCore.getModFile();
+	}
+
+	@Override
+	public Class<?> getCustomResourcePackClass() {
+		final File source = getSource();
+
+		if(source == null) {
+			return null;
+		}
+
+		final String className;
+
+		if(source.isDirectory()) {
+			className = "net.minecraftforge.fml.client.FMLFolderResourcePack";
+		} else {
+			className = "net.minecraftforge.fml.client.FMLFileResourcePack";
+		}
+
+		try {
+			return Class.forName(className, true, getClass().getClassLoader());
+		} catch(ClassNotFoundException ignored) {}
+
+		return null;
+	}
+
+	@Override
 	public URL getUpdateUrl() {
 		return RandomPatches.UPDATE_URL;
 	}
@@ -45,6 +75,7 @@ public class RPCoreContainer extends DummyModContainer {
 		MinecraftForge.EVENT_BUS.register(new RPEventHandler());
 
 		if(FMLCommonHandler.instance().getSide().isClient()) {
+			RPConfig.reload();
 			MinecraftForge.EVENT_BUS.register(new RPClientEventHandler());
 		}
 
