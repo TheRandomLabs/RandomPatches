@@ -2,11 +2,11 @@ package com.therandomlabs.randompatches.asm;
 
 import java.util.HashMap;
 import java.util.Map;
+import com.therandomlabs.randompatches.RPStaticConfig;
 import com.therandomlabs.randompatches.RandomPatches;
 import com.therandomlabs.randompatches.asm.transformer.IngameMenuTransformer;
 import com.therandomlabs.randompatches.asm.transformer.LoginServerTransformer;
 import com.therandomlabs.randompatches.asm.transformer.PlayServerTransformer;
-import com.therandomlabs.randompatches.event.RPEventHandler;
 import net.minecraft.launchwrapper.IClassTransformer;
 import net.minecraftforge.fml.relauncher.FMLInjectionData;
 import org.objectweb.asm.ClassReader;
@@ -17,7 +17,7 @@ public class RPTransformer implements IClassTransformer {
 	private static final Map<String, Transformer> TRANSFORMERS = new HashMap<>();
 
 	static {
-		RPEventHandler.initialize();
+		RPStaticConfig.reload();
 
 		register();
 

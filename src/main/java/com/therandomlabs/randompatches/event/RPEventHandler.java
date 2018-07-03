@@ -27,8 +27,4 @@ public class RPEventHandler {
 			handler.registerCommand(new CommandRPReload());
 		}
 	}
-
-	public static void initialize() {
-		RPStaticConfig.reload();
-	}
 }
