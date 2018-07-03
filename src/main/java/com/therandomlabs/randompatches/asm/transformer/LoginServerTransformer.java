@@ -9,16 +9,14 @@ import org.objectweb.asm.tree.LdcInsnNode;
 import org.objectweb.asm.tree.MethodNode;
 
 public class LoginServerTransformer extends Transformer {
-	public static final LoginServerTransformer INSTANCE = new LoginServerTransformer();
-
 	@Override
 	public boolean transform(ClassNode node) {
-		final MethodNode methodNode = findUpdateMethod(node);
+		final MethodNode method = findUpdateMethod(node);
 
 		AbstractInsnNode toPatch = null;
 
-		for(int i = 0; i < methodNode.instructions.size(); i++) {
-			final AbstractInsnNode instruction = methodNode.instructions.get(i);
+		for(int i = 0; i < method.instructions.size(); i++) {
+			final AbstractInsnNode instruction = method.instructions.get(i);
 			if(instruction.getType() == AbstractInsnNode.LDC_INSN) {
 				final LdcInsnNode ldc = (LdcInsnNode) instruction;
 				if(new Integer(600).equals(ldc.cst)) {
@@ -39,8 +37,8 @@ public class LoginServerTransformer extends Transformer {
 				"I"
 		);
 
-		methodNode.instructions.insert(toPatch, getLoginTimeout);
-		methodNode.instructions.remove(toPatch);
+		method.instructions.insert(toPatch, getLoginTimeout);
+		method.instructions.remove(toPatch);
 
 		return true;
 	}

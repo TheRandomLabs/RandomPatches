@@ -5,16 +5,14 @@ import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.MethodNode;
 
 public abstract class Transformer {
-	protected Transformer() {}
-
 	public abstract boolean transform(ClassNode node);
 
 	public static MethodNode findMethod(ClassNode node, String... names) {
-		for(MethodNode methodNode : node.methods) {
+		for(MethodNode method : node.methods) {
 			for(String name : names) {
-				if(name.equals(methodNode.name)) {
-					RandomPatches.LOGGER.debug("Patching method: " + methodNode.name);
-					return methodNode;
+				if(name.equals(method.name)) {
+					RandomPatches.LOGGER.debug("Patching method: " + method.name);
+					return method;
 				}
 			}
 		}
@@ -25,14 +23,14 @@ public abstract class Transformer {
 	public static MethodNode findUpdateMethod(ClassNode node) {
 		MethodNode update = null;
 
-		for(MethodNode methodNode : node.methods) {
-			if(methodNode.name.equals("update")) {
-				update = methodNode;
+		for(MethodNode method : node.methods) {
+			if(method.name.equals("update")) {
+				update = method;
 				break;
 			}
 
-			if(methodNode.desc.equals("()V") && !methodNode.name.equals("b")) {
-				update = methodNode;
+			if(method.desc.equals("()V") && !method.name.equals("b")) {
+				update = method;
 				break;
 			}
 		}
@@ -46,7 +44,7 @@ public abstract class Transformer {
 		return update;
 	}
 
-	public static String getFieldName(String name, String obfuscatedName) {
+	public static String getName(String name, String obfuscatedName) {
 		return RandomPatches.IS_DEOBFUSCATED ? name : obfuscatedName;
 	}
 }

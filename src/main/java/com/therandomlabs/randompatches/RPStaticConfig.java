@@ -9,8 +9,10 @@ public class RPStaticConfig {
 	private static Configuration config;
 
 	public static class Comments {
+		public static final String FAST_LANGUAGE_SWITCH = "Speeds up language switching.";
 		public static final String FORCE_TITLE_SCREEN_ON_DISCONNECT = "Forces Minecraft to show " +
 				"the title screen after disconnecting rather than the Multiplayer or Realms menu.";
+
 		public static final String RPRELOAD = "Enables the /rpreload command. " +
 				"This only takes effect after a world restart.";
 
@@ -23,7 +25,10 @@ public class RPStaticConfig {
 	}
 
 	public static class Defaults {
-		public static final boolean FORCE_TITLE_SCREEN_ON_DISCONNECT = false;
+		public static final boolean FAST_LANGUAGE_SWITCH = true;
+		public static final boolean FORCE_TITLE_SCREEN_ON_DISCONNECT =
+				RandomPatches.IS_DEOBFUSCATED;
+
 		public static final boolean RPRELOAD = true;
 
 		public static final int KEEP_ALIVE_PACKET_INTERVAL = 15;
@@ -31,6 +36,7 @@ public class RPStaticConfig {
 		public static final int READ_TIMEOUT = 90;
 	}
 
+	public static final String CLIENT_COMMENT = "Options related to client-sided features.";
 	public static final String MISC_COMMENT = "Options that don't fit into any other categories.";
 	public static final String TIMEOUTS_COMMENT = "Options related to disconnect timeouts.";
 
@@ -41,6 +47,7 @@ public class RPStaticConfig {
 
 	//Misc
 
+	public static boolean fastLanguageSwitch;
 	public static boolean forceTitleScreenOnDisconnect;
 
 	//Timeouts
@@ -60,11 +67,17 @@ public class RPStaticConfig {
 			config.load();
 		}
 
-		config.addCustomCategoryComment("misc", MISC_COMMENT);
+		config.addCustomCategoryComment("client", CLIENT_COMMENT);
 
-		forceTitleScreenOnDisconnect = getBoolean("forceTitleScreenOnDisconnect", "misc",
+		//Because there's no point in toggling this in-game, it requires an MC restart
+		fastLanguageSwitch = getBoolean("fastLanguageSwitch", "client",
+				Defaults.FAST_LANGUAGE_SWITCH, Comments.FAST_LANGUAGE_SWITCH, false, true);
+		forceTitleScreenOnDisconnect = getBoolean("forceTitleScreenOnDisconnect", "client",
 				Defaults.FORCE_TITLE_SCREEN_ON_DISCONNECT,
 				Comments.FORCE_TITLE_SCREEN_ON_DISCONNECT, false, false);
+
+		config.addCustomCategoryComment("misc", MISC_COMMENT);
+
 		rpreload = getBoolean("rpreload", "misc", Defaults.RPRELOAD, Comments.RPRELOAD, true,
 				false);
 

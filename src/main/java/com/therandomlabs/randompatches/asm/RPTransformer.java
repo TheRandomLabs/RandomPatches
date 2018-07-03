@@ -5,6 +5,7 @@ import java.util.Map;
 import com.therandomlabs.randompatches.RPStaticConfig;
 import com.therandomlabs.randompatches.RandomPatches;
 import com.therandomlabs.randompatches.asm.transformer.IngameMenuTransformer;
+import com.therandomlabs.randompatches.asm.transformer.LanguageListTransformer;
 import com.therandomlabs.randompatches.asm.transformer.LoginServerTransformer;
 import com.therandomlabs.randompatches.asm.transformer.PlayServerTransformer;
 import net.minecraft.launchwrapper.IClassTransformer;
@@ -40,8 +41,12 @@ public class RPTransformer implements IClassTransformer {
 		final ClassNode node = new ClassNode();
 		reader.accept(node, 0);
 
-		if(!transformer.transform(node)) {
-			RandomPatches.LOGGER.error("Failed to patch class: " + transformedName);
+		try {
+			if(!transformer.transform(node)) {
+				RandomPatches.LOGGER.error("Failed to patch class: " + transformedName);
+			}
+		} catch(Exception ex) {
+			RandomPatches.LOGGER.error("Failed to patch class: " + transformedName, ex);
 		}
 
 		final ClassWriter writer = new ClassWriter(ClassWriter.COMPUTE_FRAMES);
@@ -54,9 +59,10 @@ public class RPTransformer implements IClassTransformer {
 	}
 
 	private static void register() {
-		register("net.minecraft.network.NetHandlerPlayServer", PlayServerTransformer.INSTANCE);
-		register("net.minecraft.network.NetHandlerLoginServer", LoginServerTransformer.INSTANCE);
-		register("net.minecraft.client.gui.GuiIngameMenu", IngameMenuTransformer.INSTANCE);
+		register("net.minecraft.network.NetHandlerPlayServer", new PlayServerTransformer());
+		register("net.minecraft.network.NetHandlerLoginServer", new LoginServerTransformer());
+		register("net.minecraft.client.gui.GuiIngameMenu", new IngameMenuTransformer());
+		register("net.minecraft.client.gui.GuiLanguage$List", new LanguageListTransformer());
 	}
 
 	private static void registerOnePointTwelve() {

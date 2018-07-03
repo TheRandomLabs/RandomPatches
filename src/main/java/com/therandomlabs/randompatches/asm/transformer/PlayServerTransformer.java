@@ -14,10 +14,8 @@ import org.objectweb.asm.tree.MethodNode;
 import org.objectweb.asm.tree.VarInsnNode;
 
 public class PlayServerTransformer extends Transformer {
-	public static final PlayServerTransformer INSTANCE = new PlayServerTransformer();
-
 	public static final String LAST_PING_TIME = "field_194402_f";
-	public static final String SEND_PACKET = getFieldName("sendPacket", "a");
+	public static final String SEND_PACKET = getName("sendPacket", "a");
 
 	/* Expected result:
 
@@ -47,14 +45,14 @@ public class PlayServerTransformer extends Transformer {
 
 	@Override
 	public boolean transform(ClassNode node) {
-		final MethodNode methodNode = findUpdateMethod(node);
+		final MethodNode method = findUpdateMethod(node);
 
 		LdcInsnNode keepAliveInterval = null;
 		JumpInsnNode ifeq = null;
 		MethodInsnNode sendPacket = null;
 
-		for(int i = 0; i < methodNode.instructions.size(); i++) {
-			final AbstractInsnNode instruction = methodNode.instructions.get(i);
+		for(int i = 0; i < method.instructions.size(); i++) {
+			final AbstractInsnNode instruction = method.instructions.get(i);
 
 			if(keepAliveInterval == null) {
 				if(instruction.getType() == AbstractInsnNode.LDC_INSN) {
@@ -101,8 +99,8 @@ public class PlayServerTransformer extends Transformer {
 				"J"
 		);
 
-		methodNode.instructions.insert(keepAliveInterval, getKeepAliveInterval);
-		methodNode.instructions.remove(keepAliveInterval);
+		method.instructions.insert(keepAliveInterval, getKeepAliveInterval);
+		method.instructions.remove(keepAliveInterval);
 
 		final LabelNode label = new LabelNode();
 
@@ -128,15 +126,15 @@ public class PlayServerTransformer extends Transformer {
 		final InsnNode compare = new InsnNode(Opcodes.LCMP);
 		final JumpInsnNode jumpIfNotLarger = new JumpInsnNode(Opcodes.IFLT, label);
 
-		methodNode.instructions.insert(ifeq, loadCurrentTime);
-		methodNode.instructions.insert(loadCurrentTime, loadThis);
-		methodNode.instructions.insert(loadThis, getPreviousTime);
-		methodNode.instructions.insert(getPreviousTime, subtract);
-		methodNode.instructions.insert(subtract, getReadTimeoutMillis);
-		methodNode.instructions.insert(getReadTimeoutMillis, compare);
-		methodNode.instructions.insert(compare, jumpIfNotLarger);
+		method.instructions.insert(ifeq, loadCurrentTime);
+		method.instructions.insert(loadCurrentTime, loadThis);
+		method.instructions.insert(loadThis, getPreviousTime);
+		method.instructions.insert(getPreviousTime, subtract);
+		method.instructions.insert(subtract, getReadTimeoutMillis);
+		method.instructions.insert(getReadTimeoutMillis, compare);
+		method.instructions.insert(compare, jumpIfNotLarger);
 
-		methodNode.instructions.insert(sendPacket, label);
+		method.instructions.insert(sendPacket, label);
 
 		return true;
 	}

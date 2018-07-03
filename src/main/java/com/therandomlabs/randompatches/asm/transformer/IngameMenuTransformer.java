@@ -13,16 +13,14 @@ import org.objectweb.asm.tree.MethodNode;
 import org.objectweb.asm.tree.VarInsnNode;
 
 public class IngameMenuTransformer extends Transformer {
-	public static final IngameMenuTransformer INSTANCE = new IngameMenuTransformer();
-
 	@Override
 	public boolean transform(ClassNode node) {
-		final MethodNode methodNode = findMethod(node, "actionPerformed", "a");
+		final MethodNode method = findMethod(node, "actionPerformed", "a");
 
 		AbstractInsnNode toPatch = null;
 
-		for(int i = 0, frames = 0; i < methodNode.instructions.size() && frames <= 2; i++) {
-			final AbstractInsnNode instruction = methodNode.instructions.get(i);
+		for(int i = 0, frames = 0; i < method.instructions.size() && frames <= 2; i++) {
+			final AbstractInsnNode instruction = method.instructions.get(i);
 
 			if(instruction.getType() == AbstractInsnNode.FRAME &&
 					((FrameNode) instruction).type == Opcodes.F_SAME) {
@@ -51,11 +49,11 @@ public class IngameMenuTransformer extends Transformer {
 		final InsnNode loadTrue = new InsnNode(Opcodes.ICONST_1);
 		final VarInsnNode storeTrue = new VarInsnNode(Opcodes.ISTORE, 2);
 
-		methodNode.instructions.insert(toPatch, getEnabled);
-		methodNode.instructions.insert(getEnabled, jumpIfNotEnabled);
-		methodNode.instructions.insert(jumpIfNotEnabled, loadTrue);
-		methodNode.instructions.insert(loadTrue, storeTrue);
-		methodNode.instructions.insert(storeTrue, label);
+		method.instructions.insert(toPatch, getEnabled);
+		method.instructions.insert(getEnabled, jumpIfNotEnabled);
+		method.instructions.insert(jumpIfNotEnabled, loadTrue);
+		method.instructions.insert(loadTrue, storeTrue);
+		method.instructions.insert(storeTrue, label);
 
 		return true;
 	}

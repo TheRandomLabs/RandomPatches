@@ -16,11 +16,17 @@ import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
 @Config(modid = RandomPatches.MODID, name = RandomPatches.MODID, category = "")
 public class RPConfig {
-	public static class Misc {
+	public static class Client {
+		@Config.RequiresMcRestart
+		@Config.Comment(RPStaticConfig.Comments.FAST_LANGUAGE_SWITCH)
+		public boolean fastLanguageSwitch = RPStaticConfig.Defaults.FAST_LANGUAGE_SWITCH;
+
 		@Config.Comment(RPStaticConfig.Comments.FORCE_TITLE_SCREEN_ON_DISCONNECT)
 		public boolean forceTitleScreenOnDisconnect =
 				RPStaticConfig.Defaults.FORCE_TITLE_SCREEN_ON_DISCONNECT;
+	}
 
+	public static class Misc {
 		@Config.RequiresWorldRestart
 		@Config.Comment(RPStaticConfig.Comments.RPRELOAD)
 		public boolean rpreload = RPStaticConfig.Defaults.RPRELOAD;
@@ -39,6 +45,9 @@ public class RPConfig {
 		@Config.Comment(RPStaticConfig.Comments.READ_TIMEOUT)
 		public int readTimeout = RPStaticConfig.Defaults.READ_TIMEOUT;
 	}
+
+	@Config.Comment(RPStaticConfig.CLIENT_COMMENT)
+	public static Client client = new Client();
 
 	@Config.Comment(RPStaticConfig.MISC_COMMENT)
 	public static Misc misc = new Misc();
@@ -64,7 +73,15 @@ public class RPConfig {
 			throw new ReportedException(new CrashReport("Error while modifying config", ex));
 		}
 
+		//Sync any modified values to the config
 		ConfigManager.sync(RandomPatches.MODID, Config.Type.INSTANCE);
+
+		//Modify config again
+		try {
+			modifyConfig();
+		} catch(Exception ex) {
+			throw new ReportedException(new CrashReport("Error while modifying config", ex));
+		}
 	}
 
 	private static void modifyConfig() throws Exception {
