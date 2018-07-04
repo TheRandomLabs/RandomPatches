@@ -9,7 +9,6 @@ import com.therandomlabs.randompatches.asm.transformer.LanguageListTransformer;
 import com.therandomlabs.randompatches.asm.transformer.LoginServerTransformer;
 import com.therandomlabs.randompatches.asm.transformer.PlayServerTransformer;
 import net.minecraft.launchwrapper.IClassTransformer;
-import net.minecraftforge.fml.relauncher.FMLInjectionData;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.tree.ClassNode;
@@ -19,12 +18,7 @@ public class RPTransformer implements IClassTransformer {
 
 	static {
 		RPStaticConfig.reload();
-
 		register();
-
-		if(FMLInjectionData.data()[4].equals("1.12.2")) {
-			registerOnePointTwelve();
-		}
 	}
 
 	@Override
@@ -63,9 +57,5 @@ public class RPTransformer implements IClassTransformer {
 		register("net.minecraft.network.NetHandlerLoginServer", new LoginServerTransformer());
 		register("net.minecraft.client.gui.GuiIngameMenu", new IngameMenuTransformer());
 		register("net.minecraft.client.gui.GuiLanguage$List", new LanguageListTransformer());
-	}
-
-	private static void registerOnePointTwelve() {
-		//TODO
 	}
 }
