@@ -167,10 +167,86 @@ public class PlayServerTransformer extends Transformer {
 	}
 
 	private static boolean transformProcessPlayer(MethodNode method) {
-		return true; //TODO
+		LdcInsnNode elytra = null;
+		LdcInsnNode normal = null;
+
+		for(int i = 0; i < method.instructions.size(); i++) {
+			final AbstractInsnNode instruction = method.instructions.get(i);
+
+			if(instruction.getOpcode() != Opcodes.LDC) {
+				continue;
+			}
+
+			final LdcInsnNode ldc = (LdcInsnNode) instruction;
+
+			if(elytra == null && ((Float) 300.0F).equals(ldc.cst)) {
+				elytra = ldc;
+				continue;
+			}
+
+			if(normal == null && ((Float) 100.0F).equals(ldc.cst)) {
+				normal = ldc;
+				break;
+			}
+		}
+
+		if(normal == null) {
+			return false;
+		}
+
+		final FieldInsnNode getElytraMaxSpeed = new FieldInsnNode(
+				Opcodes.GETSTATIC,
+				"com/therandomlabs/randompatches/RPStaticConfig",
+				"maxPlayerElytraSpeed",
+				"F"
+		);
+
+		final FieldInsnNode getNormalMaxSpeed = new FieldInsnNode(
+				Opcodes.GETSTATIC,
+				"com/therandomlabs/randompatches/RPStaticConfig",
+				"maxPlayerSpeed",
+				"F"
+		);
+
+		method.instructions.insert(elytra, getElytraMaxSpeed);
+		method.instructions.remove(elytra);
+
+		method.instructions.insert(normal, getNormalMaxSpeed);
+		method.instructions.remove(normal);
+
+		return true;
 	}
 
 	private static boolean transformProcessVehicleMove(MethodNode method) {
-		return true; //TODO
+		LdcInsnNode speed = null;
+
+		for(int i = 0; i < method.instructions.size(); i++) {
+			final AbstractInsnNode instruction = method.instructions.get(i);
+
+			if(instruction.getOpcode() == Opcodes.LDC) {
+				final LdcInsnNode ldc = (LdcInsnNode) instruction;
+
+				if(((Double) 100.0).equals(ldc.cst)) {
+					speed = ldc;
+					break;
+				}
+			}
+		}
+
+		if(speed == null) {
+			return false;
+		}
+
+		final FieldInsnNode getVehicleMaxSpeed = new FieldInsnNode(
+				Opcodes.GETSTATIC,
+				"com/therandomlabs/randompatches/RPStaticConfig",
+				"maxPlayerVehicleSpeed",
+				"D"
+		);
+
+		method.instructions.insert(speed, getVehicleMaxSpeed);
+		method.instructions.remove(speed);
+
+		return true;
 	}
 }

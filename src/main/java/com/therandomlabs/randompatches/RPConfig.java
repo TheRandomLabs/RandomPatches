@@ -40,7 +40,20 @@ public class RPConfig {
 	}
 
 	public static class SpeedLimits {
-		//TODO
+		@Config.RangeDouble(min = 1.0)
+		@Config.LangKey("randompatches.config.speedLimits.maxPlayerSpeed")
+		@Config.Comment(RPStaticConfig.Comments.MAX_PLAYER_SPEED)
+		public float maxPlayerSpeed;
+
+		@Config.RangeDouble(min = 1.0)
+		@Config.LangKey("randompatches.config.speedLimits.maxPlayerElytraSpeed")
+		@Config.Comment(RPStaticConfig.Comments.MAX_PLAYER_ELYTRA_SPEED)
+		public float maxPlayerElytraSpeed;
+
+		@Config.RangeDouble(min = 1.0)
+		@Config.LangKey("randompatches.config.speedLimits.maxPlayerVehicleSpeed")
+		@Config.Comment(RPStaticConfig.Comments.MAX_PLAYER_VEHICLE_SPEED)
+		public double maxPlayerVehicleSpeed;
 	}
 
 	public static class Timeouts {

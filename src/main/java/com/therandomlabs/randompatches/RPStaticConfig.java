@@ -16,6 +16,13 @@ public class RPStaticConfig {
 		public static final String RPRELOAD = "Enables the /rpreload command. " +
 				"This only takes effect after a world restart.";
 
+		public static final String MAX_PLAYER_SPEED =
+				"The maximum player speed. The vanilla default is 100.0.";
+		public static final String MAX_PLAYER_ELYTRA_SPEED =
+				"The maximum player elytra speed. The vanilla default is 300.0.";
+		public static final String MAX_PLAYER_VEHICLE_SPEED =
+				"The maximum player vehicle speed. The vanilla default is 100.0.";
+
 		public static final String KEEP_ALIVE_PACKET_INTERVAL =
 				"The interval at which the server sends the KeepAlive packet.";
 		public static final String LOGIN_TIMEOUT = "The login timeout.";
@@ -30,6 +37,10 @@ public class RPStaticConfig {
 				RandomPatches.IS_DEOBFUSCATED;
 
 		public static final boolean RPRELOAD = true;
+
+		public static final double MAX_PLAYER_SPEED = Double.MAX_VALUE;
+		public static final double MAX_PLAYER_ELYTRA_SPEED = Double.MAX_VALUE;
+		public static final double MAX_PLAYER_VEHICLE_SPEED = Double.MAX_VALUE;
 
 		public static final int KEEP_ALIVE_PACKET_INTERVAL = 15;
 		public static final int LOGIN_TIMEOUT = 900;
@@ -51,6 +62,12 @@ public class RPStaticConfig {
 
 	public static boolean fastLanguageSwitch;
 	public static boolean forceTitleScreenOnDisconnect;
+
+	//Speed limits
+
+	public static float maxPlayerSpeed;
+	public static float maxPlayerElytraSpeed;
+	public static double maxPlayerVehicleSpeed;
 
 	//Timeouts
 
@@ -85,7 +102,12 @@ public class RPStaticConfig {
 
 		config.addCustomCategoryComment("speedLimits", SPEED_LIMITS_COMMENT);
 
-		//TODO
+		maxPlayerSpeed = (float) getDouble("maxPlayerSpeed", "speedLimits",
+				Defaults.MAX_PLAYER_SPEED, 1.0, Comments.MAX_PLAYER_SPEED);
+		maxPlayerElytraSpeed = (float) getDouble("maxPlayerElytraSpeed", "speedLimits",
+				Defaults.MAX_PLAYER_ELYTRA_SPEED, 1.0, Comments.MAX_PLAYER_ELYTRA_SPEED);
+		maxPlayerVehicleSpeed = getDouble("maxPlayerVehicleSpeed", "speedLimits",
+				Defaults.MAX_PLAYER_VEHICLE_SPEED, 1.0, Comments.MAX_PLAYER_VEHICLE_SPEED);
 
 		config.addCustomCategoryComment("timeouts", TIMEOUTS_COMMENT);
 
@@ -119,16 +141,31 @@ public class RPStaticConfig {
 	private static int getInt(String name, String category, int defaultValue, int minValue,
 			int maxValue, String comment) {
 		final Property prop = config.get(category, name, defaultValue);
+
 		prop.setMinValue(minValue);
 		prop.setMaxValue(maxValue);
 		prop.setComment(comment + "\nMin: " + minValue + "\nMax: " + maxValue + "\nDefault: " +
 				defaultValue);
+
 		return prop.getInt(defaultValue);
+	}
+
+	private static double getDouble(String name, String category, double defaultValue,
+			double minValue, String comment) {
+		final Property prop = config.get(category, name, defaultValue);
+
+		prop.setMinValue(minValue);
+		prop.setMaxValue(Double.MAX_VALUE);
+		prop.setComment(comment + "\nMin: " + minValue + "\nMax: " + Double.MAX_VALUE +
+				"\nDefault: " + defaultValue);
+
+		return prop.getDouble(defaultValue);
 	}
 
 	private static boolean getBoolean(String name, String category, boolean defaultValue,
 			String comment, boolean requiresWorldRestart, boolean requiresMcRestart) {
 		final Property prop = config.get(category, name, defaultValue);
+
 		prop.setComment(comment + "\nDefault: " + defaultValue);
 
 		if(requiresMcRestart) {
