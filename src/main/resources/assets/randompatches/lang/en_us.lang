@@ -18,7 +18,3 @@ randompatches.config.timeouts.tooltip=Options related to the disconnect timeouts
 randompatches.config.timeouts.keepAlivePacketInterval=KeepAlive packet interval
 randompatches.config.timeouts.loginTimeout=Login timeout
 randompatches.config.timeouts.readTimeout=Read timeout
-
-commands.rpreload.usage=/rpreload
-commands.rtreload.useConfigGUI=§cUse the provided GUI to modify the client configuration.
-commands.rtreload.success=RandomPatches configuration reloaded!

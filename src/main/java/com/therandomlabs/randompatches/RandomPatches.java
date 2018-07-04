@@ -3,7 +3,6 @@ package com.therandomlabs.randompatches;
 import java.net.MalformedURLException;
 import java.net.URL;
 import net.minecraft.launchwrapper.Launch;
-import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.fml.relauncher.FMLInjectionData;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -44,8 +43,4 @@ public final class RandomPatches {
 	}
 
 	private RandomPatches() {}
-
-	public static String localize(String key, Object... args) {
-		return new TextComponentTranslation(key, args).getFormattedText();
-	}
 }
