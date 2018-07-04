@@ -75,7 +75,10 @@ public class RPCoreContainer extends DummyModContainer {
 		MinecraftForge.EVENT_BUS.register(new RPEventHandler());
 
 		if(FMLCommonHandler.instance().getSide().isClient()) {
-			RPConfig.reload();
+			if(!RandomPatches.IS_ONE_TEN) {
+				RPConfig.reload();
+			}
+
 			MinecraftForge.EVENT_BUS.register(new RPClientEventHandler());
 		}
 

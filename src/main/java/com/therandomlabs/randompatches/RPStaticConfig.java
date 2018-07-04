@@ -38,9 +38,9 @@ public class RPStaticConfig {
 
 		public static final boolean RPRELOAD = true;
 
-		public static final double MAX_PLAYER_SPEED = Double.MAX_VALUE;
-		public static final double MAX_PLAYER_ELYTRA_SPEED = Double.MAX_VALUE;
-		public static final double MAX_PLAYER_VEHICLE_SPEED = Double.MAX_VALUE;
+		public static final double MAX_PLAYER_SPEED = 1000000.0;
+		public static final double MAX_PLAYER_ELYTRA_SPEED = 1000000.0;
+		public static final double MAX_PLAYER_VEHICLE_SPEED = 1000000.0;
 
 		public static final int KEEP_ALIVE_PACKET_INTERVAL = 15;
 		public static final int LOGIN_TIMEOUT = 900;

@@ -25,7 +25,7 @@ public class CommandRPReload extends CommandBase {
 	@Override
 	public void execute(MinecraftServer server, ICommandSender sender, String[] args)
 			throws CommandException {
-		if(server.isDedicatedServer()) {
+		if(server.isDedicatedServer() || RandomPatches.IS_ONE_TEN) {
 			RPStaticConfig.reload();
 			notifyCommandListener(sender, this,
 					RandomPatches.localize("commands.rpreload.success"));
