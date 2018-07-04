@@ -25,7 +25,11 @@ public final class RandomPatches {
 	public static final boolean IS_DEOBFUSCATED =
 			(boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment");
 
-	public static final boolean IS_ONE_TWELVE_TWO = FMLInjectionData.data()[4].equals("1.12.2");
+	public static final String MC_VERSION = (String) FMLInjectionData.data()[4];
+	public static final boolean IS_ONE_TEN = MC_VERSION.startsWith("1.10");
+	public static final boolean IS_ONE_ELEVEN = MC_VERSION.startsWith("1.11");
+	public static final boolean IS_ONE_TWELVE = MC_VERSION.startsWith("1.12");
+	public static final boolean IS_ONE_TWELVE_TWO = MC_VERSION.equals("1.12.2");
 
 	public static final Logger LOGGER = LogManager.getLogger(MODID);
 

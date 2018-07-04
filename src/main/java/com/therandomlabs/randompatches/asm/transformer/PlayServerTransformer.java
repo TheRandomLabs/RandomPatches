@@ -15,12 +15,18 @@ import org.objectweb.asm.tree.MethodNode;
 import org.objectweb.asm.tree.VarInsnNode;
 
 public class PlayServerTransformer extends Transformer {
+	public static final String UPDATE = getName("update", "E_", "F_", "e");
 	public static final String LAST_PING_TIME = "field_194402_f";
 	public static final String SEND_PACKET = getName("sendPacket", "a");
 
+	public static final String CPACKET_PLAYER =
+			getName("net/minecraft/network/play/client/CPacketPlayer", "iw", "iz", "lk");
+	public static final String CPACKET_VEHICLE_MOVE =
+			getName("net/minecraft/network/play/client/CPacketVehicleMove", "ix", "ja", "ll");
+
 	@Override
 	public boolean transform(ClassNode node) {
-		if(!transformUpdate(findUpdateMethod(node))) {
+		if(!transformUpdate(findMethod(node, "()V", UPDATE))) {
 			return false;
 		}
 
@@ -28,15 +34,17 @@ public class PlayServerTransformer extends Transformer {
 			return true;
 		}
 
-		if(!transformProcessPlayer(findMethod(node,
-				"(Lnet/minecraft/network/play/client/CPacketPlayer;)V", "(Llk;)V", "processPlayer",
-				"func_147347_a"))) {
+		final MethodNode processPlayer =
+				findMethod(node, "(L" + CPACKET_PLAYER + ";)V", "processPlayer", "a");
+
+		if(!transformProcessPlayer(processPlayer)) {
 			return false;
 		}
 
-		return transformProcessVehicleMove(findMethod(node,
-				"(Lnet/minecraft/network/play/client/CPacketVehicleMove;)V", "(Lll;)V",
-				"processVehicleMove", "func_184338_a"));
+		final MethodNode processVehicleMove =
+				findMethod(node, "(L" + CPACKET_VEHICLE_MOVE + ";)V", "processVehicleMove", "a");
+
+		return transformProcessVehicleMove(processVehicleMove);
 	}
 
 	/* Expected result:
