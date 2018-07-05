@@ -37,6 +37,11 @@ public class RPConfig {
 		@Config.LangKey("randompatches.config.misc.rpreload")
 		@Config.Comment(RPStaticConfig.Comments.RPRELOAD)
 		public boolean rpreload = RPStaticConfig.Defaults.RPRELOAD;
+
+		@Config.RequiresWorldRestart
+		@Config.LangKey("randompatches.config.misc.rpreloadclient")
+		@Config.Comment(RPStaticConfig.Comments.RPRELOADCLIENT)
+		public boolean rpreloadclient = RPStaticConfig.Defaults.RPRELOADCLIENT;
 	}
 
 	public static class SpeedLimits {

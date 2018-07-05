@@ -6,6 +6,7 @@ randompatches.config.client.forceTitleScreenOnDisconnect=Force title screen on d
 randompatches.config.misc=Miscellaneous
 randompatches.config.misc.tooltip=Options that don't fit into any other categories.
 randompatches.config.misc.rpreload=/rpreload
+randompatches.config.misc.rpreloadclient=/rpreload
 
 randompatches.config.speedLimits=Speed Limits
 randompatches.config.speedLimits.tooltip=Options related to the movement speed limits.
@@ -18,3 +19,6 @@ randompatches.config.timeouts.tooltip=Options related to the disconnect timeouts
 randompatches.config.timeouts.keepAlivePacketInterval=KeepAlive packet interval
 randompatches.config.timeouts.loginTimeout=Login timeout
 randompatches.config.timeouts.readTimeout=Read timeout
+
+commands.rpreloadclient.usage=/rpreloadclient
+commands.rpreloadclient.sucess=RandomPatches client-sided configuration reloaded!

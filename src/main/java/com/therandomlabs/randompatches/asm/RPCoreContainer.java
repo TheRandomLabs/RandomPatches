@@ -5,10 +5,13 @@ import java.net.URL;
 import java.util.List;
 import com.google.common.collect.ImmutableList;
 import com.google.common.eventbus.EventBus;
+import com.therandomlabs.randompatches.CommandRPReload;
 import com.therandomlabs.randompatches.RPConfig;
+import com.therandomlabs.randompatches.RPStaticConfig;
 import com.therandomlabs.randompatches.RandomPatches;
 import com.therandomlabs.randompatches.event.RPClientEventHandler;
 import com.therandomlabs.randompatches.event.RPEventHandler;
+import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.DummyModContainer;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -17,6 +20,7 @@ import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.ModMetadata;
 import net.minecraftforge.fml.common.versioning.InvalidVersionSpecificationException;
 import net.minecraftforge.fml.common.versioning.VersionRange;
+import net.minecraftforge.fml.relauncher.Side;
 
 public class RPCoreContainer extends DummyModContainer {
 	private static final ModMetadata METADATA = new ModMetadata();
@@ -75,6 +79,10 @@ public class RPCoreContainer extends DummyModContainer {
 		MinecraftForge.EVENT_BUS.register(new RPEventHandler());
 
 		if(FMLCommonHandler.instance().getSide().isClient()) {
+			if(RPStaticConfig.rpreloadclient) {
+				ClientCommandHandler.instance.registerCommand(new CommandRPReload(Side.CLIENT));
+			}
+
 			if(!RandomPatches.IS_ONE_TEN) {
 				RPConfig.reload();
 			}

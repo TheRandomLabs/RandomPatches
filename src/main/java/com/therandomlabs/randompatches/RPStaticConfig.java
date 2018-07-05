@@ -14,7 +14,9 @@ public class RPStaticConfig {
 				"the title screen after disconnecting rather than the Multiplayer or Realms menu.";
 
 		public static final String RPRELOAD = "Enables the /rpreload command. " +
-				"This only takes effect after a world restart.";
+				"This option only takes effect after a world restart.";
+		public static final String RPRELOADCLIENT = "Enables the /rpreloadclient command. " +
+				"This option only takes effect after a Minecraft restart.";
 
 		public static final String MAX_PLAYER_SPEED =
 				"The maximum player speed. The vanilla default is 100.0.";
@@ -37,6 +39,7 @@ public class RPStaticConfig {
 				RandomPatches.IS_DEOBFUSCATED;
 
 		public static final boolean RPRELOAD = true;
+		public static final boolean RPRELOADCLIENT = true;
 
 		public static final double MAX_PLAYER_SPEED = 1000000.0;
 		public static final double MAX_PLAYER_ELYTRA_SPEED = 1000000.0;
@@ -99,6 +102,8 @@ public class RPStaticConfig {
 
 		rpreload = getBoolean("rpreload", "misc", Defaults.RPRELOAD, Comments.RPRELOAD, true,
 				false);
+		rpreloadclient = getBoolean("rpreloadclient", "misc", Defaults.RPRELOADCLIENT,
+				Comments.RPRELOADCLIENT, false, true);
 
 		config.addCustomCategoryComment("speedLimits", SPEED_LIMITS_COMMENT);
 
