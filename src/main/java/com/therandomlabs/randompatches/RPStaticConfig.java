@@ -6,8 +6,6 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 
 public class RPStaticConfig {
-	private static Configuration config;
-
 	public static class Comments {
 		public static final String FAST_LANGUAGE_SWITCH = "Speeds up language switching.";
 		public static final String FORCE_TITLE_SCREEN_ON_DISCONNECT = "Forces Minecraft to show " +
@@ -81,6 +79,8 @@ public class RPStaticConfig {
 
 	public static int readTimeout;
 	public static long readTimeoutMillis;
+
+	private static Configuration config;
 
 	public static void reload() {
 		if(config == null) {
