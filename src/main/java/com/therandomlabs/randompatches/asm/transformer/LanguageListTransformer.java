@@ -1,6 +1,5 @@
 package com.therandomlabs.randompatches.asm.transformer;
 
-import com.therandomlabs.randompatches.RPStaticConfig;
 import com.therandomlabs.randompatches.asm.Transformer;
 import net.minecraft.client.Minecraft;
 import org.objectweb.asm.Opcodes;
@@ -14,10 +13,6 @@ public class LanguageListTransformer extends Transformer {
 
 	@Override
 	public boolean transform(ClassNode node) {
-		if(!RPStaticConfig.fastLanguageSwitch) {
-			return true;
-		}
-
 		final MethodNode method = findMethod(node, "(IZII)V", "elementClicked", "a");
 
 		MethodInsnNode refreshResources = null;

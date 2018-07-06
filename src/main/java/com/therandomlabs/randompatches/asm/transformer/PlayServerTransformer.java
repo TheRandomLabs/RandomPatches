@@ -30,10 +30,6 @@ public class PlayServerTransformer extends Transformer {
 			return false;
 		}
 
-		if(!RandomPatches.IS_ONE_TWELVE_TWO) {
-			return true;
-		}
-
 		final MethodNode processPlayer =
 				findMethod(node, "(L" + CPACKET_PLAYER + ";)V", "processPlayer", "a");
 

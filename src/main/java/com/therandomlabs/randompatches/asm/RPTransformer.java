@@ -56,6 +56,9 @@ public class RPTransformer implements IClassTransformer {
 		register("net.minecraft.network.NetHandlerPlayServer", new PlayServerTransformer());
 		register("net.minecraft.network.NetHandlerLoginServer", new LoginServerTransformer());
 		register("net.minecraft.client.gui.GuiIngameMenu", new IngameMenuTransformer());
-		register("net.minecraft.client.gui.GuiLanguage$List", new LanguageListTransformer());
+
+		if(RPStaticConfig.fastLanguageSwitch) {
+			register("net.minecraft.client.gui.GuiLanguage$List", new LanguageListTransformer());
+		}
 	}
 }
