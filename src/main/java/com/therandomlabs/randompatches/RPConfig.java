@@ -113,51 +113,20 @@ public class RPConfig {
 		ConfigManager.sync(RandomPatches.MODID, Config.Type.INSTANCE);
 
 		try {
-			modifyConfig();
+			modifyConfig(RandomPatches.MODID);
 			getProperties();
 			copyValuesToStatic();
 			RPStaticConfig.onReload();
 			copyValuesFromStatic();
-		} catch(Exception ex) {
-			throw new ReportedException(new CrashReport("Error while modifying config", ex));
-		}
-
-		//Sync any modified values to the config
-		ConfigManager.sync(RandomPatches.MODID, Config.Type.INSTANCE);
-
-		//Modify config again
-		try {
-			modifyConfig();
+			ConfigManager.sync(RandomPatches.MODID, Config.Type.INSTANCE);
+			modifyConfig(RandomPatches.MODID);
 		} catch(Exception ex) {
 			throw new ReportedException(new CrashReport("Error while modifying config", ex));
 		}
 	}
 
-	@SuppressWarnings("unchecked")
-	private static void injectASMData() throws Exception {
-		final Map<String, Multimap<Config.Type, ASMDataTable.ASMData>> asmData =
-				(Map<String, Multimap<Config.Type, ASMDataTable.ASMData>>) ASM_DATA.get(null);
-
-		Multimap<Config.Type, ASMDataTable.ASMData> data = asmData.get(RandomPatches.MODID);
-
-		if(data == null) {
-			data = ArrayListMultimap.create();
-			asmData.put(RandomPatches.MODID, data);
-		}
-
-		final Map<String, Object> annotationInfo = new HashMap<>();
-
-		annotationInfo.put("modid", RandomPatches.MODID);
-		annotationInfo.put("name", RandomPatches.MODID);
-		annotationInfo.put("category", "");
-
-		data.put(Config.Type.INSTANCE, new ASMDataTable.ASMData(null, null,
-				RPConfig.class.getName(), null, annotationInfo));
-	}
-
-	private static void modifyConfig() throws Exception {
-		final Configuration config = (Configuration) GET_CONFIGURATION.invoke(null,
-				RandomPatches.MODID, RandomPatches.MODID);
+	public static void modifyConfig(String modid) throws Exception {
+		final Configuration config = (Configuration) GET_CONFIGURATION.invoke(null, modid);
 
 		final Map<Property, String> comments = new HashMap<>();
 
@@ -190,6 +159,28 @@ public class RPConfig {
 			config.getCategory(name).getValues().forEach((key, property) ->
 					property.setComment(comments.get(property)));
 		}
+	}
+
+	@SuppressWarnings("unchecked")
+	private static void injectASMData() throws Exception {
+		final Map<String, Multimap<Config.Type, ASMDataTable.ASMData>> asmData =
+				(Map<String, Multimap<Config.Type, ASMDataTable.ASMData>>) ASM_DATA.get(null);
+
+		Multimap<Config.Type, ASMDataTable.ASMData> data = asmData.get(RandomPatches.MODID);
+
+		if(data == null) {
+			data = ArrayListMultimap.create();
+			asmData.put(RandomPatches.MODID, data);
+		}
+
+		final Map<String, Object> annotationInfo = new HashMap<>();
+
+		annotationInfo.put("modid", RandomPatches.MODID);
+		annotationInfo.put("name", RandomPatches.MODID);
+		annotationInfo.put("category", "");
+
+		data.put(Config.Type.INSTANCE, new ASMDataTable.ASMData(null, null,
+				RPConfig.class.getName(), null, annotationInfo));
 	}
 
 	private static void getProperties() throws Exception {
