@@ -48,7 +48,7 @@ public class RPTransformer implements IClassTransformer {
 		return writer.toByteArray();
 	}
 
-	private static void register(String className, Transformer transformer) {
+	public static void register(String className, Transformer transformer) {
 		TRANSFORMERS.put(className, transformer);
 	}
 
