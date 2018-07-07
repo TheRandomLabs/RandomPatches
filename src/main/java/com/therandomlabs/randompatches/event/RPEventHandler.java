@@ -8,6 +8,7 @@ import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.relauncher.Side;
 
 public class RPEventHandler {
 	@SubscribeEvent
@@ -24,7 +25,7 @@ public class RPEventHandler {
 
 	public static void registerCommands(CommandHandler handler) {
 		if(RPStaticConfig.rpreload) {
-			handler.registerCommand(new CommandRPReload());
+			handler.registerCommand(new CommandRPReload(Side.SERVER));
 		}
 	}
 }
