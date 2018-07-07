@@ -7,6 +7,17 @@ import org.objectweb.asm.tree.MethodNode;
 public abstract class Transformer {
 	public abstract boolean transform(ClassNode node);
 
+	public static MethodNode findMethod(ClassNode node, String name) {
+		for(MethodNode method : node.methods) {
+			if(name.equals(method.name)) {
+				RandomPatches.LOGGER.debug("Patching method: " + method.name);
+				return method;
+			}
+		}
+
+		return null;
+	}
+
 	public static MethodNode findMethod(ClassNode node, String descriptor, String... names) {
 		for(MethodNode method : node.methods) {
 			for(String name : names) {
