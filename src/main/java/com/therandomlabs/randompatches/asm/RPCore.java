@@ -8,6 +8,7 @@ import com.therandomlabs.randompatches.RandomPatches;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
 import org.apache.commons.lang3.StringUtils;
 
+@IFMLLoadingPlugin.SortingIndex(9001)
 @IFMLLoadingPlugin.Name(RandomPatches.NAME)
 @IFMLLoadingPlugin.TransformerExclusions({"com.therandomlabs.randompatches"})
 public class RPCore implements IFMLLoadingPlugin {
@@ -32,31 +33,7 @@ public class RPCore implements IFMLLoadingPlugin {
 
 	@Override
 	public void injectData(Map<String, Object> data) {
-		modFile = (File) data.get("coremodLocation");
-
-		if(modFile != null) {
-			return;
-		}
-
-		//If coremodLocation is null, RandomPatches was loaded by command-line arguments
-		//It will most likely be in a directory
-
-		final Class<?> clazz = getClass();
-		String uri = clazz.getResource(
-				"/" + StringUtils.replaceChars(clazz.getName(), '.', '/') + ".class"
-		).toString();
-
-		//Give up
-		if(!uri.startsWith("file:")) {
-			return;
-		}
-
-		//Get rid of an extra slash at the end while we're at it
-		uri = uri.substring(6, uri.indexOf("com/therandomlabs/randompatches"));
-
-		try {
-			modFile = new File(URLDecoder.decode(uri, "UTF-8"));
-		} catch(UnsupportedEncodingException ignored) {}
+		modFile = getModFile(data, RPCore.class, "com/therandomlabs/randompatches/asm");
 	}
 
 	@Override
@@ -66,5 +43,34 @@ public class RPCore implements IFMLLoadingPlugin {
 
 	public static File getModFile() {
 		return modFile;
+	}
+
+	public static File getModFile(Map<String, Object> data, Class<?> clazz, String packageName) {
+		File modFile = (File) data.get("coremodLocation");
+
+		if(modFile != null) {
+			return modFile;
+		}
+
+		//If coremodLocation is null, the coremod was probably loaded by command-line arguments and
+		//will most likely be in a directory
+
+		String uri = clazz.getResource(
+				"/" + StringUtils.replaceChars(clazz.getName(), '.', '/') + ".class"
+		).toString();
+
+		//Give up
+		if(!uri.startsWith("file:")) {
+			return null;
+		}
+
+		//Get rid of an extra slash at the end while we're at it
+		uri = uri.substring(6, uri.indexOf(packageName));
+
+		try {
+			return new File(URLDecoder.decode(uri, "UTF-8"));
+		} catch(UnsupportedEncodingException ignored) {}
+
+		return null;
 	}
 }

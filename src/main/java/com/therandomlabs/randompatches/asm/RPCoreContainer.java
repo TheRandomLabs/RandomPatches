@@ -17,6 +17,7 @@ import net.minecraftforge.fml.common.DummyModContainer;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.LoadController;
 import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.common.ModContainer;
 import net.minecraftforge.fml.common.ModMetadata;
 import net.minecraftforge.fml.common.versioning.InvalidVersionSpecificationException;
 import net.minecraftforge.fml.common.versioning.VersionRange;
@@ -46,25 +47,7 @@ public class RPCoreContainer extends DummyModContainer {
 
 	@Override
 	public Class<?> getCustomResourcePackClass() {
-		final File source = getSource();
-
-		if(source == null) {
-			return null;
-		}
-
-		final String className;
-
-		if(source.isDirectory()) {
-			className = "net.minecraftforge.fml.client.FMLFolderResourcePack";
-		} else {
-			className = "net.minecraftforge.fml.client.FMLFileResourcePack";
-		}
-
-		try {
-			return Class.forName(className, true, getClass().getClassLoader());
-		} catch(ClassNotFoundException ignored) {}
-
-		return null;
+		return getResourcePackClass(this);
 	}
 
 	@Override
@@ -107,5 +90,27 @@ public class RPCoreContainer extends DummyModContainer {
 	@Override
 	public List<String> getOwnedPackages() {
 		return ImmutableList.of("com.therandomlabs.randompatches");
+	}
+
+	public static Class<?> getResourcePackClass(ModContainer container) {
+		final File source = container.getSource();
+
+		if(source == null) {
+			return null;
+		}
+
+		final String className;
+
+		if(source.isDirectory()) {
+			className = "net.minecraftforge.fml.client.FMLFolderResourcePack";
+		} else {
+			className = "net.minecraftforge.fml.client.FMLFileResourcePack";
+		}
+
+		try {
+			return Class.forName(className, true, RPCoreContainer.class.getClassLoader());
+		} catch(ClassNotFoundException ignored) {}
+
+		return null;
 	}
 }
