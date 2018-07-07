@@ -81,6 +81,11 @@ public class RPStaticConfig {
 	public static long readTimeoutMillis;
 
 	private static Configuration config;
+	private static Configuration currentConfig;
+
+	public static void setCurrentConfig(Configuration config) {
+		currentConfig = config;
+	}
 
 	public static void reload() {
 		if(config == null) {
@@ -88,6 +93,8 @@ public class RPStaticConfig {
 		} else {
 			config.load();
 		}
+
+		currentConfig = config;
 
 		config.addCustomCategoryComment("client", CLIENT_COMMENT);
 
@@ -145,7 +152,7 @@ public class RPStaticConfig {
 
 	public static int getInt(String name, String category, int defaultValue, int minValue,
 			int maxValue, String comment) {
-		final Property prop = config.get(category, name, defaultValue);
+		final Property prop = currentConfig.get(category, name, defaultValue);
 
 		prop.setMinValue(minValue);
 		prop.setMaxValue(maxValue);
@@ -157,7 +164,7 @@ public class RPStaticConfig {
 
 	public static double getDouble(String name, String category, double defaultValue,
 			double minValue, String comment) {
-		final Property prop = config.get(category, name, defaultValue);
+		final Property prop = currentConfig.get(category, name, defaultValue);
 
 		prop.setMinValue(minValue);
 		prop.setMaxValue(Double.MAX_VALUE);
@@ -169,7 +176,7 @@ public class RPStaticConfig {
 
 	public static boolean getBoolean(String name, String category, boolean defaultValue,
 			String comment, boolean requiresWorldRestart, boolean requiresMcRestart) {
-		final Property prop = config.get(category, name, defaultValue);
+		final Property prop = currentConfig.get(category, name, defaultValue);
 
 		prop.setComment(comment + "\nDefault: " + defaultValue);
 
