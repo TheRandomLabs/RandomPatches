@@ -124,7 +124,7 @@ public class RPStaticConfig {
 		readTimeout = getInt("readTimeout", "timeouts", Defaults.READ_TIMEOUT, 1, Integer.MAX_VALUE,
 				Comments.READ_TIMEOUT);
 
-		removeOldProperties();
+		removeOldProperties(config);
 		onReload();
 		config.save();
 	}
@@ -143,7 +143,7 @@ public class RPStaticConfig {
 		System.setProperty("fml.loginTimeout", Integer.toString(RPStaticConfig.loginTimeout));
 	}
 
-	private static int getInt(String name, String category, int defaultValue, int minValue,
+	public static int getInt(String name, String category, int defaultValue, int minValue,
 			int maxValue, String comment) {
 		final Property prop = config.get(category, name, defaultValue);
 
@@ -155,7 +155,7 @@ public class RPStaticConfig {
 		return prop.getInt(defaultValue);
 	}
 
-	private static double getDouble(String name, String category, double defaultValue,
+	public static double getDouble(String name, String category, double defaultValue,
 			double minValue, String comment) {
 		final Property prop = config.get(category, name, defaultValue);
 
@@ -167,7 +167,7 @@ public class RPStaticConfig {
 		return prop.getDouble(defaultValue);
 	}
 
-	private static boolean getBoolean(String name, String category, boolean defaultValue,
+	public static boolean getBoolean(String name, String category, boolean defaultValue,
 			String comment, boolean requiresWorldRestart, boolean requiresMcRestart) {
 		final Property prop = config.get(category, name, defaultValue);
 
@@ -182,7 +182,7 @@ public class RPStaticConfig {
 		return prop.getBoolean(defaultValue);
 	}
 
-	private static void removeOldProperties() {
+	public static void removeOldProperties(Configuration config) {
 		for(String name : config.getCategoryNames()) {
 			final ConfigCategory category = config.getCategory(name);
 

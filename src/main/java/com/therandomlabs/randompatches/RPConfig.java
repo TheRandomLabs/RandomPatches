@@ -99,34 +99,89 @@ public class RPConfig {
 	private static final Method GET_CONFIGURATION = ReflectionHelper.findMethod(ConfigManager.class,
 			"getConfiguration", "getConfiguration", String.class, String.class);
 
-	private static final Map<Object, Field> PROPERTIES = new HashMap<>();
+	private static Map<Object, Field> properties;
+
+	public static Map<Object, Field> getProperties(Class<?> configClass) {
+		final Map<Object, Field> properties = new HashMap<>();
+
+		try {
+			for(Field field : configClass.getDeclaredFields()) {
+				final int modifiers = field.getModifiers();
+
+				if(!Modifier.isPublic(modifiers) || Modifier.isFinal(modifiers)) {
+					continue;
+				}
+
+				final Object object = field.get(null);
+
+				for(Field property : object.getClass().getDeclaredFields()) {
+					properties.put(object, property);
+				}
+			}
+		} catch(Exception ex) {
+			throw new ReportedException(new CrashReport("Error while getting config properties",
+					ex));
+		}
+
+		return properties;
+	}
 
 	public static void reload() {
-		if(!ConfigManager.hasConfigForMod(RandomPatches.MODID)) {
+		if(properties == null) {
+			properties = getProperties(RPConfig.class);
+		}
+
+		reload(properties, RandomPatches.MODID, RPConfig.class, RPStaticConfig.class);
+	}
+
+	public static void reload(Map<Object, Field> properties, String modid, Class<?> configClass,
+			Class<?> staticConfigClass) {
+		if(!ConfigManager.hasConfigForMod(modid)) {
 			try {
-				injectASMData();
+				injectASMData(modid, configClass);
 			} catch(Exception ex) {
 				throw new ReportedException(new CrashReport("Failed to load config", ex));
 			}
 		}
 
-		ConfigManager.sync(RandomPatches.MODID, Config.Type.INSTANCE);
+		ConfigManager.sync(modid, Config.Type.INSTANCE);
 
 		try {
-			modifyConfig(RandomPatches.MODID);
-			getProperties();
-			copyValuesToStatic();
+			modifyConfig(modid);
+			copyValuesToStatic(properties, staticConfigClass);
 			RPStaticConfig.onReload();
-			copyValuesFromStatic();
-			ConfigManager.sync(RandomPatches.MODID, Config.Type.INSTANCE);
-			modifyConfig(RandomPatches.MODID);
+			copyValuesFromStatic(properties, staticConfigClass);
+			ConfigManager.sync(modid, Config.Type.INSTANCE);
+			modifyConfig(modid);
 		} catch(Exception ex) {
 			throw new ReportedException(new CrashReport("Error while modifying config", ex));
 		}
 	}
 
-	public static void modifyConfig(String modid) throws Exception {
-		final Configuration config = (Configuration) GET_CONFIGURATION.invoke(null, modid);
+	@SuppressWarnings("unchecked")
+	private static void injectASMData(String modid, Class<?> configClass) throws Exception {
+		final Map<String, Multimap<Config.Type, ASMDataTable.ASMData>> asmData =
+				(Map<String, Multimap<Config.Type, ASMDataTable.ASMData>>) ASM_DATA.get(null);
+
+		Multimap<Config.Type, ASMDataTable.ASMData> data = asmData.get(modid);
+
+		if(data == null) {
+			data = ArrayListMultimap.create();
+			asmData.put(RandomPatches.MODID, data);
+		}
+
+		final Map<String, Object> annotationInfo = new HashMap<>();
+
+		annotationInfo.put("modid", modid);
+		annotationInfo.put("name", modid);
+		annotationInfo.put("category", "");
+
+		data.put(Config.Type.INSTANCE, new ASMDataTable.ASMData(null, null,
+				configClass.getName(), null, annotationInfo));
+	}
+
+	private static void modifyConfig(String modid) throws Exception {
+		final Configuration config = (Configuration) GET_CONFIGURATION.invoke(null, modid, modid);
 
 		final Map<Property, String> comments = new HashMap<>();
 
@@ -161,61 +216,25 @@ public class RPConfig {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
-	private static void injectASMData() throws Exception {
-		final Map<String, Multimap<Config.Type, ASMDataTable.ASMData>> asmData =
-				(Map<String, Multimap<Config.Type, ASMDataTable.ASMData>>) ASM_DATA.get(null);
-
-		Multimap<Config.Type, ASMDataTable.ASMData> data = asmData.get(RandomPatches.MODID);
-
-		if(data == null) {
-			data = ArrayListMultimap.create();
-			asmData.put(RandomPatches.MODID, data);
-		}
-
-		final Map<String, Object> annotationInfo = new HashMap<>();
-
-		annotationInfo.put("modid", RandomPatches.MODID);
-		annotationInfo.put("name", RandomPatches.MODID);
-		annotationInfo.put("category", "");
-
-		data.put(Config.Type.INSTANCE, new ASMDataTable.ASMData(null, null,
-				RPConfig.class.getName(), null, annotationInfo));
-	}
-
-	private static void getProperties() throws Exception {
-		for(Field field : RPConfig.class.getDeclaredFields()) {
-			final int modifiers = field.getModifiers();
-
-			if(!Modifier.isPublic(modifiers) || Modifier.isFinal(modifiers)) {
-				continue;
-			}
-
-			final Object object = field.get(null);
-
-			for(Field property : object.getClass().getDeclaredFields()) {
-				PROPERTIES.put(object, property);
-			}
-		}
-	}
-
-	private static void copyValuesToStatic() throws Exception {
-		for(Map.Entry<Object, Field> entry : PROPERTIES.entrySet()) {
+	private static void copyValuesToStatic(Map<Object, Field> properties,
+			Class<?> staticConfigClass) throws Exception {
+		for(Map.Entry<Object, Field> entry : properties.entrySet()) {
 			final Object object = entry.getKey();
 			final Field property = entry.getValue();
 
 			final Object value = property.get(object);
-			RPStaticConfig.class.getDeclaredField(property.getName()).set(null, value);
+			staticConfigClass.getDeclaredField(property.getName()).set(null, value);
 		}
 	}
 
-	private static void copyValuesFromStatic() throws Exception {
-		for(Map.Entry<Object, Field> entry : PROPERTIES.entrySet()) {
+	private static void copyValuesFromStatic(Map<Object, Field> properties,
+			Class<?> staticConfigClass) throws Exception {
+		for(Map.Entry<Object, Field> entry : properties.entrySet()) {
 			final Object object = entry.getKey();
 			final Field property = entry.getValue();
 
 			final Object value =
-					RPStaticConfig.class.getDeclaredField(property.getName()).get(null);
+					staticConfigClass.getDeclaredField(property.getName()).get(null);
 			property.set(object, value);
 		}
 	}
