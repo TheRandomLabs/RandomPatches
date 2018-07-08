@@ -1,7 +1,6 @@
 {
 	"homepage": "https://minecraft.curseforge.com/projects/randompatches",
 	"1.12.2": {
-		"1.12.2-1.4.0.0": "Readded /rpreloadclient.\nFixed the speed limit patches not working on versions other than 1.12.2.\n",
 		"1.12.2-1.3.0.0": "Code refactor.\nImproved and reorganized the configuration.\nAdded a configuration GUI.\nRemoved /rpreloadclient.\nAdded configurable player speed limits.\nAdded faster language switching.\nThe logo now shows up in the mod list.",
 		"1.12.2-1.2.1.1": "Fixed a crash.",
 		"1.12.2-1.2.1.0": "Fixed the fix of the read timeout implementation.",
