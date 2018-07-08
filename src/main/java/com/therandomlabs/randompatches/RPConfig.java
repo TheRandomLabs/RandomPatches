@@ -167,7 +167,7 @@ public class RPConfig {
 
 		if(data == null) {
 			data = ArrayListMultimap.create();
-			asmData.put(RandomPatches.MODID, data);
+			asmData.put(modid, data);
 		}
 
 		final Map<String, Object> annotationInfo = new HashMap<>();
