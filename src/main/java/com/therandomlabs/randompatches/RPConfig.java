@@ -131,11 +131,12 @@ public class RPConfig {
 			properties = getProperties(RPConfig.class);
 		}
 
-		reload(properties, RandomPatches.MODID, RPConfig.class, RPStaticConfig.class);
+		reload(properties, RandomPatches.MODID, RPConfig.class, RPStaticConfig.class,
+				RPStaticConfig::onReload);
 	}
 
 	public static void reload(Map<Object, Field> properties, String modid, Class<?> configClass,
-			Class<?> staticConfigClass) {
+			Class<?> staticConfigClass, Runnable onReload) {
 		if(!ConfigManager.hasConfigForMod(modid)) {
 			try {
 				injectASMData(modid, configClass);
@@ -149,7 +150,7 @@ public class RPConfig {
 		try {
 			modifyConfig(modid);
 			copyValuesToStatic(properties, staticConfigClass);
-			RPStaticConfig.onReload();
+			onReload.run();
 			copyValuesFromStatic(properties, staticConfigClass);
 			ConfigManager.sync(modid, Config.Type.INSTANCE);
 			modifyConfig(modid);

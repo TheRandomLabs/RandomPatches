@@ -1,6 +1,6 @@
 package com.therandomlabs.randompatches;
 
-import java.nio.file.Paths;
+import java.io.File;
 import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
@@ -89,7 +89,7 @@ public class RPStaticConfig {
 
 	public static void reload() {
 		if(config == null) {
-			config = new Configuration(Paths.get("config", RandomPatches.MODID + ".cfg").toFile());
+			config = new Configuration(new File("config", RandomPatches.MODID + ".cfg"));
 		} else {
 			config.load();
 		}

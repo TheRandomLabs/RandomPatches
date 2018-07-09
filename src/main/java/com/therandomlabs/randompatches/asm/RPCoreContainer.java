@@ -23,7 +23,8 @@ import net.minecraftforge.fml.common.versioning.VersionRange;
 
 public class RPCoreContainer extends DummyModContainer {
 	public RPCoreContainer() {
-		super(loadMetadata(RPCore.getModFile()));
+		super(loadMetadata(RPCore.getModFile(), RandomPatches.MODID, RandomPatches.NAME,
+				RandomPatches.VERSION));
 	}
 
 	@Override
@@ -64,7 +65,7 @@ public class RPCoreContainer extends DummyModContainer {
 		return ImmutableList.of("com.therandomlabs.randompatches");
 	}
 
-	public static ModMetadata loadMetadata(File source) {
+	public static ModMetadata loadMetadata(File source, String modid, String name, String version) {
 		InputStream stream = null;
 
 		if(source != null) {
@@ -82,11 +83,10 @@ public class RPCoreContainer extends DummyModContainer {
 
 		final Map<String, Object> fallback = new HashMap<>();
 
-		fallback.put("name", RandomPatches.NAME);
-		fallback.put("version", RandomPatches.VERSION);
+		fallback.put("name", name);
+		fallback.put("version", version);
 
-		return MetadataCollection.from(stream, RandomPatches.MODID).
-				getMetadataForId(RandomPatches.MODID, fallback);
+		return MetadataCollection.from(stream, modid).getMetadataForId(modid, fallback);
 	}
 
 	public static Class<?> getResourcePackClass(ModContainer container) {
