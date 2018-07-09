@@ -2,6 +2,7 @@ randompatches.config.client=Client-sided
 randompatches.config.client.tooltip=Options related to client-sided features.
 randompatches.config.client.fastLanguageSwitch=Fast language switch
 randompatches.config.client.forceTitleScreenOnDisconnect=Force title screen on disconnect
+randompatches.config.client.narratorKeybind=Toggle Narrator keybind
 
 randompatches.config.misc=Miscellaneous
 randompatches.config.misc.tooltip=Options that don't fit into any other categories.
@@ -22,3 +23,5 @@ randompatches.config.timeouts.readTimeout=Read timeout
 
 commands.rpreloadclient.usage=/rpreloadclient
 commands.rpreloadclient.sucess=RandomPatches client-sided configuration reloaded!
+
+key.narrator=Toggle Narrator

@@ -7,6 +7,7 @@ import com.therandomlabs.randompatches.RandomPatches;
 import com.therandomlabs.randompatches.asm.transformer.IngameMenuTransformer;
 import com.therandomlabs.randompatches.asm.transformer.LanguageListTransformer;
 import com.therandomlabs.randompatches.asm.transformer.LoginServerTransformer;
+import com.therandomlabs.randompatches.asm.transformer.MinecraftTransformer;
 import com.therandomlabs.randompatches.asm.transformer.PlayServerTransformer;
 import net.minecraft.launchwrapper.IClassTransformer;
 import org.objectweb.asm.ClassReader;
@@ -58,6 +59,10 @@ public class RPTransformer implements IClassTransformer {
 
 		if(RPStaticConfig.fastLanguageSwitch) {
 			register("net.minecraft.client.gui.GuiLanguage$List", new LanguageListTransformer());
+		}
+
+		if(RPStaticConfig.narratorKeybind) {
+			register("net.minecraft.client.Minecraft", new MinecraftTransformer());
 		}
 	}
 }

@@ -10,6 +10,8 @@ public class RPStaticConfig {
 		public static final String FAST_LANGUAGE_SWITCH = "Speeds up language switching.";
 		public static final String FORCE_TITLE_SCREEN_ON_DISCONNECT = "Forces Minecraft to show " +
 				"the title screen after disconnecting rather than the Multiplayer or Realms menu.";
+		public static final String NARRATOR_KEYBIND =
+				"Whether to add the Toggle Narrator keybind to the controls.";
 
 		public static final String RPRELOAD = "Enables the /rpreload command. " +
 				"This option only takes effect after a world restart.";
@@ -35,6 +37,7 @@ public class RPStaticConfig {
 		public static final boolean FAST_LANGUAGE_SWITCH = true;
 		public static final boolean FORCE_TITLE_SCREEN_ON_DISCONNECT =
 				RandomPatches.IS_DEOBFUSCATED;
+		public static final boolean NARRATOR_KEYBIND = true;
 
 		public static final boolean RPRELOAD = true;
 		public static final boolean RPRELOADCLIENT = true;
@@ -54,15 +57,16 @@ public class RPStaticConfig {
 			"Options related to the movement speed limits.";
 	public static final String TIMEOUTS_COMMENT = "Options related to the disconnect timeouts.";
 
+	//Client
+
+	public static boolean fastLanguageSwitch;
+	public static boolean forceTitleScreenOnDisconnect;
+	public static boolean narratorKeybind;
+
 	//Commands
 
 	public static boolean rpreload;
 	public static boolean rpreloadclient;
-
-	//Misc
-
-	public static boolean fastLanguageSwitch;
-	public static boolean forceTitleScreenOnDisconnect;
 
 	//Speed limits
 
@@ -104,6 +108,8 @@ public class RPStaticConfig {
 		forceTitleScreenOnDisconnect = getBoolean("forceTitleScreenOnDisconnect", "client",
 				Defaults.FORCE_TITLE_SCREEN_ON_DISCONNECT,
 				Comments.FORCE_TITLE_SCREEN_ON_DISCONNECT, false, false);
+		narratorKeybind = getBoolean("narratorKeybind", "client", Defaults.NARRATOR_KEYBIND,
+				Comments.NARRATOR_KEYBIND, false, true);
 
 		config.addCustomCategoryComment("misc", MISC_COMMENT);
 
