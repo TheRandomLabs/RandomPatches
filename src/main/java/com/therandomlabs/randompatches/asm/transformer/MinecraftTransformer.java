@@ -19,7 +19,7 @@ public class MinecraftTransformer extends Transformer {
 
 	@Override
 	public void transform(ClassNode node) {
-		final MethodNode method = findMethod(node, "()V", "dispatchKeypresses", "W");
+		final MethodNode method = findMethod(node, "dispatchKeypresses", "func_152348_aa");
 
 		IntInsnNode isB = null;
 

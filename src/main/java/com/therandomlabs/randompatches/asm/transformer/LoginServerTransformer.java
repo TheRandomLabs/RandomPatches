@@ -11,7 +11,7 @@ import org.objectweb.asm.tree.MethodNode;
 public class LoginServerTransformer extends Transformer {
 	@Override
 	public void transform(ClassNode node) {
-		final MethodNode method = findMethod(node, "()V", PlayServerTransformer.UPDATE);
+		final MethodNode method = findMethod(node, "update", "func_73660_a");
 
 		AbstractInsnNode toPatch = null;
 

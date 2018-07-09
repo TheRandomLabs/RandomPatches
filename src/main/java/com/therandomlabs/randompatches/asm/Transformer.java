@@ -18,36 +18,18 @@ public abstract class Transformer {
 		return null;
 	}
 
-	public static MethodNode findMethod(ClassNode node, String descriptor, String... names) {
+	public static MethodNode findMethod(ClassNode node, String name, String srgName) {
 		for(MethodNode method : node.methods) {
-			for(String name : names) {
-				if(name.equals(method.name) && descriptor.equals(method.desc)) {
-					RandomPatches.LOGGER.debug("Patching method: " + method.name);
-					return method;
-				}
+			if(name.equals(method.name) || srgName.equals(method.name)) {
+				RandomPatches.LOGGER.debug("Patching method: " + method.name);
+				return method;
 			}
 		}
 
 		return null;
 	}
 
-	public static String getName(String name, String obfuscatedName) {
-		return RandomPatches.IS_DEOBFUSCATED ? name : obfuscatedName;
-	}
-
-	public static String getName(String name, String oneTen, String oneEleven, String oneTwelve) {
-		if(RandomPatches.IS_DEOBFUSCATED) {
-			return name;
-		}
-
-		if(RandomPatches.IS_ONE_TEN) {
-			return oneTen;
-		}
-
-		if(RandomPatches.IS_ONE_ELEVEN) {
-			return oneEleven;
-		}
-
-		return oneTwelve;
+	public static String getName(String name, String srgName) {
+		return RandomPatches.IS_DEOBFUSCATED ? name : srgName;
 	}
 }

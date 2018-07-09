@@ -14,18 +14,13 @@ import org.objectweb.asm.tree.MethodNode;
 import org.objectweb.asm.tree.VarInsnNode;
 
 public class PlayServerTransformer extends Transformer {
-	public static final String UPDATE = getName("update", "E_", "F_", "e");
-	public static final String LAST_PING_TIME = "field_194402_f";
-	public static final String SEND_PACKET = getName("sendPacket", "a");
+	public static final String SEND_PACKET = getName("sendPacket", "func_147359_a");
 
 	@Override
 	public void transform(ClassNode node) {
-		transformUpdate(findMethod(node, "()V", UPDATE));
-		transformProcessPlayer(findMethod(node,
-				"(Lnet/minecraft/network/play/client/CPacketPlayer;)V", "processPlayer", "a"));
-		transformProcessVehicleMove(findMethod(node,
-				"(Lnet/minecraft/network/play/client/CPacketVehicleMove;)V", "processVehicleMove",
-				"a"));
+		transformUpdate(findMethod(node, "update", "func_73660_a"));
+		transformProcessPlayer(findMethod(node, "processPlayer", "func_147347_a"));
+		transformProcessVehicleMove(findMethod(node, "processVehicleMove", "func_184338_a"));
 	}
 
 	/* Expected result:
@@ -114,7 +109,7 @@ public class PlayServerTransformer extends Transformer {
 		final FieldInsnNode getPreviousTime = new FieldInsnNode(
 				Opcodes.GETFIELD,
 				"net/minecraft/network/NetHandlerPlayServer",
-				LAST_PING_TIME,
+				"field_194402_f",
 				"J"
 		);
 

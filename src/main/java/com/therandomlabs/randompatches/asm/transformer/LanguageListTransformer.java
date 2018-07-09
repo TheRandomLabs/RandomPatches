@@ -9,11 +9,11 @@ import org.objectweb.asm.tree.MethodInsnNode;
 import org.objectweb.asm.tree.MethodNode;
 
 public class LanguageListTransformer extends Transformer {
-	public static final String REFRESH_RESOURCES = getName("refreshResources", "f");
+	public static final String REFRESH_RESOURCES = getName("refreshResources", "func_110436_a");
 
 	@Override
 	public void transform(ClassNode node) {
-		final MethodNode method = findMethod(node, "(IZII)V", "elementClicked", "a");
+		final MethodNode method = findMethod(node, "elementClicked", "func_148144_a");
 
 		MethodInsnNode refreshResources = null;
 
