@@ -1,7 +1,5 @@
 package com.therandomlabs.randompatches;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import com.google.common.eventbus.Subscribe;
 import net.minecraft.launchwrapper.Launch;
 import net.minecraftforge.client.ClientCommandHandler;
@@ -20,10 +18,6 @@ public final class RandomPatches {
 	public static final String MODID = "randompatches";
 	public static final String NAME = "RandomPatches";
 	public static final String VERSION = "@VERSION@";
-	public static final String LOGO_FILE = "assets/" + MODID + "/logo.png";
-	public static final String UPDATE_JSON =
-			"https://raw.githubusercontent.com/TheRandomLabs/RandomPatches/misc/versions.json";
-	public static final URL UPDATE_URL;
 	public static final String MINECRAFT_VERSIONS = "[1.10,1.13)";
 
 	public static final boolean IS_DEOBFUSCATED =
@@ -34,16 +28,6 @@ public final class RandomPatches {
 	public static final boolean IS_ONE_ELEVEN = MC_VERSION.startsWith("1.11");
 
 	public static final Logger LOGGER = LogManager.getLogger(MODID);
-
-	static {
-		URL url = null;
-
-		try {
-			url = new URL(UPDATE_JSON);
-		} catch(MalformedURLException ignored) {}
-
-		UPDATE_URL = url;
-	}
 
 	@Subscribe
 	public void preInit(FMLPreInitializationEvent event) {

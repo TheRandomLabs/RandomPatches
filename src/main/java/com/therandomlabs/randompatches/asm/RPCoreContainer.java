@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
@@ -39,7 +40,11 @@ public class RPCoreContainer extends DummyModContainer {
 
 	@Override
 	public URL getUpdateUrl() {
-		return RandomPatches.UPDATE_URL;
+		try {
+			return new URL(getMetadata().updateJSON);
+		} catch(MalformedURLException ignored) {}
+
+		return null;
 	}
 
 	@Override
