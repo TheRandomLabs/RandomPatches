@@ -38,6 +38,11 @@ public class RPConfig {
 	}
 
 	public static class Misc {
+		@Config.RequiresMcRestart
+		@Config.LangKey("randompatches.config.misc.minecartAIFix")
+		@Config.Comment(RPStaticConfig.Comments.MINECART_AI_FIX)
+		public boolean minecartAIFix = RPStaticConfig.Defaults.MINECART_AI_FIX;
+
 		@Config.RequiresWorldRestart
 		@Config.LangKey("randompatches.config.misc.rpreload")
 		@Config.Comment(RPStaticConfig.Comments.RPRELOAD)

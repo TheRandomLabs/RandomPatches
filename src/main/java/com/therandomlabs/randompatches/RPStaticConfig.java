@@ -13,6 +13,8 @@ public class RPStaticConfig {
 		public static final String NARRATOR_KEYBIND =
 				"Whether to add the Toggle Narrator keybind to the controls.";
 
+		public static final String MINECART_AI_FIX = "Fixes MC-64836, which causes non-player " +
+				"entities to be allowed to control Minecarts using their AI.";
 		public static final String RPRELOAD = "Enables the /rpreload command. " +
 				"This option only takes effect after a world restart.";
 		public static final String RPRELOADCLIENT = "Enables the /rpreloadclient command. " +
@@ -39,6 +41,7 @@ public class RPStaticConfig {
 				RandomPatches.IS_DEOBFUSCATED;
 		public static final boolean NARRATOR_KEYBIND = true;
 
+		public static final boolean MINECART_AI_FIX = true;
 		public static final boolean RPRELOAD = true;
 		public static final boolean RPRELOADCLIENT = true;
 
@@ -63,8 +66,9 @@ public class RPStaticConfig {
 	public static boolean forceTitleScreenOnDisconnect;
 	public static boolean narratorKeybind;
 
-	//Commands
+	//Misc
 
+	public static boolean minecartAIFix;
 	public static boolean rpreload;
 	public static boolean rpreloadclient;
 
@@ -113,6 +117,8 @@ public class RPStaticConfig {
 
 		config.addCustomCategoryComment("misc", MISC_COMMENT);
 
+		minecartAIFix = getBoolean("minecartAIFix", "misc", Defaults.MINECART_AI_FIX,
+				Comments.MINECART_AI_FIX, false, true);
 		rpreload = getBoolean("rpreload", "misc", Defaults.RPRELOAD, Comments.RPRELOAD, true,
 				false);
 		rpreloadclient = getBoolean("rpreloadclient", "misc", Defaults.RPRELOADCLIENT,

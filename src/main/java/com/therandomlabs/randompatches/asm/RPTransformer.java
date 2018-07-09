@@ -7,6 +7,7 @@ import com.therandomlabs.randompatches.RandomPatches;
 import com.therandomlabs.randompatches.asm.transformer.IngameMenuTransformer;
 import com.therandomlabs.randompatches.asm.transformer.LanguageListTransformer;
 import com.therandomlabs.randompatches.asm.transformer.LoginServerTransformer;
+import com.therandomlabs.randompatches.asm.transformer.MinecartTransformer;
 import com.therandomlabs.randompatches.asm.transformer.MinecraftTransformer;
 import com.therandomlabs.randompatches.asm.transformer.PlayServerTransformer;
 import net.minecraft.launchwrapper.IClassTransformer;
@@ -41,7 +42,7 @@ public class RPTransformer implements IClassTransformer {
 
 			final ClassWriter writer = new ClassWriter(ClassWriter.COMPUTE_FRAMES) {
 				@Override
-				protected String getCommonSuperClass(final String type1, final String type2) {
+				protected String getCommonSuperClass(String type1, String type2) {
 					final ClassLoader classLoader = RPCore.class.getClassLoader();
 
 					Class<?> c;
@@ -97,6 +98,10 @@ public class RPTransformer implements IClassTransformer {
 
 		if(RPStaticConfig.narratorKeybind && RandomPatches.IS_ONE_TWELVE) {
 			register("net.minecraft.client.Minecraft", new MinecraftTransformer());
+		}
+
+		if(RPStaticConfig.minecartAIFix) {
+			register("net.minecraft.entity.item.EntityMinecart", new MinecartTransformer());
 		}
 	}
 }

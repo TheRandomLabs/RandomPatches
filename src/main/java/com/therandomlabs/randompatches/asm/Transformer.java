@@ -8,19 +8,14 @@ public abstract class Transformer {
 	public abstract void transform(ClassNode node);
 
 	public static MethodNode findMethod(ClassNode node, String name) {
-		for(MethodNode method : node.methods) {
-			if(name.equals(method.name)) {
-				RandomPatches.LOGGER.debug("Patching method: " + method.name);
-				return method;
-			}
-		}
-
-		return null;
+		return findMethod(node, name, name);
 	}
 
 	public static MethodNode findMethod(ClassNode node, String name, String srgName) {
+		name = getName(name, srgName);
+
 		for(MethodNode method : node.methods) {
-			if(name.equals(method.name) || srgName.equals(method.name)) {
+			if(name.equals(method.name)) {
 				RandomPatches.LOGGER.debug("Patching method: " + method.name);
 				return method;
 			}

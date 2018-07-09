@@ -6,6 +6,7 @@ randompatches.config.client.narratorKeybind=Toggle Narrator keybind
 
 randompatches.config.misc=Miscellaneous
 randompatches.config.misc.tooltip=Options that don't fit into any other categories.
+randompatches.config.misc.minecartAIFix=Minecraft AI fix
 randompatches.config.misc.rpreload=/rpreload
 randompatches.config.misc.rpreloadclient=/rpreloadclient
 
