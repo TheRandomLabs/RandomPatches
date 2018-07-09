@@ -15,6 +15,10 @@ public class LanguageListTransformer extends Transformer {
 	public boolean transform(ClassNode node) {
 		final MethodNode method = findMethod(node, "(IZII)V", "elementClicked", "a");
 
+		if(method == null) {
+			return false;
+		}
+
 		MethodInsnNode refreshResources = null;
 
 		for(int i = 0; i < method.instructions.size(); i++) {

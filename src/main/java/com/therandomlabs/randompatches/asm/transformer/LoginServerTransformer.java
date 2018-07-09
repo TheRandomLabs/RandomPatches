@@ -10,7 +10,7 @@ import org.objectweb.asm.tree.MethodNode;
 
 public class LoginServerTransformer extends Transformer {
 	@Override
-	public boolean transform(ClassNode node) {
+	public void transform(ClassNode node) {
 		final MethodNode method = findMethod(node, "()V", PlayServerTransformer.UPDATE);
 
 		AbstractInsnNode toPatch = null;
@@ -26,10 +26,6 @@ public class LoginServerTransformer extends Transformer {
 			}
 		}
 
-		if(toPatch == null) {
-			return false;
-		}
-
 		final FieldInsnNode getLoginTimeout = new FieldInsnNode(
 				Opcodes.GETSTATIC,
 				"com/therandomlabs/randompatches/RPStaticConfig",
@@ -39,7 +35,5 @@ public class LoginServerTransformer extends Transformer {
 
 		method.instructions.insert(toPatch, getLoginTimeout);
 		method.instructions.remove(toPatch);
-
-		return true;
 	}
 }

@@ -24,22 +24,12 @@ public class PlayServerTransformer extends Transformer {
 			getName("net/minecraft/network/play/client/CPacketVehicleMove", "ix", "ja", "ll");
 
 	@Override
-	public boolean transform(ClassNode node) {
-		if(!transformUpdate(findMethod(node, "()V", UPDATE))) {
-			return false;
-		}
-
-		final MethodNode processPlayer =
-				findMethod(node, "(L" + CPACKET_PLAYER + ";)V", "processPlayer", "a");
-
-		if(!transformProcessPlayer(processPlayer)) {
-			return false;
-		}
-
-		final MethodNode processVehicleMove =
-				findMethod(node, "(L" + CPACKET_VEHICLE_MOVE + ";)V", "processVehicleMove", "a");
-
-		return transformProcessVehicleMove(processVehicleMove);
+	public void transform(ClassNode node) {
+		transformUpdate(findMethod(node, "()V", UPDATE));
+		transformProcessPlayer(
+				findMethod(node, "(L" + CPACKET_PLAYER + ";)V", "processPlayer", "a"));
+		transformProcessVehicleMove(
+				findMethod(node, "(L" + CPACKET_VEHICLE_MOVE + ";)V", "processVehicleMove", "a"));
 	}
 
 	/* Expected result:
@@ -68,7 +58,7 @@ public class PlayServerTransformer extends Transformer {
 		}
 	} */
 
-	private static boolean transformUpdate(MethodNode method) {
+	private static void transformUpdate(MethodNode method) {
 		LdcInsnNode keepAliveInterval = null;
 		JumpInsnNode ifeq = null;
 		MethodInsnNode sendPacket = null;
@@ -108,10 +98,6 @@ public class PlayServerTransformer extends Transformer {
 					sendPacket = null;
 				}
 			}
-		}
-
-		if(sendPacket == null) {
-			return false;
 		}
 
 		final FieldInsnNode getKeepAliveInterval = new FieldInsnNode(
@@ -157,11 +143,9 @@ public class PlayServerTransformer extends Transformer {
 		method.instructions.insert(compare, jumpIfNotLarger);
 
 		method.instructions.insert(sendPacket, label);
-
-		return true;
 	}
 
-	private static boolean transformProcessPlayer(MethodNode method) {
+	private static void transformProcessPlayer(MethodNode method) {
 		LdcInsnNode elytra = null;
 		LdcInsnNode normal = null;
 
@@ -185,10 +169,6 @@ public class PlayServerTransformer extends Transformer {
 			}
 		}
 
-		if(normal == null) {
-			return false;
-		}
-
 		final FieldInsnNode getElytraMaxSpeed = new FieldInsnNode(
 				Opcodes.GETSTATIC,
 				"com/therandomlabs/randompatches/RPStaticConfig",
@@ -208,11 +188,9 @@ public class PlayServerTransformer extends Transformer {
 
 		method.instructions.insert(normal, getNormalMaxSpeed);
 		method.instructions.remove(normal);
-
-		return true;
 	}
 
-	private static boolean transformProcessVehicleMove(MethodNode method) {
+	private static void transformProcessVehicleMove(MethodNode method) {
 		LdcInsnNode speed = null;
 
 		for(int i = 0; i < method.instructions.size(); i++) {
@@ -228,10 +206,6 @@ public class PlayServerTransformer extends Transformer {
 			}
 		}
 
-		if(speed == null) {
-			return false;
-		}
-
 		final FieldInsnNode getVehicleMaxSpeed = new FieldInsnNode(
 				Opcodes.GETSTATIC,
 				"com/therandomlabs/randompatches/RPStaticConfig",
@@ -241,7 +215,5 @@ public class PlayServerTransformer extends Transformer {
 
 		method.instructions.insert(speed, getVehicleMaxSpeed);
 		method.instructions.remove(speed);
-
-		return true;
 	}
 }

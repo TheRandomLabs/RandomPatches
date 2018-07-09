@@ -17,7 +17,7 @@ public class IngameMenuTransformer extends Transformer {
 			getName("net/minecraft/client/gui/GuiButton", "bdr", "bfk", "biy");
 
 	@Override
-	public boolean transform(ClassNode node) {
+	public void transform(ClassNode node) {
 		final MethodNode method =
 				findMethod(node, "(L" + GUI_BUTTON + ";)V", "actionPerformed", "a");
 
@@ -38,10 +38,6 @@ public class IngameMenuTransformer extends Transformer {
 			}
 		}
 
-		if(toPatch == null) {
-			return false;
-		}
-
 		final LabelNode label = new LabelNode();
 		final FieldInsnNode getEnabled = new FieldInsnNode(
 				Opcodes.GETSTATIC,
@@ -58,7 +54,5 @@ public class IngameMenuTransformer extends Transformer {
 		method.instructions.insert(jumpIfNotEnabled, loadTrue);
 		method.instructions.insert(loadTrue, storeTrue);
 		method.instructions.insert(storeTrue, label);
-
-		return true;
 	}
 }

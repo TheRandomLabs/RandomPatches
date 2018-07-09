@@ -5,7 +5,7 @@ import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.MethodNode;
 
 public abstract class Transformer {
-	public abstract boolean transform(ClassNode node);
+	public abstract void transform(ClassNode node);
 
 	public static MethodNode findMethod(ClassNode node, String name) {
 		for(MethodNode method : node.methods) {
