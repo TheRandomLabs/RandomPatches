@@ -12,12 +12,8 @@ public class LanguageListTransformer extends Transformer {
 	public static final String REFRESH_RESOURCES = getName("refreshResources", "f");
 
 	@Override
-	public boolean transform(ClassNode node) {
+	public void transform(ClassNode node) {
 		final MethodNode method = findMethod(node, "(IZII)V", "elementClicked", "a");
-
-		if(method == null) {
-			return false;
-		}
 
 		MethodInsnNode refreshResources = null;
 
@@ -35,10 +31,6 @@ public class LanguageListTransformer extends Transformer {
 			}
 		}
 
-		if(refreshResources == null) {
-			return false;
-		}
-
 		final MethodInsnNode callReloadLanguage = new MethodInsnNode(
 				Opcodes.INVOKESTATIC,
 				"com/therandomlabs/randompatches/asm/transformer/LanguageListTransformer",
@@ -54,8 +46,6 @@ public class LanguageListTransformer extends Transformer {
 		method.instructions.remove(previous.getPrevious());
 		method.instructions.remove(previous);
 		method.instructions.remove(refreshResources);
-
-		return false;
 	}
 
 	public static void reloadLanguage() {
