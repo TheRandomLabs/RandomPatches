@@ -37,10 +37,10 @@ public class RPTransformer implements IClassTransformer {
 
 		try {
 			if(!transformer.transform(node)) {
-				RandomPatches.LOGGER.error("Failed to patch class: " + transformedName);
+				RandomPatches.LOGGER.error("Failed to transformer class: " + transformedName);
 			}
 		} catch(Exception ex) {
-			RandomPatches.LOGGER.error("Failed to patch class: " + transformedName, ex);
+			RandomPatches.LOGGER.error("Failed to transformer class: " + transformedName, ex);
 		}
 
 		final ClassWriter writer = new ClassWriter(ClassWriter.COMPUTE_FRAMES);

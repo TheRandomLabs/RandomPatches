@@ -1,43 +1,29 @@
 package com.therandomlabs.randompatches.asm;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.jar.JarFile;
 import com.google.common.collect.ImmutableList;
 import com.google.common.eventbus.EventBus;
-import com.therandomlabs.randompatches.CommandRPReload;
-import com.therandomlabs.randompatches.RPConfig;
-import com.therandomlabs.randompatches.RPStaticConfig;
 import com.therandomlabs.randompatches.RandomPatches;
-import com.therandomlabs.randompatches.event.RPClientEventHandler;
-import com.therandomlabs.randompatches.event.RPEventHandler;
-import net.minecraftforge.client.ClientCommandHandler;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.DummyModContainer;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.LoadController;
 import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.common.MetadataCollection;
 import net.minecraftforge.fml.common.ModContainer;
 import net.minecraftforge.fml.common.ModMetadata;
 import net.minecraftforge.fml.common.versioning.InvalidVersionSpecificationException;
 import net.minecraftforge.fml.common.versioning.VersionRange;
-import net.minecraftforge.fml.relauncher.Side;
 
 public class RPCoreContainer extends DummyModContainer {
-	private static final ModMetadata METADATA = new ModMetadata();
-
-	static {
-		METADATA.modId = RandomPatches.MODID;
-		METADATA.name = RandomPatches.NAME;
-		METADATA.version = RandomPatches.VERSION;
-		METADATA.authorList.add(RandomPatches.AUTHOR);
-		METADATA.description = RandomPatches.DESCRIPTION;
-		METADATA.url = RandomPatches.PROJECT_URL;
-		METADATA.logoFile = RandomPatches.LOGO_FILE;
-	}
-
 	public RPCoreContainer() {
-		super(METADATA);
+		super(loadMetadata(RPCore.getModFile()));
 	}
 
 	@Override
@@ -58,21 +44,7 @@ public class RPCoreContainer extends DummyModContainer {
 	@Override
 	public boolean registerBus(EventBus bus, LoadController controller) {
 		Loader.instance().setActiveModContainer(this);
-
-		MinecraftForge.EVENT_BUS.register(new RPEventHandler());
-
-		if(FMLCommonHandler.instance().getSide().isClient()) {
-			if(RPStaticConfig.rpreloadclient) {
-				ClientCommandHandler.instance.registerCommand(new CommandRPReload(Side.CLIENT));
-			}
-
-			if(!RandomPatches.IS_ONE_TEN) {
-				RPConfig.reload();
-			}
-
-			MinecraftForge.EVENT_BUS.register(new RPClientEventHandler());
-		}
-
+		bus.register(new RandomPatches());
 		return true;
 	}
 
@@ -90,6 +62,31 @@ public class RPCoreContainer extends DummyModContainer {
 	@Override
 	public List<String> getOwnedPackages() {
 		return ImmutableList.of("com.therandomlabs.randompatches");
+	}
+
+	public static ModMetadata loadMetadata(File source) {
+		InputStream stream = null;
+
+		if(source != null) {
+			try {
+				if(source.isDirectory()) {
+					stream = new FileInputStream(new File(source, "mcmod.info"));
+				} else {
+					final JarFile jar = new JarFile(source);
+					stream = jar.getInputStream(jar.getJarEntry("mcmod.info"));
+				}
+			} catch(IOException ex) {
+				RandomPatches.LOGGER.error("Failed to load mcmod.info", ex);
+			}
+		}
+
+		final Map<String, Object> fallback = new HashMap<>();
+
+		fallback.put("name", RandomPatches.NAME);
+		fallback.put("version", RandomPatches.VERSION);
+
+		return MetadataCollection.from(stream, RandomPatches.MODID).
+				getMetadataForId(RandomPatches.MODID, fallback);
 	}
 
 	public static Class<?> getResourcePackClass(ModContainer container) {

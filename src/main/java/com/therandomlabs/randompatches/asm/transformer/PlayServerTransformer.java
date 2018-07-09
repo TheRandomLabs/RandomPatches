@@ -1,6 +1,5 @@
 package com.therandomlabs.randompatches.asm.transformer;
 
-import com.therandomlabs.randompatches.RandomPatches;
 import com.therandomlabs.randompatches.asm.Transformer;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.AbstractInsnNode;

@@ -2,8 +2,17 @@ package com.therandomlabs.randompatches;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import com.google.common.eventbus.Subscribe;
 import net.minecraft.launchwrapper.Launch;
+import net.minecraftforge.client.ClientCommandHandler;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.client.event.ConfigChangedEvent;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.FMLInjectionData;
+import net.minecraftforge.fml.relauncher.Side;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -11,11 +20,7 @@ public final class RandomPatches {
 	public static final String MODID = "randompatches";
 	public static final String NAME = "RandomPatches";
 	public static final String VERSION = "@VERSION@";
-	public static final String AUTHOR = "TheRandomLabs";
-	public static final String DESCRIPTION = "A bunch of miscellaneous patches for Minecraft.";
 	public static final String LOGO_FILE = "assets/" + MODID + "/logo.png";
-	public static final String PROJECT_URL =
-			"https://minecraft.curseforge.com/projects/randompatches";
 	public static final String UPDATE_JSON =
 			"https://raw.githubusercontent.com/TheRandomLabs/RandomPatches/misc/versions.json";
 	public static final URL UPDATE_URL;
@@ -40,5 +45,35 @@ public final class RandomPatches {
 		UPDATE_URL = url;
 	}
 
-	private RandomPatches() {}
+	@Subscribe
+	public void preInit(FMLPreInitializationEvent event) {
+		if(RPStaticConfig.rpreloadclient && event.getSide().equals(Side.CLIENT)) {
+			if(!IS_ONE_TEN) {
+				RPConfig.reload();
+			}
+
+			ClientCommandHandler.instance.registerCommand(new CommandRPReload(Side.CLIENT));
+		}
+	}
+
+	@Subscribe
+	public void init(FMLInitializationEvent event) {
+		if(event.getSide().equals(Side.CLIENT)) {
+			MinecraftForge.EVENT_BUS.register(this);
+		}
+	}
+
+	@Subscribe
+	public void serverStarting(FMLServerStartingEvent event) {
+		if(RPStaticConfig.rpreload) {
+			event.registerServerCommand(new CommandRPReload(Side.SERVER));
+		}
+	}
+
+	@SubscribeEvent
+	public void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event) {
+		if(event.getModID().equals(MODID)) {
+			RPConfig.reload();
+		}
+	}
 }
