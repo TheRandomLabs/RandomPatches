@@ -34,6 +34,7 @@ public final class RandomPatches {
 	public static final String MC_VERSION = (String) FMLInjectionData.data()[4];
 	public static final boolean IS_ONE_TEN = MC_VERSION.startsWith("1.10");
 	public static final boolean IS_ONE_ELEVEN = MC_VERSION.startsWith("1.11");
+	public static final boolean IS_ONE_TWELVE = MC_VERSION.startsWith("1.12");
 
 	public static final Logger LOGGER = LogManager.getLogger(MODID);
 
@@ -62,7 +63,8 @@ public final class RandomPatches {
 
 		MinecraftForge.EVENT_BUS.register(this);
 
-		if(!RPStaticConfig.narratorKeybind || Loader.isModLoaded("rebind_narrator")) {
+		if(!RPStaticConfig.narratorKeybind || !RandomPatches.IS_ONE_TWELVE ||
+				Loader.isModLoaded("rebind_narrator")) {
 			return;
 		}
 

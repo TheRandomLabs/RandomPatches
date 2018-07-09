@@ -18,18 +18,14 @@ public class PlayServerTransformer extends Transformer {
 	public static final String LAST_PING_TIME = "field_194402_f";
 	public static final String SEND_PACKET = getName("sendPacket", "a");
 
-	public static final String CPACKET_PLAYER =
-			getName("net/minecraft/network/play/client/CPacketPlayer", "iw", "iz", "lk");
-	public static final String CPACKET_VEHICLE_MOVE =
-			getName("net/minecraft/network/play/client/CPacketVehicleMove", "ix", "ja", "ll");
-
 	@Override
 	public void transform(ClassNode node) {
 		transformUpdate(findMethod(node, "()V", UPDATE));
-		transformProcessPlayer(
-				findMethod(node, "(L" + CPACKET_PLAYER + ";)V", "processPlayer", "a"));
-		transformProcessVehicleMove(
-				findMethod(node, "(L" + CPACKET_VEHICLE_MOVE + ";)V", "processVehicleMove", "a"));
+		transformProcessPlayer(findMethod(node,
+				"(Lnet/minecraft/network/play/client/CPacketPlayer;)V", "processPlayer", "a"));
+		transformProcessVehicleMove(findMethod(node,
+				"(Lnet/minecraft/network/play/client/CPacketVehicleMove;)V", "processVehicleMove",
+				"a"));
 	}
 
 	/* Expected result:

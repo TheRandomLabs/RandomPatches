@@ -13,13 +13,10 @@ import org.objectweb.asm.tree.MethodNode;
 import org.objectweb.asm.tree.VarInsnNode;
 
 public class IngameMenuTransformer extends Transformer {
-	public static final String GUI_BUTTON =
-			getName("net/minecraft/client/gui/GuiButton", "bdr", "bfk", "biy");
-
 	@Override
 	public void transform(ClassNode node) {
 		final MethodNode method =
-				findMethod(node, "(L" + GUI_BUTTON + ";)V", "actionPerformed", "a");
+				findMethod(node, "(Lnet/minecraft/client/gui/GuiButton;)V", "actionPerformed", "a");
 
 		AbstractInsnNode toPatch = null;
 
