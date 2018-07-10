@@ -36,10 +36,10 @@ public class CommandRPReload extends CommandBase {
 			RPStaticConfig.reload();
 			notifyCommandListener(sender, this, "RandomPatches configuration reloaded!");
 		} else {
-			if(RandomPatches.IS_ONE_TEN) {
-				RPStaticConfig.reload();
-			} else {
+			if(RPStaticConfig.CONFIG_GUI_ENABLED) {
 				RPConfig.reload();
+			} else {
+				RPStaticConfig.reload();
 			}
 
 			sender.sendMessage(new TextComponentTranslation("commands.rpreloadclient.sucess"));

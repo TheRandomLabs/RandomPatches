@@ -1,9 +1,13 @@
 package com.therandomlabs.randompatches;
 
 import java.io.File;
+import java.lang.reflect.Field;
+import net.minecraft.crash.CrashReport;
+import net.minecraft.util.ReportedException;
 import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
+import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
 public class RPStaticConfig {
 	public static class Comments {
@@ -60,6 +64,9 @@ public class RPStaticConfig {
 			"Options related to the movement speed limits.";
 	public static final String TIMEOUTS_COMMENT = "Options related to the disconnect timeouts.";
 
+	public static final boolean CONFIG_GUI_ENABLED =
+			!(RandomPatches.IS_ONE_EIGHT || RandomPatches.IS_ONE_NINE || RandomPatches.IS_ONE_TEN);
+
 	//Client
 
 	public static boolean fastLanguageSwitch;
@@ -87,6 +94,9 @@ public class RPStaticConfig {
 
 	public static int readTimeout;
 	public static long readTimeoutMillis;
+
+	private static final Field COMMENT = RandomPatches.IS_ONE_EIGHT ?
+			ReflectionHelper.findField(Property.class, "comment") : null;
 
 	private static Configuration config;
 	private static Configuration currentConfig;
@@ -164,41 +174,67 @@ public class RPStaticConfig {
 
 	public static int getInt(String name, String category, int defaultValue, int minValue,
 			int maxValue, String comment) {
-		final Property prop = currentConfig.get(category, name, defaultValue);
+		final Property property = currentConfig.get(category, name, defaultValue);
 
-		prop.setMinValue(minValue);
-		prop.setMaxValue(maxValue);
-		prop.setComment(comment + "\nMin: " + minValue + "\nMax: " + maxValue + "\nDefault: " +
+		property.setMinValue(minValue);
+		property.setMaxValue(maxValue);
+		setComment(property, comment + "\nMin: " + minValue + "\nMax: " + maxValue + "\nDefault: " +
 				defaultValue);
 
-		return prop.getInt(defaultValue);
+		return property.getInt(defaultValue);
 	}
 
 	public static double getDouble(String name, String category, double defaultValue,
 			double minValue, String comment) {
-		final Property prop = currentConfig.get(category, name, defaultValue);
+		final Property property = currentConfig.get(category, name, defaultValue);
 
-		prop.setMinValue(minValue);
-		prop.setMaxValue(Double.MAX_VALUE);
-		prop.setComment(comment + "\nMin: " + minValue + "\nMax: " + Double.MAX_VALUE +
+		property.setMinValue(minValue);
+		property.setMaxValue(Double.MAX_VALUE);
+		setComment(property, comment + "\nMin: " + minValue + "\nMax: " + Double.MAX_VALUE +
 				"\nDefault: " + defaultValue);
 
-		return prop.getDouble(defaultValue);
+		return property.getDouble(defaultValue);
 	}
 
 	public static boolean getBoolean(String name, String category, boolean defaultValue,
 			String comment, boolean requiresWorldRestart, boolean requiresMcRestart) {
-		final Property prop = currentConfig.get(category, name, defaultValue);
+		final Property property = currentConfig.get(category, name, defaultValue);
 
-		prop.setComment(comment + "\nDefault: " + defaultValue);
+		setComment(property, comment + "\nDefault: " + defaultValue);
 
 		if(requiresMcRestart) {
-			prop.setRequiresMcRestart(true);
+			property.setRequiresMcRestart(true);
 		} else if(requiresWorldRestart) {
-			prop.setRequiresWorldRestart(true);
+			property.setRequiresWorldRestart(true);
 		}
 
-		return prop.getBoolean(defaultValue);
+		return property.getBoolean(defaultValue);
+	}
+
+	public static String getComment(Property property) {
+		if(RandomPatches.IS_ONE_EIGHT) {
+			try {
+				return (String) COMMENT.get(property);
+			} catch(Exception ex) {
+				throw new ReportedException(new CrashReport("Error while getting comment", ex));
+			}
+		}
+
+		return property.getComment();
+	}
+
+	public static void setComment(Property property, String comment) {
+		if(RandomPatches.IS_ONE_EIGHT) {
+			try {
+				COMMENT.set(property, comment);
+			} catch(Exception ex) {
+				throw new ReportedException(new CrashReport("Error while setting comment", ex));
+			}
+
+			return;
+		}
+
+		property.setComment(comment);
 	}
 
 	public static void removeOldProperties(Configuration config) {
@@ -206,7 +242,7 @@ public class RPStaticConfig {
 			final ConfigCategory category = config.getCategory(name);
 
 			category.getValues().forEach((key, property) -> {
-				final String comment = property.getComment();
+				final String comment = getComment(property);
 
 				if(comment == null || comment.isEmpty()) {
 					category.remove(key);
