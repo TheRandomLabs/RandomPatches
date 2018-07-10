@@ -1,5 +1,6 @@
 package com.therandomlabs.randompatches.asm.transformer;
 
+import com.therandomlabs.randompatches.asm.RPTransformer;
 import com.therandomlabs.randompatches.asm.Transformer;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.AbstractInsnNode;
@@ -19,6 +20,11 @@ public class PlayServerTransformer extends Transformer {
 	@Override
 	public void transform(ClassNode node) {
 		transformUpdate(findMethod(node, "update", "func_73660_a"));
+
+		if(RPTransformer.SPONGEFORGE_INSTALLED) {
+			return;
+		}
+
 		transformProcessPlayer(findMethod(node, "processPlayer", "func_147347_a"));
 		transformProcessVehicleMove(findMethod(node, "processVehicleMove", "func_184338_a"));
 	}

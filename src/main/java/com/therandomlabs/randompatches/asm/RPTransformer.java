@@ -11,16 +11,28 @@ import com.therandomlabs.randompatches.asm.transformer.MinecartTransformer;
 import com.therandomlabs.randompatches.asm.transformer.MinecraftTransformer;
 import com.therandomlabs.randompatches.asm.transformer.PlayServerTransformer;
 import net.minecraft.launchwrapper.IClassTransformer;
+import net.minecraft.launchwrapper.Launch;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.tree.ClassNode;
 
 public class RPTransformer implements IClassTransformer {
+	public static final boolean SPONGEFORGE_INSTALLED;
+
 	private static final Map<String, Transformer> TRANSFORMERS = new HashMap<>();
 
 	static {
 		RPStaticConfig.reload();
 		register();
+
+		boolean installed = false;
+
+		try {
+			Class.forName("org.spongepowered.mod.SpongeMod");
+			installed = true;
+		} catch(ClassNotFoundException ignored) {}
+
+		SPONGEFORGE_INSTALLED = installed;
 	}
 
 	@Override
@@ -40,10 +52,16 @@ public class RPTransformer implements IClassTransformer {
 		try {
 			transformer.transform(node);
 
-			final ClassWriter writer = new ClassWriter(ClassWriter.COMPUTE_FRAMES) {
+			int flags = ClassWriter.COMPUTE_FRAMES;
+
+			if(SPONGEFORGE_INSTALLED && transformer.getClass() == PlayServerTransformer.class) {
+				flags = ClassWriter.COMPUTE_MAXS;
+			}
+
+			final ClassWriter writer = new ClassWriter(flags) {
 				@Override
 				protected String getCommonSuperClass(String type1, String type2) {
-					final ClassLoader classLoader = RPCore.class.getClassLoader();
+					final ClassLoader classLoader = Launch.classLoader;
 
 					Class<?> c;
 					final Class<?> d;
