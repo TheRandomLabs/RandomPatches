@@ -1,4 +1,4 @@
-package com.therandomlabs.randompatches.asm;
+package com.therandomlabs.randompatches.core;
 
 import com.therandomlabs.randompatches.RandomPatches;
 import org.objectweb.asm.tree.ClassNode;

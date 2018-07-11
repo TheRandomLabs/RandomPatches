@@ -1,15 +1,15 @@
-package com.therandomlabs.randompatches.asm;
+package com.therandomlabs.randompatches.core;
 
 import java.util.HashMap;
 import java.util.Map;
 import com.therandomlabs.randompatches.RPStaticConfig;
 import com.therandomlabs.randompatches.RandomPatches;
-import com.therandomlabs.randompatches.asm.transformer.IngameMenuTransformer;
-import com.therandomlabs.randompatches.asm.transformer.LanguageListTransformer;
-import com.therandomlabs.randompatches.asm.transformer.LoginServerTransformer;
-import com.therandomlabs.randompatches.asm.transformer.MinecartTransformer;
-import com.therandomlabs.randompatches.asm.transformer.MinecraftTransformer;
-import com.therandomlabs.randompatches.asm.transformer.PlayServerTransformer;
+import com.therandomlabs.randompatches.core.transformer.IngameMenuTransformer;
+import com.therandomlabs.randompatches.core.transformer.LanguageListTransformer;
+import com.therandomlabs.randompatches.core.transformer.LoginServerTransformer;
+import com.therandomlabs.randompatches.core.transformer.MinecartTransformer;
+import com.therandomlabs.randompatches.core.transformer.MinecraftTransformer;
+import com.therandomlabs.randompatches.core.transformer.PlayServerTransformer;
 import net.minecraft.launchwrapper.IClassTransformer;
 import net.minecraft.launchwrapper.Launch;
 import org.objectweb.asm.ClassReader;

@@ -1,6 +1,6 @@
-package com.therandomlabs.randompatches.asm.transformer;
+package com.therandomlabs.randompatches.core.transformer;
 
-import com.therandomlabs.randompatches.asm.Transformer;
+import com.therandomlabs.randompatches.core.Transformer;
 import net.minecraft.client.Minecraft;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.AbstractInsnNode;
@@ -33,7 +33,7 @@ public class LanguageListTransformer extends Transformer {
 
 		final MethodInsnNode callReloadLanguage = new MethodInsnNode(
 				Opcodes.INVOKESTATIC,
-				"com/therandomlabs/randompatches/asm/transformer/LanguageListTransformer",
+				"com/therandomlabs/randompatches/core/transformer/LanguageListTransformer",
 				"reloadLanguage",
 				"()V",
 				false

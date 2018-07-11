@@ -1,4 +1,4 @@
-package com.therandomlabs.randompatches.asm;
+package com.therandomlabs.randompatches.core;
 
 import java.io.File;
 import java.io.FileInputStream;

@@ -1,6 +1,6 @@
-package com.therandomlabs.randompatches.asm.transformer;
+package com.therandomlabs.randompatches.core.transformer;
 
-import com.therandomlabs.randompatches.asm.Transformer;
+import com.therandomlabs.randompatches.core.Transformer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiControls;
 import net.minecraft.client.gui.ScreenChatOptions;
@@ -45,7 +45,7 @@ public class MinecraftTransformer extends Transformer {
 
 		final MethodInsnNode callHandleKeypress = new MethodInsnNode(
 				Opcodes.INVOKESTATIC,
-				"com/therandomlabs/randompatches/asm/transformer/MinecraftTransformer",
+				"com/therandomlabs/randompatches/core/transformer/MinecraftTransformer",
 				"handleKeypress",
 				"()V",
 				false

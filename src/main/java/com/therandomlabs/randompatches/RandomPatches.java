@@ -1,7 +1,7 @@
 package com.therandomlabs.randompatches;
 
 import com.google.common.eventbus.Subscribe;
-import com.therandomlabs.randompatches.asm.transformer.MinecraftTransformer;
+import com.therandomlabs.randompatches.core.transformer.MinecraftTransformer;
 import net.minecraft.launchwrapper.Launch;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.common.MinecraftForge;

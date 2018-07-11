@@ -1,4 +1,4 @@
-package com.therandomlabs.randompatches.asm;
+package com.therandomlabs.randompatches.core;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
@@ -17,13 +17,13 @@ public class RPCore implements IFMLLoadingPlugin {
 	@Override
 	public String[] getASMTransformerClass() {
 		return new String[] {
-				"com.therandomlabs.randompatches.asm.RPTransformer"
+				"com.therandomlabs.randompatches.core.RPTransformer"
 		};
 	}
 
 	@Override
 	public String getModContainerClass() {
-		return "com.therandomlabs.randompatches.asm.RPCoreContainer";
+		return "com.therandomlabs.randompatches.core.RPCoreContainer";
 	}
 
 	@Override
@@ -33,7 +33,7 @@ public class RPCore implements IFMLLoadingPlugin {
 
 	@Override
 	public void injectData(Map<String, Object> data) {
-		modFile = getModFile(data, RPCore.class, "com/therandomlabs/randompatches/asm");
+		modFile = getModFile(data, RPCore.class, "com/therandomlabs/randompatches/core");
 	}
 
 	@Override

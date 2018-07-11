@@ -48,7 +48,7 @@ processResources {
 jar {
 	manifest {
 		attributes "Manifest-Version": "1.0"
-		attributes "FMLCorePlugin": "com.therandomlabs.randompatches.asm.RPCore"
+		attributes "FMLCorePlugin": "com.therandomlabs.randompatches.core.RPCore"
 	}
 }
 
