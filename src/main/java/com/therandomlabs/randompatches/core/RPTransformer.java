@@ -117,7 +117,8 @@ public class RPTransformer implements IClassTransformer {
 			register("net.minecraft.client.gui.GuiLanguage$List", new LanguageListTransformer());
 		}
 
-		if(RPStaticConfig.narratorKeybind && RandomPatches.IS_ONE_TWELVE) {
+		if(RPStaticConfig.narratorKeybind && RandomPatches.IS_ONE_TWELVE &&
+				!RandomPatches.REBIND_NARRATOR_INSTALLED) {
 			register("net.minecraft.client.Minecraft", new MinecraftTransformer());
 		}
 

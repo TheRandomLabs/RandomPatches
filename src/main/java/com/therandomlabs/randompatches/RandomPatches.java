@@ -31,7 +31,20 @@ public final class RandomPatches {
 	public static final boolean IS_ONE_TEN = MC_VERSION.startsWith("1.10");
 	public static final boolean IS_ONE_TWELVE = MC_VERSION.startsWith("1.12");
 
+	public static final boolean REBIND_NARRATOR_INSTALLED;
+
 	public static final Logger LOGGER = LogManager.getLogger(MODID);
+
+	static {
+		boolean installed = false;
+
+		try {
+			Class.forName("quaternary.rebindnarrator.RebindNarrator");
+			installed = true;
+		} catch(ClassNotFoundException ignored) {}
+
+		REBIND_NARRATOR_INSTALLED = installed;
+	}
 
 	@Subscribe
 	public void preInit(FMLPreInitializationEvent event) {
