@@ -32,12 +32,22 @@ public final class RandomPatches {
 
 	public static final String DEFAULT_WINDOW_TITLE = "Minecraft " + MC_VERSION;
 
+	public static final boolean ITLT_INSTALLED;
 	public static final boolean REBIND_NARRATOR_INSTALLED;
 
 	public static final Logger LOGGER = LogManager.getLogger(MODID);
 
 	static {
 		boolean installed = false;
+
+		try {
+			Class.forName("dk.zlepper.itlt.about.mod");
+			installed = true;
+		} catch(ClassNotFoundException ignored) {}
+
+		ITLT_INSTALLED = installed;
+
+		installed = false;
 
 		try {
 			Class.forName("quaternary.rebindnarrator.RebindNarrator");

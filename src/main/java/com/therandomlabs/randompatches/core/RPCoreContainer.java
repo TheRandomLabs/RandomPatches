@@ -30,8 +30,10 @@ public class RPCoreContainer extends DummyModContainer {
 		super(loadMetadata(RPCore.getModFile(), RandomPatches.MODID, RandomPatches.NAME,
 				RandomPatches.VERSION));
 
-		WindowIconHandler.setWindowIcon();
-		Display.setTitle(RPStaticConfig.title);
+		if(!RandomPatches.ITLT_INSTALLED) {
+			WindowIconHandler.setWindowIcon();
+			Display.setTitle(RPStaticConfig.title);
+		}
 	}
 
 	@Override

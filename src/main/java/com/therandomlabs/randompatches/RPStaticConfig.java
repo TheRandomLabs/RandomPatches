@@ -214,8 +214,10 @@ public class RPStaticConfig {
 			icon32 = icon16;
 		}
 
-		WindowIconHandler.setWindowIcon();
-		Display.setTitle(title);
+		if(!RandomPatches.ITLT_INSTALLED) {
+			WindowIconHandler.setWindowIcon();
+			Display.setTitle(title);
+		}
 
 		if(readTimeout < keepAlivePacketInterval) {
 			readTimeout = keepAlivePacketInterval * 2;

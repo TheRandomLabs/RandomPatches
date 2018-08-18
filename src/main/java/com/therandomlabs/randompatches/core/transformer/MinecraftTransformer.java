@@ -26,7 +26,8 @@ public class MinecraftTransformer extends Transformer {
 
 	@Override
 	public void transform(ClassNode node) {
-		if(!RandomPatches.DEFAULT_WINDOW_TITLE.equals(RPStaticConfig.title)) {
+		if(!RandomPatches.ITLT_INSTALLED &&
+				!RandomPatches.DEFAULT_WINDOW_TITLE.equals(RPStaticConfig.title)) {
 			transformCreateDisplay(findMethod(node, "createDisplay", "func_175609_am"));
 		}
 
