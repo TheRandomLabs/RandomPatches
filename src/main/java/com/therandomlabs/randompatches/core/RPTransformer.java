@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import com.therandomlabs.randompatches.RPStaticConfig;
 import com.therandomlabs.randompatches.RandomPatches;
+import com.therandomlabs.randompatches.core.transformer.EntityLivingBaseTransformer;
 import com.therandomlabs.randompatches.core.transformer.IngameMenuTransformer;
 import com.therandomlabs.randompatches.core.transformer.LanguageListTransformer;
 import com.therandomlabs.randompatches.core.transformer.LoginServerTransformer;
@@ -70,7 +71,8 @@ public class RPTransformer implements IClassTransformer {
 						c = Class.forName(type1.replace('/', '.'), false, classLoader);
 						d = Class.forName(type2.replace('/', '.'), false, classLoader);
 					} catch(Exception ex) {
-						throw new RuntimeException(ex.toString());
+						throw new RuntimeException("Error while getting common superclass of " +
+								type1 + " and " + type2, ex);
 					}
 
 					if(c.isAssignableFrom(d)) {
@@ -125,7 +127,5 @@ public class RPTransformer implements IClassTransformer {
 		if(RPStaticConfig.minecartAIFix) {
 			register("net.minecraft.entity.item.EntityMinecart", new MinecartTransformer());
 		}
-
-		register("net.minecraft.entity.EntityLivingBase", new EntityLivingBaseTransformer());
 	}
 }

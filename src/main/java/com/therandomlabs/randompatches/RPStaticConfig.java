@@ -76,6 +76,7 @@ public class RPStaticConfig {
 	//Misc
 
 	public static boolean minecartAIFix;
+	public static boolean neverResetActiveHand;
 	public static boolean rpreload;
 	public static boolean rpreloadclient;
 
