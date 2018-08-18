@@ -2,7 +2,6 @@ package com.therandomlabs.randompatches;
 
 import java.io.File;
 import java.lang.reflect.Field;
-import com.therandomlabs.randompatches.core.transformer.MinecraftTransformer;
 import net.minecraft.crash.CrashReport;
 import net.minecraft.util.ReportedException;
 import net.minecraftforge.common.config.ConfigCategory;
@@ -215,7 +214,7 @@ public class RPStaticConfig {
 			icon32 = icon16;
 		}
 
-		MinecraftTransformer.setWindowIcon();
+		WindowIconHandler.setWindowIcon();
 		Display.setTitle(title);
 
 		if(readTimeout < keepAlivePacketInterval) {

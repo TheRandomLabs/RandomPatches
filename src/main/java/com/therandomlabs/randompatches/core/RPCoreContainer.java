@@ -13,6 +13,7 @@ import java.util.jar.JarFile;
 import com.google.common.collect.ImmutableList;
 import com.google.common.eventbus.EventBus;
 import com.therandomlabs.randompatches.RandomPatches;
+import com.therandomlabs.randompatches.WindowIconHandler;
 import net.minecraftforge.fml.common.DummyModContainer;
 import net.minecraftforge.fml.common.LoadController;
 import net.minecraftforge.fml.common.Loader;
@@ -26,6 +27,7 @@ public class RPCoreContainer extends DummyModContainer {
 	public RPCoreContainer() {
 		super(loadMetadata(RPCore.getModFile(), RandomPatches.MODID, RandomPatches.NAME,
 				RandomPatches.VERSION));
+		WindowIconHandler.setWindowIcon();
 	}
 
 	@Override
