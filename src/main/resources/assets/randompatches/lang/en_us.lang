@@ -2,6 +2,7 @@ randompatches.config.client=Client-sided
 randompatches.config.client.tooltip=Options related to client-sided features.
 randompatches.config.client.fastLanguageSwitch=Fast language switch
 randompatches.config.client.forceTitleScreenOnDisconnect=Force title screen on disconnect
+randompatches.config.client.patchTitleScreenOnDisconnect=Patch title screen on disconnect
 randompatches.config.client.narratorKeybind=Toggle Narrator keybind
 
 randompatches.config.misc=Miscellaneous
@@ -20,6 +21,7 @@ randompatches.config.timeouts=Disconnect timeouts
 randompatches.config.timeouts.tooltip=Options related to the disconnect timeouts.
 randompatches.config.timeouts.keepAlivePacketInterval=KeepAlive packet interval
 randompatches.config.timeouts.loginTimeout=Login timeout
+randompatches.config.timeouts.patchLoginTimeout=Patch login timeout
 randompatches.config.timeouts.readTimeout=Read timeout
 
 commands.rpreloadclient.usage=/rpreloadclient

@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 import com.therandomlabs.randompatches.RPStaticConfig;
 import com.therandomlabs.randompatches.RandomPatches;
-import com.therandomlabs.randompatches.core.transformer.EntityLivingBaseTransformer;
 import com.therandomlabs.randompatches.core.transformer.IngameMenuTransformer;
 import com.therandomlabs.randompatches.core.transformer.LanguageListTransformer;
 import com.therandomlabs.randompatches.core.transformer.LoginServerTransformer;
@@ -108,10 +107,15 @@ public class RPTransformer implements IClassTransformer {
 	}
 
 	private static void register() {
-		register("net.minecraft.network.NetHandlerLoginServer", new LoginServerTransformer());
-		register("net.minecraft.client.gui.GuiIngameMenu", new IngameMenuTransformer());
+		if(RPStaticConfig.patchLoginTimeout) {
+			register("net.minecraft.network.NetHandlerLoginServer", new LoginServerTransformer());
+		}
 
-		if(!RandomPatches.IS_ONE_EIGHT) {
+		if(RPStaticConfig.patchTitleScreenOnDisconnect) {
+			register("net.minecraft.client.gui.GuiIngameMenu", new IngameMenuTransformer());
+		}
+
+		if(!RandomPatches.IS_ONE_EIGHT && RPStaticConfig.patchNetHandlerPlayServer) {
 			register("net.minecraft.network.NetHandlerPlayServer", new PlayServerTransformer());
 		}
 

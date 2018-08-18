@@ -14,11 +14,15 @@ public class RPStaticConfig {
 		public static final String FAST_LANGUAGE_SWITCH = "Speeds up language switching.";
 		public static final String FORCE_TITLE_SCREEN_ON_DISCONNECT = "Forces Minecraft to show " +
 				"the title screen after disconnecting rather than the Multiplayer or Realms menu.";
+		public static final String PATCH_TITLE_SCREEN_ON_DISCONNECT = "Set this to false to " +
+				"force disable the \"force title screen on disconnect\" patch.";
 		public static final String NARRATOR_KEYBIND =
 				"Whether to add the Toggle Narrator keybind to the controls.";
 
 		public static final String MINECART_AI_FIX = "Fixes MC-64836, which causes non-player " +
 				"entities to be allowed to control Minecarts using their AI.";
+		public static final String PATCH_NETHANDLERPLAYSERVER = "Set this to false to force " +
+				"disable the NetHandlerPlayServer patches (speed limits and disconnect timeouts).";
 		public static final String RPRELOAD = "Enables the /rpreload command. " +
 				"This option only takes effect after a world restart.";
 		public static final String RPRELOADCLIENT = "Enables the /rpreloadclient command. " +
@@ -34,6 +38,7 @@ public class RPStaticConfig {
 		public static final String KEEP_ALIVE_PACKET_INTERVAL =
 				"The interval at which the server sends the KeepAlive packet.";
 		public static final String LOGIN_TIMEOUT = "The login timeout.";
+		public static final String PATCH_LOGIN_TIMEOUT = "Whether to patch the login timeout.";
 		public static final String READ_TIMEOUT = "The read timeout. This is the time it takes " +
 				"for a player to be disconnected after not responding to a KeepAlive packet. " +
 				"This value is automatically rounded up to a product of keepAlivePacketInterval.";
@@ -43,9 +48,11 @@ public class RPStaticConfig {
 		public static final boolean FAST_LANGUAGE_SWITCH = true;
 		public static final boolean FORCE_TITLE_SCREEN_ON_DISCONNECT =
 				RandomPatches.IS_DEOBFUSCATED;
+		public static final boolean PATCH_TITLE_SCREEN_ON_DISCONNECT = true;
 		public static final boolean NARRATOR_KEYBIND = true;
 
 		public static final boolean MINECART_AI_FIX = true;
+		public static final boolean PATCH_NETHANDLERPLAYSERVER = true;
 		public static final boolean RPRELOAD = true;
 		public static final boolean RPRELOADCLIENT = true;
 
@@ -55,6 +62,7 @@ public class RPStaticConfig {
 
 		public static final int KEEP_ALIVE_PACKET_INTERVAL = 15;
 		public static final int LOGIN_TIMEOUT = 900;
+		public static final boolean PATCH_LOGIN_TIMEOUT = true;
 		public static final int READ_TIMEOUT = 90;
 	}
 
@@ -71,12 +79,13 @@ public class RPStaticConfig {
 
 	public static boolean fastLanguageSwitch;
 	public static boolean forceTitleScreenOnDisconnect;
+	public static boolean patchTitleScreenOnDisconnect;
 	public static boolean narratorKeybind;
 
 	//Misc
 
 	public static boolean minecartAIFix;
-	public static boolean neverResetActiveHand;
+	public static boolean patchNetHandlerPlayServer;
 	public static boolean rpreload;
 	public static boolean rpreloadclient;
 
@@ -92,6 +101,7 @@ public class RPStaticConfig {
 	public static long keepAlivePacketIntervalMillis;
 
 	public static int loginTimeout;
+	public static boolean patchLoginTimeout;
 
 	public static int readTimeout;
 	public static long readTimeoutMillis;
@@ -151,6 +161,8 @@ public class RPStaticConfig {
 				Comments.KEEP_ALIVE_PACKET_INTERVAL);
 		loginTimeout = getInt("loginTimeout", "timeouts", Defaults.LOGIN_TIMEOUT, 1,
 				Integer.MAX_VALUE, Comments.LOGIN_TIMEOUT);
+		patchLoginTimeout = getBoolean("patchLoginTimeout", "timeouts",
+				Defaults.PATCH_LOGIN_TIMEOUT, Comments.PATCH_LOGIN_TIMEOUT, false, true);
 		readTimeout = getInt("readTimeout", "timeouts", Defaults.READ_TIMEOUT, 1, Integer.MAX_VALUE,
 				Comments.READ_TIMEOUT);
 

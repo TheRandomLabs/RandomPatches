@@ -32,6 +32,12 @@ public class RPConfig {
 				RPStaticConfig.Defaults.FORCE_TITLE_SCREEN_ON_DISCONNECT;
 
 		@Config.RequiresMcRestart
+		@Config.LangKey("randompatches.config.client.patchTitleScreenOnDisconnect")
+		@Config.Comment(RPStaticConfig.Comments.PATCH_TITLE_SCREEN_ON_DISCONNECT)
+		public boolean patchTitleScreenOnDisconnect =
+				RPStaticConfig.Defaults.PATCH_TITLE_SCREEN_ON_DISCONNECT;
+
+		@Config.RequiresMcRestart
 		@Config.LangKey("randompatches.config.client.narratorKeybind")
 		@Config.Comment(RPStaticConfig.Comments.NARRATOR_KEYBIND)
 		public boolean narratorKeybind = RPStaticConfig.Defaults.NARRATOR_KEYBIND;
@@ -42,6 +48,12 @@ public class RPConfig {
 		@Config.LangKey("randompatches.config.misc.minecartAIFix")
 		@Config.Comment(RPStaticConfig.Comments.MINECART_AI_FIX)
 		public boolean minecartAIFix = RPStaticConfig.Defaults.MINECART_AI_FIX;
+
+		@Config.RequiresMcRestart
+		@Config.LangKey("randompatches.config.misc.patchNetHandlerPlayServer")
+		@Config.Comment(RPStaticConfig.Comments.PATCH_NETHANDLERPLAYSERVER)
+		public boolean patchNetHandlerPlayServer =
+				RPStaticConfig.Defaults.PATCH_NETHANDLERPLAYSERVER;
 
 		@Config.RequiresWorldRestart
 		@Config.LangKey("randompatches.config.misc.rpreload")
@@ -81,6 +93,11 @@ public class RPConfig {
 		@Config.LangKey("randompatches.config.timeouts.loginTimeout")
 		@Config.Comment(RPStaticConfig.Comments.LOGIN_TIMEOUT)
 		public int loginTimeout = RPStaticConfig.Defaults.LOGIN_TIMEOUT;
+
+		@Config.RequiresMcRestart
+		@Config.LangKey("randompatches.config.timeouts.patchLoginTimeout")
+		@Config.Comment(RPStaticConfig.Comments.PATCH_LOGIN_TIMEOUT)
+		public boolean patchLoginTimeout = RPStaticConfig.Defaults.PATCH_LOGIN_TIMEOUT;
 
 		@Config.RangeInt(min = 1)
 		@Config.LangKey("randompatches.config.timeouts.readTimeout")
