@@ -125,5 +125,7 @@ public class RPTransformer implements IClassTransformer {
 		if(RPStaticConfig.minecartAIFix) {
 			register("net.minecraft.entity.item.EntityMinecart", new MinecartTransformer());
 		}
+
+		register("net.minecraft.entity.EntityLivingBase", new EntityLivingBaseTransformer());
 	}
 }
