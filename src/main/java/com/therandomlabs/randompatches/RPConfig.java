@@ -3,7 +3,9 @@ package com.therandomlabs.randompatches;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
@@ -20,7 +22,13 @@ import net.minecraftforge.fml.relauncher.ReflectionHelper;
 //The most convoluted way to implement a config GUI, but it works
 @Config(modid = RandomPatches.MODID, name = RandomPatches.MODID, category = "")
 public class RPConfig {
+	public interface NestedCategory {}
+
 	public static class Client {
+		@Config.LangKey("randompatches.config.window")
+		@Config.Comment(RPStaticConfig.WINDOW_COMMENT)
+		public Window window = new Window();
+
 		@Config.RequiresMcRestart
 		@Config.LangKey("randompatches.config.client.fastLanguageSwitch")
 		@Config.Comment(RPStaticConfig.Comments.FAST_LANGUAGE_SWITCH)
@@ -50,6 +58,11 @@ public class RPConfig {
 		public boolean minecartAIFix = RPStaticConfig.Defaults.MINECART_AI_FIX;
 
 		@Config.RequiresMcRestart
+		@Config.LangKey("randompatches.config.misc.patchMinecraftClass")
+		@Config.Comment(RPStaticConfig.Comments.PATCH_MINECRAFT_CLASS)
+		public boolean patchMinecraftClass = RPStaticConfig.Defaults.PATCH_MINECRAFT_CLASS;
+
+		@Config.RequiresMcRestart
 		@Config.LangKey("randompatches.config.misc.patchNetHandlerPlayServer")
 		@Config.Comment(RPStaticConfig.Comments.PATCH_NETHANDLERPLAYSERVER)
 		public boolean patchNetHandlerPlayServer =
@@ -70,12 +83,12 @@ public class RPConfig {
 		@Config.RangeDouble(min = 1.0)
 		@Config.LangKey("randompatches.config.speedLimits.maxPlayerSpeed")
 		@Config.Comment(RPStaticConfig.Comments.MAX_PLAYER_SPEED)
-		public double maxPlayerSpeed = RPStaticConfig.Defaults.MAX_PLAYER_SPEED;
+		public float maxPlayerSpeed = RPStaticConfig.Defaults.MAX_PLAYER_SPEED;
 
 		@Config.RangeDouble(min = 1.0)
 		@Config.LangKey("randompatches.config.speedLimits.maxPlayerElytraSpeed")
 		@Config.Comment(RPStaticConfig.Comments.MAX_PLAYER_ELYTRA_SPEED)
-		public double maxPlayerElytraSpeed = RPStaticConfig.Defaults.MAX_PLAYER_ELYTRA_SPEED;
+		public float maxPlayerElytraSpeed = RPStaticConfig.Defaults.MAX_PLAYER_ELYTRA_SPEED;
 
 		@Config.RangeDouble(min = 1.0)
 		@Config.LangKey("randompatches.config.speedLimits.maxPlayerVehicleSpeed")
@@ -105,6 +118,20 @@ public class RPConfig {
 		public int readTimeout = RPStaticConfig.Defaults.READ_TIMEOUT;
 	}
 
+	public static class Window implements NestedCategory {
+		@Config.LangKey("randompatches.config.window.icon16")
+		@Config.Comment(RPStaticConfig.Comments.ICON_16)
+		public String icon16 = RPStaticConfig.Defaults.ICON_16;
+
+		@Config.LangKey("randompatches.config.window.icon32")
+		@Config.Comment(RPStaticConfig.Comments.ICON_32)
+		public String icon32 = RPStaticConfig.Defaults.ICON_32;
+
+		@Config.LangKey("randompatches.config.window.title")
+		@Config.Comment(RPStaticConfig.Comments.TITLE)
+		public String title = RPStaticConfig.Defaults.TITLE;
+	}
+
 	@Config.LangKey("randompatches.config.client")
 	@Config.Comment(RPStaticConfig.CLIENT_COMMENT)
 	public static Client client = new Client();
@@ -126,12 +153,14 @@ public class RPConfig {
 	private static final Method GET_CONFIGURATION = ReflectionHelper.findMethod(ConfigManager.class,
 			"getConfiguration", "getConfiguration", String.class, String.class);
 
-	private static Map<Object, Field> properties;
+	private static Map<Object, Field[]> properties;
 
-	public static Map<Object, Field> getProperties(Class<?> configClass) {
-		final Map<Object, Field> properties = new HashMap<>();
+	public static Map<Object, Field[]> getProperties(Class<?> configClass) {
+		final Map<Object, Field[]> properties = new HashMap<>();
 
 		try {
+			final Map<Object, Field> nestedCategories = new HashMap<>();
+
 			for(Field field : configClass.getDeclaredFields()) {
 				final int modifiers = field.getModifiers();
 
@@ -140,10 +169,23 @@ public class RPConfig {
 				}
 
 				final Object object = field.get(null);
+				final Field[] propertyArray = object.getClass().getDeclaredFields();
+				final List<Field> propertyList = new ArrayList<>();
 
-				for(Field property : object.getClass().getDeclaredFields()) {
-					properties.put(object, property);
+				for(Field property : propertyArray) {
+					if(NestedCategory.class.isAssignableFrom(property.getType())) {
+						nestedCategories.put(object, property);
+					} else {
+						propertyList.add(property);
+					}
 				}
+
+				properties.put(object, propertyList.toArray(new Field[0]));
+			}
+
+			for(Map.Entry<Object, Field> category : nestedCategories.entrySet()) {
+				final Object object = category.getValue().get(category.getKey());
+				properties.put(object, object.getClass().getDeclaredFields());
 			}
 		} catch(Exception ex) {
 			throw new ReportedException(new CrashReport("Error while getting config properties",
@@ -162,7 +204,7 @@ public class RPConfig {
 				RPStaticConfig::onReload);
 	}
 
-	public static void reload(Map<Object, Field> properties, String modid, Class<?> configClass,
+	public static void reload(Map<Object, Field[]> properties, String modid, Class<?> configClass,
 			Class<?> staticConfigClass, Runnable onReload) {
 		if(!ConfigManager.hasConfigForMod(modid)) {
 			try {
@@ -244,26 +286,30 @@ public class RPConfig {
 		}
 	}
 
-	private static void copyValuesToStatic(Map<Object, Field> properties,
+	private static void copyValuesToStatic(Map<Object, Field[]> properties,
 			Class<?> staticConfigClass) throws Exception {
-		for(Map.Entry<Object, Field> entry : properties.entrySet()) {
+		for(Map.Entry<Object, Field[]> entry : properties.entrySet()) {
 			final Object object = entry.getKey();
-			final Field property = entry.getValue();
+			final Field[] propertyArray = entry.getValue();
 
-			final Object value = property.get(object);
-			staticConfigClass.getDeclaredField(property.getName()).set(null, value);
+			for(Field property : propertyArray) {
+				final Object value = property.get(object);
+				staticConfigClass.getDeclaredField(property.getName()).set(null, value);
+			}
 		}
 	}
 
-	private static void copyValuesFromStatic(Map<Object, Field> properties,
+	private static void copyValuesFromStatic(Map<Object, Field[]> properties,
 			Class<?> staticConfigClass) throws Exception {
-		for(Map.Entry<Object, Field> entry : properties.entrySet()) {
+		for(Map.Entry<Object, Field[]> entry : properties.entrySet()) {
 			final Object object = entry.getKey();
-			final Field property = entry.getValue();
+			final Field[] propertyArray = entry.getValue();
 
-			final Object value =
-					staticConfigClass.getDeclaredField(property.getName()).get(null);
-			property.set(object, value);
+			for(Field property : propertyArray) {
+				final Object value =
+						staticConfigClass.getDeclaredField(property.getName()).get(null);
+				property.set(object, value);
+			}
 		}
 	}
 }

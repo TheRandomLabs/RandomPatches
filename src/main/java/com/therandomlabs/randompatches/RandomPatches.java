@@ -6,7 +6,6 @@ import net.minecraft.launchwrapper.Launch;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
-import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
@@ -30,6 +29,8 @@ public final class RandomPatches {
 	public static final boolean IS_ONE_NINE = MC_VERSION.startsWith("1.9");
 	public static final boolean IS_ONE_TEN = MC_VERSION.startsWith("1.10");
 	public static final boolean IS_ONE_TWELVE = MC_VERSION.startsWith("1.12");
+
+	public static final String DEFAULT_WINDOW_TITLE = "Minecraft " + MC_VERSION;
 
 	public static final boolean REBIND_NARRATOR_INSTALLED;
 
@@ -70,7 +71,7 @@ public final class RandomPatches {
 		MinecraftForge.EVENT_BUS.register(this);
 
 		if(RPStaticConfig.narratorKeybind && RandomPatches.IS_ONE_TWELVE &&
-				!Loader.isModLoaded("rebind_narrator")) {
+				!RandomPatches.REBIND_NARRATOR_INSTALLED) {
 			MinecraftTransformer.registerKeybind();
 		}
 	}

@@ -24,6 +24,11 @@ randompatches.config.timeouts.loginTimeout=Login timeout
 randompatches.config.timeouts.patchLoginTimeout=Patch login timeout
 randompatches.config.timeouts.readTimeout=Read timeout
 
+randompatches.config.window=Window
+randompatches.config.window.icon16=Window icon (16x16)
+randompatches.config.window.icon32=Window icon (32x32)
+randompatches.config.window.title=Window title
+
 commands.rpreloadclient.usage=/rpreloadclient
 commands.rpreloadclient.sucess=RandomPatches client-sided configuration reloaded!
 

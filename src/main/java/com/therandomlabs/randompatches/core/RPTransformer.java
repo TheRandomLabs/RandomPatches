@@ -115,7 +115,7 @@ public class RPTransformer implements IClassTransformer {
 			register("net.minecraft.client.gui.GuiIngameMenu", new IngameMenuTransformer());
 		}
 
-		if(!RandomPatches.IS_ONE_EIGHT && RPStaticConfig.patchNetHandlerPlayServer) {
+		if(RPStaticConfig.patchNetHandlerPlayServer && !RandomPatches.IS_ONE_EIGHT) {
 			register("net.minecraft.network.NetHandlerPlayServer", new PlayServerTransformer());
 		}
 
@@ -123,8 +123,7 @@ public class RPTransformer implements IClassTransformer {
 			register("net.minecraft.client.gui.GuiLanguage$List", new LanguageListTransformer());
 		}
 
-		if(RPStaticConfig.narratorKeybind && RandomPatches.IS_ONE_TWELVE &&
-				!RandomPatches.REBIND_NARRATOR_INSTALLED) {
+		if(RPStaticConfig.patchMinecraftClass) {
 			register("net.minecraft.client.Minecraft", new MinecraftTransformer());
 		}
 

@@ -2,12 +2,14 @@ package com.therandomlabs.randompatches;
 
 import java.io.File;
 import java.lang.reflect.Field;
+import com.therandomlabs.randompatches.core.transformer.MinecraftTransformer;
 import net.minecraft.crash.CrashReport;
 import net.minecraft.util.ReportedException;
 import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
+import org.lwjgl.opengl.Display;
 
 public class RPStaticConfig {
 	public static class Comments {
@@ -19,8 +21,16 @@ public class RPStaticConfig {
 		public static final String NARRATOR_KEYBIND =
 				"Whether to add the Toggle Narrator keybind to the controls.";
 
+		public static final String ICON_16 = "The path to the 16x16 Minecraft window " +
+				"icon. Leave this and the 32x32 icon blank to use the default icon.";
+		public static final String ICON_32 = "The path to the 32x32 Minecraft window " +
+				"icon. Leave this and the 16x16 icon blank to use the default icon.";
+		public static final String TITLE = "The Minecraft window title.";
+
 		public static final String MINECART_AI_FIX = "Fixes MC-64836, which causes non-player " +
 				"entities to be allowed to control Minecarts using their AI.";
+		public static final String PATCH_MINECRAFT_CLASS = "Set this to false to disable the " +
+				"Minecraft class patches (Toggle Narrator keybind and custom window title/icon).";
 		public static final String PATCH_NETHANDLERPLAYSERVER = "Set this to false to force " +
 				"disable the NetHandlerPlayServer patches (speed limits and disconnect timeouts).";
 		public static final String RPRELOAD = "Enables the /rpreload command. " +
@@ -51,13 +61,19 @@ public class RPStaticConfig {
 		public static final boolean PATCH_TITLE_SCREEN_ON_DISCONNECT = true;
 		public static final boolean NARRATOR_KEYBIND = true;
 
+		public static final String ICON_16 = RandomPatches.IS_DEOBFUSCATED ? "icon16.png" : "";
+		public static final String ICON_32 = ICON_16;
+		public static final String TITLE = (RandomPatches.IS_DEOBFUSCATED ?
+				RandomPatches.NAME : "Minecraft") + " " + RandomPatches.MC_VERSION;
+
 		public static final boolean MINECART_AI_FIX = true;
+		public static final boolean PATCH_MINECRAFT_CLASS = true;
 		public static final boolean PATCH_NETHANDLERPLAYSERVER = true;
 		public static final boolean RPRELOAD = true;
 		public static final boolean RPRELOADCLIENT = true;
 
-		public static final double MAX_PLAYER_SPEED = 1000000.0;
-		public static final double MAX_PLAYER_ELYTRA_SPEED = 1000000.0;
+		public static final float MAX_PLAYER_SPEED = 1000000.0F;
+		public static final float MAX_PLAYER_ELYTRA_SPEED = 1000000.0F;
 		public static final double MAX_PLAYER_VEHICLE_SPEED = 1000000.0;
 
 		public static final int KEEP_ALIVE_PACKET_INTERVAL = 15;
@@ -71,6 +87,7 @@ public class RPStaticConfig {
 	public static final String SPEED_LIMITS_COMMENT =
 			"Options related to the movement speed limits.";
 	public static final String TIMEOUTS_COMMENT = "Options related to the disconnect timeouts.";
+	public static final String WINDOW_COMMENT = "Options related to the Minecraft window.";
 
 	public static final boolean CONFIG_GUI_ENABLED =
 			!(RandomPatches.IS_ONE_EIGHT || RandomPatches.IS_ONE_NINE || RandomPatches.IS_ONE_TEN);
@@ -82,9 +99,16 @@ public class RPStaticConfig {
 	public static boolean patchTitleScreenOnDisconnect;
 	public static boolean narratorKeybind;
 
+	//Client->Window
+
+	public static String icon16;
+	public static String icon32;
+	public static String title;
+
 	//Misc
 
 	public static boolean minecartAIFix;
+	public static boolean patchMinecraftClass;
 	public static boolean patchNetHandlerPlayServer;
 	public static boolean rpreload;
 	public static boolean rpreloadclient;
@@ -136,12 +160,23 @@ public class RPStaticConfig {
 		narratorKeybind = getBoolean("narratorKeybind", "client", Defaults.NARRATOR_KEYBIND,
 				Comments.NARRATOR_KEYBIND, false, true);
 
+		config.addCustomCategoryComment("client.window", WINDOW_COMMENT);
+
+		icon16 = getString("icon16", "client.window", Defaults.ICON_16, Comments.ICON_16);
+		icon32 = getString("icon32", "client.window", Defaults.ICON_32, Comments.ICON_32);
+		title = getString("title", "client.window", Defaults.TITLE, Comments.TITLE);
+
 		config.addCustomCategoryComment("misc", MISC_COMMENT);
 
 		minecartAIFix = getBoolean("minecartAIFix", "misc", Defaults.MINECART_AI_FIX,
 				Comments.MINECART_AI_FIX, false, true);
-		rpreload = getBoolean("rpreload", "misc", Defaults.RPRELOAD, Comments.RPRELOAD, true,
-				false);
+		patchMinecraftClass = getBoolean("patchMinecraftClass", "misc",
+				Defaults.PATCH_MINECRAFT_CLASS, Comments.PATCH_MINECRAFT_CLASS, false, true);
+		patchNetHandlerPlayServer = getBoolean("patchNetHandlerPlayServer", "misc",
+				Defaults.PATCH_NETHANDLERPLAYSERVER, Comments.PATCH_NETHANDLERPLAYSERVER, false,
+				true);
+		rpreload =
+				getBoolean("rpreload", "misc", Defaults.RPRELOAD, Comments.RPRELOAD, true, false);
 		rpreloadclient = getBoolean("rpreloadclient", "misc", Defaults.RPRELOADCLIENT,
 				Comments.RPRELOADCLIENT, false, true);
 
@@ -172,6 +207,17 @@ public class RPStaticConfig {
 	}
 
 	public static void onReload() {
+		if(icon16.isEmpty() && !icon32.isEmpty()) {
+			icon16 = icon32;
+		}
+
+		if(icon32.isEmpty() && !icon16.isEmpty()) {
+			icon32 = icon16;
+		}
+
+		MinecraftTransformer.setWindowIcon();
+		Display.setTitle(title);
+
 		if(readTimeout < keepAlivePacketInterval) {
 			readTimeout = keepAlivePacketInterval * 2;
 		} else if(readTimeout % keepAlivePacketInterval != 0) {
@@ -222,6 +268,13 @@ public class RPStaticConfig {
 		}
 
 		return property.getBoolean(defaultValue);
+	}
+
+	public static String getString(String name, String category, String defaultValue,
+			String comment) {
+		final Property property = currentConfig.get(category, name, defaultValue);
+		setComment(property, comment + "\nDefault: " + defaultValue);
+		return property.getString();
 	}
 
 	public static String getComment(Property property) {
