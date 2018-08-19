@@ -158,6 +158,9 @@ public class RPStaticConfig {
 				Comments.FORCE_TITLE_SCREEN_ON_DISCONNECT, false, false);
 		narratorKeybind = getBoolean("narratorKeybind", "client", Defaults.NARRATOR_KEYBIND,
 				Comments.NARRATOR_KEYBIND, false, true);
+		patchTitleScreenOnDisconnect = getBoolean("patchTitleScreenOnDisconnect", "client",
+				Defaults.PATCH_TITLE_SCREEN_ON_DISCONNECT,
+				Comments.PATCH_TITLE_SCREEN_ON_DISCONNECT, false, false);
 
 		config.addCustomCategoryComment("client.window", WINDOW_COMMENT);
 
