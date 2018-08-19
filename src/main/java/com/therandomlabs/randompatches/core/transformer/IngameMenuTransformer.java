@@ -15,19 +15,14 @@ public class IngameMenuTransformer extends Transformer {
 	@Override
 	public void transform(ClassNode node) {
 		final MethodNode method = findMethod(node, "actionPerformed", "func_146284_a");
-		VarInsnNode storeIsIntegratedServerRunning = null;
+		AbstractInsnNode storeIsIntegratedServerRunning = null;
 
 		for(int i = 0; i < method.instructions.size(); i++) {
 			final AbstractInsnNode instruction = method.instructions.get(i);
 
 			if(instruction.getOpcode() == Opcodes.ISTORE) {
-				storeIsIntegratedServerRunning = (VarInsnNode) instruction;
-
-				if(storeIsIntegratedServerRunning.var == 2) {
-					break;
-				}
-
-				storeIsIntegratedServerRunning = null;
+				storeIsIntegratedServerRunning = instruction;
+				break;
 			}
 		}
 

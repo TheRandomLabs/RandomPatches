@@ -40,15 +40,15 @@ public class RPConfig {
 				RPStaticConfig.Defaults.FORCE_TITLE_SCREEN_ON_DISCONNECT;
 
 		@Config.RequiresMcRestart
+		@Config.LangKey("randompatches.config.client.narratorKeybind")
+		@Config.Comment(RPStaticConfig.Comments.NARRATOR_KEYBIND)
+		public boolean narratorKeybind = RPStaticConfig.Defaults.NARRATOR_KEYBIND;
+
+		@Config.RequiresMcRestart
 		@Config.LangKey("randompatches.config.client.patchTitleScreenOnDisconnect")
 		@Config.Comment(RPStaticConfig.Comments.PATCH_TITLE_SCREEN_ON_DISCONNECT)
 		public boolean patchTitleScreenOnDisconnect =
 				RPStaticConfig.Defaults.PATCH_TITLE_SCREEN_ON_DISCONNECT;
-
-		@Config.RequiresMcRestart
-		@Config.LangKey("randompatches.config.client.narratorKeybind")
-		@Config.Comment(RPStaticConfig.Comments.NARRATOR_KEYBIND)
-		public boolean narratorKeybind = RPStaticConfig.Defaults.NARRATOR_KEYBIND;
 	}
 
 	public static class Misc {

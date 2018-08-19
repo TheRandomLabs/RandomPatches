@@ -43,7 +43,7 @@ public final class RandomPatches {
 		boolean flag = false;
 
 		try {
-			Class.forName("net.minecraft.client.Minecraft");
+			Class.forName("net.minecraft.client.gui.GuiIngame");
 			flag = true;
 		} catch(ClassNotFoundException ignored) {}
 

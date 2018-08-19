@@ -15,10 +15,10 @@ public class RPStaticConfig {
 		public static final String FAST_LANGUAGE_SWITCH = "Speeds up language switching.";
 		public static final String FORCE_TITLE_SCREEN_ON_DISCONNECT = "Forces Minecraft to show " +
 				"the title screen after disconnecting rather than the Multiplayer or Realms menu.";
-		public static final String PATCH_TITLE_SCREEN_ON_DISCONNECT = "Set this to false to " +
-				"force disable the \"force title screen on disconnect\" patch.";
 		public static final String NARRATOR_KEYBIND =
 				"Whether to add the Toggle Narrator keybind to the controls.";
+		public static final String PATCH_TITLE_SCREEN_ON_DISCONNECT = "Set this to false to " +
+				"force disable the \"force title screen on disconnect\" patch.";
 
 		public static final String ICON_16 = "The path to the 16x16 Minecraft window " +
 				"icon. Leave this and the 32x32 icon blank to use the default icon.";
@@ -57,8 +57,8 @@ public class RPStaticConfig {
 		public static final boolean FAST_LANGUAGE_SWITCH = true;
 		public static final boolean FORCE_TITLE_SCREEN_ON_DISCONNECT =
 				RandomPatches.IS_DEOBFUSCATED;
-		public static final boolean PATCH_TITLE_SCREEN_ON_DISCONNECT = true;
 		public static final boolean NARRATOR_KEYBIND = true;
+		public static final boolean PATCH_TITLE_SCREEN_ON_DISCONNECT = true;
 
 		public static final String ICON_16 = RandomPatches.IS_DEOBFUSCATED ? "icon16.png" : "";
 		public static final String ICON_32 = ICON_16;
@@ -95,8 +95,8 @@ public class RPStaticConfig {
 
 	public static boolean fastLanguageSwitch;
 	public static boolean forceTitleScreenOnDisconnect;
-	public static boolean patchTitleScreenOnDisconnect;
 	public static boolean narratorKeybind;
+	public static boolean patchTitleScreenOnDisconnect;
 
 	//Client->Window
 
@@ -150,7 +150,6 @@ public class RPStaticConfig {
 
 		config.addCustomCategoryComment("client", CLIENT_COMMENT);
 
-		//Because there's no point in toggling this in-game, it requires an MC restart
 		fastLanguageSwitch = getBoolean("fastLanguageSwitch", "client",
 				Defaults.FAST_LANGUAGE_SWITCH, Comments.FAST_LANGUAGE_SWITCH, false, true);
 		forceTitleScreenOnDisconnect = getBoolean("forceTitleScreenOnDisconnect", "client",
@@ -160,7 +159,7 @@ public class RPStaticConfig {
 				Comments.NARRATOR_KEYBIND, false, true);
 		patchTitleScreenOnDisconnect = getBoolean("patchTitleScreenOnDisconnect", "client",
 				Defaults.PATCH_TITLE_SCREEN_ON_DISCONNECT,
-				Comments.PATCH_TITLE_SCREEN_ON_DISCONNECT, false, false);
+				Comments.PATCH_TITLE_SCREEN_ON_DISCONNECT, false, true);
 
 		config.addCustomCategoryComment("client.window", WINDOW_COMMENT);
 

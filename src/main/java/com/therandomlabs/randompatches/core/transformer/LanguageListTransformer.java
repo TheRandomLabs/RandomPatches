@@ -14,7 +14,6 @@ public class LanguageListTransformer extends Transformer {
 	@Override
 	public void transform(ClassNode node) {
 		final MethodNode method = findMethod(node, "elementClicked", "func_148144_a");
-
 		MethodInsnNode refreshResources = null;
 
 		for(int i = 0; i < method.instructions.size(); i++) {
