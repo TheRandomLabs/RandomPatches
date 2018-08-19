@@ -49,6 +49,11 @@ public class RPConfig {
 		@Config.Comment(RPStaticConfig.Comments.PATCH_TITLE_SCREEN_ON_DISCONNECT)
 		public boolean patchTitleScreenOnDisconnect =
 				RPStaticConfig.Defaults.PATCH_TITLE_SCREEN_ON_DISCONNECT;
+
+		@Config.RequiresWorldRestart
+		@Config.LangKey("randompatches.config.client.rpreloadclient")
+		@Config.Comment(RPStaticConfig.Comments.RPRELOADCLIENT)
+		public boolean rpreloadclient = RPStaticConfig.Defaults.RPRELOADCLIENT;
 	}
 
 	public static class Misc {
@@ -72,11 +77,6 @@ public class RPConfig {
 		@Config.LangKey("randompatches.config.misc.rpreload")
 		@Config.Comment(RPStaticConfig.Comments.RPRELOAD)
 		public boolean rpreload = RPStaticConfig.Defaults.RPRELOAD;
-
-		@Config.RequiresWorldRestart
-		@Config.LangKey("randompatches.config.misc.rpreloadclient")
-		@Config.Comment(RPStaticConfig.Comments.RPRELOADCLIENT)
-		public boolean rpreloadclient = RPStaticConfig.Defaults.RPRELOADCLIENT;
 	}
 
 	public static class SpeedLimits {

@@ -19,6 +19,7 @@ public class RPStaticConfig {
 				"Whether to add the Toggle Narrator keybind to the controls.";
 		public static final String PATCH_TITLE_SCREEN_ON_DISCONNECT = "Set this to false to " +
 				"force disable the \"force title screen on disconnect\" patch.";
+		public static final String RPRELOADCLIENT = "Enables the /rpreloadclient command.";
 
 		public static final String ICON_16 = "The path to the 16x16 Minecraft window " +
 				"icon. Leave this and the 32x32 icon blank to use the default icon.";
@@ -32,10 +33,7 @@ public class RPStaticConfig {
 				"Minecraft class patches (Toggle Narrator keybind and custom window title/icon).";
 		public static final String PATCH_NETHANDLERPLAYSERVER = "Set this to false to force " +
 				"disable the NetHandlerPlayServer patches (speed limits and disconnect timeouts).";
-		public static final String RPRELOAD = "Enables the /rpreload command. " +
-				"This option only takes effect after a world restart.";
-		public static final String RPRELOADCLIENT = "Enables the /rpreloadclient command. " +
-				"This option only takes effect after a Minecraft restart.";
+		public static final String RPRELOAD = "Enables the /rpreload command.";
 
 		public static final String MAX_PLAYER_SPEED =
 				"The maximum player speed. The vanilla default is 100.0.";
@@ -59,6 +57,7 @@ public class RPStaticConfig {
 				RandomPatches.IS_DEOBFUSCATED;
 		public static final boolean NARRATOR_KEYBIND = true;
 		public static final boolean PATCH_TITLE_SCREEN_ON_DISCONNECT = true;
+		public static final boolean RPRELOADCLIENT = true;
 
 		public static final String ICON_16 = RandomPatches.IS_DEOBFUSCATED ? "icon16.png" : "";
 		public static final String ICON_32 = ICON_16;
@@ -69,7 +68,6 @@ public class RPStaticConfig {
 		public static final boolean PATCH_MINECRAFT_CLASS = true;
 		public static final boolean PATCH_NETHANDLERPLAYSERVER = true;
 		public static final boolean RPRELOAD = true;
-		public static final boolean RPRELOADCLIENT = true;
 
 		public static final float MAX_PLAYER_SPEED = 1000000.0F;
 		public static final float MAX_PLAYER_ELYTRA_SPEED = 1000000.0F;
@@ -160,6 +158,8 @@ public class RPStaticConfig {
 		patchTitleScreenOnDisconnect = getBoolean("patchTitleScreenOnDisconnect", "client",
 				Defaults.PATCH_TITLE_SCREEN_ON_DISCONNECT,
 				Comments.PATCH_TITLE_SCREEN_ON_DISCONNECT, false, true);
+		rpreloadclient = getBoolean("rpreloadclient", "client", Defaults.RPRELOADCLIENT,
+				Comments.RPRELOADCLIENT, false, true);
 
 		config.addCustomCategoryComment("client.window", WINDOW_COMMENT);
 
@@ -178,9 +178,6 @@ public class RPStaticConfig {
 				true);
 		rpreload =
 				getBoolean("rpreload", "misc", Defaults.RPRELOAD, Comments.RPRELOAD, true, false);
-		rpreloadclient = getBoolean("rpreloadclient", "misc", Defaults.RPRELOADCLIENT,
-				Comments.RPRELOADCLIENT, false, true);
-
 		config.addCustomCategoryComment("speedLimits", SPEED_LIMITS_COMMENT);
 
 		maxPlayerSpeed = (float) getDouble("maxPlayerSpeed", "speedLimits",
