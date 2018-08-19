@@ -42,7 +42,7 @@ public class CommandRPReload extends CommandBase {
 				RPStaticConfig.reload();
 			}
 
-			sender.sendMessage(new TextComponentTranslation("commands.rpreloadclient.sucess"));
+			sender.sendMessage(new TextComponentTranslation("commands.rpreloadclient.success"));
 		}
 	}
 }

@@ -30,6 +30,6 @@ randompatches.config.window.icon32=Window icon (32x32)
 randompatches.config.window.title=Window title
 
 commands.rpreloadclient.usage=/rpreloadclient
-commands.rpreloadclient.sucess=RandomPatches client-sided configuration reloaded!
+commands.rpreloadclient.success=RandomPatches client-sided configuration reloaded!
 
 key.narrator=Toggle Narrator
