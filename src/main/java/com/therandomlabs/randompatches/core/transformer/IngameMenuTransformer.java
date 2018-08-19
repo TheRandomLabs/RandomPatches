@@ -5,32 +5,32 @@ import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.AbstractInsnNode;
 import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.FieldInsnNode;
-import org.objectweb.asm.tree.FrameNode;
 import org.objectweb.asm.tree.InsnNode;
 import org.objectweb.asm.tree.JumpInsnNode;
 import org.objectweb.asm.tree.LabelNode;
+import org.objectweb.asm.tree.MethodInsnNode;
 import org.objectweb.asm.tree.MethodNode;
 import org.objectweb.asm.tree.VarInsnNode;
 
 public class IngameMenuTransformer extends Transformer {
+	public static final String IS_INTEGRATED_SERVER_RUNNING =
+			getName("isIntegratedServerRunning", "func_71387_A");
+
 	@Override
 	public void transform(ClassNode node) {
 		final MethodNode method = findMethod(node, "actionPerformed", "func_146284_a");
+		AbstractInsnNode storeIsIntegratedServerRunning = null;
 
-		AbstractInsnNode toPatch = null;
-
-		for(int i = 0, frames = 0; i < method.instructions.size() && frames <= 2; i++) {
+		for(int i = 0; i < method.instructions.size(); i++) {
 			final AbstractInsnNode instruction = method.instructions.get(i);
 
-			if(instruction.getType() == AbstractInsnNode.FRAME &&
-					((FrameNode) instruction).type == Opcodes.F_SAME) {
-				frames++;
-			}
+			if(instruction.getOpcode() == Opcodes.INVOKEVIRTUAL) {
+				final MethodInsnNode isIntegratedServerRunning = (MethodInsnNode) instruction;
 
-			if(frames == 2 && instruction.getType() == AbstractInsnNode.VAR_INSN &&
-					instruction.getOpcode() == Opcodes.ISTORE) {
-				toPatch = instruction;
-				break;
+				if(IS_INTEGRATED_SERVER_RUNNING.equals(isIntegratedServerRunning.name)) {
+					storeIsIntegratedServerRunning = instruction.getNext();
+					break;
+				}
 			}
 		}
 
@@ -45,7 +45,7 @@ public class IngameMenuTransformer extends Transformer {
 		final InsnNode loadTrue = new InsnNode(Opcodes.ICONST_1);
 		final VarInsnNode storeTrue = new VarInsnNode(Opcodes.ISTORE, 2);
 
-		method.instructions.insert(toPatch, getEnabled);
+		method.instructions.insert(storeIsIntegratedServerRunning, getEnabled);
 		method.instructions.insert(getEnabled, jumpIfNotEnabled);
 		method.instructions.insert(jumpIfNotEnabled, loadTrue);
 		method.instructions.insert(loadTrue, storeTrue);

@@ -18,6 +18,7 @@ public class MinecartTransformer extends Transformer {
 
 			if(instruction.getOpcode() == Opcodes.INSTANCEOF) {
 				instanceOfPlayer = (TypeInsnNode) instruction;
+				break;
 			}
 		}
 

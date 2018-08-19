@@ -12,17 +12,19 @@ public class LoginServerTransformer extends Transformer {
 	@Override
 	public void transform(ClassNode node) {
 		final MethodNode method = findMethod(node, "update", "func_73660_a");
-
-		AbstractInsnNode toPatch = null;
+		LdcInsnNode loginTimeout = null;
 
 		for(int i = 0; i < method.instructions.size(); i++) {
 			final AbstractInsnNode instruction = method.instructions.get(i);
-			if(instruction.getType() == AbstractInsnNode.LDC_INSN) {
-				final LdcInsnNode ldc = (LdcInsnNode) instruction;
-				if(new Integer(600).equals(ldc.cst)) {
-					toPatch = ldc;
+
+			if(instruction.getOpcode() == Opcodes.LDC) {
+				loginTimeout = (LdcInsnNode) instruction;
+
+				if(new Integer(600).equals(loginTimeout.cst)) {
 					break;
 				}
+
+				loginTimeout = null;
 			}
 		}
 
@@ -33,7 +35,7 @@ public class LoginServerTransformer extends Transformer {
 				"I"
 		);
 
-		method.instructions.insert(toPatch, getLoginTimeout);
-		method.instructions.remove(toPatch);
+		method.instructions.insert(loginTimeout, getLoginTimeout);
+		method.instructions.remove(loginTimeout);
 	}
 }

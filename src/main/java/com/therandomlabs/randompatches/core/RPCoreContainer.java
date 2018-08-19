@@ -27,10 +27,14 @@ import org.lwjgl.opengl.Display;
 
 public class RPCoreContainer extends DummyModContainer {
 	public RPCoreContainer() {
-		super(loadMetadata(RPCore.getModFile(), RandomPatches.MODID, RandomPatches.NAME,
-				RandomPatches.VERSION));
+		super(loadMetadata(
+				RPCore.getModFile(),
+				RandomPatches.MODID,
+				RandomPatches.NAME,
+				RandomPatches.VERSION
+		));
 
-		if(!RandomPatches.ITLT_INSTALLED) {
+		if(RandomPatches.IS_CLIENT && !RandomPatches.ITLT_INSTALLED) {
 			WindowIconHandler.setWindowIcon();
 			Display.setTitle(RPStaticConfig.title);
 		}

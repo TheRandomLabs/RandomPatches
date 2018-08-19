@@ -111,7 +111,7 @@ public class RPTransformer implements IClassTransformer {
 			register("net.minecraft.network.NetHandlerLoginServer", new LoginServerTransformer());
 		}
 
-		if(RPStaticConfig.patchTitleScreenOnDisconnect) {
+		if(RandomPatches.IS_CLIENT && RPStaticConfig.patchTitleScreenOnDisconnect) {
 			register("net.minecraft.client.gui.GuiIngameMenu", new IngameMenuTransformer());
 		}
 
@@ -119,11 +119,11 @@ public class RPTransformer implements IClassTransformer {
 			register("net.minecraft.network.NetHandlerPlayServer", new PlayServerTransformer());
 		}
 
-		if(RPStaticConfig.fastLanguageSwitch) {
+		if(RandomPatches.IS_CLIENT && RPStaticConfig.fastLanguageSwitch) {
 			register("net.minecraft.client.gui.GuiLanguage$List", new LanguageListTransformer());
 		}
 
-		if(RPStaticConfig.patchMinecraftClass) {
+		if(RandomPatches.IS_CLIENT && RPStaticConfig.patchMinecraftClass) {
 			register("net.minecraft.client.Minecraft", new MinecraftTransformer());
 		}
 

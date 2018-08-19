@@ -24,6 +24,8 @@ public final class RandomPatches {
 	public static final boolean IS_DEOBFUSCATED =
 			(boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment");
 
+	public static final boolean IS_CLIENT;
+
 	public static final String MC_VERSION = (String) FMLInjectionData.data()[4];
 	public static final boolean IS_ONE_EIGHT = MC_VERSION.startsWith("1.8");
 	public static final boolean IS_ONE_NINE = MC_VERSION.startsWith("1.9");
@@ -38,28 +40,35 @@ public final class RandomPatches {
 	public static final Logger LOGGER = LogManager.getLogger(MODID);
 
 	static {
-		boolean installed = false;
+		boolean flag = false;
+
+		try {
+			Class.forName("net.minecraft.client.Minecraft");
+			flag = true;
+		} catch(ClassNotFoundException ignored) {}
+
+		IS_CLIENT = flag;
+		flag = false;
 
 		try {
 			Class.forName("dk.zlepper.itlt.about.mod");
-			installed = true;
+			flag = true;
 		} catch(ClassNotFoundException ignored) {}
 
-		ITLT_INSTALLED = installed;
-
-		installed = false;
+		ITLT_INSTALLED = flag;
+		flag = false;
 
 		try {
 			Class.forName("quaternary.rebindnarrator.RebindNarrator");
-			installed = true;
+			flag = true;
 		} catch(ClassNotFoundException ignored) {}
 
-		REBIND_NARRATOR_INSTALLED = installed;
+		REBIND_NARRATOR_INSTALLED = flag;
 	}
 
 	@Subscribe
 	public void preInit(FMLPreInitializationEvent event) {
-		if(!event.getSide().equals(Side.CLIENT)) {
+		if(!IS_CLIENT) {
 			return;
 		}
 
@@ -74,7 +83,7 @@ public final class RandomPatches {
 
 	@Subscribe
 	public void init(FMLInitializationEvent event) {
-		if(!event.getSide().equals(Side.CLIENT)) {
+		if(!IS_CLIENT) {
 			return;
 		}
 

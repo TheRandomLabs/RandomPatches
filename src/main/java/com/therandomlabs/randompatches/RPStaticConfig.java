@@ -214,7 +214,7 @@ public class RPStaticConfig {
 			icon32 = icon16;
 		}
 
-		if(!RandomPatches.ITLT_INSTALLED && Display.isCreated()) {
+		if(RandomPatches.IS_CLIENT && !RandomPatches.ITLT_INSTALLED && Display.isCreated()) {
 			WindowIconHandler.setWindowIcon();
 			Display.setTitle(title);
 		}
