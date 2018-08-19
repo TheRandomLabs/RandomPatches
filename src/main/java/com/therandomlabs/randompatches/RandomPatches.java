@@ -80,8 +80,7 @@ public final class RandomPatches {
 
 		MinecraftForge.EVENT_BUS.register(this);
 
-		if(RPStaticConfig.narratorKeybind && RandomPatches.IS_ONE_TWELVE &&
-				!RandomPatches.REBIND_NARRATOR_INSTALLED) {
+		if(RPStaticConfig.narratorKeybind && IS_ONE_TWELVE && !REBIND_NARRATOR_INSTALLED) {
 			MinecraftTransformer.registerKeybind();
 		}
 	}
