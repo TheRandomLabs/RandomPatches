@@ -1,6 +1,7 @@
 {
 	"homepage": "https://minecraft.curseforge.com/projects/randompatches",
 	"1.12.2": {
+		"1.12.2-1.5.0.2": "Potentially fixed a crash with AppleCore.",
 		"1.12.2-1.5.0.1": "Bug fixes and improvements.",
 		"1.12.2-1.5.0.0": "Fixed an issue regarding configuration reloading.\nAdded configuration options to force disable the transformation of specific classes.\nAdded options to configure the window title and icon.",
 		"1.12.2-1.4.1.1": "Fixed a crash with Rebind Narrator.",
@@ -16,6 +17,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.12.1": {
+		"1.12.2-1.5.0.2": "Potentially fixed a crash with AppleCore.",
 		"1.12.2-1.5.0.1": "Bug fixes and improvements.",
 		"1.12.2-1.5.0.0": "Fixed an issue regarding configuration reloading.\nAdded configuration options to force disable the transformation of specific classes.\nAdded options to configure the window title and icon.",
 		"1.12.2-1.4.1.1": "Fixed a crash with Rebind Narrator.",
@@ -31,6 +33,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.12": {
+		"1.12.2-1.5.0.2": "Potentially fixed a crash with AppleCore.",
 		"1.12.2-1.5.0.1": "Bug fixes and improvements.",
 		"1.12.2-1.5.0.0": "Fixed an issue regarding configuration reloading.\nAdded configuration options to force disable the transformation of specific classes.\nAdded options to configure the window title and icon.",
 		"1.12.2-1.4.1.1": "Fixed a crash with Rebind Narrator.",
@@ -46,6 +49,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.11.2": {
+		"1.12.2-1.5.0.2": "Potentially fixed a crash with AppleCore.",
 		"1.12.2-1.5.0.1": "Bug fixes and improvements.",
 		"1.12.2-1.5.0.0": "Fixed an issue regarding configuration reloading.\nAdded configuration options to force disable the transformation of specific classes.\nAdded options to configure the window title and icon.",
 		"1.12.2-1.4.1.1": "Fixed a crash with Rebind Narrator.",
@@ -61,6 +65,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.11": {
+		"1.12.2-1.5.0.2": "Potentially fixed a crash with AppleCore.",
 		"1.12.2-1.5.0.1": "Bug fixes and improvements.",
 		"1.12.2-1.5.0.0": "Fixed an issue regarding configuration reloading.\nAdded configuration options to force disable the transformation of specific classes.\nAdded options to configure the window title and icon.",
 		"1.12.2-1.4.1.1": "Fixed a crash with Rebind Narrator.",
@@ -76,6 +81,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.10.2": {
+		"1.12.2-1.5.0.2": "Potentially fixed a crash with AppleCore.",
 		"1.12.2-1.5.0.1": "Bug fixes and improvements.",
 		"1.12.2-1.5.0.0": "Fixed an issue regarding configuration reloading.\nAdded configuration options to force disable the transformation of specific classes.\nAdded options to configure the window title and icon.",
 		"1.12.2-1.4.1.1": "Fixed a crash with Rebind Narrator.",
@@ -91,6 +97,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.10": {
+		"1.12.2-1.5.0.2": "Potentially fixed a crash with AppleCore.",
 		"1.12.2-1.5.0.1": "Bug fixes and improvements.",
 		"1.12.2-1.5.0.0": "Fixed an issue regarding configuration reloading.\nAdded configuration options to force disable the transformation of specific classes.\nAdded options to configure the window title and icon.",
 		"1.12.2-1.4.1.1": "Fixed a crash with Rebind Narrator.",
@@ -106,6 +113,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.9.4": {
+		"1.12.2-1.5.0.2": "Potentially fixed a crash with AppleCore.",
 		"1.12.2-1.5.0.1": "Bug fixes and improvements.",
 		"1.12.2-1.5.0.0": "Fixed an issue regarding configuration reloading.\nAdded configuration options to force disable the transformation of specific classes.\nAdded options to configure the window title and icon.",
 		"1.12.2-1.4.1.1": "Fixed a crash with Rebind Narrator.",
@@ -114,6 +122,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.9": {
+		"1.12.2-1.5.0.2": "Potentially fixed a crash with AppleCore.",
 		"1.12.2-1.5.0.1": "Bug fixes and improvements.",
 		"1.12.2-1.5.0.0": "Fixed an issue regarding configuration reloading.\nAdded configuration options to force disable the transformation of specific classes.\nAdded options to configure the window title and icon.",
 		"1.12.2-1.4.1.1": "Fixed a crash with Rebind Narrator.",
@@ -122,6 +131,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.8.9": {
+		"1.12.2-1.5.0.2": "Potentially fixed a crash with AppleCore.",
 		"1.12.2-1.5.0.1": "Bug fixes and improvements.",
 		"1.12.2-1.5.0.0": "Fixed an issue regarding configuration reloading.\nAdded configuration options to force disable the transformation of specific classes.\nAdded options to configure the window title and icon.",
 		"1.12.2-1.4.1.1": "Fixed a crash with Rebind Narrator.",
@@ -130,6 +140,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.8.8": {
+		"1.12.2-1.5.0.2": "Potentially fixed a crash with AppleCore.",
 		"1.12.2-1.5.0.1": "Bug fixes and improvements.",
 		"1.12.2-1.5.0.0": "Fixed an issue regarding configuration reloading.\nAdded configuration options to force disable the transformation of specific classes.\nAdded options to configure the window title and icon.",
 		"1.12.2-1.4.1.1": "Fixed a crash with Rebind Narrator.",
@@ -138,6 +149,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.8": {
+		"1.12.2-1.5.0.2": "Potentially fixed a crash with AppleCore.",
 		"1.12.2-1.5.0.1": "Bug fixes and improvements.",
 		"1.12.2-1.5.0.0": "Fixed an issue regarding configuration reloading.\nAdded configuration options to force disable the transformation of specific classes.\nAdded options to configure the window title and icon.",
 		"1.12.2-1.4.1.1": "Fixed a crash with Rebind Narrator.",
@@ -146,27 +158,27 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"promos": {
-		"1.12.2-latest": "1.12.2-1.5.0.1",
-		"1.12.2-recommended": "1.12.2-1.5.0.1",
-		"1.12-latest": "1.12.2-1.5.0.1",
-		"1.12-recommended": "1.12.2-1.5.0.1",
-		"1.11.2-latest": "1.12.2-1.5.0.1",
-		"1.11.2-recommended": "1.12.2-1.5.0.1",
-		"1.11-latest": "1.12.2-1.5.0.1",
-		"1.11-recommended": "1.12.2-1.5.0.1",
-		"1.10.2-latest": "1.12.2-1.5.0.1",
-		"1.10.2-recommended": "1.12.2-1.5.0.1",
-		"1.10-latest": "1.12.2-1.5.0.1",
-		"1.10-recommended": "1.12.2-1.5.0.1",
-		"1.9.4-latest": "1.12.2-1.5.0.1",
-		"1.9.4-recommended": "1.12.2-1.5.0.1",
-		"1.9-latest": "1.12.2-1.5.0.1",
-		"1.9-recommended": "1.12.2-1.5.0.1",
-		"1.8.9-latest": "1.12.2-1.5.0.1",
-		"1.8.9-recommended": "1.12.2-1.5.0.1",
-		"1.8.8-latest": "1.12.2-1.5.0.1",
-		"1.8.8-recommended": "1.12.2-1.5.0.1",
-		"1.8-latest": "1.12.2-1.5.0.1",
-		"1.8-recommended": "1.12.2-1.5.0.1"
+		"1.12.2-latest": "1.12.2-1.5.0.2",
+		"1.12.2-recommended": "1.12.2-1.5.0.2",
+		"1.12-latest": "1.12.2-1.5.0.2",
+		"1.12-recommended": "1.12.2-1.5.0.2",
+		"1.11.2-latest": "1.12.2-1.5.0.2",
+		"1.11.2-recommended": "1.12.2-1.5.0.2",
+		"1.11-latest": "1.12.2-1.5.0.2",
+		"1.11-recommended": "1.12.2-1.5.0.2",
+		"1.10.2-latest": "1.12.2-1.5.0.2",
+		"1.10.2-recommended": "1.12.2-1.5.0.2",
+		"1.10-latest": "1.12.2-1.5.0.2",
+		"1.10-recommended": "1.12.2-1.5.0.2",
+		"1.9.4-latest": "1.12.2-1.5.0.2",
+		"1.9.4-recommended": "1.12.2-1.5.0.2",
+		"1.9-latest": "1.12.2-1.5.0.2",
+		"1.9-recommended": "1.12.2-1.5.0.2",
+		"1.8.9-latest": "1.12.2-1.5.0.2",
+		"1.8.9-recommended": "1.12.2-1.5.0.2",
+		"1.8.8-latest": "1.12.2-1.5.0.2",
+		"1.8.8-recommended": "1.12.2-1.5.0.2",
+		"1.8-latest": "1.12.2-1.5.0.2",
+		"1.8-recommended": "1.12.2-1.5.0.2"
 	}
 }
