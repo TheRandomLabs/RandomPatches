@@ -11,6 +11,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.FMLInjectionData;
+import net.minecraftforge.fml.relauncher.FMLLaunchHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -24,7 +25,7 @@ public final class RandomPatches {
 	public static final boolean IS_DEOBFUSCATED =
 			(boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment");
 
-	public static final boolean IS_CLIENT;
+	public static final boolean IS_CLIENT = FMLLaunchHandler.side().isClient();
 
 	public static final String MC_VERSION = (String) FMLInjectionData.data()[4];
 	public static final boolean IS_ONE_EIGHT = MC_VERSION.startsWith("1.8");
@@ -41,14 +42,6 @@ public final class RandomPatches {
 
 	static {
 		boolean flag = false;
-
-		try {
-			Class.forName("net.minecraft.client.gui.GuiIngame");
-			flag = true;
-		} catch(ClassNotFoundException ignored) {}
-
-		IS_CLIENT = flag;
-		flag = false;
 
 		try {
 			Class.forName("dk.zlepper.itlt.about.mod");
