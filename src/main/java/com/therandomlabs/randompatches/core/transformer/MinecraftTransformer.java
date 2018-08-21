@@ -85,6 +85,10 @@ public class MinecraftTransformer extends Transformer {
 	}
 
 	public static void handleKeypress() {
+		if(toggleNarrator == null) {
+			return;
+		}
+
 		final int eventKey = Keyboard.getEventKey();
 		final int key = eventKey == 0 ? Keyboard.getEventCharacter() + 256 : eventKey;
 

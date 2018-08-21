@@ -80,7 +80,9 @@ public final class RandomPatches {
 			return;
 		}
 
-		MinecraftForge.EVENT_BUS.register(this);
+		if(RPStaticConfig.CONFIG_GUI_ENABLED) {
+			MinecraftForge.EVENT_BUS.register(this);
+		}
 
 		if(RPStaticConfig.narratorKeybind && IS_ONE_TWELVE && !REBIND_NARRATOR_INSTALLED) {
 			MinecraftTransformer.registerKeybind();
