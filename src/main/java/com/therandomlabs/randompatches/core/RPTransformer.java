@@ -17,22 +17,11 @@ import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.tree.ClassNode;
 
 public class RPTransformer implements IClassTransformer {
-	public static final boolean SPONGEFORGE_INSTALLED;
-
 	private static final Map<String, Transformer> TRANSFORMERS = new HashMap<>();
 
 	static {
 		RPStaticConfig.reload();
 		register();
-
-		boolean installed = false;
-
-		try {
-			Class.forName("org.spongepowered.mod.SpongeMod");
-			installed = true;
-		} catch(ClassNotFoundException ignored) {}
-
-		SPONGEFORGE_INSTALLED = installed;
 	}
 
 	@Override
@@ -52,10 +41,13 @@ public class RPTransformer implements IClassTransformer {
 		try {
 			transformer.transform(node);
 
-			int flags = ClassWriter.COMPUTE_FRAMES;
+			final int flags;
 
-			if(SPONGEFORGE_INSTALLED && transformer.getClass() == PlayServerTransformer.class) {
+			if(RandomPatches.SPONGEFORGE_INSTALLED &&
+					transformer.getClass() == PlayServerTransformer.class) {
 				flags = ClassWriter.COMPUTE_MAXS;
+			} else {
+				flags = ClassWriter.COMPUTE_FRAMES;
 			}
 
 			final ClassWriter writer = new ClassWriter(flags) {
@@ -70,8 +62,10 @@ public class RPTransformer implements IClassTransformer {
 						c = Class.forName(type1.replace('/', '.'), false, classLoader);
 						d = Class.forName(type2.replace('/', '.'), false, classLoader);
 					} catch(Exception ex) {
-						throw new RuntimeException("Error while getting common superclass of " +
-								type1 + " and " + type2, ex);
+						throw new RuntimeException(
+								"Could not get common superclass of " + type1 + " and " + type2,
+								ex
+						);
 					}
 
 					if(c.isAssignableFrom(d)) {
@@ -93,7 +87,9 @@ public class RPTransformer implements IClassTransformer {
 					return c.getName().replace('.', '/');
 				}
 			};
+
 			node.accept(writer);
+
 			return writer.toByteArray();
 		} catch(Exception ex) {
 			RandomPatches.LOGGER.error("Failed to transform class: " + transformedName, ex);
@@ -111,7 +107,7 @@ public class RPTransformer implements IClassTransformer {
 			register("net.minecraft.network.NetHandlerLoginServer", new LoginServerTransformer());
 		}
 
-		if(RandomPatches.IS_CLIENT && RPStaticConfig.patchTitleScreenOnDisconnect) {
+		if(RPStaticConfig.patchTitleScreenOnDisconnect) {
 			register("net.minecraft.client.gui.GuiIngameMenu", new IngameMenuTransformer());
 		}
 
@@ -119,11 +115,11 @@ public class RPTransformer implements IClassTransformer {
 			register("net.minecraft.network.NetHandlerPlayServer", new PlayServerTransformer());
 		}
 
-		if(RandomPatches.IS_CLIENT && RPStaticConfig.fastLanguageSwitch) {
+		if(RPStaticConfig.fastLanguageSwitch) {
 			register("net.minecraft.client.gui.GuiLanguage$List", new LanguageListTransformer());
 		}
 
-		if(RandomPatches.IS_CLIENT && RPStaticConfig.patchMinecraftClass) {
+		if(RPStaticConfig.patchMinecraftClass) {
 			register("net.minecraft.client.Minecraft", new MinecraftTransformer());
 		}
 

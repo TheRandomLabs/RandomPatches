@@ -31,8 +31,7 @@ public class MinecraftTransformer extends Transformer {
 			transformCreateDisplay(findMethod(node, "createDisplay", "func_175609_am"));
 		}
 
-		if(RPStaticConfig.narratorKeybind && RandomPatches.IS_ONE_TWELVE &&
-				!RandomPatches.REBIND_NARRATOR_INSTALLED) {
+		if(RPStaticConfig.isNarratorKeybindEnabled()) {
 			transformDispatchKeypresses(findMethod(node, "dispatchKeypresses", "func_152348_aa"));
 		}
 	}

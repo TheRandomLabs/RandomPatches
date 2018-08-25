@@ -133,6 +133,11 @@ public class RPStaticConfig {
 	private static Configuration config;
 	private static Configuration currentConfig;
 
+	public static boolean isNarratorKeybindEnabled() {
+		return RPStaticConfig.narratorKeybind && RandomPatches.IS_ONE_TWELVE &&
+				!RandomPatches.REBIND_NARRATOR_INSTALLED;
+	}
+
 	public static void setCurrentConfig(Configuration config) {
 		currentConfig = config;
 	}
@@ -213,7 +218,7 @@ public class RPStaticConfig {
 			icon32 = icon16;
 		}
 
-		if(RandomPatches.IS_CLIENT && !RandomPatches.ITLT_INSTALLED && Display.isCreated()) {
+		if(RPEventHandler.IS_CLIENT && !RandomPatches.ITLT_INSTALLED && Display.isCreated()) {
 			WindowIconHandler.setWindowIcon();
 			Display.setTitle(title);
 		}

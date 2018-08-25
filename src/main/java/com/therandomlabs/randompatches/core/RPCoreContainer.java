@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.jar.JarFile;
 import com.google.common.collect.ImmutableList;
 import com.google.common.eventbus.EventBus;
+import com.therandomlabs.randompatches.RPEventHandler;
 import com.therandomlabs.randompatches.RPStaticConfig;
 import com.therandomlabs.randompatches.RandomPatches;
 import com.therandomlabs.randompatches.WindowIconHandler;
@@ -34,7 +35,7 @@ public class RPCoreContainer extends DummyModContainer {
 				RandomPatches.VERSION
 		));
 
-		if(RandomPatches.IS_CLIENT && !RandomPatches.ITLT_INSTALLED) {
+		if(RPEventHandler.IS_CLIENT && !RandomPatches.ITLT_INSTALLED) {
 			WindowIconHandler.setWindowIcon();
 			Display.setTitle(RPStaticConfig.title);
 		}
@@ -63,7 +64,7 @@ public class RPCoreContainer extends DummyModContainer {
 	public boolean registerBus(EventBus bus, LoadController controller) {
 		if(!RandomPatches.IS_ONE_EIGHT && !RandomPatches.IS_ONE_NINE) {
 			Loader.instance().setActiveModContainer(this);
-			bus.register(new RandomPatches());
+			bus.register(new RPEventHandler());
 		}
 
 		return true;

@@ -1,6 +1,6 @@
 package com.therandomlabs.randompatches.core.transformer;
 
-import com.therandomlabs.randompatches.core.RPTransformer;
+import com.therandomlabs.randompatches.RandomPatches;
 import com.therandomlabs.randompatches.core.Transformer;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.AbstractInsnNode;
@@ -21,7 +21,7 @@ public class PlayServerTransformer extends Transformer {
 	public void transform(ClassNode node) {
 		transformUpdate(findMethod(node, "update", "func_73660_a"));
 
-		if(RPTransformer.SPONGEFORGE_INSTALLED) {
+		if(RandomPatches.SPONGEFORGE_INSTALLED) {
 			return;
 		}
 
