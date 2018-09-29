@@ -11,7 +11,6 @@ import com.therandomlabs.randompatches.core.transformer.MinecartTransformer;
 import com.therandomlabs.randompatches.core.transformer.MinecraftTransformer;
 import com.therandomlabs.randompatches.core.transformer.PlayServerTransformer;
 import net.minecraft.launchwrapper.IClassTransformer;
-import net.minecraft.launchwrapper.Launch;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.tree.ClassNode;
@@ -50,46 +49,8 @@ public class RPTransformer implements IClassTransformer {
 				flags = ClassWriter.COMPUTE_FRAMES;
 			}
 
-			final ClassWriter writer = new ClassWriter(flags) {
-				@Override
-				protected String getCommonSuperClass(String type1, String type2) {
-					final ClassLoader classLoader = Launch.classLoader;
-
-					Class<?> c;
-					final Class<?> d;
-
-					try {
-						c = Class.forName(type1.replace('/', '.'), false, classLoader);
-						d = Class.forName(type2.replace('/', '.'), false, classLoader);
-					} catch(Exception ex) {
-						throw new RuntimeException(
-								"Could not get common superclass of " + type1 + " and " + type2,
-								ex
-						);
-					}
-
-					if(c.isAssignableFrom(d)) {
-						return type1;
-					}
-
-					if(d.isAssignableFrom(c)) {
-						return type2;
-					}
-
-					if(c.isInterface() || d.isInterface()) {
-						return "java/lang/Object";
-					}
-
-					do {
-						c = c.getSuperclass();
-					} while(!c.isAssignableFrom(d));
-
-					return c.getName().replace('.', '/');
-				}
-			};
-
+			final ClassWriter writer = new RPClassWriter(flags);
 			node.accept(writer);
-
 			return writer.toByteArray();
 		} catch(Exception ex) {
 			RandomPatches.LOGGER.error("Failed to transform class: " + transformedName, ex);

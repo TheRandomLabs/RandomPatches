@@ -1,13 +1,10 @@
 package com.therandomlabs.randompatches.core;
 
 import java.io.File;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
 import java.util.Map;
+import com.therandomlabs.randompatches.RPUtils;
 import com.therandomlabs.randompatches.RandomPatches;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
-import org.apache.commons.lang3.StringUtils;
 
 @IFMLLoadingPlugin.SortingIndex(1002)
 @IFMLLoadingPlugin.Name(RandomPatches.NAME)
@@ -34,7 +31,7 @@ public class RPCore implements IFMLLoadingPlugin {
 
 	@Override
 	public void injectData(Map<String, Object> data) {
-		modFile = getModFile(data, RPCore.class, "com/therandomlabs/randompatches/core");
+		modFile = RPUtils.getModFile(data, RPCore.class, "com/therandomlabs/randompatches/core");
 	}
 
 	@Override
@@ -44,34 +41,5 @@ public class RPCore implements IFMLLoadingPlugin {
 
 	public static File getModFile() {
 		return modFile;
-	}
-
-	public static File getModFile(Map<String, Object> data, Class<?> clazz, String packageName) {
-		File modFile = (File) data.get("coremodLocation");
-
-		if(modFile != null) {
-			return modFile;
-		}
-
-		//If coremodLocation is null, the coremod was probably loaded by command-line arguments and
-		//will most likely be in a directory
-
-		String uri = clazz.getResource(
-				"/" + StringUtils.replaceChars(clazz.getName(), '.', '/') + ".class"
-		).toString();
-
-		//Give up
-		if(!uri.startsWith("file:")) {
-			return null;
-		}
-
-		//Get rid of an extra slash at the end while we're at it
-		uri = uri.substring(6, uri.indexOf(packageName));
-
-		try {
-			return new File(URLDecoder.decode(uri, StandardCharsets.UTF_8.name()));
-		} catch(UnsupportedEncodingException ignored) {}
-
-		return null;
 	}
 }

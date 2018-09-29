@@ -11,6 +11,7 @@ import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.FMLLaunchHandler;
 import net.minecraftforge.fml.relauncher.Side;
+import org.lwjgl.opengl.Display;
 
 public final class RPEventHandler {
 	public static final boolean IS_CLIENT = FMLLaunchHandler.side().isClient();
@@ -56,6 +57,13 @@ public final class RPEventHandler {
 	public void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event) {
 		if(event.getModID().equals(RandomPatches.MODID)) {
 			RPConfig.reload();
+		}
+	}
+
+	public static void containerInit() {
+		if(RPEventHandler.IS_CLIENT && !RandomPatches.ITLT_INSTALLED) {
+			WindowIconHandler.setWindowIcon();
+			Display.setTitle(RPStaticConfig.title);
 		}
 	}
 }

@@ -153,18 +153,50 @@ public class RPStaticConfig {
 
 		config.addCustomCategoryComment("client", CLIENT_COMMENT);
 
-		fastLanguageSwitch = getBoolean("fastLanguageSwitch", "client",
-				Defaults.FAST_LANGUAGE_SWITCH, Comments.FAST_LANGUAGE_SWITCH, false, true);
-		forceTitleScreenOnDisconnect = getBoolean("forceTitleScreenOnDisconnect", "client",
+		fastLanguageSwitch = getBoolean(
+				"fastLanguageSwitch",
+				"client",
+				Defaults.FAST_LANGUAGE_SWITCH,
+				Comments.FAST_LANGUAGE_SWITCH,
+				false,
+				true
+		);
+
+		forceTitleScreenOnDisconnect = getBoolean(
+				"forceTitleScreenOnDisconnect",
+				"client",
 				Defaults.FORCE_TITLE_SCREEN_ON_DISCONNECT,
-				Comments.FORCE_TITLE_SCREEN_ON_DISCONNECT, false, false);
-		narratorKeybind = getBoolean("narratorKeybind", "client", Defaults.NARRATOR_KEYBIND,
-				Comments.NARRATOR_KEYBIND, false, true);
-		patchTitleScreenOnDisconnect = getBoolean("patchTitleScreenOnDisconnect", "client",
+				Comments.FORCE_TITLE_SCREEN_ON_DISCONNECT,
+				false,
+				false
+		);
+
+		narratorKeybind = getBoolean(
+				"narratorKeybind",
+				"client",
+				Defaults.NARRATOR_KEYBIND,
+				Comments.NARRATOR_KEYBIND,
+				false,
+				true
+		);
+
+		patchTitleScreenOnDisconnect = getBoolean(
+				"patchTitleScreenOnDisconnect",
+				"client",
 				Defaults.PATCH_TITLE_SCREEN_ON_DISCONNECT,
-				Comments.PATCH_TITLE_SCREEN_ON_DISCONNECT, false, true);
-		rpreloadclient = getBoolean("rpreloadclient", "client", Defaults.RPRELOADCLIENT,
-				Comments.RPRELOADCLIENT, false, true);
+				Comments.PATCH_TITLE_SCREEN_ON_DISCONNECT,
+				false,
+				true
+		);
+
+		rpreloadclient = getBoolean(
+				"rpreloadclient",
+				"client",
+				Defaults.RPRELOADCLIENT,
+				Comments.RPRELOADCLIENT,
+				false,
+				true
+		);
 
 		config.addCustomCategoryComment("client.window", WINDOW_COMMENT);
 
@@ -174,36 +206,105 @@ public class RPStaticConfig {
 
 		config.addCustomCategoryComment("misc", MISC_COMMENT);
 
-		minecartAIFix = getBoolean("minecartAIFix", "misc", Defaults.MINECART_AI_FIX,
-				Comments.MINECART_AI_FIX, false, true);
-		patchMinecraftClass = getBoolean("patchMinecraftClass", "misc",
-				Defaults.PATCH_MINECRAFT_CLASS, Comments.PATCH_MINECRAFT_CLASS, false, true);
-		patchNetHandlerPlayServer = getBoolean("patchNetHandlerPlayServer", "misc",
-				Defaults.PATCH_NETHANDLERPLAYSERVER, Comments.PATCH_NETHANDLERPLAYSERVER, false,
-				true);
-		rpreload =
-				getBoolean("rpreload", "misc", Defaults.RPRELOAD, Comments.RPRELOAD, true, false);
+		minecartAIFix = getBoolean(
+				"minecartAIFix",
+				"misc",
+				Defaults.MINECART_AI_FIX,
+				Comments.MINECART_AI_FIX,
+				false,
+				true
+		);
+
+		patchMinecraftClass = getBoolean(
+				"patchMinecraftClass",
+				"misc",
+				Defaults.PATCH_MINECRAFT_CLASS,
+				Comments.PATCH_MINECRAFT_CLASS,
+				false,
+				true
+		);
+
+		patchNetHandlerPlayServer = getBoolean(
+				"patchNetHandlerPlayServer",
+				"misc",
+				Defaults.PATCH_NETHANDLERPLAYSERVER,
+				Comments.PATCH_NETHANDLERPLAYSERVER,
+				false,
+				true
+		);
+
+		rpreload = getBoolean(
+				"rpreload",
+				"misc",
+				Defaults.RPRELOAD,
+				Comments.RPRELOAD,
+				true,
+				false
+		);
+
 		config.addCustomCategoryComment("speedLimits", SPEED_LIMITS_COMMENT);
 
-		maxPlayerSpeed = (float) getDouble("maxPlayerSpeed", "speedLimits",
-				Defaults.MAX_PLAYER_SPEED, 1.0, Comments.MAX_PLAYER_SPEED);
-		maxPlayerElytraSpeed = (float) getDouble("maxPlayerElytraSpeed", "speedLimits",
-				Defaults.MAX_PLAYER_ELYTRA_SPEED, 1.0, Comments.MAX_PLAYER_ELYTRA_SPEED);
-		maxPlayerVehicleSpeed = getDouble("maxPlayerVehicleSpeed", "speedLimits",
-				Defaults.MAX_PLAYER_VEHICLE_SPEED, 1.0, Comments.MAX_PLAYER_VEHICLE_SPEED);
+		maxPlayerSpeed = (float) getDouble(
+				"maxPlayerSpeed",
+				"speedLimits",
+				Defaults.MAX_PLAYER_SPEED,
+				1.0,
+				Comments.MAX_PLAYER_SPEED
+		);
+
+		maxPlayerElytraSpeed = (float) getDouble(
+				"maxPlayerElytraSpeed",
+				"speedLimits",
+				Defaults.MAX_PLAYER_ELYTRA_SPEED,
+				1.0,
+				Comments.MAX_PLAYER_ELYTRA_SPEED
+		);
+
+		maxPlayerVehicleSpeed = getDouble(
+				"maxPlayerVehicleSpeed",
+				"speedLimits",
+				Defaults.MAX_PLAYER_VEHICLE_SPEED,
+				1.0,
+				Comments.MAX_PLAYER_VEHICLE_SPEED
+		);
 
 		config.addCustomCategoryComment("timeouts", TIMEOUTS_COMMENT);
 
-		keepAlivePacketInterval = getInt("keepAlivePacketInterval", "timeouts",
-				Defaults.KEEP_ALIVE_PACKET_INTERVAL, 1, Integer.MAX_VALUE,
-				Comments.KEEP_ALIVE_PACKET_INTERVAL);
-		loginTimeout = getInt("loginTimeout", "timeouts", Defaults.LOGIN_TIMEOUT, 1,
-				Integer.MAX_VALUE, Comments.LOGIN_TIMEOUT);
-		patchLoginTimeout = getBoolean("patchLoginTimeout", "timeouts",
-				Defaults.PATCH_LOGIN_TIMEOUT, Comments.PATCH_LOGIN_TIMEOUT, false, true);
-		readTimeout = getInt("readTimeout", "timeouts", Defaults.READ_TIMEOUT, 1,
+		keepAlivePacketInterval = getInt(
+				"keepAlivePacketInterval",
+				"timeouts",
+				Defaults.KEEP_ALIVE_PACKET_INTERVAL,
+				1,
 				Integer.MAX_VALUE,
-				Comments.READ_TIMEOUT);
+				Comments.KEEP_ALIVE_PACKET_INTERVAL
+		);
+
+		loginTimeout = getInt(
+				"loginTimeout",
+				"timeouts",
+				Defaults.LOGIN_TIMEOUT,
+				1,
+				Integer.MAX_VALUE,
+				Comments.LOGIN_TIMEOUT
+		);
+
+		patchLoginTimeout = getBoolean(
+				"patchLoginTimeout",
+				"timeouts",
+				Defaults.PATCH_LOGIN_TIMEOUT,
+				Comments.PATCH_LOGIN_TIMEOUT,
+				false,
+				true
+		);
+
+		readTimeout = getInt(
+				"readTimeout",
+				"timeouts",
+				Defaults.READ_TIMEOUT,
+				1,
+				Integer.MAX_VALUE,
+				Comments.READ_TIMEOUT
+		);
 
 		removeOldProperties(config);
 		onReload();
@@ -243,20 +344,29 @@ public class RPStaticConfig {
 
 		property.setMinValue(minValue);
 		property.setMaxValue(maxValue);
-		setComment(property, comment + "\nMin: " + minValue + "\nMax: " + maxValue +
-				"\nDefault: " + defaultValue);
+		setComment(
+				property,
+				comment + "\nMin: " + minValue + "\nMax: " + maxValue + "\nDefault: " + defaultValue
+		);
 
 		return property.getInt(defaultValue);
 	}
 
 	public static double getDouble(String name, String category, double defaultValue,
 			double minValue, String comment) {
+		return getDouble(name, category, defaultValue, minValue, Double.MAX_VALUE, comment);
+	}
+
+	public static double getDouble(String name, String category, double defaultValue,
+			double minValue, double maxValue, String comment) {
 		final Property property = currentConfig.get(category, name, defaultValue);
 
 		property.setMinValue(minValue);
-		property.setMaxValue(Double.MAX_VALUE);
-		setComment(property, comment + "\nMin: " + minValue + "\nMax: " + Double.MAX_VALUE +
-				"\nDefault: " + defaultValue);
+		property.setMaxValue(maxValue);
+		setComment(
+				property,
+				comment + "\nMin: " + minValue + "\nMax: " + maxValue + "\nDefault: " + defaultValue
+		);
 
 		return property.getDouble(defaultValue);
 	}

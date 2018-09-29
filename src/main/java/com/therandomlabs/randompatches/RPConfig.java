@@ -192,8 +192,9 @@ public class RPConfig {
 				properties.put(object, object.getClass().getDeclaredFields());
 			}
 		} catch(Exception ex) {
-			throw new ReportedException(new CrashReport("Error while getting config properties",
-					ex));
+			throw new ReportedException(new CrashReport(
+					"Error while getting config properties", ex
+			));
 		}
 
 		return properties;
@@ -254,8 +255,10 @@ public class RPConfig {
 		annotationInfo.put("name", modid);
 		annotationInfo.put("category", "");
 
-		data.put(Config.Type.INSTANCE, new ASMDataTable.ASMData(null, null,
-				configClass.getName(), null, annotationInfo));
+		data.put(
+				Config.Type.INSTANCE,
+				new ASMDataTable.ASMData(null, null, configClass.getName(), null, annotationInfo)
+		);
 	}
 
 	private static void modifyConfig(String modid)
@@ -290,8 +293,9 @@ public class RPConfig {
 
 		//Remove default values from comments so they don't show up in the configuration GUI
 		for(String name : config.getCategoryNames()) {
-			config.getCategory(name).getValues().forEach((key, property) ->
-					property.setComment(comments.get(property)));
+			config.getCategory(name).getValues().forEach(
+					(key, property) -> property.setComment(comments.get(property))
+			);
 		}
 	}
 
