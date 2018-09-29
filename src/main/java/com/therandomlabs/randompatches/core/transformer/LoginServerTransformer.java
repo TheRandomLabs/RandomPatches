@@ -20,7 +20,7 @@ public class LoginServerTransformer extends Transformer {
 			if(instruction.getOpcode() == Opcodes.LDC) {
 				loginTimeout = (LdcInsnNode) instruction;
 
-				if(new Integer(600).equals(loginTimeout.cst)) {
+				if(((Integer) 600).equals(loginTimeout.cst)) {
 					break;
 				}
 

@@ -134,7 +134,7 @@ public class RPStaticConfig {
 	private static Configuration currentConfig;
 
 	public static boolean isNarratorKeybindEnabled() {
-		return RPStaticConfig.narratorKeybind && RandomPatches.IS_ONE_TWELVE &&
+		return narratorKeybind && RandomPatches.IS_ONE_TWELVE &&
 				!RandomPatches.REBIND_NARRATOR_INSTALLED;
 	}
 
@@ -201,7 +201,8 @@ public class RPStaticConfig {
 				Integer.MAX_VALUE, Comments.LOGIN_TIMEOUT);
 		patchLoginTimeout = getBoolean("patchLoginTimeout", "timeouts",
 				Defaults.PATCH_LOGIN_TIMEOUT, Comments.PATCH_LOGIN_TIMEOUT, false, true);
-		readTimeout = getInt("readTimeout", "timeouts", Defaults.READ_TIMEOUT, 1, Integer.MAX_VALUE,
+		readTimeout = getInt("readTimeout", "timeouts", Defaults.READ_TIMEOUT, 1,
+				Integer.MAX_VALUE,
 				Comments.READ_TIMEOUT);
 
 		removeOldProperties(config);
@@ -232,8 +233,8 @@ public class RPStaticConfig {
 		keepAlivePacketIntervalMillis = keepAlivePacketInterval * 1000L;
 		readTimeoutMillis = readTimeout * 1000L;
 
-		System.setProperty("fml.readTimeout", Integer.toString(RPStaticConfig.readTimeout));
-		System.setProperty("fml.loginTimeout", Integer.toString(RPStaticConfig.loginTimeout));
+		System.setProperty("fml.readTimeout", Integer.toString(readTimeout));
+		System.setProperty("fml.loginTimeout", Integer.toString(loginTimeout));
 	}
 
 	public static int getInt(String name, String category, int defaultValue, int minValue,
@@ -242,8 +243,8 @@ public class RPStaticConfig {
 
 		property.setMinValue(minValue);
 		property.setMaxValue(maxValue);
-		setComment(property, comment + "\nMin: " + minValue + "\nMax: " + maxValue + "\nDefault: " +
-				defaultValue);
+		setComment(property, comment + "\nMin: " + minValue + "\nMax: " + maxValue +
+				"\nDefault: " + defaultValue);
 
 		return property.getInt(defaultValue);
 	}

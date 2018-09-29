@@ -84,16 +84,14 @@ public class PlayServerTransformer extends Transformer {
 				continue;
 			}
 
-			if(sendPacket == null) {
-				if(instruction.getOpcode() == Opcodes.INVOKEVIRTUAL) {
-					sendPacket = (MethodInsnNode) instruction;
+			if(instruction.getOpcode() == Opcodes.INVOKEVIRTUAL) {
+				sendPacket = (MethodInsnNode) instruction;
 
-					if(SEND_PACKET.equals(sendPacket.name)) {
-						break;
-					}
-
-					sendPacket = null;
+				if(SEND_PACKET.equals(sendPacket.name)) {
+					break;
 				}
+
+				sendPacket = null;
 			}
 		}
 
@@ -160,7 +158,7 @@ public class PlayServerTransformer extends Transformer {
 				continue;
 			}
 
-			if(normal == null && ((Float) 100.0F).equals(ldc.cst)) {
+			if(((Float) 100.0F).equals(ldc.cst)) {
 				normal = ldc;
 				break;
 			}

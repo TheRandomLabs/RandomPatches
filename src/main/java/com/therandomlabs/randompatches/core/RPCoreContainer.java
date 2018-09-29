@@ -24,6 +24,7 @@ import net.minecraftforge.fml.common.ModContainer;
 import net.minecraftforge.fml.common.ModMetadata;
 import net.minecraftforge.fml.common.versioning.InvalidVersionSpecificationException;
 import net.minecraftforge.fml.common.versioning.VersionRange;
+import org.apache.commons.io.IOUtils;
 import org.lwjgl.opengl.Display;
 
 public class RPCoreContainer extends DummyModContainer {
@@ -75,7 +76,7 @@ public class RPCoreContainer extends DummyModContainer {
 		try {
 			return VersionRange.createFromVersionSpec(RandomPatches.MINECRAFT_VERSIONS);
 		} catch(InvalidVersionSpecificationException ex) {
-			ex.printStackTrace();
+			RandomPatches.LOGGER.error("Failed to create version range", ex);
 		}
 
 		return null;
@@ -88,17 +89,21 @@ public class RPCoreContainer extends DummyModContainer {
 
 	public static ModMetadata loadMetadata(File source, String modid, String name, String version) {
 		InputStream stream = null;
+		JarFile jar = null;
 
 		if(source != null) {
 			try {
 				if(source.isDirectory()) {
 					stream = new FileInputStream(new File(source, "mcmod.info"));
 				} else {
-					final JarFile jar = new JarFile(source);
+					jar = new JarFile(source);
 					stream = jar.getInputStream(jar.getJarEntry("mcmod.info"));
 				}
 			} catch(IOException ex) {
 				RandomPatches.LOGGER.error("Failed to load mcmod.info", ex);
+
+				IOUtils.closeQuietly(stream);
+				IOUtils.closeQuietly(jar);
 			}
 		}
 
@@ -107,7 +112,13 @@ public class RPCoreContainer extends DummyModContainer {
 		fallback.put("name", name);
 		fallback.put("version", version);
 
-		return MetadataCollection.from(stream, modid).getMetadataForId(modid, fallback);
+		final ModMetadata metadata =
+				MetadataCollection.from(stream, modid).getMetadataForId(modid, fallback);
+
+		IOUtils.closeQuietly(stream);
+		IOUtils.closeQuietly(jar);
+
+		return metadata;
 	}
 
 	public static Class<?> getResourcePackClass(ModContainer container) {

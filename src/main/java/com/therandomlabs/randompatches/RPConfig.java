@@ -1,6 +1,7 @@
 package com.therandomlabs.randompatches;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
@@ -22,8 +23,6 @@ import net.minecraftforge.fml.relauncher.ReflectionHelper;
 //The most convoluted way to implement a config GUI, but it works
 @Config(modid = RandomPatches.MODID, name = RandomPatches.MODID, category = "")
 public class RPConfig {
-	public interface NestedCategory {}
-
 	public static class Client {
 		@Config.LangKey("randompatches.config.window")
 		@Config.Comment(RPStaticConfig.WINDOW_COMMENT)
@@ -132,6 +131,8 @@ public class RPConfig {
 		public String title = RPStaticConfig.Defaults.TITLE;
 	}
 
+	public interface NestedCategory {}
+
 	@Config.LangKey("randompatches.config.client")
 	@Config.Comment(RPStaticConfig.CLIENT_COMMENT)
 	public static Client client = new Client();
@@ -148,12 +149,15 @@ public class RPConfig {
 	@Config.Comment(RPStaticConfig.TIMEOUTS_COMMENT)
 	public static Timeouts timeouts = new Timeouts();
 
-	private static final Field ASM_DATA =
-			ReflectionHelper.findField(ConfigManager.class, "asm_data");
-	private static final Method GET_CONFIGURATION = ReflectionHelper.findMethod(ConfigManager.class,
-			"getConfiguration", "getConfiguration", String.class, String.class);
+	private static final Field ASM_DATA = ReflectionHelper.findField(
+			ConfigManager.class, "asm_data"
+	);
 
-	private static Map<Object, Field[]> properties;
+	private static final Method GET_CONFIGURATION = ReflectionHelper.findMethod(
+			ConfigManager.class, "getConfiguration", "getConfiguration", String.class, String.class
+	);
+
+	private static Map<Object, Field[]> propertyCache;
 
 	public static Map<Object, Field[]> getProperties(Class<?> configClass) {
 		final Map<Object, Field[]> properties = new HashMap<>();
@@ -196,12 +200,17 @@ public class RPConfig {
 	}
 
 	public static void reload() {
-		if(properties == null) {
-			properties = getProperties(RPConfig.class);
+		if(propertyCache == null) {
+			propertyCache = getProperties(RPConfig.class);
 		}
 
-		reload(properties, RandomPatches.MODID, RPConfig.class, RPStaticConfig.class,
-				RPStaticConfig::onReload);
+		reload(
+				propertyCache,
+				RandomPatches.MODID,
+				RPConfig.class,
+				RPStaticConfig.class,
+				RPStaticConfig::onReload
+		);
 	}
 
 	public static void reload(Map<Object, Field[]> properties, String modid, Class<?> configClass,
@@ -229,16 +238,15 @@ public class RPConfig {
 	}
 
 	@SuppressWarnings("unchecked")
-	private static void injectASMData(String modid, Class<?> configClass) throws Exception {
+	private static void injectASMData(String modid, Class<?> configClass)
+			throws IllegalAccessException {
 		final Map<String, Multimap<Config.Type, ASMDataTable.ASMData>> asmData =
 				(Map<String, Multimap<Config.Type, ASMDataTable.ASMData>>) ASM_DATA.get(null);
 
-		Multimap<Config.Type, ASMDataTable.ASMData> data = asmData.get(modid);
-
-		if(data == null) {
-			data = ArrayListMultimap.create();
-			asmData.put(modid, data);
-		}
+		final Multimap<Config.Type, ASMDataTable.ASMData> data = asmData.computeIfAbsent(
+				modid,
+				id -> ArrayListMultimap.create()
+		);
 
 		final Map<String, Object> annotationInfo = new HashMap<>();
 
@@ -250,7 +258,8 @@ public class RPConfig {
 				configClass.getName(), null, annotationInfo));
 	}
 
-	private static void modifyConfig(String modid) throws Exception {
+	private static void modifyConfig(String modid)
+			throws IllegalAccessException, InvocationTargetException {
 		final Configuration config = (Configuration) GET_CONFIGURATION.invoke(null, modid, modid);
 
 		final Map<Property, String> comments = new HashMap<>();
@@ -287,7 +296,7 @@ public class RPConfig {
 	}
 
 	private static void copyValuesToStatic(Map<Object, Field[]> properties,
-			Class<?> staticConfigClass) throws Exception {
+			Class<?> staticConfigClass) throws IllegalAccessException, NoSuchFieldException {
 		for(Map.Entry<Object, Field[]> entry : properties.entrySet()) {
 			final Object object = entry.getKey();
 			final Field[] propertyArray = entry.getValue();
@@ -300,7 +309,7 @@ public class RPConfig {
 	}
 
 	private static void copyValuesFromStatic(Map<Object, Field[]> properties,
-			Class<?> staticConfigClass) throws Exception {
+			Class<?> staticConfigClass) throws IllegalAccessException, NoSuchFieldException {
 		for(Map.Entry<Object, Field[]> entry : properties.entrySet()) {
 			final Object object = entry.getKey();
 			final Field[] propertyArray = entry.getValue();

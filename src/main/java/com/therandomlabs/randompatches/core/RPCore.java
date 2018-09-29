@@ -3,6 +3,7 @@ package com.therandomlabs.randompatches.core;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import com.therandomlabs.randompatches.RandomPatches;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
@@ -68,7 +69,7 @@ public class RPCore implements IFMLLoadingPlugin {
 		uri = uri.substring(6, uri.indexOf(packageName));
 
 		try {
-			return new File(URLDecoder.decode(uri, "UTF-8"));
+			return new File(URLDecoder.decode(uri, StandardCharsets.UTF_8.name()));
 		} catch(UnsupportedEncodingException ignored) {}
 
 		return null;

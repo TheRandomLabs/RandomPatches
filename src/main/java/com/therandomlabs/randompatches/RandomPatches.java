@@ -22,15 +22,14 @@ public final class RandomPatches {
 
 	public static final String DEFAULT_WINDOW_TITLE = "Minecraft " + MC_VERSION;
 
-	public static final boolean SPONGEFORGE_INSTALLED =
-			installed("org.spongepowered.mod.SpongeMod");
-	public static final boolean ITLT_INSTALLED = installed("dk.zlepper.itlt.about.mod");
+	public static final boolean SPONGEFORGE_INSTALLED = detect("org.spongepowered.mod.SpongeMod");
+	public static final boolean ITLT_INSTALLED = detect("dk.zlepper.itlt.about.mod");
 	public static final boolean REBIND_NARRATOR_INSTALLED =
-			installed("quaternary.rebindnarrator.RebindNarrator");
+			detect("quaternary.rebindnarrator.RebindNarrator");
 
 	public static final Logger LOGGER = LogManager.getLogger(MODID);
 
-	private static boolean installed(String className) {
+	private static boolean detect(String className) {
 		try {
 			Class.forName(className);
 		} catch(ClassNotFoundException ex) {

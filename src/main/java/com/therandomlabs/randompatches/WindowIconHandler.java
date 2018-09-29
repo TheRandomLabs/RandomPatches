@@ -75,12 +75,18 @@ public class WindowIconHandler {
 
 			final Graphics2D graphics = resized.createGraphics();
 
-			graphics.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-					RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-			graphics.setRenderingHint(RenderingHints.KEY_RENDERING,
-					RenderingHints.VALUE_RENDER_QUALITY);
-			graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-					RenderingHints.VALUE_ANTIALIAS_ON);
+			graphics.setRenderingHint(
+					RenderingHints.KEY_INTERPOLATION,
+					RenderingHints.VALUE_INTERPOLATION_BILINEAR
+			);
+			graphics.setRenderingHint(
+					RenderingHints.KEY_RENDERING,
+					RenderingHints.VALUE_RENDER_QUALITY
+			);
+			graphics.setRenderingHint(
+					RenderingHints.KEY_ANTIALIASING,
+					RenderingHints.VALUE_ANTIALIAS_ON
+			);
 
 			graphics.drawImage(image, 0, 0, dimensions, dimensions, null);
 
@@ -89,8 +95,7 @@ public class WindowIconHandler {
 			image = resized;
 		}
 
-		final int[] aint =
-				image.getRGB(0, 0, dimensions, dimensions, null, 0, dimensions);
+		final int[] aint = image.getRGB(0, 0, dimensions, dimensions, null, 0, dimensions);
 		final ByteBuffer buffer = ByteBuffer.allocate(aint.length * 4);
 
 		for(int i : aint) {
