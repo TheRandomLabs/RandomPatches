@@ -9,16 +9,13 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.relauncher.FMLLaunchHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import org.lwjgl.opengl.Display;
 
 public final class RPEventHandler {
-	public static final boolean IS_CLIENT = FMLLaunchHandler.side().isClient();
-
 	@Subscribe
 	public void preInit(FMLPreInitializationEvent event) {
-		if(!IS_CLIENT) {
+		if(!RandomPatches.IS_CLIENT) {
 			return;
 		}
 
@@ -33,7 +30,7 @@ public final class RPEventHandler {
 
 	@Subscribe
 	public void init(FMLInitializationEvent event) {
-		if(!IS_CLIENT) {
+		if(!RandomPatches.IS_CLIENT) {
 			return;
 		}
 
@@ -61,7 +58,7 @@ public final class RPEventHandler {
 	}
 
 	public static void containerInit() {
-		if(RPEventHandler.IS_CLIENT && !RandomPatches.ITLT_INSTALLED) {
+		if(RandomPatches.IS_CLIENT && !RandomPatches.ITLT_INSTALLED) {
 			WindowIconHandler.setWindowIcon();
 			Display.setTitle(RPStaticConfig.title);
 		}

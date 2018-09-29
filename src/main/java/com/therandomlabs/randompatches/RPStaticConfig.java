@@ -17,8 +17,12 @@ public class RPStaticConfig {
 				"the title screen after disconnecting rather than the Multiplayer or Realms menu.";
 		public static final String NARRATOR_KEYBIND =
 				"Whether to add the Toggle Narrator keybind to the controls.";
+		public static final String PATCH_MINECRAFT_CLASS = "Set this to false to disable the " +
+				"Minecraft class patches (Toggle Narrator keybind and custom window title/icon).";
 		public static final String PATCH_TITLE_SCREEN_ON_DISCONNECT = "Set this to false to " +
 				"force disable the \"force title screen on disconnect\" patch.";
+		public static final String REMOVE_POTION_GLINT =
+				"Whether to remove the glowing effect from potions.";
 		public static final String RPRELOADCLIENT = "Enables the /rpreloadclient command.";
 
 		public static final String ICON_16 = "The path to the 16x16 Minecraft window " +
@@ -29,8 +33,6 @@ public class RPStaticConfig {
 
 		public static final String MINECART_AI_FIX = "Fixes MC-64836, which causes non-player " +
 				"entities to be allowed to control Minecarts using their AI.";
-		public static final String PATCH_MINECRAFT_CLASS = "Set this to false to disable the " +
-				"Minecraft class patches (Toggle Narrator keybind and custom window title/icon).";
 		public static final String PATCH_NETHANDLERPLAYSERVER = "Set this to false to force " +
 				"disable the NetHandlerPlayServer patches (speed limits and disconnect timeouts).";
 		public static final String RPRELOAD = "Enables the /rpreload command.";
@@ -56,16 +58,17 @@ public class RPStaticConfig {
 		public static final boolean FORCE_TITLE_SCREEN_ON_DISCONNECT =
 				RandomPatches.IS_DEOBFUSCATED;
 		public static final boolean NARRATOR_KEYBIND = true;
+		public static final boolean PATCH_MINECRAFT_CLASS = true;
 		public static final boolean PATCH_TITLE_SCREEN_ON_DISCONNECT = true;
+		public static final boolean REMOVE_POTION_GLINT = RandomPatches.IS_DEOBFUSCATED;
 		public static final boolean RPRELOADCLIENT = true;
 
 		public static final String ICON_16 = RandomPatches.IS_DEOBFUSCATED ? "icon16.png" : "";
 		public static final String ICON_32 = ICON_16;
-		public static final String TITLE = (RandomPatches.IS_DEOBFUSCATED ?
-				RandomPatches.NAME : "Minecraft") + " " + RandomPatches.MC_VERSION;
+		public static final String TITLE = RandomPatches.IS_DEOBFUSCATED ?
+				RandomPatches.NAME : RandomPatches.DEFAULT_WINDOW_TITLE;
 
 		public static final boolean MINECART_AI_FIX = true;
-		public static final boolean PATCH_MINECRAFT_CLASS = true;
 		public static final boolean PATCH_NETHANDLERPLAYSERVER = true;
 		public static final boolean RPRELOAD = true;
 
@@ -94,7 +97,10 @@ public class RPStaticConfig {
 	public static boolean fastLanguageSwitch;
 	public static boolean forceTitleScreenOnDisconnect;
 	public static boolean narratorKeybind;
+	public static boolean patchMinecraftClass;
 	public static boolean patchTitleScreenOnDisconnect;
+	public static boolean removePotionGlint;
+	public static boolean rpreloadclient;
 
 	//Client->Window
 
@@ -105,10 +111,8 @@ public class RPStaticConfig {
 	//Misc
 
 	public static boolean minecartAIFix;
-	public static boolean patchMinecraftClass;
 	public static boolean patchNetHandlerPlayServer;
 	public static boolean rpreload;
-	public static boolean rpreloadclient;
 
 	//Speed limits
 
@@ -180,11 +184,29 @@ public class RPStaticConfig {
 				true
 		);
 
+		patchMinecraftClass = getBoolean(
+				"patchMinecraftClass",
+				"client",
+				Defaults.PATCH_MINECRAFT_CLASS,
+				Comments.PATCH_MINECRAFT_CLASS,
+				false,
+				true
+		);
+
 		patchTitleScreenOnDisconnect = getBoolean(
 				"patchTitleScreenOnDisconnect",
 				"client",
 				Defaults.PATCH_TITLE_SCREEN_ON_DISCONNECT,
 				Comments.PATCH_TITLE_SCREEN_ON_DISCONNECT,
+				false,
+				true
+		);
+
+		removePotionGlint = getBoolean(
+				"removePotionGlint",
+				"client",
+				Defaults.REMOVE_POTION_GLINT,
+				Comments.REMOVE_POTION_GLINT,
 				false,
 				true
 		);
@@ -211,15 +233,6 @@ public class RPStaticConfig {
 				"misc",
 				Defaults.MINECART_AI_FIX,
 				Comments.MINECART_AI_FIX,
-				false,
-				true
-		);
-
-		patchMinecraftClass = getBoolean(
-				"patchMinecraftClass",
-				"misc",
-				Defaults.PATCH_MINECRAFT_CLASS,
-				Comments.PATCH_MINECRAFT_CLASS,
 				false,
 				true
 		);
@@ -320,7 +333,7 @@ public class RPStaticConfig {
 			icon32 = icon16;
 		}
 
-		if(RPEventHandler.IS_CLIENT && !RandomPatches.ITLT_INSTALLED && Display.isCreated()) {
+		if(RandomPatches.IS_CLIENT && !RandomPatches.ITLT_INSTALLED && Display.isCreated()) {
 			WindowIconHandler.setWindowIcon();
 			Display.setTitle(title);
 		}

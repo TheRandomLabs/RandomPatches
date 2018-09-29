@@ -5,6 +5,7 @@ import java.util.Map;
 import com.therandomlabs.randompatches.RPStaticConfig;
 import com.therandomlabs.randompatches.RandomPatches;
 import com.therandomlabs.randompatches.core.transformer.IngameMenuTransformer;
+import com.therandomlabs.randompatches.core.transformer.ItemPotionTransformer;
 import com.therandomlabs.randompatches.core.transformer.LanguageListTransformer;
 import com.therandomlabs.randompatches.core.transformer.LoginServerTransformer;
 import com.therandomlabs.randompatches.core.transformer.MinecartTransformer;
@@ -76,16 +77,20 @@ public class RPTransformer implements IClassTransformer {
 			register("net.minecraft.network.NetHandlerPlayServer", new PlayServerTransformer());
 		}
 
-		if(RPStaticConfig.fastLanguageSwitch) {
+		if(RPStaticConfig.fastLanguageSwitch && RandomPatches.IS_CLIENT) {
 			register("net.minecraft.client.gui.GuiLanguage$List", new LanguageListTransformer());
 		}
 
-		if(RPStaticConfig.patchMinecraftClass) {
+		if(RPStaticConfig.patchMinecraftClass && RandomPatches.IS_CLIENT) {
 			register("net.minecraft.client.Minecraft", new MinecraftTransformer());
 		}
 
 		if(RPStaticConfig.minecartAIFix) {
 			register("net.minecraft.entity.item.EntityMinecart", new MinecartTransformer());
+		}
+
+		if(RPStaticConfig.removePotionGlint && RandomPatches.IS_CLIENT) {
+			register("net.minecraft.item.ItemPotion", new ItemPotionTransformer());
 		}
 	}
 }

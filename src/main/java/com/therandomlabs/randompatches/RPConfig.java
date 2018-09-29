@@ -44,10 +44,20 @@ public class RPConfig {
 		public boolean narratorKeybind = RPStaticConfig.Defaults.NARRATOR_KEYBIND;
 
 		@Config.RequiresMcRestart
+		@Config.LangKey("randompatches.config.client.patchMinecraftClass")
+		@Config.Comment(RPStaticConfig.Comments.PATCH_MINECRAFT_CLASS)
+		public boolean patchMinecraftClass = RPStaticConfig.Defaults.PATCH_MINECRAFT_CLASS;
+
+		@Config.RequiresMcRestart
 		@Config.LangKey("randompatches.config.client.patchTitleScreenOnDisconnect")
 		@Config.Comment(RPStaticConfig.Comments.PATCH_TITLE_SCREEN_ON_DISCONNECT)
 		public boolean patchTitleScreenOnDisconnect =
 				RPStaticConfig.Defaults.PATCH_TITLE_SCREEN_ON_DISCONNECT;
+
+		@Config.RequiresMcRestart
+		@Config.LangKey("randompatches.config.client.removePotionGlint")
+		@Config.Comment(RPStaticConfig.Comments.REMOVE_POTION_GLINT)
+		public boolean removePotionGlint = RPStaticConfig.Defaults.REMOVE_POTION_GLINT;
 
 		@Config.RequiresWorldRestart
 		@Config.LangKey("randompatches.config.client.rpreloadclient")
@@ -60,11 +70,6 @@ public class RPConfig {
 		@Config.LangKey("randompatches.config.misc.minecartAIFix")
 		@Config.Comment(RPStaticConfig.Comments.MINECART_AI_FIX)
 		public boolean minecartAIFix = RPStaticConfig.Defaults.MINECART_AI_FIX;
-
-		@Config.RequiresMcRestart
-		@Config.LangKey("randompatches.config.misc.patchMinecraftClass")
-		@Config.Comment(RPStaticConfig.Comments.PATCH_MINECRAFT_CLASS)
-		public boolean patchMinecraftClass = RPStaticConfig.Defaults.PATCH_MINECRAFT_CLASS;
 
 		@Config.RequiresMcRestart
 		@Config.LangKey("randompatches.config.misc.patchNetHandlerPlayServer")

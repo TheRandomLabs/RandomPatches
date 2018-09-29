@@ -2,6 +2,7 @@ package com.therandomlabs.randompatches;
 
 import net.minecraft.launchwrapper.Launch;
 import net.minecraftforge.fml.relauncher.FMLInjectionData;
+import net.minecraftforge.fml.relauncher.FMLLaunchHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -13,6 +14,8 @@ public final class RandomPatches {
 
 	public static final boolean IS_DEOBFUSCATED =
 			(boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment");
+
+	public static final boolean IS_CLIENT = FMLLaunchHandler.side().isClient();
 
 	public static final String MC_VERSION = (String) FMLInjectionData.data()[4];
 	public static final boolean IS_ONE_EIGHT = MC_VERSION.startsWith("1.8");
