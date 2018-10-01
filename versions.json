@@ -1,6 +1,7 @@
 {
 	"homepage": "https://minecraft.curseforge.com/projects/randompatches",
 	"1.12.2": {
+		"1.12.2-1.6.0.1": "Fixed a server crash.",
 		"1.12.2-1.6.0.0": "Cleaned up the code.\nAdded an option to disable potion glints.",
 		"1.12.2-1.5.0.4": "Potential compatibility fix.",
 		"1.12.2-1.5.0.3": "Fixed a NullPointerException related to the Toggle Narrator keybind.",
@@ -20,6 +21,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.12.1": {
+		"1.12.2-1.6.0.1": "Fixed a server crash.",
 		"1.12.2-1.6.0.0": "Cleaned up the code.\nAdded an option to disable potion glints.",
 		"1.12.2-1.5.0.4": "Potential compatibility fix.",
 		"1.12.2-1.5.0.3": "Fixed a NullPointerException related to the Toggle Narrator keybind.",
@@ -39,6 +41,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.12": {
+		"1.12.2-1.6.0.1": "Fixed a server crash.",
 		"1.12.2-1.6.0.0": "Cleaned up the code.\nAdded an option to disable potion glints.",
 		"1.12.2-1.5.0.4": "Potential compatibility fix.",
 		"1.12.2-1.5.0.3": "Fixed a NullPointerException related to the Toggle Narrator keybind.",
@@ -58,6 +61,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.11.2": {
+		"1.12.2-1.6.0.1": "Fixed a server crash.",
 		"1.12.2-1.6.0.0": "Cleaned up the code.\nAdded an option to disable potion glints.",
 		"1.12.2-1.5.0.4": "Potential compatibility fix.",
 		"1.12.2-1.5.0.3": "Fixed a NullPointerException related to the Toggle Narrator keybind.",
@@ -77,6 +81,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.11": {
+		"1.12.2-1.6.0.1": "Fixed a server crash.",
 		"1.12.2-1.6.0.0": "Cleaned up the code.\nAdded an option to disable potion glints.",
 		"1.12.2-1.5.0.4": "Potential compatibility fix.",
 		"1.12.2-1.5.0.3": "Fixed a NullPointerException related to the Toggle Narrator keybind.",
@@ -96,6 +101,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.10.2": {
+		"1.12.2-1.6.0.1": "Fixed a server crash.",
 		"1.12.2-1.6.0.0": "Cleaned up the code.\nAdded an option to disable potion glints.",
 		"1.12.2-1.5.0.4": "Potential compatibility fix.",
 		"1.12.2-1.5.0.3": "Fixed a NullPointerException related to the Toggle Narrator keybind.",
@@ -115,6 +121,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.10": {
+		"1.12.2-1.6.0.1": "Fixed a server crash.",
 		"1.12.2-1.6.0.0": "Cleaned up the code.\nAdded an option to disable potion glints.",
 		"1.12.2-1.5.0.4": "Potential compatibility fix.",
 		"1.12.2-1.5.0.3": "Fixed a NullPointerException related to the Toggle Narrator keybind.",
@@ -134,6 +141,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.9.4": {
+		"1.12.2-1.6.0.1": "Fixed a server crash.",
 		"1.12.2-1.6.0.0": "Cleaned up the code.\nAdded an option to disable potion glints.",
 		"1.12.2-1.5.0.4": "Potential compatibility fix.",
 		"1.12.2-1.5.0.3": "Fixed a NullPointerException related to the Toggle Narrator keybind.",
@@ -146,6 +154,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.9": {
+		"1.12.2-1.6.0.1": "Fixed a server crash.",
 		"1.12.2-1.6.0.0": "Cleaned up the code.\nAdded an option to disable potion glints.",
 		"1.12.2-1.5.0.4": "Potential compatibility fix.",
 		"1.12.2-1.5.0.3": "Fixed a NullPointerException related to the Toggle Narrator keybind.",
@@ -158,6 +167,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.8.9": {
+		"1.12.2-1.6.0.1": "Fixed a server crash.",
 		"1.12.2-1.6.0.0": "Cleaned up the code.\nAdded an option to disable potion glints.",
 		"1.12.2-1.5.0.4": "Potential compatibility fix.",
 		"1.12.2-1.5.0.3": "Fixed a NullPointerException related to the Toggle Narrator keybind.",
@@ -170,6 +180,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.8.8": {
+		"1.12.2-1.6.0.1": "Fixed a server crash.",
 		"1.12.2-1.6.0.0": "Cleaned up the code.\nAdded an option to disable potion glints.",
 		"1.12.2-1.5.0.4": "Potential compatibility fix.",
 		"1.12.2-1.5.0.3": "Fixed a NullPointerException related to the Toggle Narrator keybind.",
@@ -182,6 +193,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.8": {
+		"1.12.2-1.6.0.1": "Fixed a server crash.",
 		"1.12.2-1.6.0.0": "Cleaned up the code.\nAdded an option to disable potion glints.",
 		"1.12.2-1.5.0.4": "Potential compatibility fix.",
 		"1.12.2-1.5.0.3": "Fixed a NullPointerException related to the Toggle Narrator keybind.",
@@ -194,27 +206,27 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"promos": {
-		"1.12.2-latest": "1.12.2-1.6.0.0",
-		"1.12.2-recommended": "1.12.2-1.6.0.0",
-		"1.12-latest": "1.12.2-1.6.0.0",
-		"1.12-recommended": "1.12.2-1.6.0.0",
-		"1.11.2-latest": "1.12.2-1.6.0.0",
-		"1.11.2-recommended": "1.12.2-1.6.0.0",
-		"1.11-latest": "1.12.2-1.6.0.0",
-		"1.11-recommended": "1.12.2-1.6.0.0",
-		"1.10.2-latest": "1.12.2-1.6.0.0",
-		"1.10.2-recommended": "1.12.2-1.6.0.0",
-		"1.10-latest": "1.12.2-1.6.0.0",
-		"1.10-recommended": "1.12.2-1.6.0.0",
-		"1.9.4-latest": "1.12.2-1.6.0.0",
-		"1.9.4-recommended": "1.12.2-1.6.0.0",
-		"1.9-latest": "1.12.2-1.6.0.0",
-		"1.9-recommended": "1.12.2-1.6.0.0",
-		"1.8.9-latest": "1.12.2-1.6.0.0",
-		"1.8.9-recommended": "1.12.2-1.6.0.0",
-		"1.8.8-latest": "1.12.2-1.6.0.0",
-		"1.8.8-recommended": "1.12.2-1.6.0.0",
-		"1.8-latest": "1.12.2-1.6.0.0",
-		"1.8-recommended": "1.12.2-1.6.0.0"
+		"1.12.2-latest": "1.12.2-1.6.0.1",
+		"1.12.2-recommended": "1.12.2-1.6.0.1",
+		"1.12-latest": "1.12.2-1.6.0.1",
+		"1.12-recommended": "1.12.2-1.6.0.1",
+		"1.11.2-latest": "1.12.2-1.6.0.1",
+		"1.11.2-recommended": "1.12.2-1.6.0.1",
+		"1.11-latest": "1.12.2-1.6.0.1",
+		"1.11-recommended": "1.12.2-1.6.0.1",
+		"1.10.2-latest": "1.12.2-1.6.0.1",
+		"1.10.2-recommended": "1.12.2-1.6.0.1",
+		"1.10-latest": "1.12.2-1.6.0.1",
+		"1.10-recommended": "1.12.2-1.6.0.1",
+		"1.9.4-latest": "1.12.2-1.6.0.1",
+		"1.9.4-recommended": "1.12.2-1.6.0.1",
+		"1.9-latest": "1.12.2-1.6.0.1",
+		"1.9-recommended": "1.12.2-1.6.0.1",
+		"1.8.9-latest": "1.12.2-1.6.0.1",
+		"1.8.9-recommended": "1.12.2-1.6.0.1",
+		"1.8.8-latest": "1.12.2-1.6.0.1",
+		"1.8.8-recommended": "1.12.2-1.6.0.1",
+		"1.8-latest": "1.12.2-1.6.0.1",
+		"1.8-recommended": "1.12.2-1.6.0.1"
 	}
 }
