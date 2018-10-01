@@ -333,7 +333,7 @@ public class RPStaticConfig {
 			icon32 = icon16;
 		}
 
-		if(Display.isCreated()) {
+		if(RandomPatches.IS_CLIENT && Display.isCreated()) {
 			RPEventHandler.containerInit();
 		}
 
