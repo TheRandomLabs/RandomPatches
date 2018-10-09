@@ -19,7 +19,6 @@ import org.lwjgl.opengl.Display;
 
 public class WindowIconHandler {
 	public static void setWindowIcon() {
-		final Minecraft mc = Minecraft.getMinecraft();
 		final Util.EnumOS os = Util.getOSType();
 
 		if(os != Util.EnumOS.OSX) {
@@ -28,6 +27,8 @@ public class WindowIconHandler {
 
 			try {
 				if(RPStaticConfig.icon16.isEmpty()) {
+					final Minecraft mc = Minecraft.getMinecraft();
+
 					stream16 = mc.defaultResourcePack.getInputStreamAssets(
 							new ResourceLocation("icons/icon_16x16.png")
 					);
