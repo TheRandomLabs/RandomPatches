@@ -59,7 +59,11 @@ public final class RPEventHandler {
 
 	public static void containerInit() {
 		if(RandomPatches.IS_CLIENT && !RandomPatches.ITLT_INSTALLED) {
-			WindowIconHandler.setWindowIcon();
+			if(!RPStaticConfig.icon16.isEmpty()) {
+				//If icon16 is empty, WindowIconHandler loads the Minecraft class too early
+				WindowIconHandler.setWindowIcon();
+			}
+
 			Display.setTitle(RPStaticConfig.title);
 		}
 	}
