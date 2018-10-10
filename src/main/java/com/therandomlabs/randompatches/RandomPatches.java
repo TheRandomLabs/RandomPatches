@@ -12,6 +12,8 @@ public final class RandomPatches {
 	public static final String VERSION = "@VERSION@";
 	public static final String MINECRAFT_VERSIONS = "[1.8,1.13)";
 
+	public static final int SORTING_INDEX = Integer.MAX_VALUE - 10000;
+
 	public static final boolean IS_DEOBFUSCATED =
 			(boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment");
 
