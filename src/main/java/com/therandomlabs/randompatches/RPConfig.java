@@ -1,5 +1,6 @@
 package com.therandomlabs.randompatches;
 
+import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -10,13 +11,12 @@ import java.util.List;
 import java.util.Map;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
-import net.minecraft.crash.CrashReport;
-import net.minecraft.util.ReportedException;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.discovery.ASMDataTable;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
@@ -162,6 +162,8 @@ public class RPConfig {
 			ConfigManager.class, "getConfiguration", "getConfiguration", String.class, String.class
 	);
 
+	private static final Field CONFIGS = ReflectionHelper.findField(ConfigManager.class, "CONFIGS");
+
 	private static Map<Object, Field[]> propertyCache;
 
 	public static Map<Object, Field[]> getProperties(Class<?> configClass) {
@@ -197,9 +199,7 @@ public class RPConfig {
 				properties.put(object, object.getClass().getDeclaredFields());
 			}
 		} catch(Exception ex) {
-			throw new ReportedException(new CrashReport(
-					"Error while getting config properties", ex
-			));
+			RPUtils.crashReport("Error while getting config properties", ex);
 		}
 
 		return properties;
@@ -225,7 +225,7 @@ public class RPConfig {
 			try {
 				injectASMData(modid, configClass);
 			} catch(Exception ex) {
-				throw new ReportedException(new CrashReport("Failed to load config", ex));
+				RPUtils.crashReport("Failed to load config", ex);
 			}
 		}
 
@@ -239,7 +239,18 @@ public class RPConfig {
 			ConfigManager.sync(modid, Config.Type.INSTANCE);
 			modifyConfig(modid);
 		} catch(Exception ex) {
-			throw new ReportedException(new CrashReport("Error while modifying config", ex));
+			RPUtils.crashReport("Error while modifying config", ex);
+		}
+	}
+
+	public static void reloadFromDisk() {
+		try {
+			final File file =
+					new File(Loader.instance().getConfigDir(), RandomPatches.MODID + ".cfg");
+			((Map) CONFIGS.get(null)).remove(file.getAbsolutePath());
+			reload();
+		} catch(Exception ex) {
+			RPUtils.crashReport("Error while modifying config", ex);
 		}
 	}
 

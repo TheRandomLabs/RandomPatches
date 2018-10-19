@@ -11,6 +11,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.jar.JarFile;
 import com.therandomlabs.randompatches.core.RPCoreContainer;
+import net.minecraft.crash.CrashReport;
+import net.minecraft.util.ReportedException;
 import net.minecraftforge.fml.common.MetadataCollection;
 import net.minecraftforge.fml.common.ModContainer;
 import net.minecraftforge.fml.common.ModMetadata;
@@ -115,5 +117,9 @@ public final class RPUtils {
 		}
 
 		return null;
+	}
+
+	public static void crashReport(String message, Throwable throwable) {
+		throw new ReportedException(new CrashReport(message, throwable));
 	}
 }

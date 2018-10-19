@@ -2,8 +2,6 @@ package com.therandomlabs.randompatches;
 
 import java.io.File;
 import java.lang.reflect.Field;
-import net.minecraft.crash.CrashReport;
-import net.minecraft.util.ReportedException;
 import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
@@ -63,7 +61,8 @@ public class RPStaticConfig {
 		public static final boolean REMOVE_POTION_GLINT = RandomPatches.IS_DEOBFUSCATED;
 		public static final boolean RPRELOADCLIENT = true;
 
-		public static final String ICON_16 = RandomPatches.IS_DEOBFUSCATED ? "icon16.png" : "";
+		public static final String ICON_16 = RandomPatches.IS_DEOBFUSCATED ?
+				"../src/main/resources/assets/randompatches/logo.png" : "";
 		public static final String ICON_32 = ICON_16;
 		public static final String TITLE = RandomPatches.IS_DEOBFUSCATED ?
 				RandomPatches.NAME : RandomPatches.DEFAULT_WINDOW_TITLE;
@@ -350,6 +349,7 @@ public class RPStaticConfig {
 		System.setProperty("fml.loginTimeout", Integer.toString(loginTimeout));
 	}
 
+	@SuppressWarnings("Duplicates")
 	public static int getInt(String name, String category, int defaultValue, int minValue,
 			int maxValue, String comment) {
 		final Property property = currentConfig.get(category, name, defaultValue);
@@ -369,6 +369,7 @@ public class RPStaticConfig {
 		return getDouble(name, category, defaultValue, minValue, Double.MAX_VALUE, comment);
 	}
 
+	@SuppressWarnings("Duplicates")
 	public static double getDouble(String name, String category, double defaultValue,
 			double minValue, double maxValue, String comment) {
 		final Property property = currentConfig.get(category, name, defaultValue);
@@ -410,7 +411,7 @@ public class RPStaticConfig {
 			try {
 				return (String) COMMENT.get(property);
 			} catch(Exception ex) {
-				throw new ReportedException(new CrashReport("Error while getting comment", ex));
+				RPUtils.crashReport("Error while getting comment", ex);
 			}
 		}
 
@@ -422,7 +423,7 @@ public class RPStaticConfig {
 			try {
 				COMMENT.set(property, comment);
 			} catch(Exception ex) {
-				throw new ReportedException(new CrashReport("Error while setting comment", ex));
+				RPUtils.crashReport("Error while setting comment", ex);
 			}
 
 			return;

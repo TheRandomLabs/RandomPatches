@@ -13,6 +13,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import org.lwjgl.opengl.Display;
 
 public final class RPEventHandler {
+	static boolean setWindowSettings = true;
+
 	@Subscribe
 	public void preInit(FMLPreInitializationEvent event) {
 		if(!RandomPatches.IS_CLIENT) {
@@ -58,7 +60,7 @@ public final class RPEventHandler {
 	}
 
 	public static void containerInit() {
-		if(RandomPatches.IS_CLIENT && !RandomPatches.ITLT_INSTALLED) {
+		if(setWindowSettings && RandomPatches.IS_CLIENT && !RandomPatches.ITLT_INSTALLED) {
 			if(!RPStaticConfig.icon16.isEmpty()) {
 				//If icon16 is empty, WindowIconHandler loads the Minecraft class too early
 				WindowIconHandler.setWindowIcon();
