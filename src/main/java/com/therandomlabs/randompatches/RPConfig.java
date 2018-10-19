@@ -254,6 +254,15 @@ public class RPConfig {
 		}
 	}
 
+	public static void removeConfigForReloadFromDisk(String modid) {
+		try {
+			final File file = new File(Loader.instance().getConfigDir(), modid + ".cfg");
+			((Map) CONFIGS.get(null)).remove(file.getAbsolutePath());
+		} catch(Exception ex) {
+			RPUtils.crashReport("Error while modifying config", ex);
+		}
+	}
+
 	@SuppressWarnings("unchecked")
 	private static void injectASMData(String modid, Class<?> configClass)
 			throws IllegalAccessException {
