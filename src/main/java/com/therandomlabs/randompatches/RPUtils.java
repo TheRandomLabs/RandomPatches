@@ -8,11 +8,13 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.jar.JarFile;
 import com.therandomlabs.randompatches.core.RPCoreContainer;
 import net.minecraft.crash.CrashReport;
 import net.minecraft.util.ReportedException;
+import net.minecraftforge.fml.common.CertificateHelper;
 import net.minecraftforge.fml.common.MetadataCollection;
 import net.minecraftforge.fml.common.ModContainer;
 import net.minecraftforge.fml.common.ModMetadata;
@@ -117,6 +119,20 @@ public final class RPUtils {
 		}
 
 		return null;
+	}
+
+	public static boolean hasFingerprint(Class<?> clazz, String fingerprintToFind) {
+		final List<String> fingerprints = CertificateHelper.getFingerprints(
+				clazz.getProtectionDomain().getCodeSource().getCertificates()
+		);
+
+		for(String fingerprint : fingerprints) {
+			if(fingerprintToFind.equals(fingerprint)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	public static void crashReport(String message, Throwable throwable) {

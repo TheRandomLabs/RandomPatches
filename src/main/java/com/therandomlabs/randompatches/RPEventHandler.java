@@ -1,12 +1,10 @@
 package com.therandomlabs.randompatches;
 
-import java.util.List;
 import com.google.common.eventbus.Subscribe;
 import com.therandomlabs.randompatches.core.transformer.MinecraftTransformer;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
-import net.minecraftforge.fml.common.CertificateHelper;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
@@ -62,20 +60,7 @@ public final class RPEventHandler {
 	}
 
 	public static void containerInit() {
-		final List<String> fingerprints = CertificateHelper.getFingerprints(
-				RPEventHandler.class.getProtectionDomain().getCodeSource().getCertificates()
-		);
-
-		boolean found = false;
-
-		for(String fingerprint : fingerprints) {
-			if(RandomPatches.CERTIFICATE_FINGERPRINT.equals(fingerprint)) {
-				found = true;
-				break;
-			}
-		}
-
-		if(!found) {
+		if(!RPUtils.hasFingerprint(RPEventHandler.class, RandomPatches.CERTIFICATE_FINGERPRINT)) {
 			RandomPatches.LOGGER.error("Invalid fingerprint detected!");
 		}
 
