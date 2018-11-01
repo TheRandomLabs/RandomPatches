@@ -245,9 +245,13 @@ public class RPConfig {
 
 	public static void reloadFromDisk() {
 		try {
-			final File file =
-					new File(Loader.instance().getConfigDir(), RandomPatches.MODID + ".cfg");
+			final File file = new File(
+					Loader.instance().getConfigDir(),
+					RandomPatches.MODID + ".cfg"
+			);
+
 			((Map) CONFIGS.get(null)).remove(file.getAbsolutePath());
+
 			reload();
 		} catch(Exception ex) {
 			RPUtils.crashReport("Error while modifying config", ex);

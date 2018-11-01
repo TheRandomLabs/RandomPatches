@@ -11,6 +11,7 @@ public final class RandomPatches {
 	public static final String NAME = "RandomPatches";
 	public static final String VERSION = "@VERSION@";
 	public static final String MINECRAFT_VERSIONS = "[1.8,1.13)";
+	public static final String CERTIFICATE_FINGERPRINT = "@FINGERPRINT@";
 
 	public static final int SORTING_INDEX = Integer.MAX_VALUE - 10000;
 
