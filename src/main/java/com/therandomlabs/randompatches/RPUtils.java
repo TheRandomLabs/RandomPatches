@@ -68,7 +68,7 @@ public final class RPUtils {
 					stream = jar.getInputStream(jar.getJarEntry("mcmod.info"));
 				}
 			} catch(IOException ex) {
-				RandomPatches.LOGGER.error("Failed to load mcmod.info", ex);
+				RandomPatches.LOGGER.error("Failed to load mcmod.info: " + source, ex);
 
 				IOUtils.closeQuietly(stream);
 				IOUtils.closeQuietly(jar);

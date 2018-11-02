@@ -310,7 +310,7 @@ public class RPConfig {
 
 				//Add default value to comment
 				comments.put(property, comment);
-				property.setComment(comment + "\n" + "Default: " + property.getDefault());
+				property.setComment(comment + "\nDefault: " + property.getDefault());
 			});
 
 			if(category.getValues().isEmpty() || category.getComment() == null) {

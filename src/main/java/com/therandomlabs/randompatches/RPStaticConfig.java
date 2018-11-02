@@ -16,7 +16,8 @@ public class RPStaticConfig {
 		public static final String NARRATOR_KEYBIND =
 				"Whether to add the Toggle Narrator keybind to the controls.";
 		public static final String PATCH_MINECRAFT_CLASS = "Set this to false to disable the " +
-				"Minecraft class patches (Toggle Narrator keybind and custom window title/icon).";
+				"Minecraft class patches (the Toggle Narrator keybind and custom window " +
+				"title/icon).";
 		public static final String PATCH_TITLE_SCREEN_ON_DISCONNECT = "Set this to false to " +
 				"force disable the \"force title screen on disconnect\" patch.";
 		public static final String REMOVE_POTION_GLINT =
@@ -24,30 +25,31 @@ public class RPStaticConfig {
 		public static final String RPRELOADCLIENT = "Enables the /rpreloadclient command.";
 
 		public static final String ICON_16 = "The path to the 16x16 Minecraft window " +
-				"icon. Leave this and the 32x32 icon blank to use the default icon.";
+				"icon.\nLeave this and the 32x32 icon blank to use the default icon.";
 		public static final String ICON_32 = "The path to the 32x32 Minecraft window " +
-				"icon. Leave this and the 16x16 icon blank to use the default icon.";
+				"icon.\nLeave this and the 16x16 icon blank to use the default icon.";
 		public static final String TITLE = "The Minecraft window title.";
 
 		public static final String MINECART_AI_FIX = "Fixes MC-64836, which causes non-player " +
 				"entities to be allowed to control Minecarts using their AI.";
 		public static final String PATCH_NETHANDLERPLAYSERVER = "Set this to false to force " +
-				"disable the NetHandlerPlayServer patches (speed limits and disconnect timeouts).";
+				"disable the NetHandlerPlayServer patches (the speed limits and disconnect " +
+				"timeouts).";
 		public static final String RPRELOAD = "Enables the /rpreload command.";
 
 		public static final String MAX_PLAYER_SPEED =
-				"The maximum player speed. The vanilla default is 100.0.";
+				"The maximum player speed.\nThe vanilla default is 100.0.";
 		public static final String MAX_PLAYER_ELYTRA_SPEED =
-				"The maximum player elytra speed. The vanilla default is 300.0.";
+				"The maximum player elytra speed.\nThe vanilla default is 300.0.";
 		public static final String MAX_PLAYER_VEHICLE_SPEED =
-				"The maximum player vehicle speed. The vanilla default is 100.0.";
+				"The maximum player vehicle speed.\nThe vanilla default is 100.0.";
 
 		public static final String KEEP_ALIVE_PACKET_INTERVAL =
 				"The interval at which the server sends the KeepAlive packet.";
 		public static final String LOGIN_TIMEOUT = "The login timeout.";
 		public static final String PATCH_LOGIN_TIMEOUT = "Whether to patch the login timeout.";
-		public static final String READ_TIMEOUT = "The read timeout. This is the time it takes " +
-				"for a player to be disconnected after not responding to a KeepAlive packet. " +
+		public static final String READ_TIMEOUT = "The read timeout.\nThis is the time it takes " +
+				"for a player to be disconnected after not responding to a KeepAlive packet.\n" +
 				"This value is automatically rounded up to a product of keepAlivePacketInterval.";
 	}
 
