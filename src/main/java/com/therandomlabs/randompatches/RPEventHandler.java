@@ -54,7 +54,7 @@ public final class RPEventHandler {
 
 	@SubscribeEvent
 	public void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event) {
-		if(event.getModID().equals(RandomPatches.MODID)) {
+		if(event.getModID().equals(RandomPatches.MOD_ID)) {
 			RPConfig.reload();
 		}
 	}

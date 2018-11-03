@@ -7,7 +7,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public final class RandomPatches {
-	public static final String MODID = "randompatches";
+	public static final String MOD_ID = "randompatches";
 	public static final String NAME = "RandomPatches";
 	public static final String VERSION = "@VERSION@";
 	public static final String MINECRAFT_VERSIONS = "[1.8,1.13)";
@@ -33,7 +33,7 @@ public final class RandomPatches {
 	public static final boolean REBIND_NARRATOR_INSTALLED =
 			detect("quaternary.rebindnarrator.RebindNarrator");
 
-	public static final Logger LOGGER = LogManager.getLogger(MODID);
+	public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
 
 	private static boolean detect(String className) {
 		try {

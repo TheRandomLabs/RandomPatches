@@ -149,7 +149,7 @@ public class RPStaticConfig {
 
 	public static void reload() {
 		if(config == null) {
-			config = new Configuration(new File("config", RandomPatches.MODID + ".cfg"));
+			config = new Configuration(new File("config", RandomPatches.MOD_ID + ".cfg"));
 		} else {
 			config.load();
 		}

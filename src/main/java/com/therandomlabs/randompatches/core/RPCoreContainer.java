@@ -19,7 +19,7 @@ public class RPCoreContainer extends DummyModContainer {
 	public RPCoreContainer() {
 		super(RPUtils.loadMetadata(
 				RPCore.getModFile(),
-				RandomPatches.MODID,
+				RandomPatches.MOD_ID,
 				RandomPatches.NAME,
 				RandomPatches.VERSION
 		));

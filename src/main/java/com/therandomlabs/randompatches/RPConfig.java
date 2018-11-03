@@ -21,7 +21,7 @@ import net.minecraftforge.fml.common.discovery.ASMDataTable;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
 //The most convoluted way to implement a config GUI, but it works
-@Config(modid = RandomPatches.MODID, name = RandomPatches.MODID, category = "")
+@Config(modid = RandomPatches.MOD_ID, name = RandomPatches.MOD_ID, category = "")
 public class RPConfig {
 	public static class Client {
 		@Config.LangKey("randompatches.config.window")
@@ -212,7 +212,7 @@ public class RPConfig {
 
 		reload(
 				propertyCache,
-				RandomPatches.MODID,
+				RandomPatches.MOD_ID,
 				RPConfig.class,
 				RPStaticConfig.class,
 				RPStaticConfig::onReload
@@ -247,7 +247,7 @@ public class RPConfig {
 		try {
 			final File file = new File(
 					Loader.instance().getConfigDir(),
-					RandomPatches.MODID + ".cfg"
+					RandomPatches.MOD_ID + ".cfg"
 			);
 
 			((Map) CONFIGS.get(null)).remove(file.getAbsolutePath());
