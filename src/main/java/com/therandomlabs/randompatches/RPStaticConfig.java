@@ -2,6 +2,9 @@ package com.therandomlabs.randompatches;
 
 import java.io.File;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
@@ -134,6 +137,8 @@ public class RPStaticConfig {
 
 	private static final Field COMMENT = RandomPatches.IS_ONE_EIGHT ?
 			ReflectionHelper.findField(Property.class, "comment") : null;
+
+	private static final List<Runnable> reloadHandlers = new ArrayList<>(1);
 
 	private static Configuration config;
 	private static Configuration currentConfig;
@@ -349,6 +354,12 @@ public class RPStaticConfig {
 
 		System.setProperty("fml.readTimeout", Integer.toString(readTimeout));
 		System.setProperty("fml.loginTimeout", Integer.toString(loginTimeout));
+
+		reloadHandlers.forEach(Runnable::run);
+	}
+
+	public static void registerReloadHandler(Runnable runnable) {
+		reloadHandlers.add(Objects.requireNonNull(runnable));
 	}
 
 	@SuppressWarnings("Duplicates")
