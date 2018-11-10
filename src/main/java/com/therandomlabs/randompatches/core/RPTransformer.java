@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import com.therandomlabs.randompatches.RPStaticConfig;
 import com.therandomlabs.randompatches.RandomPatches;
+import com.therandomlabs.randompatches.core.transformer.BlockModelShapesTransformer;
 import com.therandomlabs.randompatches.core.transformer.IngameMenuTransformer;
 import com.therandomlabs.randompatches.core.transformer.ItemPotionTransformer;
 import com.therandomlabs.randompatches.core.transformer.LanguageListTransformer;
@@ -91,6 +92,13 @@ public class RPTransformer implements IClassTransformer {
 
 		if(RPStaticConfig.removePotionGlint && RandomPatches.IS_CLIENT) {
 			register("net.minecraft.item.ItemPotion", new ItemPotionTransformer());
+		}
+
+		if(RandomPatches.VERTICAL_END_PORTALS_INSTALLED && RandomPatches.IS_CLIENT) {
+			register(
+					"net.minecraft.client.renderer.BlockModelShapes",
+					new BlockModelShapesTransformer()
+			);
 		}
 	}
 }
