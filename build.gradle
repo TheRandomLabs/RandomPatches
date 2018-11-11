@@ -61,4 +61,13 @@ task signJar(type: SignJar, dependsOn: reobfJar) {
 	outputFile = jar.archivePath
 }
 
+task deobfJar(type: Jar) {
+	from sourceSets.main.output
+	classifier = "deobf"
+}
+
+artifacts {
+	archives deobfJar
+}
+
 build.dependsOn signJar
