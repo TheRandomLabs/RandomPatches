@@ -1,7 +1,6 @@
 package com.therandomlabs.randompatches;
 
 import com.google.common.eventbus.Subscribe;
-import com.therandomlabs.randompatches.core.TileEntityEndPortalRenderer;
 import com.therandomlabs.randompatches.core.transformer.MinecraftTransformer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.tileentity.TileEntityEndPortal;
