@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 import com.therandomlabs.randompatches.RPStaticConfig;
 import com.therandomlabs.randompatches.RandomPatches;
-import com.therandomlabs.randompatches.core.transformer.BlockModelShapesTransformer;
 import com.therandomlabs.randompatches.core.transformer.IngameMenuTransformer;
 import com.therandomlabs.randompatches.core.transformer.ItemPotionTransformer;
 import com.therandomlabs.randompatches.core.transformer.LanguageListTransformer;
@@ -12,6 +11,9 @@ import com.therandomlabs.randompatches.core.transformer.LoginServerTransformer;
 import com.therandomlabs.randompatches.core.transformer.MinecartTransformer;
 import com.therandomlabs.randompatches.core.transformer.MinecraftTransformer;
 import com.therandomlabs.randompatches.core.transformer.PlayServerTransformer;
+import com.therandomlabs.randompatches.core.transformer.endportal.BlockEndPortalTransformer;
+import com.therandomlabs.randompatches.core.transformer.endportal.BlockModelShapesTransformer;
+import com.therandomlabs.randompatches.core.transformer.endportal.TileEntityEndPortalTransformer;
 import net.minecraft.launchwrapper.IClassTransformer;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
@@ -94,10 +96,15 @@ public class RPTransformer implements IClassTransformer {
 			register("net.minecraft.item.ItemPotion", new ItemPotionTransformer());
 		}
 
-		if(RandomPatches.VERTICAL_END_PORTALS_INSTALLED && RandomPatches.IS_CLIENT) {
+		if(RPStaticConfig.isEndPortalTweaksEnabled() && RandomPatches.IS_CLIENT) {
+			register("net.minecraft.block.BlockEndPortal", new BlockEndPortalTransformer());
 			register(
 					"net.minecraft.client.renderer.BlockModelShapes",
 					new BlockModelShapesTransformer()
+			);
+			register(
+					"net.minecraft.tileentity.TileEntityEndPortal",
+					new TileEntityEndPortalTransformer()
 			);
 		}
 	}

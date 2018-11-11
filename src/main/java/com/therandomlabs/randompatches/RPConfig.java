@@ -67,6 +67,11 @@ public class RPConfig {
 
 	public static class Misc {
 		@Config.RequiresMcRestart
+		@Config.LangKey("randompatches.config.misc.endPortalTweaks")
+		@Config.Comment(RPStaticConfig.Comments.END_PORTAL_TWEAKS)
+		public boolean endPortalTweaks = RPStaticConfig.Defaults.END_PORTAL_TWEAKS;
+
+		@Config.RequiresMcRestart
 		@Config.LangKey("randompatches.config.misc.minecartAIFix")
 		@Config.Comment(RPStaticConfig.Comments.MINECART_AI_FIX)
 		public boolean minecartAIFix = RPStaticConfig.Defaults.MINECART_AI_FIX;

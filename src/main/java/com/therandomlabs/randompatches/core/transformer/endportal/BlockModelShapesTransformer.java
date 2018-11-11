@@ -1,4 +1,4 @@
-package com.therandomlabs.randompatches.core.transformer;
+package com.therandomlabs.randompatches.core.transformer.endportal;
 
 import com.therandomlabs.randompatches.core.Transformer;
 import org.objectweb.asm.Opcodes;
@@ -7,7 +7,7 @@ import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.FieldInsnNode;
 import org.objectweb.asm.tree.MethodNode;
 
-public class BlockModelShapesTransformer extends Transformer {
+public final class BlockModelShapesTransformer extends Transformer {
 	public static final String AIR = getName("AIR", "field_150350_a");
 	public static final String END_PORTAL = getName("END_PORTAL", "field_150384_bq");
 

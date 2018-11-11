@@ -8,7 +8,7 @@ import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.MethodInsnNode;
 import org.objectweb.asm.tree.MethodNode;
 
-public class LanguageListTransformer extends Transformer {
+public final class LanguageListTransformer extends Transformer {
 	public static final String REFRESH_RESOURCES = getName("refreshResources", "func_110436_a");
 
 	@Override

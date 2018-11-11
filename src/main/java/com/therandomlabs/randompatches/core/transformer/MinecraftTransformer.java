@@ -20,7 +20,7 @@ import org.objectweb.asm.tree.LdcInsnNode;
 import org.objectweb.asm.tree.MethodInsnNode;
 import org.objectweb.asm.tree.MethodNode;
 
-public class MinecraftTransformer extends Transformer {
+public final class MinecraftTransformer extends Transformer {
 	public static final int KEY_UNUSED = 0x54;
 	public static KeyBinding toggleNarrator;
 

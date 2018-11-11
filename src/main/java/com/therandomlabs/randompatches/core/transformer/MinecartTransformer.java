@@ -7,7 +7,7 @@ import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.MethodNode;
 import org.objectweb.asm.tree.TypeInsnNode;
 
-public class MinecartTransformer extends Transformer {
+public final class MinecartTransformer extends Transformer {
 	@Override
 	public void transform(ClassNode node) {
 		final MethodNode method = findMethod(node, "moveAlongTrack", "func_180460_a");

@@ -7,7 +7,7 @@ import org.objectweb.asm.tree.InsnList;
 import org.objectweb.asm.tree.InsnNode;
 import org.objectweb.asm.tree.MethodNode;
 
-public class ItemPotionTransformer extends Transformer {
+public final class ItemPotionTransformer extends Transformer {
 	@Override
 	public void transform(ClassNode node) {
 		MethodNode method = findMethod(node, "hasEffect", "func_77962_s");

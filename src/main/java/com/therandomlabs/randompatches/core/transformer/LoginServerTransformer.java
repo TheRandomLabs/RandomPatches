@@ -8,7 +8,7 @@ import org.objectweb.asm.tree.FieldInsnNode;
 import org.objectweb.asm.tree.LdcInsnNode;
 import org.objectweb.asm.tree.MethodNode;
 
-public class LoginServerTransformer extends Transformer {
+public final class LoginServerTransformer extends Transformer {
 	@Override
 	public void transform(ClassNode node) {
 		final MethodNode method = findMethod(node, "update", "func_73660_a");

@@ -1,7 +1,10 @@
 package com.therandomlabs.randompatches;
 
 import com.google.common.eventbus.Subscribe;
+import com.therandomlabs.randompatches.core.TileEntityEndPortalRenderer;
 import com.therandomlabs.randompatches.core.transformer.MinecraftTransformer;
+import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
+import net.minecraft.tileentity.TileEntityEndPortal;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
@@ -62,6 +65,12 @@ public final class RPEventHandler {
 	public static void containerInit() {
 		if(!RPUtils.hasFingerprint(RPEventHandler.class, RandomPatches.CERTIFICATE_FINGERPRINT)) {
 			RandomPatches.LOGGER.error("Invalid fingerprint detected!");
+		}
+
+		if(RPStaticConfig.isEndPortalTweaksEnabled() && RandomPatches.IS_CLIENT) {
+			final TileEntityEndPortalRenderer renderer = new TileEntityEndPortalRenderer();
+			renderer.setRendererDispatcher(TileEntityRendererDispatcher.instance);
+			TileEntityRendererDispatcher.instance.renderers.put(TileEntityEndPortal.class, renderer);
 		}
 
 		setWindowSettings();

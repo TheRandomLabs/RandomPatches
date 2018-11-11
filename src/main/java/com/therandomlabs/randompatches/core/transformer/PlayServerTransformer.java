@@ -14,7 +14,7 @@ import org.objectweb.asm.tree.MethodInsnNode;
 import org.objectweb.asm.tree.MethodNode;
 import org.objectweb.asm.tree.VarInsnNode;
 
-public class PlayServerTransformer extends Transformer {
+public final class PlayServerTransformer extends Transformer {
 	public static final String SEND_PACKET = getName("sendPacket", "func_147359_a");
 
 	@Override
@@ -55,6 +55,7 @@ public class PlayServerTransformer extends Transformer {
 		}
 	} */
 
+	@SuppressWarnings("Duplicates")
 	private static void transformUpdate(MethodNode method) {
 		LdcInsnNode keepAliveInterval = null;
 		JumpInsnNode ifeq = null;

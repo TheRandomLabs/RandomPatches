@@ -16,8 +16,9 @@ public class RPStaticConfig {
 		public static final String FAST_LANGUAGE_SWITCH = "Speeds up language switching.";
 		public static final String FORCE_TITLE_SCREEN_ON_DISCONNECT = "Forces Minecraft to show " +
 				"the title screen after disconnecting rather than the Multiplayer or Realms menu.";
-		public static final String NARRATOR_KEYBIND =
-				"Whether to add the Toggle Narrator keybind to the controls.";
+		public static final String NARRATOR_KEYBIND = "Whether to add the Toggle Narrator keybind " +
+				"to the controls. This only works in 1.12 as the narrator does not exist in " +
+				"previous versions.";
 		public static final String PATCH_MINECRAFT_CLASS = "Set this to false to disable the " +
 				"Minecraft class patches (the Toggle Narrator keybind and custom window " +
 				"title/icon).";
@@ -33,11 +34,14 @@ public class RPStaticConfig {
 				"icon.\nLeave this and the 16x16 icon blank to use the default icon.";
 		public static final String TITLE = "The Minecraft window title.";
 
+		public static final String END_PORTAL_TWEAKS = "Fixes the End portal break particle " +
+				"textures and improves End portal rendering. This only works on Minecraft 1.11 " +
+				"and above.";
 		public static final String MINECART_AI_FIX = "Fixes MC-64836, which causes non-player " +
 				"entities to be allowed to control Minecarts using their AI.";
 		public static final String PATCH_NETHANDLERPLAYSERVER = "Set this to false to force " +
 				"disable the NetHandlerPlayServer patches (the speed limits and disconnect " +
-				"timeouts).";
+				"timeouts). On Minecraft 1.8, 1.8.8 and 1.8.9, these patches are disabled.";
 		public static final String RPRELOAD = "Enables the /rpreload command.";
 
 		public static final String MAX_PLAYER_SPEED =
@@ -72,6 +76,7 @@ public class RPStaticConfig {
 		public static final String TITLE = RandomPatches.IS_DEOBFUSCATED ?
 				RandomPatches.NAME : RandomPatches.DEFAULT_WINDOW_TITLE;
 
+		public static final boolean END_PORTAL_TWEAKS = true;
 		public static final boolean MINECART_AI_FIX = true;
 		public static final boolean PATCH_NETHANDLERPLAYSERVER = true;
 		public static final boolean RPRELOAD = true;
@@ -114,6 +119,7 @@ public class RPStaticConfig {
 
 	//Misc
 
+	public static boolean endPortalTweaks;
 	public static boolean minecartAIFix;
 	public static boolean patchNetHandlerPlayServer;
 	public static boolean rpreload;
@@ -138,7 +144,7 @@ public class RPStaticConfig {
 	private static final Field COMMENT = RandomPatches.IS_ONE_EIGHT ?
 			ReflectionHelper.findField(Property.class, "comment") : null;
 
-	private static final List<Runnable> reloadHandlers = new ArrayList<>(1);
+	private static final List<Runnable> reloadListeners = new ArrayList<>(1);
 
 	private static Configuration config;
 	private static Configuration currentConfig;
@@ -146,6 +152,11 @@ public class RPStaticConfig {
 	public static boolean isNarratorKeybindEnabled() {
 		return narratorKeybind && RandomPatches.IS_ONE_TWELVE &&
 				!RandomPatches.REBIND_NARRATOR_INSTALLED;
+	}
+
+	public static boolean isEndPortalTweaksEnabled() {
+		return RPStaticConfig.endPortalTweaks &&
+				(RandomPatches.IS_ONE_ELEVEN || RandomPatches.IS_ONE_TWELVE);
 	}
 
 	public static void setCurrentConfig(Configuration config) {
@@ -233,6 +244,15 @@ public class RPStaticConfig {
 		title = getString("title", "client.window", Defaults.TITLE, Comments.TITLE);
 
 		config.addCustomCategoryComment("misc", MISC_COMMENT);
+
+		endPortalTweaks = getBoolean(
+				"endPortalTweaks",
+				"misc",
+				Defaults.END_PORTAL_TWEAKS,
+				Comments.END_PORTAL_TWEAKS,
+				false,
+				true
+		);
 
 		minecartAIFix = getBoolean(
 				"minecartAIFix",
@@ -340,7 +360,7 @@ public class RPStaticConfig {
 		}
 
 		if(RandomPatches.IS_CLIENT && Display.isCreated()) {
-			RPEventHandler.containerInit();
+			RPEventHandler.setWindowSettings();
 		}
 
 		if(readTimeout < keepAlivePacketInterval) {
@@ -355,11 +375,11 @@ public class RPStaticConfig {
 		System.setProperty("fml.readTimeout", Integer.toString(readTimeout));
 		System.setProperty("fml.loginTimeout", Integer.toString(loginTimeout));
 
-		reloadHandlers.forEach(Runnable::run);
+		reloadListeners.forEach(Runnable::run);
 	}
 
-	public static void registerReloadHandler(Runnable runnable) {
-		reloadHandlers.add(Objects.requireNonNull(runnable));
+	public static void registerReloadListener(Runnable runnable) {
+		reloadListeners.add(Objects.requireNonNull(runnable));
 	}
 
 	@SuppressWarnings("Duplicates")
