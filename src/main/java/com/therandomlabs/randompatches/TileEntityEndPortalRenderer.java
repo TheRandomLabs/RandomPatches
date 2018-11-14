@@ -94,13 +94,13 @@ public class TileEntityEndPortalRenderer extends
 			GlStateManager.texGen(GlStateManager.TexGen.T, 9216);
 			GlStateManager.texGen(GlStateManager.TexGen.R, 9216);
 			GlStateManager.texGen(
-					GlStateManager.TexGen.S, 9474, this.getBuffer(1.0F, 0.0F, 0.0F, 0.0F)
+					GlStateManager.TexGen.S, 9474, getBuffer(1.0F, 0.0F, 0.0F, 0.0F)
 			);
 			GlStateManager.texGen(
-					GlStateManager.TexGen.T, 9474, this.getBuffer(0.0F, 1.0F, 0.0F, 0.0F)
+					GlStateManager.TexGen.T, 9474, getBuffer(0.0F, 1.0F, 0.0F, 0.0F)
 			);
 			GlStateManager.texGen(
-					GlStateManager.TexGen.R, 9474, this.getBuffer(0.0F, 0.0F, 1.0F, 0.0F)
+					GlStateManager.TexGen.R, 9474, getBuffer(0.0F, 0.0F, 1.0F, 0.0F)
 			);
 			GlStateManager.enableTexGenCoord(GlStateManager.TexGen.S);
 			GlStateManager.enableTexGenCoord(GlStateManager.TexGen.T);
