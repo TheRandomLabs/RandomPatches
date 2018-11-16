@@ -13,6 +13,7 @@ randompatches.config.misc.tooltip=Options that don't fit into any other categori
 randompatches.config.misc.endPortalTweaks=End portal tweaks
 randompatches.config.misc.minecartAIFix=Minecraft AI fix
 randompatches.config.misc.patchNetHandlerPlayServer=Patch NetHandlerPlayServer
+randompatches.config.misc.recipeBookNBTFix=Recipe book NBT fix
 randompatches.config.misc.rpreload=/rpreload
 
 randompatches.config.speedLimits=Speed Limits

@@ -16,7 +16,8 @@ public class RPStaticConfig {
 		public static final String FAST_LANGUAGE_SWITCH = "Speeds up language switching.";
 		public static final String FORCE_TITLE_SCREEN_ON_DISCONNECT = "Forces Minecraft to show " +
 				"the title screen after disconnecting rather than the Multiplayer or Realms menu.";
-		public static final String NARRATOR_KEYBIND = "Whether to add the Toggle Narrator keybind " +
+		public static final String NARRATOR_KEYBIND = "Whether to add the Toggle Narrator keybind" +
+				" " +
 				"to the controls. This only works in 1.12 as the narrator does not exist in " +
 				"previous versions.";
 		public static final String PATCH_MINECRAFT_CLASS = "Set this to false to disable the " +
@@ -42,6 +43,9 @@ public class RPStaticConfig {
 		public static final String PATCH_NETHANDLERPLAYSERVER = "Set this to false to force " +
 				"disable the NetHandlerPlayServer patches (the speed limits and disconnect " +
 				"timeouts). On Minecraft 1.8, 1.8.8 and 1.8.9, these patches are disabled.";
+		public static final String RECIPE_BOOK_NBT_FIX = "Fixes MC-129057, which prevents " +
+				"ingredients with NBT data from being transferred to the crafting grid when a " +
+				"recipe is clicked in the recipe book.";
 		public static final String RPRELOAD = "Enables the /rpreload command.";
 
 		public static final String MAX_PLAYER_SPEED =
@@ -79,6 +83,7 @@ public class RPStaticConfig {
 		public static final boolean END_PORTAL_TWEAKS = true;
 		public static final boolean MINECART_AI_FIX = true;
 		public static final boolean PATCH_NETHANDLERPLAYSERVER = true;
+		public static final boolean RECIPE_BOOK_NBT_FIX = true;
 		public static final boolean RPRELOAD = true;
 
 		public static final float MAX_PLAYER_SPEED = 1000000.0F;
@@ -122,6 +127,7 @@ public class RPStaticConfig {
 	public static boolean endPortalTweaks;
 	public static boolean minecartAIFix;
 	public static boolean patchNetHandlerPlayServer;
+	public static boolean recipeBookNBTFix;
 	public static boolean rpreload;
 
 	//Speed limits
@@ -155,8 +161,12 @@ public class RPStaticConfig {
 	}
 
 	public static boolean isEndPortalTweaksEnabled() {
-		return RPStaticConfig.endPortalTweaks &&
-				(RandomPatches.IS_ONE_ELEVEN || RandomPatches.IS_ONE_TWELVE);
+		return endPortalTweaks && (RandomPatches.IS_ONE_ELEVEN || RandomPatches.IS_ONE_TWELVE);
+	}
+
+	public static boolean isRecipeBookNBTFixEnabled() {
+		return recipeBookNBTFix && RandomPatches.IS_ONE_TWELVE &&
+				!RandomPatches.VANILLAFIX_INSTALLED;
 	}
 
 	public static void setCurrentConfig(Configuration config) {
@@ -268,6 +278,15 @@ public class RPStaticConfig {
 				"misc",
 				Defaults.PATCH_NETHANDLERPLAYSERVER,
 				Comments.PATCH_NETHANDLERPLAYSERVER,
+				false,
+				true
+		);
+
+		recipeBookNBTFix = getBoolean(
+				"recipeBookNBTFix",
+				"misc",
+				Defaults.RECIPE_BOOK_NBT_FIX,
+				Comments.RECIPE_BOOK_NBT_FIX,
 				false,
 				true
 		);

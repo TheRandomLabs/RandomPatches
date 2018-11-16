@@ -82,6 +82,11 @@ public class RPConfig {
 		public boolean patchNetHandlerPlayServer =
 				RPStaticConfig.Defaults.PATCH_NETHANDLERPLAYSERVER;
 
+		@Config.RequiresMcRestart
+		@Config.LangKey("randompatches.config.misc.recipeBookNBTFix")
+		@Config.Comment(RPStaticConfig.Comments.RECIPE_BOOK_NBT_FIX)
+		public boolean recipeBookNBTFix = RPStaticConfig.Defaults.RECIPE_BOOK_NBT_FIX;
+
 		@Config.RequiresWorldRestart
 		@Config.LangKey("randompatches.config.misc.rpreload")
 		@Config.Comment(RPStaticConfig.Comments.RPRELOAD)

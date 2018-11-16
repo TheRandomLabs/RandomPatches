@@ -20,11 +20,6 @@ public class CommandRPReload extends CommandBase {
 	}
 
 	@Override
-	public int getRequiredPermissionLevel() {
-		return isClient ? 0 : 4;
-	}
-
-	@Override
 	public String getUsage(ICommandSender sender) {
 		return isClient ? "commands.rpreloadclient.usage" : "/rpreload";
 	}
@@ -48,5 +43,10 @@ public class CommandRPReload extends CommandBase {
 		}
 
 		RPEventHandler.setWindowSettings = true;
+	}
+
+	@Override
+	public int getRequiredPermissionLevel() {
+		return isClient ? 0 : 4;
 	}
 }

@@ -69,7 +69,9 @@ public final class RPEventHandler {
 		if(RPStaticConfig.isEndPortalTweaksEnabled() && RandomPatches.IS_CLIENT) {
 			final TileEntityEndPortalRenderer renderer = new TileEntityEndPortalRenderer();
 			renderer.setRendererDispatcher(TileEntityRendererDispatcher.instance);
-			TileEntityRendererDispatcher.instance.renderers.put(TileEntityEndPortal.class, renderer);
+			TileEntityRendererDispatcher.instance.renderers.put(
+					TileEntityEndPortal.class, renderer
+			);
 		}
 
 		setWindowSettings();

@@ -36,6 +36,43 @@ public final class MinecraftTransformer extends Transformer {
 		}
 	}
 
+	public static void handleKeypress() {
+		if(toggleNarrator == null) {
+			return;
+		}
+
+		final int eventKey = Keyboard.getEventKey();
+		final int key = eventKey == 0 ? Keyboard.getEventCharacter() + 256 : eventKey;
+
+		if(!toggleNarrator.isActiveAndMatches(key)) {
+			return;
+		}
+
+		final Minecraft mc = Minecraft.getMinecraft();
+
+		mc.gameSettings.setOptionValue(GameSettings.Options.NARRATOR, 1);
+
+		if(mc.currentScreen instanceof ScreenChatOptions) {
+			((ScreenChatOptions) mc.currentScreen).updateNarratorButton();
+		}
+	}
+
+	public static void registerKeybind() {
+		toggleNarrator = new KeyBinding("key.narrator", new IKeyConflictContext() {
+			@Override
+			public boolean isActive() {
+				return !(Minecraft.getMinecraft().currentScreen instanceof GuiControls);
+			}
+
+			@Override
+			public boolean conflicts(IKeyConflictContext other) {
+				return true;
+			}
+		}, KeyModifier.CONTROL, Keyboard.KEY_B, "key.categories.misc");
+
+		ClientRegistry.registerKeyBinding(toggleNarrator);
+	}
+
 	private static void transformCreateDisplay(MethodNode method) {
 		LdcInsnNode ldc = null;
 
@@ -81,42 +118,5 @@ public final class MinecraftTransformer extends Transformer {
 
 		method.instructions.insertBefore(isB.getPrevious(), callHandleKeypress);
 		isB.operand = KEY_UNUSED;
-	}
-
-	public static void handleKeypress() {
-		if(toggleNarrator == null) {
-			return;
-		}
-
-		final int eventKey = Keyboard.getEventKey();
-		final int key = eventKey == 0 ? Keyboard.getEventCharacter() + 256 : eventKey;
-
-		if(!toggleNarrator.isActiveAndMatches(key)) {
-			return;
-		}
-
-		final Minecraft mc = Minecraft.getMinecraft();
-
-		mc.gameSettings.setOptionValue(GameSettings.Options.NARRATOR, 1);
-
-		if(mc.currentScreen instanceof ScreenChatOptions) {
-			((ScreenChatOptions) mc.currentScreen).updateNarratorButton();
-		}
-	}
-
-	public static void registerKeybind() {
-		toggleNarrator = new KeyBinding("key.narrator", new IKeyConflictContext() {
-			@Override
-			public boolean isActive() {
-				return !(Minecraft.getMinecraft().currentScreen instanceof GuiControls);
-			}
-
-			@Override
-			public boolean conflicts(IKeyConflictContext other) {
-				return true;
-			}
-		}, KeyModifier.CONTROL, Keyboard.KEY_B, "key.categories.misc");
-
-		ClientRegistry.registerKeyBinding(toggleNarrator);
 	}
 }

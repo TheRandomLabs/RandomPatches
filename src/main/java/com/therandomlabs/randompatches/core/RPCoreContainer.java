@@ -37,20 +37,6 @@ public class RPCoreContainer extends DummyModContainer {
 	}
 
 	@Override
-	public Class<?> getCustomResourcePackClass() {
-		return RPUtils.getResourcePackClass(this);
-	}
-
-	@Override
-	public URL getUpdateUrl() {
-		try {
-			return new URL(getMetadata().updateJSON);
-		} catch(MalformedURLException ignored) {}
-
-		return null;
-	}
-
-	@Override
 	public boolean registerBus(EventBus bus, LoadController controller) {
 		if(!RandomPatches.IS_ONE_EIGHT && !RandomPatches.IS_ONE_NINE) {
 			Loader.instance().setActiveModContainer(this);
@@ -66,7 +52,21 @@ public class RPCoreContainer extends DummyModContainer {
 	}
 
 	@Override
+	public Class<?> getCustomResourcePackClass() {
+		return RPUtils.getResourcePackClass(this);
+	}
+
+	@Override
 	public List<String> getOwnedPackages() {
 		return ImmutableList.of("com.therandomlabs.randompatches");
+	}
+
+	@Override
+	public URL getUpdateUrl() {
+		try {
+			return new URL(getMetadata().updateJSON);
+		} catch(MalformedURLException ignored) {}
+
+		return null;
 	}
 }

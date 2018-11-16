@@ -34,6 +34,7 @@ public final class RandomPatches {
 	public static final boolean ITLT_INSTALLED = detect("dk.zlepper.itlt.about.mod");
 	public static final boolean REBIND_NARRATOR_INSTALLED =
 			detect("quaternary.rebindnarrator.RebindNarrator");
+	public static final boolean VANILLAFIX_INSTALLED = detect("org.dimdev.vanillafix.VanillaFix");
 
 	public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
 
