@@ -117,6 +117,8 @@ public class RPTransformer implements IClassTransformer {
 			);
 		}
 
-		register("net.minecraft.entity.item.EntityBoat", new EntityBoatTransformer());
+		if(RPStaticConfig.patchEntityBoat && !RandomPatches.IS_ONE_EIGHT) {
+			register("net.minecraft.entity.item.EntityBoat", new EntityBoatTransformer());
+		}
 	}
 }
