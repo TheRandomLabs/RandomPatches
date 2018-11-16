@@ -157,11 +157,12 @@ public class RPStaticConfig {
 
 	public static boolean isNarratorKeybindEnabled() {
 		return narratorKeybind && RandomPatches.IS_ONE_TWELVE &&
-				!RandomPatches.REBIND_NARRATOR_INSTALLED;
+				!RandomPatches.REBIND_NARRATOR_INSTALLED && RandomPatches.IS_CLIENT;
 	}
 
 	public static boolean isEndPortalTweaksEnabled() {
-		return endPortalTweaks && (RandomPatches.IS_ONE_ELEVEN || RandomPatches.IS_ONE_TWELVE);
+		return endPortalTweaks && (RandomPatches.IS_ONE_ELEVEN || RandomPatches.IS_ONE_TWELVE) &&
+				RandomPatches.IS_CLIENT;
 	}
 
 	public static boolean isRecipeBookNBTFixEnabled() {

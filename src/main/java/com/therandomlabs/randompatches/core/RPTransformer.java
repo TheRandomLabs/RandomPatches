@@ -97,7 +97,7 @@ public class RPTransformer implements IClassTransformer {
 			register("net.minecraft.item.ItemPotion", new ItemPotionTransformer());
 		}
 
-		if(RPStaticConfig.isEndPortalTweaksEnabled() && RandomPatches.IS_CLIENT) {
+		if(RPStaticConfig.isEndPortalTweaksEnabled()) {
 			register("net.minecraft.block.BlockEndPortal", new BlockEndPortalTransformer());
 			register(
 					"net.minecraft.client.renderer.BlockModelShapes",
