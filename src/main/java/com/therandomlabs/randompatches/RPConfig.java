@@ -23,6 +23,23 @@ import net.minecraftforge.fml.relauncher.ReflectionHelper;
 //The most convoluted way to implement a config GUI, but it works
 @Config(modid = RandomPatches.MOD_ID, name = RandomPatches.MOD_ID, category = "")
 public class RPConfig {
+	public static class Boats {
+		@Config.RequiresMcRestart
+		@Config.LangKey("randompatches.config.boats.patchEntityBoat")
+		@Config.Comment(RPStaticConfig.Comments.PATCH_ENTITYBOAT)
+		public boolean patchEntityBoat = RPStaticConfig.Defaults.PATCH_ENTITYBOAT;
+
+		@Config.LangKey("randompatches.config.boats.preventUnderwaterBoatPassengerEjection")
+		@Config.Comment(RPStaticConfig.Comments.PREVENT_UNDERWATER_BOAT_PASSENGER_EJECTION)
+		public boolean preventUnderwaterBoatPassengerEjection =
+				RPStaticConfig.Defaults.PREVENT_UNDERWATER_BOAT_PASSENGER_EJECTION;
+
+		@Config.LangKey("randompatches.config.boats.underwaterBoatBuoyancy")
+		@Config.Comment(RPStaticConfig.Comments.UNDERWATER_BOAT_BUOYANCY)
+		public double underwaterBoatBuoyancy =
+				RPStaticConfig.Defaults.UNDERWATER_BOAT_BUOYANCY;
+	}
+
 	public static class Client {
 		@Config.LangKey("randompatches.config.window")
 		@Config.Comment(RPStaticConfig.WINDOW_COMMENT)
@@ -147,6 +164,10 @@ public class RPConfig {
 	}
 
 	public interface NestedCategory {}
+
+	@Config.LangKey("randompatches.config.boats")
+	@Config.Comment(RPStaticConfig.BOATS_COMMENT)
+	public static Boats boats = new Boats();
 
 	@Config.LangKey("randompatches.config.client")
 	@Config.Comment(RPStaticConfig.CLIENT_COMMENT)

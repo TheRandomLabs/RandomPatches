@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import com.therandomlabs.randompatches.RPStaticConfig;
 import com.therandomlabs.randompatches.RandomPatches;
+import com.therandomlabs.randompatches.core.transformer.EntityBoatTransformer;
 import com.therandomlabs.randompatches.core.transformer.IngameMenuTransformer;
 import com.therandomlabs.randompatches.core.transformer.InventoryPlayerTransformer;
 import com.therandomlabs.randompatches.core.transformer.ItemPotionTransformer;
@@ -115,5 +116,7 @@ public class RPTransformer implements IClassTransformer {
 					new InventoryPlayerTransformer()
 			);
 		}
+
+		register("net.minecraft.entity.item.EntityBoat", new EntityBoatTransformer());
 	}
 }

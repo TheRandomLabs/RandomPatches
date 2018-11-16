@@ -5,6 +5,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import com.therandomlabs.randompatches.core.transformer.EntityBoatTransformer;
 import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
@@ -13,11 +14,16 @@ import org.lwjgl.opengl.Display;
 
 public class RPStaticConfig {
 	public static class Comments {
+		public static final String PATCH_ENTITYBOAT = "Whether to patch EntityBoat.";
+		public static final String PREVENT_UNDERWATER_BOAT_PASSENGER_EJECTION = "Prevents " +
+				"underwater boat passengers from being ejected after 60 ticks (3 seconds).";
+		public static final String UNDERWATER_BOAT_BUOYANCY = "The underwater boat buoyancy. " +
+				"The vanilla default is " + EntityBoatTransformer.VANILLA_UNDERWATER_BUOYANCY + ".";
+
 		public static final String FAST_LANGUAGE_SWITCH = "Speeds up language switching.";
 		public static final String FORCE_TITLE_SCREEN_ON_DISCONNECT = "Forces Minecraft to show " +
 				"the title screen after disconnecting rather than the Multiplayer or Realms menu.";
 		public static final String NARRATOR_KEYBIND = "Whether to add the Toggle Narrator keybind" +
-				" " +
 				"to the controls. This only works in 1.12 as the narrator does not exist in " +
 				"previous versions.";
 		public static final String PATCH_MINECRAFT_CLASS = "Set this to false to disable the " +
@@ -65,6 +71,10 @@ public class RPStaticConfig {
 	}
 
 	public static class Defaults {
+		public static final boolean PATCH_ENTITYBOAT = true;
+		public static final boolean PREVENT_UNDERWATER_BOAT_PASSENGER_EJECTION = false;
+		public static final double UNDERWATER_BOAT_BUOYANCY = 0.023;
+
 		public static final boolean FAST_LANGUAGE_SWITCH = true;
 		public static final boolean FORCE_TITLE_SCREEN_ON_DISCONNECT =
 				RandomPatches.IS_DEOBFUSCATED;
@@ -96,6 +106,7 @@ public class RPStaticConfig {
 		public static final int READ_TIMEOUT = 90;
 	}
 
+	public static final String BOATS_COMMENT = "Options related to boats.";
 	public static final String CLIENT_COMMENT = "Options related to client-sided features.";
 	public static final String MISC_COMMENT = "Options that don't fit into any other categories.";
 	public static final String SPEED_LIMITS_COMMENT =
@@ -105,6 +116,12 @@ public class RPStaticConfig {
 
 	public static final boolean CONFIG_GUI_ENABLED =
 			!(RandomPatches.IS_ONE_EIGHT || RandomPatches.IS_ONE_NINE || RandomPatches.IS_ONE_TEN);
+
+	//Boats
+
+	public static boolean patchEntityBoat;
+	public static boolean preventUnderwaterBoatPassengerEjection;
+	public static double underwaterBoatBuoyancy;
 
 	//Client
 
@@ -182,6 +199,33 @@ public class RPStaticConfig {
 		}
 
 		currentConfig = config;
+
+		config.addCustomCategoryComment("boats", BOATS_COMMENT);
+
+		patchEntityBoat = getBoolean(
+				"patchEntityBoat",
+				"boats",
+				Defaults.PATCH_ENTITYBOAT,
+				Comments.PATCH_ENTITYBOAT,
+				false,
+				true
+		);
+
+		preventUnderwaterBoatPassengerEjection = getBoolean(
+				"preventUnderwaterBoatPassengerEjection",
+				"boats",
+				Defaults.PREVENT_UNDERWATER_BOAT_PASSENGER_EJECTION,
+				Comments.PREVENT_UNDERWATER_BOAT_PASSENGER_EJECTION,
+				false,
+				false
+		);
+
+		underwaterBoatBuoyancy = getDouble(
+				"underwaterBoatBuoyancy",
+				"boats",
+				Defaults.UNDERWATER_BOAT_BUOYANCY,
+				Comments.UNDERWATER_BOAT_BUOYANCY
+		);
 
 		config.addCustomCategoryComment("client", CLIENT_COMMENT);
 
@@ -415,6 +459,11 @@ public class RPStaticConfig {
 		);
 
 		return property.getInt(defaultValue);
+	}
+
+	public static double getDouble(String name, String category, double defaultValue,
+			String comment) {
+		return getDouble(name, category, defaultValue, Double.MIN_VALUE, comment);
 	}
 
 	public static double getDouble(String name, String category, double defaultValue,
