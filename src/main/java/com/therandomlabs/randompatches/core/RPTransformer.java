@@ -6,7 +6,7 @@ import com.therandomlabs.randompatches.RPStaticConfig;
 import com.therandomlabs.randompatches.RandomPatches;
 import com.therandomlabs.randompatches.core.transformer.EntityBoatTransformer;
 import com.therandomlabs.randompatches.core.transformer.IngameMenuTransformer;
-import com.therandomlabs.randompatches.core.transformer.InventoryPlayerTransformer;
+import com.therandomlabs.randompatches.core.transformer.ServerRecipeBookHelperTransformer;
 import com.therandomlabs.randompatches.core.transformer.ItemPotionTransformer;
 import com.therandomlabs.randompatches.core.transformer.LanguageListTransformer;
 import com.therandomlabs.randompatches.core.transformer.LoginServerTransformer;
@@ -112,8 +112,8 @@ public class RPTransformer implements IClassTransformer {
 
 		if(RPStaticConfig.isRecipeBookNBTFixEnabled()) {
 			register(
-					"net.minecraft.entity.player.InventoryPlayer",
-					new InventoryPlayerTransformer()
+					"net.minecraft.util.ServerRecipeBookHelper",
+					new ServerRecipeBookHelperTransformer()
 			);
 		}
 
