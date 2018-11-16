@@ -34,7 +34,7 @@ public final class ServerRecipeBookHelperTransformer extends Transformer {
 	}
 
 	public static int findSlotMatchingUnusedItem(InventoryPlayer inventory, ItemStack toMatch) {
-		for(int i = 0; i < inventory.mainInventory.size(); ++i) {
+		for(int i = 0; i < inventory.mainInventory.size(); i++) {
 			final ItemStack stack = inventory.mainInventory.get(i);
 
 			if(!stack.isEmpty() && stackEqualExact(toMatch, stack) && !stack.isItemDamaged() &&

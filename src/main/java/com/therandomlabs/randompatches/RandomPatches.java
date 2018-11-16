@@ -19,14 +19,8 @@ public final class RandomPatches {
 			(boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment");
 
 	public static final boolean IS_CLIENT = FMLLaunchHandler.side().isClient();
-
-	public static final String MC_VERSION = (String) FMLInjectionData.data()[4];
-
-	public static final boolean IS_ONE_EIGHT = MC_VERSION.startsWith("1.8");
-	public static final boolean IS_ONE_NINE = MC_VERSION.startsWith("1.9");
-	public static final boolean IS_ONE_TEN = MC_VERSION.startsWith("1.10");
-	public static final boolean IS_ONE_ELEVEN = MC_VERSION.startsWith("1.11");
-	public static final boolean IS_ONE_TWELVE = MC_VERSION.startsWith("1.12");
+	public static final int MC_VERSION =
+			Integer.parseInt(((String) FMLInjectionData.data()[4]).split("\\.")[1]);
 
 	public static final String DEFAULT_WINDOW_TITLE = "Minecraft " + MC_VERSION;
 

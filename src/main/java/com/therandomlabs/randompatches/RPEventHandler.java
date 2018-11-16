@@ -23,7 +23,7 @@ public final class RPEventHandler {
 			return;
 		}
 
-		if(RPStaticConfig.CONFIG_GUI_ENABLED) {
+		if(RandomPatches.MC_VERSION > 10) {
 			RPConfig.reload();
 		}
 
@@ -38,7 +38,7 @@ public final class RPEventHandler {
 			return;
 		}
 
-		if(RPStaticConfig.CONFIG_GUI_ENABLED) {
+		if(RandomPatches.MC_VERSION > 10) {
 			MinecraftForge.EVENT_BUS.register(this);
 		}
 

@@ -38,7 +38,7 @@ public class RPCoreContainer extends DummyModContainer {
 
 	@Override
 	public boolean registerBus(EventBus bus, LoadController controller) {
-		if(!RandomPatches.IS_ONE_EIGHT && !RandomPatches.IS_ONE_NINE) {
+		if(RandomPatches.MC_VERSION > 9) {
 			Loader.instance().setActiveModContainer(this);
 			bus.register(new RPEventHandler());
 		}

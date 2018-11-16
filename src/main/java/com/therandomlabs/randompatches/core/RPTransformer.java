@@ -78,7 +78,7 @@ public class RPTransformer implements IClassTransformer {
 			register("net.minecraft.client.gui.GuiIngameMenu", new IngameMenuTransformer());
 		}
 
-		if(RPStaticConfig.patchNetHandlerPlayServer && !RandomPatches.IS_ONE_EIGHT) {
+		if(RPStaticConfig.patchNetHandlerPlayServer && RandomPatches.MC_VERSION > 8) {
 			register("net.minecraft.network.NetHandlerPlayServer", new PlayServerTransformer());
 		}
 
@@ -117,7 +117,7 @@ public class RPTransformer implements IClassTransformer {
 			);
 		}
 
-		if(RPStaticConfig.patchEntityBoat && !RandomPatches.IS_ONE_EIGHT) {
+		if(RPStaticConfig.patchEntityBoat && RandomPatches.MC_VERSION > 8) {
 			register("net.minecraft.entity.item.EntityBoat", new EntityBoatTransformer());
 		}
 	}

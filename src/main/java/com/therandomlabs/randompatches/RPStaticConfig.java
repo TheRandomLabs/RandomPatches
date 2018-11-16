@@ -114,9 +114,6 @@ public class RPStaticConfig {
 	public static final String TIMEOUTS_COMMENT = "Options related to the disconnect timeouts.";
 	public static final String WINDOW_COMMENT = "Options related to the Minecraft window.";
 
-	public static final boolean CONFIG_GUI_ENABLED =
-			!(RandomPatches.IS_ONE_EIGHT || RandomPatches.IS_ONE_NINE || RandomPatches.IS_ONE_TEN);
-
 	//Boats
 
 	public static boolean patchEntityBoat;
@@ -164,7 +161,7 @@ public class RPStaticConfig {
 	public static int readTimeout;
 	public static long readTimeoutMillis;
 
-	private static final Field COMMENT = RandomPatches.IS_ONE_EIGHT ?
+	private static final Field COMMENT = RandomPatches.MC_VERSION == 8 ?
 			ReflectionHelper.findField(Property.class, "comment") : null;
 
 	private static final List<Runnable> reloadListeners = new ArrayList<>(1);
@@ -173,17 +170,16 @@ public class RPStaticConfig {
 	private static Configuration currentConfig;
 
 	public static boolean isNarratorKeybindEnabled() {
-		return narratorKeybind && RandomPatches.IS_ONE_TWELVE &&
+		return narratorKeybind && RandomPatches.MC_VERSION > 11 &&
 				!RandomPatches.REBIND_NARRATOR_INSTALLED && RandomPatches.IS_CLIENT;
 	}
 
 	public static boolean isEndPortalTweaksEnabled() {
-		return endPortalTweaks && (RandomPatches.IS_ONE_ELEVEN || RandomPatches.IS_ONE_TWELVE) &&
-				RandomPatches.IS_CLIENT;
+		return endPortalTweaks && RandomPatches.MC_VERSION > 10 && RandomPatches.IS_CLIENT;
 	}
 
 	public static boolean isRecipeBookNBTFixEnabled() {
-		return recipeBookNBTFix && RandomPatches.IS_ONE_TWELVE &&
+		return recipeBookNBTFix && RandomPatches.MC_VERSION > 11 &&
 				!RandomPatches.VANILLAFIX_INSTALLED;
 	}
 
@@ -509,7 +505,7 @@ public class RPStaticConfig {
 	}
 
 	public static String getComment(Property property) {
-		if(RandomPatches.IS_ONE_EIGHT) {
+		if(RandomPatches.MC_VERSION == 8) {
 			try {
 				return (String) COMMENT.get(property);
 			} catch(Exception ex) {
@@ -521,7 +517,7 @@ public class RPStaticConfig {
 	}
 
 	public static void setComment(Property property, String comment) {
-		if(RandomPatches.IS_ONE_EIGHT) {
+		if(RandomPatches.MC_VERSION == 8) {
 			try {
 				COMMENT.set(property, comment);
 			} catch(Exception ex) {

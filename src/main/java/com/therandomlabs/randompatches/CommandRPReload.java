@@ -33,7 +33,7 @@ public class CommandRPReload extends CommandBase {
 			RPStaticConfig.reload();
 			notifyCommandListener(sender, this, "RandomPatches configuration reloaded!");
 		} else {
-			if(RPStaticConfig.CONFIG_GUI_ENABLED) {
+			if(RandomPatches.MC_VERSION > 10) {
 				RPConfig.reloadFromDisk();
 			} else {
 				RPStaticConfig.reload();
