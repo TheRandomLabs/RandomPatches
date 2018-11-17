@@ -19,10 +19,10 @@ public final class RandomPatches {
 			(boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment");
 
 	public static final boolean IS_CLIENT = FMLLaunchHandler.side().isClient();
-	public static final int MC_VERSION =
-			Integer.parseInt(((String) FMLInjectionData.data()[4]).split("\\.")[1]);
+	public static final String MC_VERSION_STRING = (String) FMLInjectionData.data()[4];
+	public static final int MC_VERSION = Integer.parseInt(MC_VERSION_STRING.split("\\.")[1]);
 
-	public static final String DEFAULT_WINDOW_TITLE = "Minecraft " + MC_VERSION;
+	public static final String DEFAULT_WINDOW_TITLE = "Minecraft " + MC_VERSION_STRING;
 
 	public static final boolean SPONGEFORGE_INSTALLED = detect("org.spongepowered.mod.SpongeMod");
 	public static final boolean ITLT_INSTALLED = detect("dk.zlepper.itlt.about.mod");

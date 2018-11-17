@@ -43,7 +43,7 @@ public final class RPEventHandler {
 		}
 
 		if(RPStaticConfig.isNarratorKeybindEnabled()) {
-			MinecraftTransformer.registerKeybind();
+			MinecraftTransformer.ToggleNarratorKeybind.register();
 		}
 	}
 

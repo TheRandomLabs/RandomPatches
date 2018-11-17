@@ -21,8 +21,27 @@ import org.objectweb.asm.tree.MethodInsnNode;
 import org.objectweb.asm.tree.MethodNode;
 
 public final class MinecraftTransformer extends Transformer {
+	public static final class ToggleNarratorKeybind {
+		public static KeyBinding keybind;
+
+		public static void register() {
+			keybind = new KeyBinding("key.narrator", new IKeyConflictContext() {
+				@Override
+				public boolean isActive() {
+					return !(Minecraft.getMinecraft().currentScreen instanceof GuiControls);
+				}
+
+				@Override
+				public boolean conflicts(IKeyConflictContext other) {
+					return true;
+				}
+			}, KeyModifier.CONTROL, Keyboard.KEY_B, "key.categories.misc");
+
+			ClientRegistry.registerKeyBinding(keybind);
+		}
+	}
+
 	public static final int KEY_UNUSED = 0x54;
-	public static KeyBinding toggleNarrator;
 
 	@Override
 	public void transform(ClassNode node) {
@@ -37,14 +56,14 @@ public final class MinecraftTransformer extends Transformer {
 	}
 
 	public static void handleKeypress() {
-		if(toggleNarrator == null) {
+		if(ToggleNarratorKeybind.keybind == null) {
 			return;
 		}
 
 		final int eventKey = Keyboard.getEventKey();
 		final int key = eventKey == 0 ? Keyboard.getEventCharacter() + 256 : eventKey;
 
-		if(!toggleNarrator.isActiveAndMatches(key)) {
+		if(!ToggleNarratorKeybind.keybind.isActiveAndMatches(key)) {
 			return;
 		}
 
@@ -55,22 +74,6 @@ public final class MinecraftTransformer extends Transformer {
 		if(mc.currentScreen instanceof ScreenChatOptions) {
 			((ScreenChatOptions) mc.currentScreen).updateNarratorButton();
 		}
-	}
-
-	public static void registerKeybind() {
-		toggleNarrator = new KeyBinding("key.narrator", new IKeyConflictContext() {
-			@Override
-			public boolean isActive() {
-				return !(Minecraft.getMinecraft().currentScreen instanceof GuiControls);
-			}
-
-			@Override
-			public boolean conflicts(IKeyConflictContext other) {
-				return true;
-			}
-		}, KeyModifier.CONTROL, Keyboard.KEY_B, "key.categories.misc");
-
-		ClientRegistry.registerKeyBinding(toggleNarrator);
 	}
 
 	private static void transformCreateDisplay(MethodNode method) {

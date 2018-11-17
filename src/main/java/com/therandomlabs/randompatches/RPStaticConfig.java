@@ -130,6 +130,11 @@ public class RPStaticConfig {
 	public static boolean removePotionGlint;
 	public static boolean rpreloadclient;
 
+	//Client->Borderless Fullscreen
+
+	public static boolean enableBorderlessFullscreen;
+	public static int fullscreenMonitor;
+
 	//Client->Window
 
 	public static String icon16;
