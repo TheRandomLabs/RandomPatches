@@ -72,7 +72,8 @@ public class RPStaticConfig {
 
 	public static class Defaults {
 		public static final boolean PATCH_ENTITYBOAT = true;
-		public static final boolean PREVENT_UNDERWATER_BOAT_PASSENGER_EJECTION = false;
+		public static final boolean PREVENT_UNDERWATER_BOAT_PASSENGER_EJECTION =
+				RandomPatches.IS_DEOBFUSCATED;
 		public static final double UNDERWATER_BOAT_BUOYANCY = 0.023;
 
 		public static final boolean FAST_LANGUAGE_SWITCH = true;

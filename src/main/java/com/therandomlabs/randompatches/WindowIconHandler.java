@@ -48,6 +48,12 @@ public class WindowIconHandler {
 					});
 				}
 			} catch(IOException ex) {
+				if(RandomPatches.IS_DEOBFUSCATED &&
+						ex instanceof FileNotFoundException &&
+						RPStaticConfig.Defaults.ICON16.equals(RPStaticConfig.icon16)) {
+					return;
+				}
+				
 				RandomPatches.LOGGER.error("Failed to set icon", ex);
 			} finally {
 				IOUtils.closeQuietly(stream16);
