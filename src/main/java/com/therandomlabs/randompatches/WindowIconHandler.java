@@ -7,6 +7,7 @@ import java.awt.GraphicsEnvironment;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
@@ -50,7 +51,8 @@ public class WindowIconHandler {
 			} catch(IOException ex) {
 				if(RandomPatches.IS_DEOBFUSCATED &&
 						ex instanceof FileNotFoundException &&
-						RPStaticConfig.Defaults.ICON16.equals(RPStaticConfig.icon16)) {
+						RPStaticConfig.Defaults.ICON_16.equals(RPStaticConfig.icon16) &&
+						RPStaticConfig.Defaults.ICON_32.equals(RPStaticConfig.icon32)) {
 					return;
 				}
 				
