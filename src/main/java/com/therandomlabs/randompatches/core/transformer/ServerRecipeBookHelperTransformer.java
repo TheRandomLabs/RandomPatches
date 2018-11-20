@@ -26,8 +26,8 @@ public final class ServerRecipeBookHelperTransformer extends Transformer {
 		}
 
 		findSlotMatchingUnusedItem.setOpcode(Opcodes.INVOKESTATIC);
-		findSlotMatchingUnusedItem.owner =
-				"com/therandomlabs/randompatches/core/transformer/ServerRecipeBookHelperTransformer";
+		findSlotMatchingUnusedItem.owner = "com/therandomlabs/randompatches/core/transformer/" +
+				"ServerRecipeBookHelperTransformer";
 		findSlotMatchingUnusedItem.name = "findSlotMatchingUnusedItem";
 		findSlotMatchingUnusedItem.desc =
 				"(Lnet/minecraft/entity/player/InventoryPlayer;Lnet/minecraft/item/ItemStack;)I";
