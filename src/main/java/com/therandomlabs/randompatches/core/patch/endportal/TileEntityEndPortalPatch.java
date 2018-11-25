@@ -1,6 +1,6 @@
-package com.therandomlabs.randompatches.core.transformer.endportal;
+package com.therandomlabs.randompatches.core.patch.endportal;
 
-import com.therandomlabs.randompatches.core.Transformer;
+import com.therandomlabs.randompatches.core.Patch;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.FieldInsnNode;
@@ -11,10 +11,10 @@ import org.objectweb.asm.tree.LabelNode;
 import org.objectweb.asm.tree.MethodNode;
 import org.objectweb.asm.tree.VarInsnNode;
 
-public final class TileEntityEndPortalTransformer extends Transformer {
+public final class TileEntityEndPortalPatch extends Patch {
 	@SuppressWarnings("Duplicates")
 	@Override
-	public void transform(ClassNode node) {
+	public void apply(ClassNode node) {
 		final MethodNode method = findMethod(node, "shouldRenderFace", "func_184313_a");
 		final InsnList list = new InsnList();
 

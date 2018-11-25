@@ -1,8 +1,8 @@
-package com.therandomlabs.randompatches.core.transformer;
+package com.therandomlabs.randompatches.core.patch;
 
-import com.therandomlabs.randompatches.RPStaticConfig;
 import com.therandomlabs.randompatches.RandomPatches;
-import com.therandomlabs.randompatches.core.Transformer;
+import com.therandomlabs.randompatches.config.RPStaticConfig;
+import com.therandomlabs.randompatches.core.Patch;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiControls;
 import net.minecraft.client.gui.ScreenChatOptions;
@@ -20,7 +20,7 @@ import org.objectweb.asm.tree.LdcInsnNode;
 import org.objectweb.asm.tree.MethodInsnNode;
 import org.objectweb.asm.tree.MethodNode;
 
-public final class MinecraftTransformer extends Transformer {
+public final class MinecraftPatch extends Patch {
 	public static final class ToggleNarratorKeybind {
 		public static KeyBinding keybind;
 
@@ -44,7 +44,7 @@ public final class MinecraftTransformer extends Transformer {
 	public static final int KEY_UNUSED = 0x54;
 
 	@Override
-	public void transform(ClassNode node) {
+	public void apply(ClassNode node) {
 		if(!RandomPatches.ITLT_INSTALLED &&
 				!RandomPatches.DEFAULT_WINDOW_TITLE.equals(RPStaticConfig.title)) {
 			transformCreateDisplay(findMethod(node, "createDisplay", "func_175609_am"));
@@ -113,7 +113,7 @@ public final class MinecraftTransformer extends Transformer {
 
 		final MethodInsnNode callHandleKeypress = new MethodInsnNode(
 				Opcodes.INVOKESTATIC,
-				"com/therandomlabs/randompatches/core/transformer/MinecraftTransformer",
+				"com/therandomlabs/randompatches/core/patch/MinecraftPatch",
 				"handleKeypress",
 				"()V",
 				false

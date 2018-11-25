@@ -1,6 +1,6 @@
-package com.therandomlabs.randompatches.core.transformer.endportal;
+package com.therandomlabs.randompatches.core.patch.endportal;
 
-import com.therandomlabs.randompatches.core.Transformer;
+import com.therandomlabs.randompatches.core.Patch;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.AbstractInsnNode;
 import org.objectweb.asm.tree.ClassNode;
@@ -11,10 +11,10 @@ import org.objectweb.asm.tree.LabelNode;
 import org.objectweb.asm.tree.MethodNode;
 import org.objectweb.asm.tree.VarInsnNode;
 
-public final class BlockEndPortalTransformer extends Transformer {
+public final class BlockEndPortalPatch extends Patch {
 	@SuppressWarnings("Duplicates")
 	@Override
-	public void transform(ClassNode node) {
+	public void apply(ClassNode node) {
 		final MethodNode method = findMethod(node, "shouldSideBeRendered", "func_176225_a");
 
 		JumpInsnNode isDown = null;

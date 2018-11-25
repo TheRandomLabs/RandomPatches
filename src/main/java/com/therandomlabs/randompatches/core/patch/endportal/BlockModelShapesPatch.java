@@ -1,18 +1,18 @@
-package com.therandomlabs.randompatches.core.transformer.endportal;
+package com.therandomlabs.randompatches.core.patch.endportal;
 
-import com.therandomlabs.randompatches.core.Transformer;
+import com.therandomlabs.randompatches.core.Patch;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.AbstractInsnNode;
 import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.FieldInsnNode;
 import org.objectweb.asm.tree.MethodNode;
 
-public final class BlockModelShapesTransformer extends Transformer {
+public final class BlockModelShapesPatch extends Patch {
 	public static final String AIR = getName("AIR", "field_150350_a");
 	public static final String END_PORTAL = getName("END_PORTAL", "field_150384_bq");
 
 	@Override
-	public void transform(ClassNode node) {
+	public void apply(ClassNode node) {
 		final MethodNode method = findMethod(node, "registerAllBlocks", "func_178119_d");
 
 		FieldInsnNode getEndPortal = null;

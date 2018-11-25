@@ -1,6 +1,6 @@
-package com.therandomlabs.randompatches.core.transformer;
+package com.therandomlabs.randompatches.core.patch;
 
-import com.therandomlabs.randompatches.core.Transformer;
+import com.therandomlabs.randompatches.core.Patch;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.AbstractInsnNode;
 import org.objectweb.asm.tree.ClassNode;
@@ -11,9 +11,9 @@ import org.objectweb.asm.tree.LabelNode;
 import org.objectweb.asm.tree.MethodNode;
 import org.objectweb.asm.tree.VarInsnNode;
 
-public final class IngameMenuTransformer extends Transformer {
+public final class IngameMenuPatch extends Patch {
 	@Override
-	public void transform(ClassNode node) {
+	public void apply(ClassNode node) {
 		final MethodNode method = findMethod(node, "actionPerformed", "func_146284_a");
 		AbstractInsnNode storeIsIntegratedServerRunning = null;
 
@@ -29,7 +29,7 @@ public final class IngameMenuTransformer extends Transformer {
 		final LabelNode label = new LabelNode();
 		final FieldInsnNode getEnabled = new FieldInsnNode(
 				Opcodes.GETSTATIC,
-				"com/therandomlabs/randompatches/RPStaticConfig",
+				"com/therandomlabs/randompatches/config/RPStaticConfig",
 				"forceTitleScreenOnDisconnect",
 				"Z"
 		);

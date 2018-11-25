@@ -1,7 +1,7 @@
-package com.therandomlabs.randompatches.core.transformer;
+package com.therandomlabs.randompatches.core.patch;
 
 import com.therandomlabs.randompatches.RandomPatches;
-import com.therandomlabs.randompatches.core.Transformer;
+import com.therandomlabs.randompatches.core.Patch;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.AbstractInsnNode;
 import org.objectweb.asm.tree.ClassNode;
@@ -14,11 +14,11 @@ import org.objectweb.asm.tree.MethodInsnNode;
 import org.objectweb.asm.tree.MethodNode;
 import org.objectweb.asm.tree.VarInsnNode;
 
-public final class PlayServerTransformer extends Transformer {
+public final class PlayServerPatch extends Patch {
 	public static final String SEND_PACKET = getName("sendPacket", "func_147359_a");
 
 	@Override
-	public void transform(ClassNode node) {
+	public void apply(ClassNode node) {
 		transformUpdate(findMethod(node, "update", "func_73660_a"));
 
 		if(RandomPatches.SPONGEFORGE_INSTALLED) {
@@ -98,7 +98,7 @@ public final class PlayServerTransformer extends Transformer {
 
 		final FieldInsnNode getKeepAliveInterval = new FieldInsnNode(
 				Opcodes.GETSTATIC,
-				"com/therandomlabs/randompatches/RPStaticConfig",
+				"com/therandomlabs/randompatches/config/RPStaticConfig",
 				"keepAlivePacketIntervalMillis",
 				"J"
 		);
@@ -122,7 +122,7 @@ public final class PlayServerTransformer extends Transformer {
 
 		final FieldInsnNode getReadTimeoutMillis = new FieldInsnNode(
 				Opcodes.GETSTATIC,
-				"com/therandomlabs/randompatches/RPStaticConfig",
+				"com/therandomlabs/randompatches/config/RPStaticConfig",
 				"readTimeoutMillis",
 				"J"
 		);
@@ -167,14 +167,14 @@ public final class PlayServerTransformer extends Transformer {
 
 		final FieldInsnNode getElytraMaxSpeed = new FieldInsnNode(
 				Opcodes.GETSTATIC,
-				"com/therandomlabs/randompatches/RPStaticConfig",
+				"com/therandomlabs/randompatches/config/RPStaticConfig",
 				"maxPlayerElytraSpeed",
 				"F"
 		);
 
 		final FieldInsnNode getNormalMaxSpeed = new FieldInsnNode(
 				Opcodes.GETSTATIC,
-				"com/therandomlabs/randompatches/RPStaticConfig",
+				"com/therandomlabs/randompatches/config/RPStaticConfig",
 				"maxPlayerSpeed",
 				"F"
 		);
@@ -204,7 +204,7 @@ public final class PlayServerTransformer extends Transformer {
 
 		final FieldInsnNode getVehicleMaxSpeed = new FieldInsnNode(
 				Opcodes.GETSTATIC,
-				"com/therandomlabs/randompatches/RPStaticConfig",
+				"com/therandomlabs/randompatches/config/RPStaticConfig",
 				"maxPlayerVehicleSpeed",
 				"D"
 		);

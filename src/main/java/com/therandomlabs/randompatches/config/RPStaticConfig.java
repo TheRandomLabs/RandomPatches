@@ -1,24 +1,26 @@
-package com.therandomlabs.randompatches;
+package com.therandomlabs.randompatches.config;
 
 import java.io.File;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import com.therandomlabs.randompatches.core.transformer.EntityBoatTransformer;
+import com.therandomlabs.randompatches.RandomPatches;
+import com.therandomlabs.randompatches.core.patch.EntityBoatPatch;
+import com.therandomlabs.randompatches.util.RPUtils;
+import com.therandomlabs.randompatches.util.WindowIconHandler;
 import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
-import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import org.lwjgl.opengl.Display;
 
 public class RPStaticConfig {
 	public static class Comments {
-		public static final String PATCH_ENTITYBOAT = "Whether to patch EntityBoat.";
+		public static final String PATCH_ENTITYBOAT = "Whether to apply EntityBoat.";
 		public static final String PREVENT_UNDERWATER_BOAT_PASSENGER_EJECTION = "Prevents " +
 				"underwater boat passengers from being ejected after 60 ticks (3 seconds).";
 		public static final String UNDERWATER_BOAT_BUOYANCY = "The underwater boat buoyancy. " +
-				"The vanilla default is " + EntityBoatTransformer.VANILLA_UNDERWATER_BUOYANCY + ".";
+				"The vanilla default is " + EntityBoatPatch.VANILLA_UNDERWATER_BUOYANCY + ".";
 
 		public static final String FAST_LANGUAGE_SWITCH = "Speeds up language switching.";
 		public static final String FORCE_TITLE_SCREEN_ON_DISCONNECT = "Forces Minecraft to show " +
@@ -30,7 +32,7 @@ public class RPStaticConfig {
 				"Minecraft class patches (the Toggle Narrator keybind and custom window " +
 				"title/icon).";
 		public static final String PATCH_TITLE_SCREEN_ON_DISCONNECT = "Set this to false to " +
-				"force disable the \"force title screen on disconnect\" patch.";
+				"force disable the \"force title screen on disconnect\" apply.";
 		public static final String REMOVE_POTION_GLINT =
 				"Whether to remove the glowing effect from potions.";
 		public static final String RPRELOADCLIENT = "Enables the /rpreloadclient command.";
@@ -64,7 +66,7 @@ public class RPStaticConfig {
 		public static final String KEEP_ALIVE_PACKET_INTERVAL =
 				"The interval at which the server sends the KeepAlive packet.";
 		public static final String LOGIN_TIMEOUT = "The login timeout.";
-		public static final String PATCH_LOGIN_TIMEOUT = "Whether to patch the login timeout.";
+		public static final String PATCH_LOGIN_TIMEOUT = "Whether to apply the login timeout.";
 		public static final String READ_TIMEOUT = "The read timeout.\nThis is the time it takes " +
 				"for a player to be disconnected after not responding to a KeepAlive packet.\n" +
 				"This value is automatically rounded up to a product of keepAlivePacketInterval.";
@@ -168,12 +170,14 @@ public class RPStaticConfig {
 	public static long readTimeoutMillis;
 
 	private static final Field COMMENT = RandomPatches.MC_VERSION == 8 ?
-			ReflectionHelper.findField(Property.class, "comment") : null;
+			RPUtils.findField(Property.class, "comment") : null;
 
 	private static final List<Runnable> reloadListeners = new ArrayList<>(1);
 
 	private static Configuration config;
 	private static Configuration currentConfig;
+
+	static boolean setWindowSettings;
 
 	public static boolean isNarratorKeybindEnabled() {
 		return narratorKeybind && RandomPatches.MC_VERSION > 11 &&
@@ -426,7 +430,7 @@ public class RPStaticConfig {
 		}
 
 		if(RandomPatches.IS_CLIENT && Display.isCreated()) {
-			RPEventHandler.setWindowSettings();
+			setWindowSettings();
 		}
 
 		if(readTimeout < keepAlivePacketInterval) {
@@ -552,5 +556,26 @@ public class RPStaticConfig {
 				config.removeCategory(category);
 			}
 		}
+	}
+
+	public static void setWindowSettings() {
+		if(!setWindowSettings || !RandomPatches.IS_CLIENT || RandomPatches.ITLT_INSTALLED) {
+			return;
+		}
+
+		if(!RPStaticConfig.icon16.isEmpty()) {
+			//If icon16 is empty, WindowIconHandler loads the Minecraft class too early
+			WindowIconHandler.setWindowIcon();
+		}
+
+		Display.setTitle(RPStaticConfig.title);
+	}
+
+	public static void doNotSetWindowSettings() {
+		setWindowSettings = false;
+	}
+
+	public static void doSetWindowSettings() {
+		setWindowSettings = true;
 	}
 }

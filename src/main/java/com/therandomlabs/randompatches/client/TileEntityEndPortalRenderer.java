@@ -1,4 +1,4 @@
-package com.therandomlabs.randompatches;
+package com.therandomlabs.randompatches.client;
 
 import java.nio.FloatBuffer;
 import java.util.Random;

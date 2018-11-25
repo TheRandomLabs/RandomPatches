@@ -1,6 +1,6 @@
-package com.therandomlabs.randompatches.core.transformer;
+package com.therandomlabs.randompatches.core.patch;
 
-import com.therandomlabs.randompatches.core.Transformer;
+import com.therandomlabs.randompatches.core.Patch;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
 import org.objectweb.asm.Opcodes;
@@ -9,9 +9,9 @@ import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.MethodInsnNode;
 import org.objectweb.asm.tree.MethodNode;
 
-public final class ServerRecipeBookHelperTransformer extends Transformer {
+public final class ServerRecipeBookHelperPatch extends Patch {
 	@Override
-	public void transform(ClassNode node) {
+	public void apply(ClassNode node) {
 		final MethodNode method = findMethod(node, "func_194325_a");
 
 		MethodInsnNode findSlotMatchingUnusedItem = null;
@@ -26,8 +26,8 @@ public final class ServerRecipeBookHelperTransformer extends Transformer {
 		}
 
 		findSlotMatchingUnusedItem.setOpcode(Opcodes.INVOKESTATIC);
-		findSlotMatchingUnusedItem.owner = "com/therandomlabs/randompatches/core/transformer/" +
-				"ServerRecipeBookHelperTransformer";
+		findSlotMatchingUnusedItem.owner = "com/therandomlabs/randompatches/core/patch/" +
+				"ServerRecipeBookHelperPatch";
 		findSlotMatchingUnusedItem.name = "findSlotMatchingUnusedItem";
 		findSlotMatchingUnusedItem.desc =
 				"(Lnet/minecraft/entity/player/InventoryPlayer;Lnet/minecraft/item/ItemStack;)I";

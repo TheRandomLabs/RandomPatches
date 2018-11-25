@@ -1,6 +1,6 @@
-package com.therandomlabs.randompatches.core.transformer;
+package com.therandomlabs.randompatches.core.patch;
 
-import com.therandomlabs.randompatches.core.Transformer;
+import com.therandomlabs.randompatches.core.Patch;
 import net.minecraft.client.Minecraft;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.AbstractInsnNode;
@@ -8,11 +8,11 @@ import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.MethodInsnNode;
 import org.objectweb.asm.tree.MethodNode;
 
-public final class LanguageListTransformer extends Transformer {
+public final class LanguageListPatch extends Patch {
 	public static final String REFRESH_RESOURCES = getName("refreshResources", "func_110436_a");
 
 	@Override
-	public void transform(ClassNode node) {
+	public void apply(ClassNode node) {
 		final MethodNode method = findMethod(node, "elementClicked", "func_148144_a");
 		MethodInsnNode refreshResources = null;
 
@@ -32,7 +32,7 @@ public final class LanguageListTransformer extends Transformer {
 
 		final MethodInsnNode callReloadLanguage = new MethodInsnNode(
 				Opcodes.INVOKESTATIC,
-				"com/therandomlabs/randompatches/core/transformer/LanguageListTransformer",
+				"com/therandomlabs/randompatches/core/patch/LanguageListPatch",
 				"reloadLanguage",
 				"()V",
 				false

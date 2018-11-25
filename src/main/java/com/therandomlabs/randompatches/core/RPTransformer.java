@@ -2,27 +2,27 @@ package com.therandomlabs.randompatches.core;
 
 import java.util.HashMap;
 import java.util.Map;
-import com.therandomlabs.randompatches.RPStaticConfig;
 import com.therandomlabs.randompatches.RandomPatches;
-import com.therandomlabs.randompatches.core.transformer.EntityBoatTransformer;
-import com.therandomlabs.randompatches.core.transformer.IngameMenuTransformer;
-import com.therandomlabs.randompatches.core.transformer.ItemPotionTransformer;
-import com.therandomlabs.randompatches.core.transformer.LanguageListTransformer;
-import com.therandomlabs.randompatches.core.transformer.LoginServerTransformer;
-import com.therandomlabs.randompatches.core.transformer.MinecartTransformer;
-import com.therandomlabs.randompatches.core.transformer.MinecraftTransformer;
-import com.therandomlabs.randompatches.core.transformer.PlayServerTransformer;
-import com.therandomlabs.randompatches.core.transformer.ServerRecipeBookHelperTransformer;
-import com.therandomlabs.randompatches.core.transformer.endportal.BlockEndPortalTransformer;
-import com.therandomlabs.randompatches.core.transformer.endportal.BlockModelShapesTransformer;
-import com.therandomlabs.randompatches.core.transformer.endportal.TileEntityEndPortalTransformer;
+import com.therandomlabs.randompatches.config.RPStaticConfig;
+import com.therandomlabs.randompatches.core.patch.EntityBoatPatch;
+import com.therandomlabs.randompatches.core.patch.IngameMenuPatch;
+import com.therandomlabs.randompatches.core.patch.ItemPotionPatch;
+import com.therandomlabs.randompatches.core.patch.LanguageListPatch;
+import com.therandomlabs.randompatches.core.patch.LoginServerPatch;
+import com.therandomlabs.randompatches.core.patch.MinecartPatch;
+import com.therandomlabs.randompatches.core.patch.MinecraftPatch;
+import com.therandomlabs.randompatches.core.patch.PlayServerPatch;
+import com.therandomlabs.randompatches.core.patch.ServerRecipeBookHelperPatch;
+import com.therandomlabs.randompatches.core.patch.endportal.BlockEndPortalPatch;
+import com.therandomlabs.randompatches.core.patch.endportal.BlockModelShapesPatch;
+import com.therandomlabs.randompatches.core.patch.endportal.TileEntityEndPortalPatch;
 import net.minecraft.launchwrapper.IClassTransformer;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.tree.ClassNode;
 
 public class RPTransformer implements IClassTransformer {
-	private static final Map<String, Transformer> TRANSFORMERS = new HashMap<>();
+	private static final Map<String, Patch> PATCHES = new HashMap<>();
 
 	static {
 		RPStaticConfig.reload();
@@ -31,9 +31,9 @@ public class RPTransformer implements IClassTransformer {
 
 	@Override
 	public byte[] transform(String name, String transformedName, byte[] basicClass) {
-		final Transformer transformer = TRANSFORMERS.get(transformedName);
+		final Patch patch = PATCHES.get(transformedName);
 
-		if(transformer == null) {
+		if(patch == null) {
 			return basicClass;
 		}
 
@@ -44,12 +44,12 @@ public class RPTransformer implements IClassTransformer {
 		reader.accept(node, 0);
 
 		try {
-			transformer.transform(node);
+			patch.apply(node);
 
 			final int flags;
 
 			if(RandomPatches.SPONGEFORGE_INSTALLED &&
-					transformer.getClass() == PlayServerTransformer.class) {
+					patch.getClass() == PlayServerPatch.class) {
 				flags = ClassWriter.COMPUTE_MAXS;
 			} else {
 				flags = ClassWriter.COMPUTE_FRAMES;
@@ -59,66 +59,66 @@ public class RPTransformer implements IClassTransformer {
 			node.accept(writer);
 			return writer.toByteArray();
 		} catch(Exception ex) {
-			RandomPatches.LOGGER.error("Failed to transform class: " + transformedName, ex);
+			RandomPatches.LOGGER.error("Failed to apply class: " + transformedName, ex);
 		}
 
 		return basicClass;
 	}
 
-	public static void register(String className, Transformer transformer) {
-		TRANSFORMERS.put(className, transformer);
+	public static void register(String className, Patch patch) {
+		PATCHES.put(className, patch);
 	}
 
 	private static void register() {
 		if(RPStaticConfig.patchLoginTimeout) {
-			register("net.minecraft.network.NetHandlerLoginServer", new LoginServerTransformer());
+			register("net.minecraft.network.NetHandlerLoginServer", new LoginServerPatch());
 		}
 
 		if(RPStaticConfig.patchTitleScreenOnDisconnect) {
-			register("net.minecraft.client.gui.GuiIngameMenu", new IngameMenuTransformer());
+			register("net.minecraft.client.gui.GuiIngameMenu", new IngameMenuPatch());
 		}
 
 		if(RPStaticConfig.patchNetHandlerPlayServer && RandomPatches.MC_VERSION > 8) {
-			register("net.minecraft.network.NetHandlerPlayServer", new PlayServerTransformer());
+			register("net.minecraft.network.NetHandlerPlayServer", new PlayServerPatch());
 		}
 
 		if(RPStaticConfig.fastLanguageSwitch && RandomPatches.IS_CLIENT) {
-			register("net.minecraft.client.gui.GuiLanguage$List", new LanguageListTransformer());
+			register("net.minecraft.client.gui.GuiLanguage$List", new LanguageListPatch());
 		}
 
 		if(RPStaticConfig.patchMinecraftClass && RandomPatches.IS_CLIENT) {
-			register("net.minecraft.client.Minecraft", new MinecraftTransformer());
+			register("net.minecraft.client.Minecraft", new MinecraftPatch());
 		}
 
 		if(RPStaticConfig.minecartAIFix) {
-			register("net.minecraft.entity.item.EntityMinecart", new MinecartTransformer());
+			register("net.minecraft.entity.item.EntityMinecart", new MinecartPatch());
 		}
 
 		if(RPStaticConfig.removePotionGlint && RandomPatches.IS_CLIENT) {
-			register("net.minecraft.item.ItemPotion", new ItemPotionTransformer());
+			register("net.minecraft.item.ItemPotion", new ItemPotionPatch());
 		}
 
 		if(RPStaticConfig.isEndPortalTweaksEnabled()) {
-			register("net.minecraft.block.BlockEndPortal", new BlockEndPortalTransformer());
+			register("net.minecraft.block.BlockEndPortal", new BlockEndPortalPatch());
 			register(
 					"net.minecraft.client.renderer.BlockModelShapes",
-					new BlockModelShapesTransformer()
+					new BlockModelShapesPatch()
 			);
 			register(
 					"net.minecraft.tileentity.TileEntityEndPortal",
-					new TileEntityEndPortalTransformer()
+					new TileEntityEndPortalPatch()
 			);
 		}
 
 		if(RPStaticConfig.isRecipeBookNBTFixEnabled()) {
 			register(
 					"net.minecraft.util.ServerRecipeBookHelper",
-					new ServerRecipeBookHelperTransformer()
+					new ServerRecipeBookHelperPatch()
 			);
 		}
 
 		if(RPStaticConfig.patchEntityBoat && RandomPatches.MC_VERSION > 8) {
-			register("net.minecraft.entity.item.EntityBoat", new EntityBoatTransformer());
+			register("net.minecraft.entity.item.EntityBoat", new EntityBoatPatch());
 		}
 	}
 }

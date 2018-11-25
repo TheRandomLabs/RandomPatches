@@ -1,4 +1,4 @@
-package com.therandomlabs.randompatches;
+package com.therandomlabs.randompatches.util;
 
 import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
@@ -12,6 +12,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
 import javax.imageio.ImageIO;
+import com.therandomlabs.randompatches.RandomPatches;
+import com.therandomlabs.randompatches.config.RPStaticConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Util;

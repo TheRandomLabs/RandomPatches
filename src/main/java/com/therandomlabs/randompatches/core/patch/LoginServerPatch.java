@@ -1,6 +1,6 @@
-package com.therandomlabs.randompatches.core.transformer;
+package com.therandomlabs.randompatches.core.patch;
 
-import com.therandomlabs.randompatches.core.Transformer;
+import com.therandomlabs.randompatches.core.Patch;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.AbstractInsnNode;
 import org.objectweb.asm.tree.ClassNode;
@@ -8,9 +8,9 @@ import org.objectweb.asm.tree.FieldInsnNode;
 import org.objectweb.asm.tree.LdcInsnNode;
 import org.objectweb.asm.tree.MethodNode;
 
-public final class LoginServerTransformer extends Transformer {
+public final class LoginServerPatch extends Patch {
 	@Override
-	public void transform(ClassNode node) {
+	public void apply(ClassNode node) {
 		final MethodNode method = findMethod(node, "update", "func_73660_a");
 		LdcInsnNode loginTimeout = null;
 
@@ -30,7 +30,7 @@ public final class LoginServerTransformer extends Transformer {
 
 		final FieldInsnNode getLoginTimeout = new FieldInsnNode(
 				Opcodes.GETSTATIC,
-				"com/therandomlabs/randompatches/RPStaticConfig",
+				"com/therandomlabs/randompatches/config/RPStaticConfig",
 				"loginTimeout",
 				"I"
 		);

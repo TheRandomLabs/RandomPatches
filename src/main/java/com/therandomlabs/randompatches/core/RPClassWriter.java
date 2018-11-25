@@ -17,7 +17,7 @@ public class RPClassWriter extends ClassWriter {
 			c = Class.forName(type1.replace('/', '.'), false, Launch.classLoader);
 			d = Class.forName(type2.replace('/', '.'), false, Launch.classLoader);
 		} catch(Exception ex) {
-			throw new RuntimeException(
+			throw new IllegalArgumentException(
 					"Could not get common superclass of " + type1 + " and " + type2,
 					ex
 			);

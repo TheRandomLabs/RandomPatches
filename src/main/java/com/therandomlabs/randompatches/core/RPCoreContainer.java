@@ -6,9 +6,8 @@ import java.net.URL;
 import java.util.List;
 import com.google.common.collect.ImmutableList;
 import com.google.common.eventbus.EventBus;
-import com.therandomlabs.randompatches.RPEventHandler;
-import com.therandomlabs.randompatches.RPUtils;
 import com.therandomlabs.randompatches.RandomPatches;
+import com.therandomlabs.randompatches.util.RPUtils;
 import net.minecraftforge.fml.common.DummyModContainer;
 import net.minecraftforge.fml.common.LoadController;
 import net.minecraftforge.fml.common.Loader;
@@ -24,7 +23,7 @@ public class RPCoreContainer extends DummyModContainer {
 				RandomPatches.VERSION
 		));
 
-		RPEventHandler.containerInit();
+		RandomPatches.containerInit();
 	}
 
 	protected RPCoreContainer(ModMetadata metadata) {
@@ -40,7 +39,7 @@ public class RPCoreContainer extends DummyModContainer {
 	public boolean registerBus(EventBus bus, LoadController controller) {
 		if(RandomPatches.MC_VERSION > 9) {
 			Loader.instance().setActiveModContainer(this);
-			bus.register(new RPEventHandler());
+			bus.register(new RandomPatches());
 		}
 
 		return true;

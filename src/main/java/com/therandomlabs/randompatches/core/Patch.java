@@ -4,8 +4,8 @@ import com.therandomlabs.randompatches.RandomPatches;
 import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.MethodNode;
 
-public abstract class Transformer {
-	public abstract void transform(ClassNode node);
+public abstract class Patch {
+	public abstract void apply(ClassNode node);
 
 	public static MethodNode findMethod(ClassNode node, String name) {
 		return findMethod(node, name, name);

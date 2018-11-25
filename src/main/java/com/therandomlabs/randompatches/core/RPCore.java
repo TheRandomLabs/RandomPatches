@@ -2,8 +2,8 @@ package com.therandomlabs.randompatches.core;
 
 import java.io.File;
 import java.util.Map;
-import com.therandomlabs.randompatches.RPUtils;
 import com.therandomlabs.randompatches.RandomPatches;
+import com.therandomlabs.randompatches.util.RPUtils;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
 
 @IFMLLoadingPlugin.SortingIndex(RandomPatches.SORTING_INDEX)

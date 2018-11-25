@@ -1,4 +1,4 @@
-package com.therandomlabs.randompatches;
+package com.therandomlabs.randompatches.config;
 
 import java.io.File;
 import java.lang.reflect.Field;
@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.Map;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
+import com.therandomlabs.randompatches.RandomPatches;
+import com.therandomlabs.randompatches.util.RPUtils;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.ConfigManager;
@@ -18,7 +20,6 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.discovery.ASMDataTable;
-import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
 //The most convoluted way to implement a config GUI, but it works
 @Config(modid = RandomPatches.MOD_ID, name = RandomPatches.MOD_ID, category = "")
@@ -185,15 +186,13 @@ public class RPConfig {
 	@Config.Comment(RPStaticConfig.TIMEOUTS_COMMENT)
 	public static Timeouts timeouts = new Timeouts();
 
-	private static final Field ASM_DATA = ReflectionHelper.findField(
-			ConfigManager.class, "asm_data"
-	);
+	private static final Field ASM_DATA = RPUtils.findField(ConfigManager.class, "asm_data");
 
-	private static final Method GET_CONFIGURATION = ReflectionHelper.findMethod(
+	private static final Method GET_CONFIGURATION = RPUtils.findMethod(
 			ConfigManager.class, "getConfiguration", "getConfiguration", String.class, String.class
 	);
 
-	private static final Field CONFIGS = ReflectionHelper.findField(ConfigManager.class, "CONFIGS");
+	private static final Field CONFIGS = RPUtils.findField(ConfigManager.class, "CONFIGS");
 
 	private static Map<Object, Field[]> propertyCache;
 

@@ -1,4 +1,4 @@
-package com.therandomlabs.randompatches;
+package com.therandomlabs.randompatches.util;
 
 import java.security.MessageDigest;
 import java.security.cert.Certificate;

@@ -1,7 +1,7 @@
-package com.therandomlabs.randompatches.core.transformer;
+package com.therandomlabs.randompatches.core.patch;
 
-import com.therandomlabs.randompatches.RPStaticConfig;
-import com.therandomlabs.randompatches.core.Transformer;
+import com.therandomlabs.randompatches.config.RPStaticConfig;
+import com.therandomlabs.randompatches.core.Patch;
 import net.minecraft.entity.item.EntityBoat;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.AbstractInsnNode;
@@ -14,7 +14,7 @@ import org.objectweb.asm.tree.MethodInsnNode;
 import org.objectweb.asm.tree.MethodNode;
 import org.objectweb.asm.tree.VarInsnNode;
 
-public final class EntityBoatTransformer extends Transformer {
+public final class EntityBoatPatch extends Patch {
 	public static final String STATUS = getName("status", "field_184469_aF");
 	public static final String OUT_OF_CONTROL_TICKS =
 			getName("outOfControlTicks", "field_184474_h");
@@ -23,7 +23,7 @@ public final class EntityBoatTransformer extends Transformer {
 
 	@SuppressWarnings("Duplicates")
 	@Override
-	public void transform(ClassNode node) {
+	public void apply(ClassNode node) {
 		final MethodNode method = findMethod(node, "onUpdate", "func_70071_h_");
 		InsnNode returnVoid = null;
 
@@ -57,7 +57,7 @@ public final class EntityBoatTransformer extends Transformer {
 
 		final MethodInsnNode onUpdate = new MethodInsnNode(
 				Opcodes.INVOKESTATIC,
-				"com/therandomlabs/randompatches/core/transformer/EntityBoatTransformer",
+				"com/therandomlabs/randompatches/core/patch/EntityBoatPatch",
 				"onUpdate",
 				"(Lnet/minecraft/entity/item/EntityBoat;" +
 						"Lnet/minecraft/entity/item/EntityBoat$Status;)V",
@@ -66,7 +66,7 @@ public final class EntityBoatTransformer extends Transformer {
 
 		final FieldInsnNode getPreventEjection = new FieldInsnNode(
 				Opcodes.GETSTATIC,
-				"com/therandomlabs/randompatches/RPStaticConfig",
+				"com/therandomlabs/randompatches/config/RPStaticConfig",
 				"preventUnderwaterBoatPassengerEjection",
 				"Z"
 		);
