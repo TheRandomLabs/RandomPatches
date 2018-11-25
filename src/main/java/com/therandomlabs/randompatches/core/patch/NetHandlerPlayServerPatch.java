@@ -14,7 +14,7 @@ import org.objectweb.asm.tree.MethodInsnNode;
 import org.objectweb.asm.tree.MethodNode;
 import org.objectweb.asm.tree.VarInsnNode;
 
-public final class PlayServerPatch extends Patch {
+public final class NetHandlerPlayServerPatch extends Patch {
 	public static final String SEND_PACKET = getName("sendPacket", "func_147359_a");
 
 	@Override

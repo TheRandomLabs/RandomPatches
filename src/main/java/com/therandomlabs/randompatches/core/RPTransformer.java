@@ -8,10 +8,10 @@ import com.therandomlabs.randompatches.core.patch.EntityBoatPatch;
 import com.therandomlabs.randompatches.core.patch.IngameMenuPatch;
 import com.therandomlabs.randompatches.core.patch.ItemPotionPatch;
 import com.therandomlabs.randompatches.core.patch.LanguageListPatch;
-import com.therandomlabs.randompatches.core.patch.LoginServerPatch;
+import com.therandomlabs.randompatches.core.patch.NetHandlerLoginServerPatch;
 import com.therandomlabs.randompatches.core.patch.MinecartPatch;
 import com.therandomlabs.randompatches.core.patch.MinecraftPatch;
-import com.therandomlabs.randompatches.core.patch.PlayServerPatch;
+import com.therandomlabs.randompatches.core.patch.NetHandlerPlayServerPatch;
 import com.therandomlabs.randompatches.core.patch.ServerRecipeBookHelperPatch;
 import com.therandomlabs.randompatches.core.patch.endportal.BlockEndPortalPatch;
 import com.therandomlabs.randompatches.core.patch.endportal.BlockModelShapesPatch;
@@ -49,7 +49,7 @@ public class RPTransformer implements IClassTransformer {
 			final int flags;
 
 			if(RandomPatches.SPONGEFORGE_INSTALLED &&
-					patch.getClass() == PlayServerPatch.class) {
+					patch.getClass() == NetHandlerPlayServerPatch.class) {
 				flags = ClassWriter.COMPUTE_MAXS;
 			} else {
 				flags = ClassWriter.COMPUTE_FRAMES;
@@ -71,7 +71,7 @@ public class RPTransformer implements IClassTransformer {
 
 	private static void register() {
 		if(RPStaticConfig.patchLoginTimeout) {
-			register("net.minecraft.network.NetHandlerLoginServer", new LoginServerPatch());
+			register("net.minecraft.network.NetHandlerLoginServer", new NetHandlerLoginServerPatch());
 		}
 
 		if(RPStaticConfig.patchTitleScreenOnDisconnect) {
@@ -79,7 +79,7 @@ public class RPTransformer implements IClassTransformer {
 		}
 
 		if(RPStaticConfig.patchNetHandlerPlayServer && RandomPatches.MC_VERSION > 8) {
-			register("net.minecraft.network.NetHandlerPlayServer", new PlayServerPatch());
+			register("net.minecraft.network.NetHandlerPlayServer", new NetHandlerPlayServerPatch());
 		}
 
 		if(RPStaticConfig.fastLanguageSwitch && RandomPatches.IS_CLIENT) {

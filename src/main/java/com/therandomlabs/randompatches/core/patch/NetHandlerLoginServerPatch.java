@@ -8,7 +8,7 @@ import org.objectweb.asm.tree.FieldInsnNode;
 import org.objectweb.asm.tree.LdcInsnNode;
 import org.objectweb.asm.tree.MethodNode;
 
-public final class LoginServerPatch extends Patch {
+public final class NetHandlerLoginServerPatch extends Patch {
 	@Override
 	public void apply(ClassNode node) {
 		final MethodNode method = findMethod(node, "update", "func_73660_a");
