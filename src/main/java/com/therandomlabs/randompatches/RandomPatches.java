@@ -97,7 +97,11 @@ public final class RandomPatches {
 
 	public static void containerInit() {
 		if(!RPUtils.hasFingerprint(RandomPatches.class, CERTIFICATE_FINGERPRINT)) {
-			LOGGER.error("Invalid fingerprint detected!");
+			if(IS_DEOBFUSCATED) {
+				LOGGER.debug("Invalid fingerprint detected!");
+			} else {
+				LOGGER.error("Invalid fingerprint detected!");
+			}
 		}
 
 		if(RPStaticConfig.isEndPortalTweaksEnabled() && IS_CLIENT) {
