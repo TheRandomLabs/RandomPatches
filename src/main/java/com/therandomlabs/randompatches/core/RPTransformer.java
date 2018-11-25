@@ -8,11 +8,12 @@ import com.therandomlabs.randompatches.core.patch.EntityBoatPatch;
 import com.therandomlabs.randompatches.core.patch.IngameMenuPatch;
 import com.therandomlabs.randompatches.core.patch.ItemPotionPatch;
 import com.therandomlabs.randompatches.core.patch.LanguageListPatch;
-import com.therandomlabs.randompatches.core.patch.NetHandlerLoginServerPatch;
 import com.therandomlabs.randompatches.core.patch.MinecartPatch;
 import com.therandomlabs.randompatches.core.patch.MinecraftPatch;
+import com.therandomlabs.randompatches.core.patch.NetHandlerLoginServerPatch;
 import com.therandomlabs.randompatches.core.patch.NetHandlerPlayServerPatch;
 import com.therandomlabs.randompatches.core.patch.ServerRecipeBookHelperPatch;
+import com.therandomlabs.randompatches.core.patch.WorldServerPatch;
 import com.therandomlabs.randompatches.core.patch.endportal.BlockEndPortalPatch;
 import com.therandomlabs.randompatches.core.patch.endportal.BlockModelShapesPatch;
 import com.therandomlabs.randompatches.core.patch.endportal.TileEntityEndPortalPatch;
@@ -71,7 +72,10 @@ public class RPTransformer implements IClassTransformer {
 
 	private static void register() {
 		if(RPStaticConfig.patchLoginTimeout) {
-			register("net.minecraft.network.NetHandlerLoginServer", new NetHandlerLoginServerPatch());
+			register(
+					"net.minecraft.network.NetHandlerLoginServer",
+					new NetHandlerLoginServerPatch()
+			);
 		}
 
 		if(RPStaticConfig.patchTitleScreenOnDisconnect) {
@@ -119,6 +123,10 @@ public class RPTransformer implements IClassTransformer {
 
 		if(RPStaticConfig.patchEntityBoat && RandomPatches.MC_VERSION > 8) {
 			register("net.minecraft.entity.item.EntityBoat", new EntityBoatPatch());
+		}
+
+		if(RandomPatches.VERTICAL_END_PORTALS_INSTALLED) {
+			register("net.minecraft.world.WorldServer", new WorldServerPatch());
 		}
 	}
 }

@@ -7,7 +7,6 @@ import com.therandomlabs.randompatches.config.RPConfig;
 import com.therandomlabs.randompatches.config.RPStaticConfig;
 import com.therandomlabs.randompatches.core.patch.MinecraftPatch;
 import com.therandomlabs.randompatches.util.RPUtils;
-import com.therandomlabs.randompatches.util.WindowIconHandler;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.launchwrapper.Launch;
 import net.minecraft.tileentity.TileEntityEndPortal;
@@ -23,7 +22,6 @@ import net.minecraftforge.fml.relauncher.FMLLaunchHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.lwjgl.opengl.Display;
 
 public final class RandomPatches {
 	public static final String MOD_ID = "randompatches";
@@ -48,6 +46,8 @@ public final class RandomPatches {
 	public static final boolean REBIND_NARRATOR_INSTALLED =
 			detect("quaternary.rebindnarrator.RebindNarrator");
 	public static final boolean VANILLAFIX_INSTALLED = detect("org.dimdev.vanillafix.VanillaFix");
+	public static final boolean VERTICAL_END_PORTALS_INSTALLED =
+			detect("com.therandomlabs.verticalendportals.VerticalEndPortals");
 
 	public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
 
@@ -110,7 +110,6 @@ public final class RandomPatches {
 
 		RPStaticConfig.setWindowSettings();
 	}
-
 
 
 	private static boolean detect(String className) {

@@ -168,16 +168,12 @@ public class RPStaticConfig {
 
 	public static int readTimeout;
 	public static long readTimeoutMillis;
-
+	static boolean setWindowSettings;
 	private static final Field COMMENT = RandomPatches.MC_VERSION == 8 ?
 			RPUtils.findField(Property.class, "comment") : null;
-
 	private static final List<Runnable> reloadListeners = new ArrayList<>(1);
-
 	private static Configuration config;
 	private static Configuration currentConfig;
-
-	static boolean setWindowSettings;
 
 	public static boolean isNarratorKeybindEnabled() {
 		return narratorKeybind && RandomPatches.MC_VERSION > 11 &&
