@@ -7,6 +7,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagDouble;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraftforge.common.util.Constants;
 import org.objectweb.asm.tree.AbstractInsnNode;
 import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.JumpInsnNode;
@@ -39,7 +40,20 @@ public final class EntityPatch extends Patch {
 	}
 
 	public static void readAABBTag(Entity entity, NBTTagCompound compound) {
+		if(!compound.hasKey("AABB")) {
+			return;
+		}
 
+		final NBTTagList aabb = compound.getTagList("AABB", Constants.NBT.TAG_DOUBLE);
+
+		entity.setEntityBoundingBox(new AxisAlignedBB(
+				aabb.getDoubleAt(0),
+				aabb.getDoubleAt(1),
+				aabb.getDoubleAt(2),
+				aabb.getDoubleAt(3),
+				aabb.getDoubleAt(4),
+				aabb.getDoubleAt(5)
+		));
 	}
 
 	private static void patchWriteToNBT(MethodNode method) {
