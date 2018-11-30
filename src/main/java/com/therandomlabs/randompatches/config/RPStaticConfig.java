@@ -46,6 +46,9 @@ public class RPStaticConfig {
 		public static final String END_PORTAL_TWEAKS = "Fixes the End portal break particle " +
 				"textures and improves End portal rendering. This only works on Minecraft 1.11 " +
 				"and above.";
+		public static final String MC_2025_FIX = "Fixes MC-2025. More information can be found " +
+				"here: https://www.reddit.com/r/Mojira/comments/8pgd4q/final_and_proper_fix_to_" +
+				"mc2025_simple_reliable/";
 		public static final String MINECART_AI_FIX = "Fixes MC-64836, which causes non-player " +
 				"entities to be allowed to control Minecarts using their AI.";
 		public static final String PATCH_NETHANDLERPLAYSERVER = "Set this to false to force " +
@@ -94,6 +97,7 @@ public class RPStaticConfig {
 				RandomPatches.NAME : RandomPatches.DEFAULT_WINDOW_TITLE;
 
 		public static final boolean END_PORTAL_TWEAKS = true;
+		public static final boolean MC_2025_FIX = true;
 		public static final boolean MINECART_AI_FIX = true;
 		public static final boolean PATCH_NETHANDLERPLAYSERVER = true;
 		public static final boolean RECIPE_BOOK_NBT_FIX = true;
@@ -147,6 +151,7 @@ public class RPStaticConfig {
 	//Misc
 
 	public static boolean endPortalTweaks;
+	public static boolean mc2025Fix;
 	public static boolean minecartAIFix;
 	public static boolean patchNetHandlerPlayServer;
 	public static boolean recipeBookNBTFix;
@@ -307,6 +312,15 @@ public class RPStaticConfig {
 				"misc",
 				Defaults.END_PORTAL_TWEAKS,
 				Comments.END_PORTAL_TWEAKS,
+				false,
+				true
+		);
+
+		mc2025Fix = getBoolean(
+				"mc2025Fix",
+				"misc",
+				Defaults.MC_2025_FIX,
+				Comments.MC_2025_FIX,
 				false,
 				true
 		);

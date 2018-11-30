@@ -47,11 +47,11 @@ public final class MinecraftPatch extends Patch {
 	public void apply(ClassNode node) {
 		if(!RandomPatches.ITLT_INSTALLED &&
 				!RandomPatches.DEFAULT_WINDOW_TITLE.equals(RPStaticConfig.title)) {
-			transformCreateDisplay(findMethod(node, "createDisplay", "func_175609_am"));
+			patchCreateDisplay(findMethod(node, "createDisplay", "func_175609_am"));
 		}
 
 		if(RPStaticConfig.isNarratorKeybindEnabled()) {
-			transformDispatchKeypresses(findMethod(node, "dispatchKeypresses", "func_152348_aa"));
+			patchDispatchKeypresses(findMethod(node, "dispatchKeypresses", "func_152348_aa"));
 		}
 	}
 
@@ -76,7 +76,7 @@ public final class MinecraftPatch extends Patch {
 		}
 	}
 
-	private static void transformCreateDisplay(MethodNode method) {
+	private static void patchCreateDisplay(MethodNode method) {
 		LdcInsnNode ldc = null;
 
 		for(int i = 0; i < method.instructions.size(); i++) {
@@ -94,7 +94,7 @@ public final class MinecraftPatch extends Patch {
 		ldc.cst = RPStaticConfig.title;
 	}
 
-	private static void transformDispatchKeypresses(MethodNode method) {
+	private static void patchDispatchKeypresses(MethodNode method) {
 		IntInsnNode isB = null;
 
 		for(int i = 0; i < method.instructions.size(); i++) {

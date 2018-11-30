@@ -12,6 +12,7 @@ import org.objectweb.asm.tree.MethodNode;
 import org.objectweb.asm.tree.VarInsnNode;
 
 public final class IngameMenuPatch extends Patch {
+	@SuppressWarnings("Duplicates")
 	@Override
 	public void apply(ClassNode node) {
 		final MethodNode method = findMethod(node, "actionPerformed", "func_146284_a");

@@ -26,9 +26,9 @@ public final class WorldServerPatch extends Patch {
 					if(!"net/minecraft/world/Teleporter".equals(createTeleporter.desc)) {
 						createTeleporter = null;
 					}
-
-					continue;
 				}
+
+				continue;
 			}
 
 			if(instruction.getOpcode() == Opcodes.INVOKESPECIAL) {

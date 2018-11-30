@@ -19,14 +19,14 @@ public final class NetHandlerPlayServerPatch extends Patch {
 
 	@Override
 	public void apply(ClassNode node) {
-		transformUpdate(findMethod(node, "update", "func_73660_a"));
+		patchUpdate(findMethod(node, "update", "func_73660_a"));
 
 		if(RandomPatches.SPONGEFORGE_INSTALLED) {
 			return;
 		}
 
-		transformProcessPlayer(findMethod(node, "processPlayer", "func_147347_a"));
-		transformProcessVehicleMove(findMethod(node, "processVehicleMove", "func_184338_a"));
+		patchProcessPlayer(findMethod(node, "processPlayer", "func_147347_a"));
+		patchProcessVehicleMove(findMethod(node, "processVehicleMove", "func_184338_a"));
 	}
 
 	/* Expected result:
@@ -56,7 +56,7 @@ public final class NetHandlerPlayServerPatch extends Patch {
 	} */
 
 	@SuppressWarnings("Duplicates")
-	private static void transformUpdate(MethodNode method) {
+	private static void patchUpdate(MethodNode method) {
 		LdcInsnNode keepAliveInterval = null;
 		JumpInsnNode ifeq = null;
 		MethodInsnNode sendPacket = null;
@@ -141,7 +141,7 @@ public final class NetHandlerPlayServerPatch extends Patch {
 		method.instructions.insert(sendPacket, label);
 	}
 
-	private static void transformProcessPlayer(MethodNode method) {
+	private static void patchProcessPlayer(MethodNode method) {
 		LdcInsnNode elytra = null;
 		LdcInsnNode normal = null;
 
@@ -186,7 +186,7 @@ public final class NetHandlerPlayServerPatch extends Patch {
 		method.instructions.remove(normal);
 	}
 
-	private static void transformProcessVehicleMove(MethodNode method) {
+	private static void patchProcessVehicleMove(MethodNode method) {
 		LdcInsnNode speed = null;
 
 		for(int i = 0; i < method.instructions.size(); i++) {

@@ -90,6 +90,11 @@ public class RPConfig {
 		public boolean endPortalTweaks = RPStaticConfig.Defaults.END_PORTAL_TWEAKS;
 
 		@Config.RequiresMcRestart
+		@Config.LangKey("randompatches.config.misc.mc2025Fix")
+		@Config.Comment(RPStaticConfig.Comments.MC_2025_FIX)
+		public boolean mc2025Fix = RPStaticConfig.Defaults.MC_2025_FIX;
+
+		@Config.RequiresMcRestart
 		@Config.LangKey("randompatches.config.misc.minecartAIFix")
 		@Config.Comment(RPStaticConfig.Comments.MINECART_AI_FIX)
 		public boolean minecartAIFix = RPStaticConfig.Defaults.MINECART_AI_FIX;

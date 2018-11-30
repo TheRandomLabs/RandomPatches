@@ -5,6 +5,7 @@ import java.util.Map;
 import com.therandomlabs.randompatches.RandomPatches;
 import com.therandomlabs.randompatches.config.RPStaticConfig;
 import com.therandomlabs.randompatches.core.patch.EntityBoatPatch;
+import com.therandomlabs.randompatches.core.patch.EntityPatch;
 import com.therandomlabs.randompatches.core.patch.IngameMenuPatch;
 import com.therandomlabs.randompatches.core.patch.ItemPotionPatch;
 import com.therandomlabs.randompatches.core.patch.LanguageListPatch;
@@ -127,6 +128,11 @@ public class RPTransformer implements IClassTransformer {
 
 		if(RandomPatches.VERTICAL_END_PORTALS_INSTALLED) {
 			register("net.minecraft.world.WorldServer", new WorldServerPatch());
+		}
+
+		//TODO find minimum version
+		if(RPStaticConfig.mc2025Fix) {
+			register("net.minecraft.entity.Entity", new EntityPatch());
 		}
 	}
 }
