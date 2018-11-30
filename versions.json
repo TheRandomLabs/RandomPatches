@@ -1,6 +1,7 @@
 {
 	"homepage": "https://minecraft.curseforge.com/projects/randompatches",
 	"1.12.2": {
+		"1.12.2-1.9.0.0": "Refactor.\nImplemented a fix for MC-2025.",
 		"1.12.2-1.8.0.0": "Fixed 1.8+ compatibility.\nImplemented a fix for MC-129057.\nAdded boat tweaks.",
 		"1.12.2-1.7.0.0": "Added End portal tweaks.",
 		"1.12.2-1.6.1.2": "Minor tweaks to configuration property comments.\nImproved an error message.",
@@ -27,6 +28,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.12.1": {
+		"1.12.2-1.9.0.0": "Refactor.\nImplemented a fix for MC-2025.",
 		"1.12.2-1.8.0.0": "Fixed 1.8+ compatibility.\nImplemented a fix for MC-129057.\nAdded boat tweaks.",
 		"1.12.2-1.7.0.0": "Added End portal tweaks.",
 		"1.12.2-1.6.1.2": "Minor tweaks to configuration property comments.\nImproved an error message.",
@@ -53,6 +55,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.12": {
+		"1.12.2-1.9.0.0": "Refactor.\nImplemented a fix for MC-2025.",
 		"1.12.2-1.8.0.0": "Fixed 1.8+ compatibility.\nImplemented a fix for MC-129057.\nAdded boat tweaks.",
 		"1.12.2-1.7.0.0": "Added End portal tweaks.",
 		"1.12.2-1.6.1.2": "Minor tweaks to configuration property comments.\nImproved an error message.",
@@ -79,6 +82,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.11.2": {
+		"1.12.2-1.9.0.0": "Refactor.\nImplemented a fix for MC-2025.",
 		"1.12.2-1.8.0.0": "Fixed 1.8+ compatibility.\nImplemented a fix for MC-129057.\nAdded boat tweaks.",
 		"1.12.2-1.7.0.0": "Added End portal tweaks.",
 		"1.12.2-1.6.1.2": "Minor tweaks to configuration property comments.\nImproved an error message.",
@@ -105,6 +109,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.11": {
+		"1.12.2-1.9.0.0": "Refactor.\nImplemented a fix for MC-2025.",
 		"1.12.2-1.8.0.0": "Fixed 1.8+ compatibility.\nImplemented a fix for MC-129057.\nAdded boat tweaks.",
 		"1.12.2-1.7.0.0": "Added End portal tweaks.",
 		"1.12.2-1.6.1.2": "Minor tweaks to configuration property comments.\nImproved an error message.",
@@ -131,6 +136,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.10.2": {
+		"1.12.2-1.9.0.0": "Refactor.\nImplemented a fix for MC-2025.",
 		"1.12.2-1.8.0.0": "Fixed 1.8+ compatibility.\nImplemented a fix for MC-129057.\nAdded boat tweaks.",
 		"1.12.2-1.7.0.0": "Added End portal tweaks.",
 		"1.12.2-1.6.1.2": "Minor tweaks to configuration property comments.\nImproved an error message.",
@@ -157,6 +163,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.10": {
+		"1.12.2-1.9.0.0": "Refactor.\nImplemented a fix for MC-2025.",
 		"1.12.2-1.8.0.0": "Fixed 1.8+ compatibility.\nImplemented a fix for MC-129057.\nAdded boat tweaks.",
 		"1.12.2-1.7.0.0": "Added End portal tweaks.",
 		"1.12.2-1.6.1.2": "Minor tweaks to configuration property comments.\nImproved an error message.",
@@ -183,6 +190,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.9.4": {
+		"1.12.2-1.9.0.0": "Refactor.\nImplemented a fix for MC-2025.",
 		"1.12.2-1.8.0.0": "Fixed 1.8+ compatibility.\nImplemented a fix for MC-129057.\nAdded boat tweaks.",
 		"1.12.2-1.7.0.0": "Added End portal tweaks.",
 		"1.12.2-1.6.1.2": "Minor tweaks to configuration property comments.\nImproved an error message.",
@@ -202,6 +210,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.9": {
+		"1.12.2-1.9.0.0": "Refactor.\nImplemented a fix for MC-2025.",
 		"1.12.2-1.8.0.0": "Fixed 1.8+ compatibility.\nImplemented a fix for MC-129057.\nAdded boat tweaks.",
 		"1.12.2-1.7.0.0": "Added End portal tweaks.",
 		"1.12.2-1.6.1.2": "Minor tweaks to configuration property comments.\nImproved an error message.",
@@ -221,6 +230,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.8.9": {
+		"1.12.2-1.9.0.0": "Refactor.\nImplemented a fix for MC-2025.",
 		"1.12.2-1.8.0.0": "Fixed 1.8+ compatibility.\nImplemented a fix for MC-129057.\nAdded boat tweaks.",
 		"1.12.2-1.7.0.0": "Added End portal tweaks.",
 		"1.12.2-1.6.1.2": "Minor tweaks to configuration property comments.\nImproved an error message.",
@@ -240,6 +250,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.8.8": {
+		"1.12.2-1.9.0.0": "Refactor.\nImplemented a fix for MC-2025.",
 		"1.12.2-1.8.0.0": "Fixed 1.8+ compatibility.\nImplemented a fix for MC-129057.\nAdded boat tweaks.",
 		"1.12.2-1.7.0.0": "Added End portal tweaks.",
 		"1.12.2-1.6.1.2": "Minor tweaks to configuration property comments.\nImproved an error message.",
@@ -259,6 +270,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.8": {
+		"1.12.2-1.9.0.0": "Refactor.\nImplemented a fix for MC-2025.",
 		"1.12.2-1.8.0.0": "Fixed 1.8+ compatibility.\nImplemented a fix for MC-129057.\nAdded boat tweaks.",
 		"1.12.2-1.7.0.0": "Added End portal tweaks.",
 		"1.12.2-1.6.1.2": "Minor tweaks to configuration property comments.\nImproved an error message.",
@@ -278,27 +290,27 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"promos": {
-		"1.12.2-latest": "1.12.2-1.8.0.0",
-		"1.12.2-recommended": "1.12.2-1.8.0.0",
-		"1.12-latest": "1.12.2-1.8.0.0",
-		"1.12-recommended": "1.12.2-1.8.0.0",
-		"1.11.2-latest": "1.12.2-1.8.0.0",
-		"1.11.2-recommended": "1.12.2-1.8.0.0",
-		"1.11-latest": "1.12.2-1.8.0.0",
-		"1.11-recommended": "1.12.2-1.8.0.0",
-		"1.10.2-latest": "1.12.2-1.8.0.0",
-		"1.10.2-recommended": "1.12.2-1.8.0.0",
-		"1.10-latest": "1.12.2-1.8.0.0",
-		"1.10-recommended": "1.12.2-1.8.0.0",
-		"1.9.4-latest": "1.12.2-1.8.0.0",
-		"1.9.4-recommended": "1.12.2-1.8.0.0",
-		"1.9-latest": "1.12.2-1.8.0.0",
-		"1.9-recommended": "1.12.2-1.8.0.0",
-		"1.8.9-latest": "1.12.2-1.8.0.0",
-		"1.8.9-recommended": "1.12.2-1.8.0.0",
-		"1.8.8-latest": "1.12.2-1.8.0.0",
-		"1.8.8-recommended": "1.12.2-1.8.0.0",
-		"1.8-latest": "1.12.2-1.8.0.0",
-		"1.8-recommended": "1.12.2-1.8.0.0"
+		"1.12.2-latest": "1.12.2-1.9.0.0",
+		"1.12.2-recommended": "1.12.2-1.9.0.0",
+		"1.12-latest": "1.12.2-1.9.0.0",
+		"1.12-recommended": "1.12.2-1.9.0.0",
+		"1.11.2-latest": "1.12.2-1.9.0.0",
+		"1.11.2-recommended": "1.12.2-1.9.0.0",
+		"1.11-latest": "1.12.2-1.9.0.0",
+		"1.11-recommended": "1.12.2-1.9.0.0",
+		"1.10.2-latest": "1.12.2-1.9.0.0",
+		"1.10.2-recommended": "1.12.2-1.9.0.0",
+		"1.10-latest": "1.12.2-1.9.0.0",
+		"1.10-recommended": "1.12.2-1.9.0.0",
+		"1.9.4-latest": "1.12.2-1.9.0.0",
+		"1.9.4-recommended": "1.12.2-1.9.0.0",
+		"1.9-latest": "1.12.2-1.9.0.0",
+		"1.9-recommended": "1.12.2-1.9.0.0",
+		"1.8.9-latest": "1.12.2-1.9.0.0",
+		"1.8.9-recommended": "1.12.2-1.9.0.0",
+		"1.8.8-latest": "1.12.2-1.9.0.0",
+		"1.8.8-recommended": "1.12.2-1.9.0.0",
+		"1.8-latest": "1.12.2-1.9.0.0",
+		"1.8-recommended": "1.12.2-1.9.0.0"
 	}
 }
