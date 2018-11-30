@@ -130,8 +130,7 @@ public class RPTransformer implements IClassTransformer {
 			register("net.minecraft.world.WorldServer", new WorldServerPatch());
 		}
 
-		//TODO find minimum version
-		if(RPStaticConfig.mc2025Fix) {
+		if(RPStaticConfig.mc2025Fix && RandomPatches.MC_VERSION > 9) {
 			register("net.minecraft.entity.Entity", new EntityPatch());
 		}
 	}
