@@ -21,8 +21,8 @@ public final class EntityPatch extends Patch {
 
 	@Override
 	public void apply(ClassNode node) {
-		patchWriteToNBT(findMethod(node, "writeToNBT", "writeToNBT"));
-		patchReadFromNBT(findMethod(node, "readFromNBT", "readFromNBT"));
+		patchWriteToNBT(findMethod(node, "writeToNBT", "func_189511_e"));
+		patchReadFromNBT(findMethod(node, "readFromNBT", "func_70020_e"));
 	}
 
 	public static void writeAABBTag(Entity entity, NBTTagCompound compound) {
