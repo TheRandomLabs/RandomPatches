@@ -42,7 +42,7 @@ public final class WorldServerPatch extends Patch {
 			}
 		}
 
-		createTeleporter.desc = "com/therandomlabs/verticalendportals/util/VEPTeleporter";
-		initTeleporter.owner = "com/therandomlabs/verticalendportals/util/VEPTeleporter";
+		createTeleporter.desc = "com/therandomlabs/randompatches/util/RPTeleporter";
+		initTeleporter.owner = "com/therandomlabs/randompatches/util/RPTeleporter";
 	}
 }

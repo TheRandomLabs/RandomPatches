@@ -126,7 +126,7 @@ public class RPTransformer implements IClassTransformer {
 			register("net.minecraft.entity.item.EntityBoat", new EntityBoatPatch());
 		}
 
-		if(RandomPatches.VERTICAL_END_PORTALS_INSTALLED) {
+		if(RPStaticConfig.customTeleporter && RandomPatches.MC_VERSION > 11) {
 			register("net.minecraft.world.WorldServer", new WorldServerPatch());
 		}
 

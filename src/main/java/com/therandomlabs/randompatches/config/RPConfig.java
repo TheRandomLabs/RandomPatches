@@ -85,6 +85,11 @@ public class RPConfig {
 
 	public static class Misc {
 		@Config.RequiresMcRestart
+		@Config.LangKey("randompatches.config.misc.customTeleporter")
+		@Config.Comment(RPStaticConfig.Comments.CUSTOM_TELEPORTER)
+		public boolean customTeleporter = RPStaticConfig.Defaults.CUSTOM_TELEPORTER;
+
+		@Config.RequiresMcRestart
 		@Config.LangKey("randompatches.config.misc.endPortalTweaks")
 		@Config.Comment(RPStaticConfig.Comments.END_PORTAL_TWEAKS)
 		public boolean endPortalTweaks = RPStaticConfig.Defaults.END_PORTAL_TWEAKS;

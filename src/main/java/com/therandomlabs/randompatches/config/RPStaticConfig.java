@@ -43,6 +43,8 @@ public class RPStaticConfig {
 				"icon.\nLeave this and the 16x16 icon blank to use the default icon.";
 		public static final String TITLE = "The Minecraft window title.";
 
+		public static final String CUSTOM_TELEPORTER =
+				"Allows Vertical End Portals to replace vanilla's Teleporter with its own.";
 		public static final String END_PORTAL_TWEAKS = "Fixes the End portal break particle " +
 				"textures and improves End portal rendering. This only works on Minecraft 1.11 " +
 				"and above.";
@@ -96,6 +98,7 @@ public class RPStaticConfig {
 		public static final String TITLE = RandomPatches.IS_DEOBFUSCATED ?
 				RandomPatches.NAME : RandomPatches.DEFAULT_WINDOW_TITLE;
 
+		public static final boolean CUSTOM_TELEPORTER = true;
 		public static final boolean END_PORTAL_TWEAKS = true;
 		public static final boolean MC_2025_FIX = true;
 		public static final boolean MINECART_AI_FIX = true;
@@ -150,6 +153,7 @@ public class RPStaticConfig {
 
 	//Misc
 
+	public static boolean customTeleporter;
 	public static boolean endPortalTweaks;
 	public static boolean mc2025Fix;
 	public static boolean minecartAIFix;
@@ -173,16 +177,21 @@ public class RPStaticConfig {
 
 	public static int readTimeout;
 	public static long readTimeoutMillis;
+
 	static boolean setWindowSettings;
+
 	private static final Field COMMENT = RandomPatches.MC_VERSION == 8 ?
 			RPUtils.findField(Property.class, "comment") : null;
+
 	private static final List<Runnable> reloadListeners = new ArrayList<>(1);
+
 	private static Configuration config;
 	private static Configuration currentConfig;
 
 	public static boolean isNarratorKeybindEnabled() {
 		return narratorKeybind && RandomPatches.MC_VERSION > 11 &&
-				!RandomPatches.REBIND_NARRATOR_INSTALLED && RandomPatches.IS_CLIENT;
+				!RandomPatches.REBIND_NARRATOR_INSTALLED &&
+				RandomPatches.IS_CLIENT;
 	}
 
 	public static boolean isEndPortalTweaksEnabled() {
@@ -306,6 +315,15 @@ public class RPStaticConfig {
 		title = getString("title", "client.window", Defaults.TITLE, Comments.TITLE);
 
 		config.addCustomCategoryComment("misc", MISC_COMMENT);
+
+		customTeleporter = getBoolean(
+				"customTeleporter",
+				"misc",
+				Defaults.CUSTOM_TELEPORTER,
+				Comments.CUSTOM_TELEPORTER,
+				false,
+				true
+		);
 
 		endPortalTweaks = getBoolean(
 				"endPortalTweaks",

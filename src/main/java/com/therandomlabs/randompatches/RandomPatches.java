@@ -47,7 +47,7 @@ public final class RandomPatches {
 			detect("quaternary.rebindnarrator.RebindNarrator");
 	public static final boolean VANILLAFIX_INSTALLED = detect("org.dimdev.vanillafix.VanillaFix");
 	public static final boolean VERTICAL_END_PORTALS_INSTALLED =
-			detect("com.therandomlabs.verticalendportals.VerticalEndPortals");
+			detect("com.therandomlabs.verticalendportals.util.VEPUtils$DetectedByRandomPatches");
 
 	public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
 
@@ -114,7 +114,6 @@ public final class RandomPatches {
 
 		RPStaticConfig.setWindowSettings();
 	}
-
 
 	private static boolean detect(String className) {
 		try {
