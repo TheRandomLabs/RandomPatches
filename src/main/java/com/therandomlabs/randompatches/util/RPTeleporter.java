@@ -1,21 +1,24 @@
 package com.therandomlabs.randompatches.util;
 
-import com.therandomlabs.verticalendportals.util.VEPTeleporter;
+import com.therandomlabs.randompatches.api.TeleporterSetEvent;
 import net.minecraft.entity.Entity;
 import net.minecraft.world.Teleporter;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
-import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.common.MinecraftForge;
 
 public class RPTeleporter extends Teleporter {
-	public static final boolean VERTICAL_END_PORTALS_LOADED =
-			Loader.isModLoaded("verticalendportals");
-
 	private final Teleporter customTeleporter;
 
 	public RPTeleporter(WorldServer world) {
 		super(world);
-		customTeleporter = VERTICAL_END_PORTALS_LOADED ? new VEPTeleporter(world) : null;
+
+		final TeleporterSetEvent event = new TeleporterSetEvent(this);
+
+		MinecraftForge.EVENT_BUS.post(event);
+
+		final Teleporter teleporter = event.getTeleporter();
+		customTeleporter = teleporter == this ? null : teleporter;
 	}
 
 	@Override
