@@ -13,7 +13,7 @@ public class RPTeleporter extends Teleporter {
 	public RPTeleporter(WorldServer world) {
 		super(world);
 
-		final TeleporterSetEvent event = new TeleporterSetEvent(this);
+		final TeleporterSetEvent event = new TeleporterSetEvent(world, this);
 
 		MinecraftForge.EVENT_BUS.post(event);
 
