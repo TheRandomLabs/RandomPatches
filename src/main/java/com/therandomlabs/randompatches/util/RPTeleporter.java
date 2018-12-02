@@ -1,24 +1,33 @@
 package com.therandomlabs.randompatches.util;
 
-import com.therandomlabs.randompatches.api.TeleporterSetEvent;
+import java.lang.reflect.InvocationTargetException;
 import net.minecraft.entity.Entity;
 import net.minecraft.world.Teleporter;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
-import net.minecraftforge.common.MinecraftForge;
 
 public class RPTeleporter extends Teleporter {
+	private static Class<? extends Teleporter> teleporterClass;
 	private final Teleporter customTeleporter;
 
 	public RPTeleporter(WorldServer world) {
 		super(world);
 
-		final TeleporterSetEvent event = new TeleporterSetEvent(world, this);
+		if(teleporterClass == null) {
+			customTeleporter = null;
+		} else {
+			Teleporter teleporter = null;
 
-		MinecraftForge.EVENT_BUS.post(event);
+			try {
+				teleporter =
+						teleporterClass.getConstructor(WorldServer.class).newInstance(world);
+			} catch(IllegalAccessException | InstantiationException | NoSuchMethodException |
+					InvocationTargetException ex) {
+				RPUtils.crashReport("Failed to instantiate: " + teleporterClass.getName(), ex);
+			}
 
-		final Teleporter teleporter = event.getTeleporter();
-		customTeleporter = teleporter == this ? null : teleporter;
+			this.customTeleporter = teleporter;
+		}
 	}
 
 	@Override
@@ -64,5 +73,9 @@ public class RPTeleporter extends Teleporter {
 		} else {
 			customTeleporter.placeEntity(world, entity, yaw);
 		}
+	}
+
+	public static void setTeleporter(Class<? extends Teleporter> teleporterClass) {
+		RPTeleporter.teleporterClass = teleporterClass;
 	}
 }
