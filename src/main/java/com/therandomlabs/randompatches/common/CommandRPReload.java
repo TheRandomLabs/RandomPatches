@@ -30,12 +30,12 @@ public class CommandRPReload extends CommandBase {
 	@Override
 	public void execute(MinecraftServer server, ICommandSender sender, String[] args)
 			throws CommandException {
-		RPStaticConfig.doNotSetWindowSettings();
-
-		if(server.isDedicatedServer()) {
+		if(server != null && server.isDedicatedServer()) {
 			RPStaticConfig.reload();
 			notifyCommandListener(sender, this, "RandomPatches configuration reloaded!");
 		} else {
+			RPStaticConfig.doNotSetWindowSettings();
+
 			if(RandomPatches.MC_VERSION > 10) {
 				RPConfig.reloadFromDisk();
 			} else {
@@ -43,9 +43,8 @@ public class CommandRPReload extends CommandBase {
 			}
 
 			sender.sendMessage(new TextComponentTranslation("commands.rpreloadclient.success"));
+			RPStaticConfig.doSetWindowSettings();
 		}
-
-		RPStaticConfig.doSetWindowSettings();
 	}
 
 	@Override
