@@ -6,7 +6,7 @@ import net.minecraft.world.Teleporter;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 
-public class RPTeleporter extends Teleporter {
+public final class RPTeleporter extends Teleporter {
 	private static Class<? extends Teleporter> teleporterClass;
 	private final Teleporter customTeleporter;
 
