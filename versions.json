@@ -1,6 +1,7 @@
 {
 	"homepage": "https://minecraft.curseforge.com/projects/randompatches",
 	"1.12.2": {
+		"1.12.2-1.9.1.2": "Fixed End portal teleportation.",
 		"1.12.2-1.9.1.1": "Fixed /rpreloadclient.",
 		"1.12.2-1.9.1.0": "Fixed Vertical End Portals compatibility.",
 		"1.12.2-1.9.0.0": "Refactor.\nImplemented a fix for MC-2025.",
@@ -30,6 +31,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.12.1": {
+		"1.12.2-1.9.1.2": "Fixed End portal teleportation.",
 		"1.12.2-1.9.1.1": "Fixed /rpreloadclient.",
 		"1.12.2-1.9.1.0": "Fixed Vertical End Portals compatibility.",
 		"1.12.2-1.9.0.0": "Refactor.\nImplemented a fix for MC-2025.",
@@ -59,6 +61,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.12": {
+		"1.12.2-1.9.1.2": "Fixed End portal teleportation.",
 		"1.12.2-1.9.1.1": "Fixed /rpreloadclient.",
 		"1.12.2-1.9.1.0": "Fixed Vertical End Portals compatibility.",
 		"1.12.2-1.9.0.0": "Refactor.\nImplemented a fix for MC-2025.",
@@ -88,6 +91,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.11.2": {
+		"1.12.2-1.9.1.2": "Fixed End portal teleportation.",
 		"1.12.2-1.9.1.1": "Fixed /rpreloadclient.",
 		"1.12.2-1.9.1.0": "Fixed Vertical End Portals compatibility.",
 		"1.12.2-1.9.0.0": "Refactor.\nImplemented a fix for MC-2025.",
@@ -117,6 +121,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.11": {
+		"1.12.2-1.9.1.2": "Fixed End portal teleportation.",
 		"1.12.2-1.9.1.1": "Fixed /rpreloadclient.",
 		"1.12.2-1.9.1.0": "Fixed Vertical End Portals compatibility.",
 		"1.12.2-1.9.0.0": "Refactor.\nImplemented a fix for MC-2025.",
@@ -146,6 +151,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.10.2": {
+		"1.12.2-1.9.1.2": "Fixed End portal teleportation.",
 		"1.12.2-1.9.1.1": "Fixed /rpreloadclient.",
 		"1.12.2-1.9.1.0": "Fixed Vertical End Portals compatibility.",
 		"1.12.2-1.9.0.0": "Refactor.\nImplemented a fix for MC-2025.",
@@ -175,6 +181,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.10": {
+		"1.12.2-1.9.1.2": "Fixed End portal teleportation.",
 		"1.12.2-1.9.1.1": "Fixed /rpreloadclient.",
 		"1.12.2-1.9.1.0": "Fixed Vertical End Portals compatibility.",
 		"1.12.2-1.9.0.0": "Refactor.\nImplemented a fix for MC-2025.",
@@ -204,6 +211,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.9.4": {
+		"1.12.2-1.9.1.2": "Fixed End portal teleportation.",
 		"1.12.2-1.9.1.1": "Fixed /rpreloadclient.",
 		"1.12.2-1.9.1.0": "Fixed Vertical End Portals compatibility.",
 		"1.12.2-1.9.0.0": "Refactor.\nImplemented a fix for MC-2025.",
@@ -226,6 +234,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.9": {
+		"1.12.2-1.9.1.2": "Fixed End portal teleportation.",
 		"1.12.2-1.9.1.1": "Fixed /rpreloadclient.",
 		"1.12.2-1.9.1.0": "Fixed Vertical End Portals compatibility.",
 		"1.12.2-1.9.0.0": "Refactor.\nImplemented a fix for MC-2025.",
@@ -248,6 +257,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.8.9": {
+		"1.12.2-1.9.1.2": "Fixed End portal teleportation.",
 		"1.12.2-1.9.1.1": "Fixed /rpreloadclient.",
 		"1.12.2-1.9.1.0": "Fixed Vertical End Portals compatibility.",
 		"1.12.2-1.9.0.0": "Refactor.\nImplemented a fix for MC-2025.",
@@ -270,6 +280,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.8.8": {
+		"1.12.2-1.9.1.2": "Fixed End portal teleportation.",
 		"1.12.2-1.9.1.1": "Fixed /rpreloadclient.",
 		"1.12.2-1.9.1.0": "Fixed Vertical End Portals compatibility.",
 		"1.12.2-1.9.0.0": "Refactor.\nImplemented a fix for MC-2025.",
@@ -292,6 +303,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.8": {
+		"1.12.2-1.9.1.2": "Fixed End portal teleportation.",
 		"1.12.2-1.9.1.1": "Fixed /rpreloadclient.",
 		"1.12.2-1.9.1.0": "Fixed Vertical End Portals compatibility.",
 		"1.12.2-1.9.0.0": "Refactor.\nImplemented a fix for MC-2025.",
@@ -314,27 +326,27 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"promos": {
-		"1.12.2-latest": "1.12.2-1.9.1.1",
-		"1.12.2-recommended": "1.12.2-1.9.1.1",
-		"1.12-latest": "1.12.2-1.9.1.1",
-		"1.12-recommended": "1.12.2-1.9.1.1",
-		"1.11.2-latest": "1.12.2-1.9.1.1",
-		"1.11.2-recommended": "1.12.2-1.9.1.1",
-		"1.11-latest": "1.12.2-1.9.1.1",
-		"1.11-recommended": "1.12.2-1.9.1.1",
-		"1.10.2-latest": "1.12.2-1.9.1.1",
-		"1.10.2-recommended": "1.12.2-1.9.1.1",
-		"1.10-latest": "1.12.2-1.9.1.1",
-		"1.10-recommended": "1.12.2-1.9.1.1",
-		"1.9.4-latest": "1.12.2-1.9.1.1",
-		"1.9.4-recommended": "1.12.2-1.9.1.1",
-		"1.9-latest": "1.12.2-1.9.1.1",
-		"1.9-recommended": "1.12.2-1.9.1.1",
-		"1.8.9-latest": "1.12.2-1.9.1.1",
-		"1.8.9-recommended": "1.12.2-1.9.1.1",
-		"1.8.8-latest": "1.12.2-1.9.1.1",
-		"1.8.8-recommended": "1.12.2-1.9.1.1",
-		"1.8-latest": "1.12.2-1.9.1.1",
-		"1.8-recommended": "1.12.2-1.9.1.1"
+		"1.12.2-latest": "1.12.2-1.9.1.2",
+		"1.12.2-recommended": "1.12.2-1.9.1.2",
+		"1.12-latest": "1.12.2-1.9.1.2",
+		"1.12-recommended": "1.12.2-1.9.1.2",
+		"1.11.2-latest": "1.12.2-1.9.1.2",
+		"1.11.2-recommended": "1.12.2-1.9.1.2",
+		"1.11-latest": "1.12.2-1.9.1.2",
+		"1.11-recommended": "1.12.2-1.9.1.2",
+		"1.10.2-latest": "1.12.2-1.9.1.2",
+		"1.10.2-recommended": "1.12.2-1.9.1.2",
+		"1.10-latest": "1.12.2-1.9.1.2",
+		"1.10-recommended": "1.12.2-1.9.1.2",
+		"1.9.4-latest": "1.12.2-1.9.1.2",
+		"1.9.4-recommended": "1.12.2-1.9.1.2",
+		"1.9-latest": "1.12.2-1.9.1.2",
+		"1.9-recommended": "1.12.2-1.9.1.2",
+		"1.8.9-latest": "1.12.2-1.9.1.2",
+		"1.8.9-recommended": "1.12.2-1.9.1.2",
+		"1.8.8-latest": "1.12.2-1.9.1.2",
+		"1.8.8-recommended": "1.12.2-1.9.1.2",
+		"1.8-latest": "1.12.2-1.9.1.2",
+		"1.8-recommended": "1.12.2-1.9.1.2"
 	}
 }
