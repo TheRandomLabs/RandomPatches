@@ -77,7 +77,7 @@ public final class RPTeleporter extends Teleporter {
 
 	@Override
 	public boolean isVanilla() {
-		return customTeleporter == null ? true : customTeleporter.isVanilla();
+		return customTeleporter == null || customTeleporter.isVanilla();
 	}
 
 	public static void setTeleporter(Class<? extends Teleporter> teleporterClass) {
