@@ -23,8 +23,8 @@ import net.minecraftforge.fml.common.discovery.ASMDataTable;
 
 //The most convoluted way to implement a config GUI, but it works
 @Config(modid = RandomPatches.MOD_ID, name = RandomPatches.MOD_ID, category = "")
-public class RPConfig {
-	public static class Boats {
+public final class RPConfig {
+	public static final class Boats {
 		@Config.RequiresMcRestart
 		@Config.LangKey("randompatches.config.boats.patchEntityBoat")
 		@Config.Comment(RPStaticConfig.Comments.PATCH_ENTITYBOAT)
@@ -41,10 +41,10 @@ public class RPConfig {
 				RPStaticConfig.Defaults.UNDERWATER_BOAT_BUOYANCY;
 	}
 
-	public static class Client {
+	public static final class Client {
 		@Config.LangKey("randompatches.config.window")
 		@Config.Comment(RPStaticConfig.WINDOW_COMMENT)
-		public Window window = new Window();
+		public final Window window = new Window();
 
 		@Config.RequiresMcRestart
 		@Config.LangKey("randompatches.config.client.fastLanguageSwitch")
@@ -83,7 +83,7 @@ public class RPConfig {
 		public boolean rpreloadclient = RPStaticConfig.Defaults.RPRELOADCLIENT;
 	}
 
-	public static class Misc {
+	public static final class Misc {
 		@Config.RequiresMcRestart
 		@Config.LangKey("randompatches.config.misc.customTeleporter")
 		@Config.Comment(RPStaticConfig.Comments.CUSTOM_TELEPORTER)
@@ -121,7 +121,7 @@ public class RPConfig {
 		public boolean rpreload = RPStaticConfig.Defaults.RPRELOAD;
 	}
 
-	public static class SpeedLimits {
+	public static final class SpeedLimits {
 		@Config.RangeDouble(min = 1.0)
 		@Config.LangKey("randompatches.config.speedLimits.maxPlayerSpeed")
 		@Config.Comment(RPStaticConfig.Comments.MAX_PLAYER_SPEED)
@@ -138,7 +138,7 @@ public class RPConfig {
 		public double maxPlayerVehicleSpeed = RPStaticConfig.Defaults.MAX_PLAYER_VEHICLE_SPEED;
 	}
 
-	public static class Timeouts {
+	public static final class Timeouts {
 		@Config.RangeInt(min = 1)
 		@Config.LangKey("randompatches.config.timeouts.keepAlivePacketInterval")
 		@Config.Comment(RPStaticConfig.Comments.KEEP_ALIVE_PACKET_INTERVAL)
@@ -160,7 +160,7 @@ public class RPConfig {
 		public int readTimeout = RPStaticConfig.Defaults.READ_TIMEOUT;
 	}
 
-	public static class Window implements NestedCategory {
+	public static final class Window implements NestedCategory {
 		@Config.LangKey("randompatches.config.window.icon16")
 		@Config.Comment(RPStaticConfig.Comments.ICON_16)
 		public String icon16 = RPStaticConfig.Defaults.ICON_16;
@@ -178,23 +178,23 @@ public class RPConfig {
 
 	@Config.LangKey("randompatches.config.boats")
 	@Config.Comment(RPStaticConfig.BOATS_COMMENT)
-	public static Boats boats = new Boats();
+	public static final Boats boats = new Boats();
 
 	@Config.LangKey("randompatches.config.client")
 	@Config.Comment(RPStaticConfig.CLIENT_COMMENT)
-	public static Client client = new Client();
+	public static final Client client = new Client();
 
 	@Config.LangKey("randompatches.config.misc")
 	@Config.Comment(RPStaticConfig.MISC_COMMENT)
-	public static Misc misc = new Misc();
+	public static final Misc misc = new Misc();
 
 	@Config.LangKey("randompatches.config.speedLimits")
 	@Config.Comment(RPStaticConfig.SPEED_LIMITS_COMMENT)
-	public static SpeedLimits speedLimits = new SpeedLimits();
+	public static final SpeedLimits speedLimits = new SpeedLimits();
 
 	@Config.LangKey("randompatches.config.timeouts")
 	@Config.Comment(RPStaticConfig.TIMEOUTS_COMMENT)
-	public static Timeouts timeouts = new Timeouts();
+	public static final Timeouts timeouts = new Timeouts();
 
 	private static final Field ASM_DATA = RPUtils.findField(ConfigManager.class, "asm_data");
 
