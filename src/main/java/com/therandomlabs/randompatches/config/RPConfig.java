@@ -210,7 +210,8 @@ public final class RPConfig {
 			for(Field field : configClass.getDeclaredFields()) {
 				final int modifiers = field.getModifiers();
 
-				if(!Modifier.isPublic(modifiers) || Modifier.isFinal(modifiers)) {
+				if(!Modifier.isPublic(modifiers) ||
+						field.getAnnotation(Config.Ignore.class) != null) {
 					continue;
 				}
 

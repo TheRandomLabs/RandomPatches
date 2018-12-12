@@ -1,6 +1,5 @@
 package com.therandomlabs.randompatches.patch.client;
 
-import com.therandomlabs.randompatches.config.RPStaticConfig;
 import com.therandomlabs.randompatches.core.Patch;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.AbstractInsnNode;
