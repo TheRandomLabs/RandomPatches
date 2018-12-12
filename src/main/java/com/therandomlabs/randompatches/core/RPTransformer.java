@@ -27,7 +27,7 @@ public class RPTransformer implements IClassTransformer {
 
 	static {
 		RPStaticConfig.reload();
-		register();
+		registerPatches();
 	}
 
 	@Override
@@ -70,7 +70,7 @@ public class RPTransformer implements IClassTransformer {
 		PATCHES.put(className, patch);
 	}
 
-	private static void register() {
+	private static void registerPatches() {
 		if(RPStaticConfig.patchLoginTimeout) {
 			register(
 					"net.minecraft.network.NetHandlerLoginServer",
