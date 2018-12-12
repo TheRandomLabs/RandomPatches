@@ -57,13 +57,22 @@ public final class RPUtils {
 				"/" + StringUtils.replaceChars(clazz.getName(), '.', '/') + ".class"
 		).toString();
 
-		//Give up
-		if(!uri.startsWith("file:")) {
+		RandomPatches.LOGGER.error(uri + " " + data);
+
+		if(uri.startsWith("file:/")) {
+			//e.g. file:/C:/examplemod/out/production/RandomPatches_main/com/therandomlabs/
+			//randompatches/core/RPCore.class
+			//Get rid of everything including and after the "/com"
+			uri = uri.substring(6, uri.indexOf(packageName));
+		} else if(uri.startsWith("jar:file:/")) {
+			//e.g. jar:file:/C:/examplemod/libs/randompatches-version-deobf.jar!/com/therandomlabs/
+			//randompatches/core/RPCore.class
+			//Get rid of everything including and after the '!'
+			uri = uri.substring(10, uri.indexOf(packageName) - 1);
+		} else {
+			//Give up
 			return null;
 		}
-
-		//Get rid of an extra slash at the end while we're at it
-		uri = uri.substring(6, uri.indexOf(packageName));
 
 		try {
 			return new File(URLDecoder.decode(uri, StandardCharsets.UTF_8.name()));
