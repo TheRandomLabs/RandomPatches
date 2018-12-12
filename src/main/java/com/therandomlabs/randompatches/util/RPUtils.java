@@ -57,8 +57,6 @@ public final class RPUtils {
 				"/" + StringUtils.replaceChars(clazz.getName(), '.', '/') + ".class"
 		).toString();
 
-		RandomPatches.LOGGER.error(uri + " " + data);
-
 		if(uri.startsWith("file:/")) {
 			//e.g. file:/C:/examplemod/out/production/RandomPatches_main/com/therandomlabs/
 			//randompatches/core/RPCore.class
