@@ -507,6 +507,7 @@ public class RPStaticConfig {
 		return property.getDouble(defaultValue);
 	}
 
+	@SuppressWarnings("Duplicates")
 	public static boolean getBoolean(String name, String category, boolean defaultValue,
 			String comment, boolean requiresWorldRestart, boolean requiresMcRestart) {
 		final Property property = currentConfig.get(category, name, defaultValue);
@@ -524,8 +525,22 @@ public class RPStaticConfig {
 
 	public static String getString(String name, String category, String defaultValue,
 			String comment) {
+		return getString(name, category, defaultValue, comment, false, false);
+	}
+
+	@SuppressWarnings("Duplicates")
+	public static String getString(String name, String category, String defaultValue,
+			String comment, boolean requiresWorldRestart, boolean requiresMcRestart) {
 		final Property property = currentConfig.get(category, name, defaultValue);
+
 		setComment(property, comment + "\nDefault: " + defaultValue);
+
+		if(requiresMcRestart) {
+			property.setRequiresMcRestart(true);
+		} else if(requiresWorldRestart) {
+			property.setRequiresWorldRestart(true);
+		}
+
 		return property.getString();
 	}
 
