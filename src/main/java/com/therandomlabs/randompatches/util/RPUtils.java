@@ -61,12 +61,12 @@ public final class RPUtils {
 			//e.g. file:/C:/examplemod/out/production/RandomPatches_main/com/therandomlabs/
 			//randompatches/core/RPCore.class
 			//Get rid of everything including and after the "/com"
-			uri = uri.substring(6, uri.indexOf(packageName));
+			uri = uri.substring(6, uri.indexOf(packageName) - 1);
 		} else if(uri.startsWith("jar:file:/")) {
 			//e.g. jar:file:/C:/examplemod/libs/randompatches-version-deobf.jar!/com/therandomlabs/
 			//randompatches/core/RPCore.class
 			//Get rid of everything including and after the '!'
-			uri = uri.substring(10, uri.indexOf(packageName) - 1);
+			uri = uri.substring(10, uri.indexOf(packageName) - 2);
 		} else {
 			//Give up
 			return null;
