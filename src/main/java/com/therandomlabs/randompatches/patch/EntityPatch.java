@@ -1,4 +1,4 @@
-package com.therandomlabs.randompatches.core.patch;
+package com.therandomlabs.randompatches.patch;
 
 import com.therandomlabs.randompatches.core.Patch;
 import net.minecraft.entity.Entity;
@@ -85,7 +85,7 @@ public final class EntityPatch extends Patch {
 
 		final MethodInsnNode writeAABBTag = new MethodInsnNode(
 				Opcodes.INVOKESTATIC,
-				"com/therandomlabs/randompatches/core/patch/EntityPatch",
+				"com/therandomlabs/randompatches/patch/EntityPatch",
 				"writeAABBTag",
 				"(Lnet/minecraft/entity/Entity;Lnet/minecraft/nbt/NBTTagCompound;)V",
 				false
@@ -138,7 +138,7 @@ public final class EntityPatch extends Patch {
 
 		final MethodInsnNode readAABBTag = new MethodInsnNode(
 				Opcodes.INVOKESTATIC,
-				"com/therandomlabs/randompatches/core/patch/EntityPatch",
+				"com/therandomlabs/randompatches/patch/EntityPatch",
 				"readAABBTag",
 				"(Lnet/minecraft/entity/Entity;Lnet/minecraft/nbt/NBTTagCompound;)V",
 				false

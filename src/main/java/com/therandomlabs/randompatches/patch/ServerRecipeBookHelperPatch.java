@@ -1,4 +1,4 @@
-package com.therandomlabs.randompatches.core.patch;
+package com.therandomlabs.randompatches.patch;
 
 import com.therandomlabs.randompatches.core.Patch;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -26,7 +26,7 @@ public final class ServerRecipeBookHelperPatch extends Patch {
 		}
 
 		findSlotMatchingUnusedItem.setOpcode(Opcodes.INVOKESTATIC);
-		findSlotMatchingUnusedItem.owner = "com/therandomlabs/randompatches/core/patch/" +
+		findSlotMatchingUnusedItem.owner = "com/therandomlabs/randompatches/patch/" +
 				"ServerRecipeBookHelperPatch";
 		findSlotMatchingUnusedItem.name = "findSlotMatchingUnusedItem";
 		findSlotMatchingUnusedItem.desc =

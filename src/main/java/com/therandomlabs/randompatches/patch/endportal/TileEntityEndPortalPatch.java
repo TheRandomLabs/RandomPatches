@@ -1,4 +1,4 @@
-package com.therandomlabs.randompatches.core.patch.endportal;
+package com.therandomlabs.randompatches.patch.endportal;
 
 import com.therandomlabs.randompatches.core.Patch;
 import org.objectweb.asm.Opcodes;

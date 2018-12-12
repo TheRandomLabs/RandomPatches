@@ -1,4 +1,4 @@
-package com.therandomlabs.randompatches.core.patch;
+package com.therandomlabs.randompatches.patch.client;
 
 import com.therandomlabs.randompatches.core.Patch;
 import net.minecraft.client.Minecraft;
@@ -32,7 +32,7 @@ public final class LanguageListPatch extends Patch {
 
 		final MethodInsnNode callReloadLanguage = new MethodInsnNode(
 				Opcodes.INVOKESTATIC,
-				"com/therandomlabs/randompatches/core/patch/LanguageListPatch",
+				"com/therandomlabs/randompatches/patch/LanguageListPatch",
 				"reloadLanguage",
 				"()V",
 				false

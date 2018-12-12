@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import com.therandomlabs.randompatches.RandomPatches;
-import com.therandomlabs.randompatches.core.patch.EntityBoatPatch;
+import com.therandomlabs.randompatches.patch.EntityBoatPatch;
 import com.therandomlabs.randompatches.util.RPUtils;
 import com.therandomlabs.randompatches.util.WindowIconHandler;
 import net.minecraftforge.common.config.ConfigCategory;
@@ -43,8 +43,6 @@ public class RPStaticConfig {
 				"icon.\nLeave this and the 16x16 icon blank to use the default icon.";
 		public static final String TITLE = "The Minecraft window title.";
 
-		public static final String CUSTOM_TELEPORTER =
-				"Allows Vertical End Portals to replace vanilla's Teleporter with its own.";
 		public static final String END_PORTAL_TWEAKS = "Fixes the End portal break particle " +
 				"textures and improves End portal rendering. This only works on Minecraft 1.11 " +
 				"and above.";
@@ -98,7 +96,6 @@ public class RPStaticConfig {
 		public static final String TITLE = RandomPatches.IS_DEOBFUSCATED ?
 				RandomPatches.NAME : RandomPatches.DEFAULT_WINDOW_TITLE;
 
-		public static final boolean CUSTOM_TELEPORTER = true;
 		public static final boolean END_PORTAL_TWEAKS = true;
 		public static final boolean MC_2025_FIX = true;
 		public static final boolean MINECART_AI_FIX = true;
@@ -153,7 +150,6 @@ public class RPStaticConfig {
 
 	//Misc
 
-	public static boolean customTeleporter;
 	public static boolean endPortalTweaks;
 	public static boolean mc2025Fix;
 	public static boolean minecartAIFix;
@@ -315,15 +311,6 @@ public class RPStaticConfig {
 		title = getString("title", "client.window", Defaults.TITLE, Comments.TITLE);
 
 		config.addCustomCategoryComment("misc", MISC_COMMENT);
-
-		customTeleporter = getBoolean(
-				"customTeleporter",
-				"misc",
-				Defaults.CUSTOM_TELEPORTER,
-				Comments.CUSTOM_TELEPORTER,
-				false,
-				true
-		);
 
 		endPortalTweaks = getBoolean(
 				"endPortalTweaks",

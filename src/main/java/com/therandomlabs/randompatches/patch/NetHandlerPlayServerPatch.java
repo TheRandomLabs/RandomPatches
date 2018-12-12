@@ -1,4 +1,4 @@
-package com.therandomlabs.randompatches.core.patch;
+package com.therandomlabs.randompatches.patch;
 
 import com.therandomlabs.randompatches.RandomPatches;
 import com.therandomlabs.randompatches.core.Patch;

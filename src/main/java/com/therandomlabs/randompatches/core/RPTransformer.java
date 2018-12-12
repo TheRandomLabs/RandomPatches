@@ -4,20 +4,19 @@ import java.util.HashMap;
 import java.util.Map;
 import com.therandomlabs.randompatches.RandomPatches;
 import com.therandomlabs.randompatches.config.RPStaticConfig;
-import com.therandomlabs.randompatches.core.patch.EntityBoatPatch;
-import com.therandomlabs.randompatches.core.patch.EntityPatch;
-import com.therandomlabs.randompatches.core.patch.IngameMenuPatch;
-import com.therandomlabs.randompatches.core.patch.ItemPotionPatch;
-import com.therandomlabs.randompatches.core.patch.LanguageListPatch;
-import com.therandomlabs.randompatches.core.patch.MinecartPatch;
-import com.therandomlabs.randompatches.core.patch.MinecraftPatch;
-import com.therandomlabs.randompatches.core.patch.NetHandlerLoginServerPatch;
-import com.therandomlabs.randompatches.core.patch.NetHandlerPlayServerPatch;
-import com.therandomlabs.randompatches.core.patch.ServerRecipeBookHelperPatch;
-import com.therandomlabs.randompatches.core.patch.WorldServerPatch;
-import com.therandomlabs.randompatches.core.patch.endportal.BlockEndPortalPatch;
-import com.therandomlabs.randompatches.core.patch.endportal.BlockModelShapesPatch;
-import com.therandomlabs.randompatches.core.patch.endportal.TileEntityEndPortalPatch;
+import com.therandomlabs.randompatches.patch.EntityBoatPatch;
+import com.therandomlabs.randompatches.patch.EntityPatch;
+import com.therandomlabs.randompatches.patch.client.IngameMenuPatch;
+import com.therandomlabs.randompatches.patch.client.ItemPotionPatch;
+import com.therandomlabs.randompatches.patch.client.LanguageListPatch;
+import com.therandomlabs.randompatches.patch.MinecartPatch;
+import com.therandomlabs.randompatches.patch.client.MinecraftPatch;
+import com.therandomlabs.randompatches.patch.NetHandlerLoginServerPatch;
+import com.therandomlabs.randompatches.patch.NetHandlerPlayServerPatch;
+import com.therandomlabs.randompatches.patch.ServerRecipeBookHelperPatch;
+import com.therandomlabs.randompatches.patch.endportal.BlockEndPortalPatch;
+import com.therandomlabs.randompatches.patch.endportal.BlockModelShapesPatch;
+import com.therandomlabs.randompatches.patch.endportal.TileEntityEndPortalPatch;
 import net.minecraft.launchwrapper.IClassTransformer;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
@@ -124,10 +123,6 @@ public class RPTransformer implements IClassTransformer {
 
 		if(RPStaticConfig.patchEntityBoat && RandomPatches.MC_VERSION > 8) {
 			register("net.minecraft.entity.item.EntityBoat", new EntityBoatPatch());
-		}
-
-		if(RPStaticConfig.customTeleporter && RandomPatches.MC_VERSION > 11) {
-			register("net.minecraft.world.WorldServer", new WorldServerPatch());
 		}
 
 		if(RPStaticConfig.mc2025Fix && RandomPatches.MC_VERSION > 9) {

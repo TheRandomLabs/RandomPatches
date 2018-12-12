@@ -1,4 +1,4 @@
-package com.therandomlabs.randompatches.core.patch;
+package com.therandomlabs.randompatches.patch.client;
 
 import com.therandomlabs.randompatches.RandomPatches;
 import com.therandomlabs.randompatches.config.RPStaticConfig;
@@ -113,7 +113,7 @@ public final class MinecraftPatch extends Patch {
 
 		final MethodInsnNode callHandleKeypress = new MethodInsnNode(
 				Opcodes.INVOKESTATIC,
-				"com/therandomlabs/randompatches/core/patch/MinecraftPatch",
+				"com/therandomlabs/randompatches/patch/MinecraftPatch",
 				"handleKeypress",
 				"()V",
 				false

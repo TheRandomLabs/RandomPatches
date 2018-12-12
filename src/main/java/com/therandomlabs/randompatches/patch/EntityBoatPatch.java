@@ -1,4 +1,4 @@
-package com.therandomlabs.randompatches.core.patch;
+package com.therandomlabs.randompatches.patch;
 
 import com.therandomlabs.randompatches.config.RPStaticConfig;
 import com.therandomlabs.randompatches.core.Patch;
@@ -57,7 +57,7 @@ public final class EntityBoatPatch extends Patch {
 
 		final MethodInsnNode onUpdate = new MethodInsnNode(
 				Opcodes.INVOKESTATIC,
-				"com/therandomlabs/randompatches/core/patch/EntityBoatPatch",
+				"com/therandomlabs/randompatches/patch/EntityBoatPatch",
 				"onUpdate",
 				"(Lnet/minecraft/entity/item/EntityBoat;" +
 						"Lnet/minecraft/entity/item/EntityBoat$Status;)V",

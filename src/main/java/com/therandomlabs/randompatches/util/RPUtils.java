@@ -17,6 +17,7 @@ import java.util.jar.JarFile;
 import com.therandomlabs.randompatches.RandomPatches;
 import com.therandomlabs.randompatches.core.RPCoreContainer;
 import net.minecraft.crash.CrashReport;
+import net.minecraft.launchwrapper.Launch;
 import net.minecraft.util.ReportedException;
 import net.minecraftforge.fml.common.MetadataCollection;
 import net.minecraftforge.fml.common.ModContainer;
@@ -31,6 +32,16 @@ import org.apache.commons.lang3.StringUtils;
 
 public final class RPUtils {
 	private RPUtils() {}
+
+	public static boolean detect(String className) {
+		try {
+			Class.forName(className, false, Launch.classLoader);
+		} catch(ClassNotFoundException ex) {
+			return false;
+		}
+
+		return true;
+	}
 
 	public static File getModFile(Map<String, Object> data, Class<?> clazz, String packageName) {
 		File modFile = (File) data.get("coremodLocation");
