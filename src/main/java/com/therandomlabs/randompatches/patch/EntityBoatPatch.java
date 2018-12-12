@@ -57,7 +57,7 @@ public final class EntityBoatPatch extends Patch {
 
 		final MethodInsnNode onUpdate = new MethodInsnNode(
 				Opcodes.INVOKESTATIC,
-				"com/therandomlabs/randompatches/patch/EntityBoatPatch",
+				getName(EntityBoatPatch.class),
 				"onUpdate",
 				"(Lnet/minecraft/entity/item/EntityBoat;" +
 						"Lnet/minecraft/entity/item/EntityBoat$Status;)V",
@@ -66,7 +66,7 @@ public final class EntityBoatPatch extends Patch {
 
 		final FieldInsnNode getPreventEjection = new FieldInsnNode(
 				Opcodes.GETSTATIC,
-				"com/therandomlabs/randompatches/config/RPStaticConfig",
+				RPSTATICCONFIG,
 				"preventUnderwaterBoatPassengerEjection",
 				"Z"
 		);

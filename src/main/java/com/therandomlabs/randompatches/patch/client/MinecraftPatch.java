@@ -113,7 +113,7 @@ public final class MinecraftPatch extends Patch {
 
 		final MethodInsnNode callHandleKeypress = new MethodInsnNode(
 				Opcodes.INVOKESTATIC,
-				"com/therandomlabs/randompatches/patch/MinecraftPatch",
+				getName(MinecraftPatch.class),
 				"handleKeypress",
 				"()V",
 				false

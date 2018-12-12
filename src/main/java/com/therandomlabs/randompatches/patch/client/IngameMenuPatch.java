@@ -1,5 +1,6 @@
 package com.therandomlabs.randompatches.patch.client;
 
+import com.therandomlabs.randompatches.config.RPStaticConfig;
 import com.therandomlabs.randompatches.core.Patch;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.AbstractInsnNode;
@@ -30,7 +31,7 @@ public final class IngameMenuPatch extends Patch {
 		final LabelNode label = new LabelNode();
 		final FieldInsnNode getEnabled = new FieldInsnNode(
 				Opcodes.GETSTATIC,
-				"com/therandomlabs/randompatches/config/RPStaticConfig",
+				RPSTATICCONFIG,
 				"forceTitleScreenOnDisconnect",
 				"Z"
 		);

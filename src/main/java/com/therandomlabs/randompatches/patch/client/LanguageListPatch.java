@@ -32,7 +32,7 @@ public final class LanguageListPatch extends Patch {
 
 		final MethodInsnNode callReloadLanguage = new MethodInsnNode(
 				Opcodes.INVOKESTATIC,
-				"com/therandomlabs/randompatches/patch/LanguageListPatch",
+				getName(LanguageListPatch.class),
 				"reloadLanguage",
 				"()V",
 				false

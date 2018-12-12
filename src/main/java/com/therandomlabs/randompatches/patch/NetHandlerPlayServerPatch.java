@@ -98,7 +98,7 @@ public final class NetHandlerPlayServerPatch extends Patch {
 
 		final FieldInsnNode getKeepAliveInterval = new FieldInsnNode(
 				Opcodes.GETSTATIC,
-				"com/therandomlabs/randompatches/config/RPStaticConfig",
+				RPSTATICCONFIG,
 				"keepAlivePacketIntervalMillis",
 				"J"
 		);
@@ -122,7 +122,7 @@ public final class NetHandlerPlayServerPatch extends Patch {
 
 		final FieldInsnNode getReadTimeoutMillis = new FieldInsnNode(
 				Opcodes.GETSTATIC,
-				"com/therandomlabs/randompatches/config/RPStaticConfig",
+				RPSTATICCONFIG,
 				"readTimeoutMillis",
 				"J"
 		);
@@ -167,14 +167,14 @@ public final class NetHandlerPlayServerPatch extends Patch {
 
 		final FieldInsnNode getElytraMaxSpeed = new FieldInsnNode(
 				Opcodes.GETSTATIC,
-				"com/therandomlabs/randompatches/config/RPStaticConfig",
+				RPSTATICCONFIG,
 				"maxPlayerElytraSpeed",
 				"F"
 		);
 
 		final FieldInsnNode getNormalMaxSpeed = new FieldInsnNode(
 				Opcodes.GETSTATIC,
-				"com/therandomlabs/randompatches/config/RPStaticConfig",
+				RPSTATICCONFIG,
 				"maxPlayerSpeed",
 				"F"
 		);
@@ -204,7 +204,7 @@ public final class NetHandlerPlayServerPatch extends Patch {
 
 		final FieldInsnNode getVehicleMaxSpeed = new FieldInsnNode(
 				Opcodes.GETSTATIC,
-				"com/therandomlabs/randompatches/config/RPStaticConfig",
+				RPSTATICCONFIG,
 				"maxPlayerVehicleSpeed",
 				"D"
 		);

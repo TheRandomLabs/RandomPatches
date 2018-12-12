@@ -17,6 +17,7 @@ import org.objectweb.asm.tree.MethodNode;
 import org.objectweb.asm.tree.VarInsnNode;
 
 public final class EntityPatch extends Patch {
+	public static final String ENTITYPATCH = getName(EntityPatch.class);
 	public static final String SET_POSITION = getName("setPosition", "func_70107_b");
 
 	@Override
@@ -85,7 +86,7 @@ public final class EntityPatch extends Patch {
 
 		final MethodInsnNode writeAABBTag = new MethodInsnNode(
 				Opcodes.INVOKESTATIC,
-				"com/therandomlabs/randompatches/patch/EntityPatch",
+				ENTITYPATCH,
 				"writeAABBTag",
 				"(Lnet/minecraft/entity/Entity;Lnet/minecraft/nbt/NBTTagCompound;)V",
 				false
@@ -138,7 +139,7 @@ public final class EntityPatch extends Patch {
 
 		final MethodInsnNode readAABBTag = new MethodInsnNode(
 				Opcodes.INVOKESTATIC,
-				"com/therandomlabs/randompatches/patch/EntityPatch",
+				ENTITYPATCH,
 				"readAABBTag",
 				"(Lnet/minecraft/entity/Entity;Lnet/minecraft/nbt/NBTTagCompound;)V",
 				false

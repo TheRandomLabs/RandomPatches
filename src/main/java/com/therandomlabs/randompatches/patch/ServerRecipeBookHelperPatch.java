@@ -26,8 +26,7 @@ public final class ServerRecipeBookHelperPatch extends Patch {
 		}
 
 		findSlotMatchingUnusedItem.setOpcode(Opcodes.INVOKESTATIC);
-		findSlotMatchingUnusedItem.owner = "com/therandomlabs/randompatches/patch/" +
-				"ServerRecipeBookHelperPatch";
+		findSlotMatchingUnusedItem.owner = getName(ServerRecipeBookHelperPatch.class);
 		findSlotMatchingUnusedItem.name = "findSlotMatchingUnusedItem";
 		findSlotMatchingUnusedItem.desc =
 				"(Lnet/minecraft/entity/player/InventoryPlayer;Lnet/minecraft/item/ItemStack;)I";
@@ -47,6 +46,7 @@ public final class ServerRecipeBookHelperPatch extends Patch {
 	}
 
 	public static boolean stackEqualExact(ItemStack stack1, ItemStack stack2) {
+		//(OreDictionary.WILDCARD_VALUE = Short.MAX_VALUE)
 		return stack1.getItem() == stack2.getItem() && (stack1.getMetadata() == Short.MAX_VALUE ||
 				stack1.getMetadata() == stack2.getMetadata());
 	}
