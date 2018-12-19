@@ -19,14 +19,14 @@ public class RPStaticConfig {
 		public static final String PATCH_ENTITYBOAT = "Whether to apply EntityBoat.";
 		public static final String PREVENT_UNDERWATER_BOAT_PASSENGER_EJECTION = "Prevents " +
 				"underwater boat passengers from being ejected after 60 ticks (3 seconds).";
-		public static final String UNDERWATER_BOAT_BUOYANCY = "The underwater boat buoyancy. " +
+		public static final String UNDERWATER_BOAT_BUOYANCY = "The underwater boat buoyancy.\n" +
 				"The vanilla default is " + EntityBoatPatch.VANILLA_UNDERWATER_BUOYANCY + ".";
 
 		public static final String FAST_LANGUAGE_SWITCH = "Speeds up language switching.";
 		public static final String FORCE_TITLE_SCREEN_ON_DISCONNECT = "Forces Minecraft to show " +
 				"the title screen after disconnecting rather than the Multiplayer or Realms menu.";
 		public static final String NARRATOR_KEYBIND = "Whether to add the Toggle Narrator keybind" +
-				"to the controls. This only works in 1.12 as the narrator does not exist in " +
+				"to the controls.\nThis only works on 1.12 as the narrator does not exist in " +
 				"previous versions.";
 		public static final String PATCH_MINECRAFT_CLASS = "Set this to false to disable the " +
 				"Minecraft class patches (the Toggle Narrator keybind and custom window " +
@@ -44,16 +44,16 @@ public class RPStaticConfig {
 		public static final String TITLE = "The Minecraft window title.";
 
 		public static final String END_PORTAL_TWEAKS = "Fixes the End portal break particle " +
-				"textures and improves End portal rendering. This only works on Minecraft 1.11 " +
+				"textures and improves End portal rendering.\nThis only works on Minecraft 1.11 " +
 				"and above.";
-		public static final String MC_2025_FIX = "Fixes MC-2025. More information can be found " +
+		public static final String MC_2025_FIX = "Fixes MC-2025.\nMore information can be found " +
 				"here: https://www.reddit.com/r/Mojira/comments/8pgd4q/final_and_proper_fix_to_" +
 				"mc2025_simple_reliable/";
 		public static final String MINECART_AI_FIX = "Fixes MC-64836, which causes non-player " +
-				"entities to be allowed to control Minecarts using their AI.";
-		public static final String PATCH_NETHANDLERPLAYSERVER = "Set this to false to force " +
+				"entities to be allowed to control minecarts using their AI.";
+		public static final String PATCH_NETHANDLERPLAYSERVER = "Set this to false to " +
 				"disable the NetHandlerPlayServer patches (the speed limits and disconnect " +
-				"timeouts). On Minecraft 1.8, 1.8.8 and 1.8.9, these patches are disabled.";
+				"timeouts).\nOn Minecraft 1.8, 1.8.8 and 1.8.9, these patches are always disabled.";
 		public static final String RECIPE_BOOK_NBT_FIX = "Fixes MC-129057, which prevents " +
 				"ingredients with NBT data from being transferred to the crafting grid when a " +
 				"recipe is clicked in the recipe book.";

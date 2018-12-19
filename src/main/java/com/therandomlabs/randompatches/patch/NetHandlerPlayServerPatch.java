@@ -43,9 +43,12 @@ public final class NetHandlerPlayServerPatch extends Patch {
 
 		if(currentTime - lastPingTime >= KEEP_ALIVE_PACKET_INTERVAL) {
 			if(shouldDisconnect) {
+				//Inserting code here
 				if(currentTime - lastPingTime >= READ_TIMEOUT) {
+					//This line is kept from vanilla
 					disconnect(new TextComponentTranslation("disconnect.timeout"));
 				}
+				//End code insertion
 			} else {
 				shouldDisconnect = true;
 				lastPingTime = currentTime;
@@ -111,13 +114,15 @@ public final class NetHandlerPlayServerPatch extends Patch {
 		final VarInsnNode loadCurrentTime = new VarInsnNode(Opcodes.LLOAD, 1);
 
 		final VarInsnNode loadThis = new VarInsnNode(Opcodes.ALOAD, 0);
-		final FieldInsnNode getPreviousTime = new FieldInsnNode(
+		final FieldInsnNode getLastPingTime = new FieldInsnNode(
 				Opcodes.GETFIELD,
 				"net/minecraft/network/NetHandlerPlayServer",
 				"field_194402_f",
 				"J"
 		);
 
+		//i - field_194402_f
+		//currentTime - lastPingTime
 		final InsnNode subtract = new InsnNode(Opcodes.LSUB);
 
 		final FieldInsnNode getReadTimeoutMillis = new FieldInsnNode(
@@ -127,17 +132,19 @@ public final class NetHandlerPlayServerPatch extends Patch {
 				"J"
 		);
 
+		//if(currentTime - lastPingTime >= RPStaticConfig.readTimeoutMillis)
 		final InsnNode compare = new InsnNode(Opcodes.LCMP);
 		final JumpInsnNode jumpIfNotLarger = new JumpInsnNode(Opcodes.IFLT, label);
 
 		method.instructions.insert(ifeq, loadCurrentTime);
 		method.instructions.insert(loadCurrentTime, loadThis);
-		method.instructions.insert(loadThis, getPreviousTime);
-		method.instructions.insert(getPreviousTime, subtract);
+		method.instructions.insert(loadThis, getLastPingTime);
+		method.instructions.insert(getLastPingTime, subtract);
 		method.instructions.insert(subtract, getReadTimeoutMillis);
 		method.instructions.insert(getReadTimeoutMillis, compare);
 		method.instructions.insert(compare, jumpIfNotLarger);
 
+		//Break out of the if(i - field_194402_f >= 15000L) statement
 		method.instructions.insert(sendPacket, label);
 	}
 
