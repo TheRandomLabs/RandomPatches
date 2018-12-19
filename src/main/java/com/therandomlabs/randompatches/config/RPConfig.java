@@ -201,58 +201,12 @@ public final class RPConfig {
 			ConfigManager.class, "getConfiguration", "getConfiguration", String.class, String.class
 	);
 
+	private static final Map<Class<?>, Map<Object, Field[]>> propertyCacheMap = new HashMap<>();
 	private static final Map<String, Map<Property, Object>> defaultValueMap = new HashMap<>();
 	private static final Map<String, Map<Property, String>> commentMap = new HashMap<>();
 
-	private static Map<Object, Field[]> propertyCache;
-
-	public static Map<Object, Field[]> getProperties(Class<?> configClass) {
-		final Map<Object, Field[]> properties = new HashMap<>();
-
-		try {
-			final Map<Object, Field> nestedCategories = new HashMap<>();
-
-			for(Field field : configClass.getDeclaredFields()) {
-				final int modifiers = field.getModifiers();
-
-				if(!Modifier.isPublic(modifiers) ||
-						field.getAnnotation(Config.Ignore.class) != null) {
-					continue;
-				}
-
-				final Object object = field.get(null);
-				final Field[] propertyArray = object.getClass().getDeclaredFields();
-				final List<Field> propertyList = new ArrayList<>();
-
-				for(Field property : propertyArray) {
-					if(NestedCategory.class.isAssignableFrom(property.getType())) {
-						nestedCategories.put(object, property);
-					} else {
-						propertyList.add(property);
-					}
-				}
-
-				properties.put(object, propertyList.toArray(new Field[0]));
-			}
-
-			for(Map.Entry<Object, Field> category : nestedCategories.entrySet()) {
-				final Object object = category.getValue().get(category.getKey());
-				properties.put(object, object.getClass().getDeclaredFields());
-			}
-		} catch(Exception ex) {
-			RPUtils.crashReport("Error while getting config properties", ex);
-		}
-
-		return properties;
-	}
-
 	public static void reload() {
-		if(propertyCache == null) {
-			propertyCache = getProperties(RPConfig.class);
-		}
-
 		reload(
-				propertyCache,
 				RandomPatches.MOD_ID,
 				RPConfig.class,
 				RPStaticConfig.class,
@@ -260,7 +214,7 @@ public final class RPConfig {
 		);
 	}
 
-	public static void reload(Map<Object, Field[]> properties, String modid, Class<?> configClass,
+	public static void reload(String modid, Class<?> configClass,
 			Class<?> staticConfigClass, Runnable onReload) {
 		if(!ConfigManager.hasConfigForMod(modid)) {
 			try {
@@ -287,6 +241,8 @@ public final class RPConfig {
 					}
 				});
 			}
+
+			final Map<Object, Field[]> properties = getProperties(configClass);
 
 			modifyConfig(modid);
 			copyValuesToStatic(properties, staticConfigClass);
@@ -454,5 +410,51 @@ public final class RPConfig {
 				property.set(object, value);
 			}
 		}
+	}
+
+	private static Map<Object, Field[]> getProperties(Class<?> configClass) {
+		final Map<Object, Field[]> properties =
+				propertyCacheMap.computeIfAbsent(configClass, clazz -> new HashMap<>());
+
+		if(!properties.isEmpty()) {
+			return properties;
+		}
+
+		try {
+			final Map<Object, Field> nestedCategories = new HashMap<>();
+
+			for(Field field : configClass.getDeclaredFields()) {
+				final int modifiers = field.getModifiers();
+
+				if(!Modifier.isPublic(modifiers) ||
+						field.getAnnotation(Config.Ignore.class) != null) {
+					continue;
+				}
+
+				final Object object = field.get(null);
+				final Field[] propertyArray = object.getClass().getDeclaredFields();
+				final List<Field> propertyList = new ArrayList<>();
+
+				for(Field property : propertyArray) {
+					if(NestedCategory.class.isAssignableFrom(property.getType())) {
+						nestedCategories.put(object, property);
+					} else {
+						propertyList.add(property);
+					}
+				}
+
+				properties.put(object, propertyList.toArray(new Field[0]));
+			}
+
+			for(Map.Entry<Object, Field> category : nestedCategories.entrySet()) {
+				final Object object = category.getValue().get(category.getKey());
+				properties.put(object, object.getClass().getDeclaredFields());
+			}
+		} catch(Exception ex) {
+			RPUtils.crashReport("Error while getting config properties", ex);
+		}
+
+		propertyCacheMap.put(configClass, properties);
+		return properties;
 	}
 }
