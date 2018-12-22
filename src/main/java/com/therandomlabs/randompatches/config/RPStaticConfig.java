@@ -174,7 +174,7 @@ public class RPStaticConfig {
 	public static int readTimeout;
 	public static long readTimeoutMillis;
 
-	static boolean setWindowSettings;
+	static boolean setWindowSettings = true;
 
 	private static final Field COMMENT = RandomPatches.MC_VERSION == 8 ?
 			RPUtils.findField(Property.class, "comment") : null;

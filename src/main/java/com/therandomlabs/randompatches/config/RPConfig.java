@@ -231,13 +231,11 @@ public final class RPConfig {
 					defaultValueMap.computeIfAbsent(modid, property -> new HashMap<>());
 
 			if(defaultValues.isEmpty()) {
-				final Map<Property, Object> values = new HashMap<>();
-
 				forEachProperties(modid, property -> {
 					if(property.isList()) {
-						values.put(property, property.getDefaults());
+						defaultValues.put(property, property.getDefaults());
 					} else {
-						values.put(property, property.getDefault());
+						defaultValues.put(property, property.getDefault());
 					}
 				});
 			}
