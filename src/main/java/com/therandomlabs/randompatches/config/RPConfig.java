@@ -1,7 +1,6 @@
 package com.therandomlabs.randompatches.config;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
@@ -12,13 +11,13 @@ import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import com.therandomlabs.randompatches.RandomPatches;
 import com.therandomlabs.randompatches.util.RPUtils;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
-import net.minecraftforge.fml.common.Loader;
-import net.minecraftforge.fml.common.LoaderState;
+import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.discovery.ASMDataTable;
 
 //The most convoluted way to implement a config GUI, but it works
@@ -171,10 +170,6 @@ public final class RPConfig {
 
 	public interface NestedCategory {}
 
-	private interface PropertyConsumer {
-		void accept(Property property) throws InvocationTargetException, IllegalAccessException;
-	}
-
 	@Config.LangKey("randompatches.config.boats")
 	@Config.Comment(RPStaticConfig.BOATS_COMMENT)
 	public static final Boats boats = new Boats();
@@ -201,8 +196,12 @@ public final class RPConfig {
 			ConfigManager.class, "getConfiguration", "getConfiguration", String.class, String.class
 	);
 
+	private static final Method SYNC = RPUtils.findMethod(
+			ConfigManager.class, "sync", "sync", Configuration.class, Class.class, String.class,
+			String.class, boolean.class, Object.class
+	);
+
 	private static final Map<Class<?>, Map<Object, Field[]>> propertyCacheMap = new HashMap<>();
-	private static final Map<String, Map<Property, Object>> defaultValueMap = new HashMap<>();
 	private static final Map<String, Map<Property, String>> commentMap = new HashMap<>();
 
 	public static void reload() {
@@ -220,51 +219,84 @@ public final class RPConfig {
 			try {
 				injectASMData(modid, configClass);
 			} catch(Exception ex) {
-				RPUtils.crashReport("Failed to load config", ex);
+				RandomPatches.LOGGER.error("Failed to load config", ex);
+				return;
 			}
 		}
 
 		try {
-			ConfigManager.sync(modid, Config.Type.INSTANCE);
+			Configuration config = (Configuration) GET_CONFIGURATION.invoke(null, modid, modid);
 
-			final Map<Property, Object> defaultValues =
-					defaultValueMap.computeIfAbsent(modid, property -> new HashMap<>());
-
-			if(defaultValues.isEmpty()) {
-				forEachProperties(modid, property -> {
-					if(property.isList()) {
-						defaultValues.put(property, property.getDefaults());
-					} else {
-						defaultValues.put(property, property.getDefault());
-					}
-				});
+			if(config == null) {
+				ConfigManager.sync(modid, Config.Type.INSTANCE);
+				config = (Configuration) GET_CONFIGURATION.invoke(null, modid, modid);
+			} else {
+				SYNC.invoke(null, config, configClass, modid, "", false, null);
 			}
 
 			final Map<Object, Field[]> properties = getProperties(configClass);
 
-			modifyConfig(modid);
 			copyValuesToStatic(properties, staticConfigClass);
 			onReload.run();
 			copyValuesFromStatic(properties, staticConfigClass);
-			ConfigManager.sync(modid, Config.Type.INSTANCE);
 
-			//If Minecraft hasn't loaded yet and ConfigManager.sync is called, the default values
-			//are reset
-			if(!Loader.instance().hasReachedState(LoaderState.AVAILABLE)) {
-				for(Map.Entry<Property, Object> entry : defaultValues.entrySet()) {
-					final Property property = entry.getKey();
+			final Map<Property, String> comments =
+					commentMap.computeIfAbsent(modid, property -> new HashMap<>());
 
-					if(property.isList()) {
-						property.setDefaultValues((String[]) entry.getValue());
-					} else {
-						property.setDefaultValue((String) entry.getValue());
+			//Remove old elements
+			for(String name : config.getCategoryNames()) {
+				final ConfigCategory category = config.getCategory(name);
+
+				category.getValues().forEach((key, property) -> {
+					final String comment = property.getComment();
+
+					if(comment == null || comment.isEmpty()) {
+						category.remove(key);
+						return;
 					}
+
+					String newComment = comments.get(property);
+
+					if(newComment == null) {
+						newComment = comment + "\nDefault: " + property.getDefault();
+						comments.put(property, newComment);
+					}
+
+					property.setComment(newComment);
+				});
+
+				if(category.getValues().isEmpty() || category.getComment() == null) {
+					config.removeCategory(category);
 				}
 			}
 
-			modifyConfig(modid);
+			config.save();
+
+			SYNC.invoke(null, config, configClass, modid, "", false, null);
+
+			//Remove default values, min/max values and valid values from the comments so
+			//they don't show up twice in the configuration GUI
+			for(String name : config.getCategoryNames()) {
+				final ConfigCategory category = config.getCategory(name);
+
+				category.getValues().forEach((key, property) -> {
+					final String[] comment = property.getComment().split("\n");
+					final StringBuilder prunedComment = new StringBuilder();
+
+					for(String line : comment) {
+						if(line.startsWith("Default:") || line.startsWith("Min:")) {
+							break;
+						}
+
+						prunedComment.append(line).append("\n");
+					}
+
+					final String commentString = prunedComment.toString();
+					property.setComment(commentString.substring(0, commentString.length() - 1));
+				});
+			}
 		} catch(Exception ex) {
-			RPUtils.crashReport("Error while modifying config", ex);
+			RandomPatches.LOGGER.error("Error while modifying config", ex);
 		}
 	}
 
@@ -288,8 +320,12 @@ public final class RPConfig {
 					config.getCategory(name).get(entry.getKey()).set(entry.getValue().getString());
 				}
 			}
+
+			MinecraftForge.EVENT_BUS.post(new ConfigChangedEvent.PostConfigChangedEvent(
+					modid, null, true, false
+			));
 		} catch(Exception ex) {
-			RPUtils.crashReport("Error while modifying config", ex);
+			RandomPatches.LOGGER.error("Error while modifying config", ex);
 		}
 	}
 
@@ -314,73 +350,6 @@ public final class RPConfig {
 				Config.Type.INSTANCE,
 				new ASMDataTable.ASMData(null, null, configClass.getName(), null, annotationInfo)
 		);
-	}
-
-	private static void forEachProperties(String modid, PropertyConsumer consumer)
-			throws InvocationTargetException, IllegalAccessException {
-		final Configuration config = (Configuration) GET_CONFIGURATION.invoke(null, modid, modid);
-
-		for(String name : config.getCategoryNames()) {
-			final Map<String, Property> properties = config.getCategory(name).getValues();
-
-			for(Property property : properties.values()) {
-				consumer.accept(property);
-			}
-		}
-	}
-
-	private static void modifyConfig(String modid)
-			throws IllegalAccessException, InvocationTargetException {
-		final Configuration config = (Configuration) GET_CONFIGURATION.invoke(null, modid, modid);
-		final Map<Property, String> comments =
-				commentMap.computeIfAbsent(modid, property -> new HashMap<>());
-
-		//Remove old elements
-		for(String name : config.getCategoryNames()) {
-			final ConfigCategory category = config.getCategory(name);
-
-			category.getValues().forEach((key, property) -> {
-				final String comment = property.getComment();
-
-				if(comment == null || comment.isEmpty()) {
-					category.remove(key);
-					return;
-				}
-
-				String newComment = comments.get(property);
-
-				if(newComment == null) {
-					newComment = comment + "\nDefault: " + property.getDefault();
-					comments.put(property, newComment);
-				}
-
-				property.setComment(newComment);
-			});
-
-			if(category.getValues().isEmpty() || category.getComment() == null) {
-				config.removeCategory(category);
-			}
-		}
-
-		config.save();
-
-		//Remove default values, min/max values and valid values from the comments so
-		//they don't show up twice in the configuration GUI
-		forEachProperties(modid, property -> {
-			final String[] comment = property.getComment().split("\n");
-			final StringBuilder prunedComment = new StringBuilder();
-
-			for(String line : comment) {
-				if(line.startsWith("Default:") || line.startsWith("Min:")) {
-					break;
-				}
-
-				prunedComment.append(line).append("\n");
-			}
-
-			final String commentString = prunedComment.toString();
-			property.setComment(commentString.substring(0, commentString.length() - 1));
-		});
 	}
 
 	private static void copyValuesToStatic(Map<Object, Field[]> properties,
@@ -449,7 +418,7 @@ public final class RPConfig {
 				properties.put(object, object.getClass().getDeclaredFields());
 			}
 		} catch(Exception ex) {
-			RPUtils.crashReport("Error while getting config properties", ex);
+			RandomPatches.LOGGER.error("Error while getting config properties", ex);
 		}
 
 		propertyCacheMap.put(configClass, properties);
