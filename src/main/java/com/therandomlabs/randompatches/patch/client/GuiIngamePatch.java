@@ -118,7 +118,7 @@ public final class GuiIngamePatch extends Patch {
 		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 	}
 
-	public static void setRenderer(PortalRenderer renderer) {
+	public static void setPortalRenderer(PortalRenderer renderer) {
 		GuiIngamePatch.renderer = renderer;
 	}
 }
