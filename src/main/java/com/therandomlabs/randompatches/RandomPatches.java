@@ -11,7 +11,9 @@ import com.therandomlabs.randompatches.patch.MinecartPatch;
 import com.therandomlabs.randompatches.patch.NetHandlerLoginServerPatch;
 import com.therandomlabs.randompatches.patch.NetHandlerPlayServerPatch;
 import com.therandomlabs.randompatches.patch.ServerRecipeBookHelperPatch;
-import com.therandomlabs.randompatches.patch.client.IngameMenuPatch;
+import com.therandomlabs.randompatches.patch.WorldServerPatch;
+import com.therandomlabs.randompatches.patch.client.GuiIngameMenuPatch;
+import com.therandomlabs.randompatches.patch.client.GuiIngamePatch;
 import com.therandomlabs.randompatches.patch.client.ItemPotionPatch;
 import com.therandomlabs.randompatches.patch.client.LanguageListPatch;
 import com.therandomlabs.randompatches.patch.client.MinecraftPatch;
@@ -141,7 +143,7 @@ public final class RandomPatches {
 		}
 
 		if(RPStaticConfig.patchTitleScreenOnDisconnect) {
-			register("net.minecraft.client.gui.GuiIngameMenu", new IngameMenuPatch());
+			register("net.minecraft.client.gui.GuiIngameMenu", new GuiIngameMenuPatch());
 		}
 
 		if(RPStaticConfig.patchNetHandlerPlayServer && RandomPatches.MC_VERSION > 8) {
@@ -189,6 +191,14 @@ public final class RandomPatches {
 
 		if(RPStaticConfig.mc2025Fix && RandomPatches.MC_VERSION > 9) {
 			register("net.minecraft.entity.Entity", new EntityPatch());
+		}
+
+		if(RPStaticConfig.replaceTeleporter && RandomPatches.MC_VERSION == 12) {
+			register("net.minecraft.world.WorldServer", new WorldServerPatch());
+		}
+
+		if(RPStaticConfig.replacePortalRenderer && RandomPatches.MC_VERSION == 12) {
+			register("net.minecraft.client.gui.GuiIngame", new GuiIngamePatch());
 		}
 	}
 }

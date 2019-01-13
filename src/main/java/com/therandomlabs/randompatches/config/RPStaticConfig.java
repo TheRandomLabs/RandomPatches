@@ -35,6 +35,8 @@ public class RPStaticConfig {
 				"force disable the \"force title screen on disconnect\" apply.";
 		public static final String REMOVE_POTION_GLINT =
 				"Whether to remove the glowing effect from potions.";
+		public static final String REPLACE_PORTAL_RENDERER = "Whether to allow other mods " +
+				"(namely RandomPortals) to replace the portal renderer.";
 		public static final String RPRELOADCLIENT = "Enables the /rpreloadclient command.";
 
 		public static final String ICON_16 = "The path to the 16x16 Minecraft window " +
@@ -57,6 +59,8 @@ public class RPStaticConfig {
 		public static final String RECIPE_BOOK_NBT_FIX = "Fixes MC-129057, which prevents " +
 				"ingredients with NBT data from being transferred to the crafting grid when a " +
 				"recipe is clicked in the recipe book.";
+		public static final String REPLACE_TELEPORTER = "Whether to allow other mods " +
+				"(namely RandomPortals) to replace the default Teleporter.";
 		public static final String RPRELOAD = "Enables the /rpreload command.";
 
 		public static final String MAX_PLAYER_SPEED =
@@ -88,6 +92,7 @@ public class RPStaticConfig {
 		public static final boolean PATCH_MINECRAFT_CLASS = true;
 		public static final boolean PATCH_TITLE_SCREEN_ON_DISCONNECT = true;
 		public static final boolean REMOVE_POTION_GLINT = RandomPatches.IS_DEOBFUSCATED;
+		public static final boolean REPLACE_PORTAL_RENDERER = true;
 		public static final boolean RPRELOADCLIENT = true;
 
 		public static final String ICON_16 = RandomPatches.IS_DEOBFUSCATED ?
@@ -101,6 +106,7 @@ public class RPStaticConfig {
 		public static final boolean MINECART_AI_FIX = true;
 		public static final boolean PATCH_NETHANDLERPLAYSERVER = true;
 		public static final boolean RECIPE_BOOK_NBT_FIX = true;
+		public static final boolean REPLACE_TELEPORTER = true;
 		public static final boolean RPRELOAD = true;
 
 		public static final float MAX_PLAYER_SPEED = 1000000.0F;
@@ -135,6 +141,7 @@ public class RPStaticConfig {
 	public static boolean patchMinecraftClass;
 	public static boolean patchTitleScreenOnDisconnect;
 	public static boolean removePotionGlint;
+	public static boolean replacePortalRenderer;
 	public static boolean rpreloadclient;
 
 	//Client->Borderless Fullscreen
@@ -155,6 +162,7 @@ public class RPStaticConfig {
 	public static boolean minecartAIFix;
 	public static boolean patchNetHandlerPlayServer;
 	public static boolean recipeBookNBTFix;
+	public static boolean replaceTeleporter;
 	public static boolean rpreload;
 
 	//Speed limits
@@ -295,6 +303,15 @@ public class RPStaticConfig {
 				true
 		);
 
+		replacePortalRenderer = getBoolean(
+				"replacePortalRenderer",
+				"client",
+				Defaults.REPLACE_PORTAL_RENDERER,
+				Comments.REPLACE_PORTAL_RENDERER,
+				false,
+				true
+		);
+
 		rpreloadclient = getBoolean(
 				"rpreloadclient",
 				"client",
@@ -353,6 +370,15 @@ public class RPStaticConfig {
 				"misc",
 				Defaults.RECIPE_BOOK_NBT_FIX,
 				Comments.RECIPE_BOOK_NBT_FIX,
+				false,
+				true
+		);
+
+		replaceTeleporter = getBoolean(
+				"replaceTeleporter",
+				"misc",
+				Defaults.REPLACE_TELEPORTER,
+				Comments.REPLACE_TELEPORTER,
 				false,
 				true
 		);

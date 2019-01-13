@@ -11,10 +11,10 @@ import org.objectweb.asm.tree.LabelNode;
 import org.objectweb.asm.tree.MethodNode;
 import org.objectweb.asm.tree.VarInsnNode;
 
-public final class IngameMenuPatch extends Patch {
+public final class GuiIngameMenuPatch extends Patch {
 	@SuppressWarnings("Duplicates")
 	@Override
-	public void apply(ClassNode node) {
+	public boolean apply(ClassNode node) {
 		final MethodNode method = findMethod(node, "actionPerformed", "func_146284_a");
 		AbstractInsnNode storeIsIntegratedServerRunning = null;
 
@@ -43,5 +43,7 @@ public final class IngameMenuPatch extends Patch {
 		method.instructions.insert(jumpIfNotEnabled, loadTrue);
 		method.instructions.insert(loadTrue, storeTrue);
 		method.instructions.insert(storeTrue, label);
+
+		return true;
 	}
 }

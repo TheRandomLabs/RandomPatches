@@ -12,7 +12,7 @@ public final class LanguageListPatch extends Patch {
 	public static final String REFRESH_RESOURCES = getName("refreshResources", "func_110436_a");
 
 	@Override
-	public void apply(ClassNode node) {
+	public boolean apply(ClassNode node) {
 		final MethodNode method = findMethod(node, "elementClicked", "func_148144_a");
 		MethodInsnNode refreshResources = null;
 
@@ -45,6 +45,8 @@ public final class LanguageListPatch extends Patch {
 		method.instructions.remove(previous.getPrevious());
 		method.instructions.remove(previous);
 		method.instructions.remove(refreshResources);
+
+		return true;
 	}
 
 	public static void reloadLanguage() {

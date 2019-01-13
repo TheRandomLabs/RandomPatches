@@ -44,7 +44,7 @@ public final class MinecraftPatch extends Patch {
 	public static final int KEY_UNUSED = 0x54;
 
 	@Override
-	public void apply(ClassNode node) {
+	public boolean apply(ClassNode node) {
 		if(!RandomPatches.ITLT_INSTALLED &&
 				!RandomPatches.DEFAULT_WINDOW_TITLE.equals(RPStaticConfig.title)) {
 			patchCreateDisplay(findMethod(node, "createDisplay", "func_175609_am"));
@@ -53,6 +53,8 @@ public final class MinecraftPatch extends Patch {
 		if(RPStaticConfig.isNarratorKeybindEnabled()) {
 			patchDispatchKeypresses(findMethod(node, "dispatchKeypresses", "func_152348_aa"));
 		}
+
+		return true;
 	}
 
 	public static void handleKeypress() {

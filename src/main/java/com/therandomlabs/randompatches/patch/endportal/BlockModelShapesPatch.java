@@ -12,7 +12,7 @@ public final class BlockModelShapesPatch extends Patch {
 	public static final String END_PORTAL = getName("END_PORTAL", "field_150384_bq");
 
 	@Override
-	public void apply(ClassNode node) {
+	public boolean apply(ClassNode node) {
 		final MethodNode method = findMethod(node, "registerAllBlocks", "func_178119_d");
 
 		FieldInsnNode getEndPortal = null;
@@ -32,5 +32,7 @@ public final class BlockModelShapesPatch extends Patch {
 		}
 
 		getEndPortal.name = AIR;
+
+		return true;
 	}
 }

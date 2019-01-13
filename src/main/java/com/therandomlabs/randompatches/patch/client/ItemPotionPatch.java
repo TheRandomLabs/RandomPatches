@@ -9,7 +9,7 @@ import org.objectweb.asm.tree.MethodNode;
 
 public final class ItemPotionPatch extends Patch {
 	@Override
-	public void apply(ClassNode node) {
+	public boolean apply(ClassNode node) {
 		MethodNode method = findMethod(node, "hasEffect", "func_77962_s");
 
 		if(method == null) {
@@ -22,5 +22,7 @@ public final class ItemPotionPatch extends Patch {
 		list.add(new InsnNode(Opcodes.IRETURN));
 
 		method.instructions = list;
+
+		return true;
 	}
 }

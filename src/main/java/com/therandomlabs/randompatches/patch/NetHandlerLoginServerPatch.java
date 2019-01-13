@@ -10,7 +10,7 @@ import org.objectweb.asm.tree.MethodNode;
 
 public final class NetHandlerLoginServerPatch extends Patch {
 	@Override
-	public void apply(ClassNode node) {
+	public boolean apply(ClassNode node) {
 		final MethodNode method = findMethod(node, "update", "func_73660_a");
 		LdcInsnNode loginTimeout = null;
 
@@ -37,5 +37,7 @@ public final class NetHandlerLoginServerPatch extends Patch {
 
 		method.instructions.insert(loginTimeout, getLoginTimeout);
 		method.instructions.remove(loginTimeout);
+
+		return true;
 	}
 }

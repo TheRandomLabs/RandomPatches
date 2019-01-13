@@ -14,7 +14,7 @@ import org.objectweb.asm.tree.VarInsnNode;
 public final class TileEntityEndPortalPatch extends Patch {
 	@SuppressWarnings("Duplicates")
 	@Override
-	public void apply(ClassNode node) {
+	public boolean apply(ClassNode node) {
 		final MethodNode method = findMethod(node, "shouldRenderFace", "func_184313_a");
 		final InsnList list = new InsnList();
 
@@ -69,5 +69,7 @@ public final class TileEntityEndPortalPatch extends Patch {
 		list.add(returnTrue);
 
 		method.instructions = list;
+
+		return true;
 	}
 }

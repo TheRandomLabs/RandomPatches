@@ -14,7 +14,7 @@ import org.objectweb.asm.tree.VarInsnNode;
 public final class BlockEndPortalPatch extends Patch {
 	@SuppressWarnings("Duplicates")
 	@Override
-	public void apply(ClassNode node) {
+	public boolean apply(ClassNode node) {
 		final MethodNode method = findMethod(node, "shouldSideBeRendered", "func_176225_a");
 
 		JumpInsnNode isDown = null;
@@ -65,5 +65,7 @@ public final class BlockEndPortalPatch extends Patch {
 		method.instructions.insert(loadFacing, jumpIfNotEqual);
 		method.instructions.insert(jumpIfNotEqual, labelSuper);
 		method.instructions.insertBefore(loadZero, labelReturnFalse);
+
+		return true;
 	}
 }

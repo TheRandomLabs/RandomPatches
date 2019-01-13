@@ -26,14 +26,16 @@ public class RPTransformer implements IClassTransformer {
 			return basicClass;
 		}
 
-		RandomPatches.LOGGER.debug("Patching class: " + transformedName);
+		RandomPatches.LOGGER.debug("Transforming class: " + transformedName);
 
 		final ClassReader reader = new ClassReader(basicClass);
 		final ClassNode node = new ClassNode();
 		reader.accept(node, 0);
 
 		try {
-			patch.apply(node);
+			if(!patch.apply(node)) {
+				return basicClass;
+			}
 
 			final int flags;
 
@@ -48,7 +50,7 @@ public class RPTransformer implements IClassTransformer {
 			node.accept(writer);
 			return writer.toByteArray();
 		} catch(Exception ex) {
-			RandomPatches.LOGGER.error("Failed to apply class: " + transformedName, ex);
+			RandomPatches.LOGGER.error("Failed to transform class: " + transformedName, ex);
 		}
 
 		return basicClass;

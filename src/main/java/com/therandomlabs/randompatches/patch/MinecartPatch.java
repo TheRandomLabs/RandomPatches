@@ -9,7 +9,7 @@ import org.objectweb.asm.tree.TypeInsnNode;
 
 public final class MinecartPatch extends Patch {
 	@Override
-	public void apply(ClassNode node) {
+	public boolean apply(ClassNode node) {
 		final MethodNode method = findMethod(node, "moveAlongTrack", "func_180460_a");
 		TypeInsnNode instanceOfPlayer = null;
 
@@ -23,5 +23,7 @@ public final class MinecartPatch extends Patch {
 		}
 
 		instanceOfPlayer.desc = "net/minecraft/entity/player/EntityPlayer";
+
+		return true;
 	}
 }

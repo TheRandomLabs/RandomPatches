@@ -11,7 +11,7 @@ import org.objectweb.asm.tree.MethodNode;
 
 public final class ServerRecipeBookHelperPatch extends Patch {
 	@Override
-	public void apply(ClassNode node) {
+	public boolean apply(ClassNode node) {
 		final MethodNode method = findMethod(node, "func_194325_a");
 
 		MethodInsnNode findSlotMatchingUnusedItem = null;
@@ -30,6 +30,8 @@ public final class ServerRecipeBookHelperPatch extends Patch {
 		findSlotMatchingUnusedItem.name = "findSlotMatchingUnusedItem";
 		findSlotMatchingUnusedItem.desc =
 				"(Lnet/minecraft/entity/player/InventoryPlayer;Lnet/minecraft/item/ItemStack;)I";
+
+		return true;
 	}
 
 	public static int findSlotMatchingUnusedItem(InventoryPlayer inventory, ItemStack toMatch) {

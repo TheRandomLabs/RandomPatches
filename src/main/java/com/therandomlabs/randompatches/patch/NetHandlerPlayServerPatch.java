@@ -18,15 +18,15 @@ public final class NetHandlerPlayServerPatch extends Patch {
 	public static final String SEND_PACKET = getName("sendPacket", "func_147359_a");
 
 	@Override
-	public void apply(ClassNode node) {
+	public boolean apply(ClassNode node) {
 		patchUpdate(findMethod(node, "update", "func_73660_a"));
 
-		if(RandomPatches.SPONGEFORGE_INSTALLED) {
-			return;
+		if(!RandomPatches.SPONGEFORGE_INSTALLED) {
+			patchProcessPlayer(findMethod(node, "processPlayer", "func_147347_a"));
+			patchProcessVehicleMove(findMethod(node, "processVehicleMove", "func_184338_a"));
 		}
 
-		patchProcessPlayer(findMethod(node, "processPlayer", "func_147347_a"));
-		patchProcessVehicleMove(findMethod(node, "processVehicleMove", "func_184338_a"));
+		return true;
 	}
 
 	/* Expected result:

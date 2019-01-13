@@ -21,9 +21,11 @@ public final class EntityPatch extends Patch {
 	public static final String SET_POSITION = getName("setPosition", "func_70107_b");
 
 	@Override
-	public void apply(ClassNode node) {
+	public boolean apply(ClassNode node) {
 		patchWriteToNBT(findMethod(node, "writeToNBT", "func_189511_e"));
 		patchReadFromNBT(findMethod(node, "readFromNBT", "func_70020_e"));
+
+		return true;
 	}
 
 	public static void writeAABBTag(Entity entity, NBTTagCompound compound) {

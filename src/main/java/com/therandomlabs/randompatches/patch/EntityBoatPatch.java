@@ -23,7 +23,7 @@ public final class EntityBoatPatch extends Patch {
 
 	@SuppressWarnings("Duplicates")
 	@Override
-	public void apply(ClassNode node) {
+	public boolean apply(ClassNode node) {
 		final MethodNode method = findMethod(node, "onUpdate", "func_70071_h_");
 		InsnNode returnVoid = null;
 
@@ -102,6 +102,8 @@ public final class EntityBoatPatch extends Patch {
 		method.instructions.insert(loadThis3, loadZero);
 		method.instructions.insert(loadZero, setOutOfControlTicks);
 		method.instructions.insert(setOutOfControlTicks, returnLabel);
+
+		return true;
 	}
 
 	public static void onUpdate(EntityBoat boat, EntityBoat.Status status) {

@@ -9,7 +9,7 @@ import org.objectweb.asm.tree.MethodNode;
 public abstract class Patch {
 	public static final String RPSTATICCONFIG = getName(RPStaticConfig.class);
 
-	public abstract void apply(ClassNode node);
+	public abstract boolean apply(ClassNode node);
 
 	public static MethodNode findMethod(ClassNode node, String name) {
 		return findMethod(node, name, name);
