@@ -115,7 +115,7 @@ public final class RPConfig {
 		public boolean recipeBookNBTFix = RPStaticConfig.Defaults.RECIPE_BOOK_NBT_FIX;
 
 		@Config.RequiresMcRestart
-		@Config.LangKey("randompatches.config.client.replaceTeleporter")
+		@Config.LangKey("randompatches.config.misc.replaceTeleporter")
 		@Config.Comment(RPStaticConfig.Comments.REPLACE_TELEPORTER)
 		public boolean replaceTeleporter = RPStaticConfig.Defaults.REPLACE_TELEPORTER;
 
