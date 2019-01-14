@@ -1,6 +1,5 @@
 package com.therandomlabs.randompatches.patch;
 
-import com.therandomlabs.randompatches.common.RPTeleporter;
 import com.therandomlabs.randompatches.core.Patch;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.AbstractInsnNode;
@@ -10,8 +9,6 @@ import org.objectweb.asm.tree.MethodNode;
 import org.objectweb.asm.tree.TypeInsnNode;
 
 public final class WorldServerPatch extends Patch {
-	public static final String RPTELEPORTER = getName(RPTeleporter.class);
-
 	@Override
 	public boolean apply(ClassNode node) {
 		final MethodNode method = findMethod(node, "<init>");
@@ -45,8 +42,10 @@ public final class WorldServerPatch extends Patch {
 			}
 		}
 
-		createTeleporter.desc = RPTELEPORTER;
-		initTeleporter.owner = RPTELEPORTER;
+		//We can't use getName here because that requires loading RPTeleporter.class
+		//which loads Teleporter.class which breaks Cubic Chunks and possibly other mods
+		createTeleporter.desc = "com/therandomlabs/randompatches/common/RPTeleporter";
+		initTeleporter.owner = "com/therandomlabs/randompatches/common/RPTeleporter";
 
 		return true;
 	}
