@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import com.therandomlabs.randompatches.RandomPatches;
-import com.therandomlabs.randompatches.patch.EntityBoatPatch;
 import com.therandomlabs.randompatches.util.RPUtils;
 import com.therandomlabs.randompatches.util.WindowIconHandler;
 import net.minecraftforge.common.config.ConfigCategory;
@@ -20,7 +19,7 @@ public class RPStaticConfig {
 		public static final String PREVENT_UNDERWATER_BOAT_PASSENGER_EJECTION = "Prevents " +
 				"underwater boat passengers from being ejected after 60 ticks (3 seconds).";
 		public static final String UNDERWATER_BOAT_BUOYANCY = "The underwater boat buoyancy.\n" +
-				"The vanilla default is " + EntityBoatPatch.VANILLA_UNDERWATER_BUOYANCY + ".";
+				"The vanilla default is -0.0007.";
 
 		public static final String FAST_LANGUAGE_SWITCH = "Speeds up language switching.";
 		public static final String FORCE_TITLE_SCREEN_ON_DISCONNECT = "Forces Minecraft to show " +
