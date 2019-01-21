@@ -1,6 +1,6 @@
 {
 	"parent": "block/block",
 	"textures": {
-		"particle": "blocks/obsidian"
+		"particle": "blocks/end_portal"
 	}
 }
