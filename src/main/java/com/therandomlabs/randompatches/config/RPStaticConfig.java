@@ -44,9 +44,9 @@ public class RPStaticConfig {
 				"icon.\nLeave this and the 16x16 icon blank to use the default icon.";
 		public static final String TITLE = "The Minecraft window title.";
 
-		public static final String END_PORTAL_TWEAKS = "Fixes the End portal break particle " +
-				"textures and improves End portal rendering.\nThis only works on Minecraft 1.11 " +
-				"and above.";
+		public static final String END_PORTAL_TWEAKS = "Fixes the End portal and End gateway " +
+				"break particle textures and improves End portal rendering.\n" +
+				"This only works on Minecraft 1.11 and above.";
 		public static final String MC_2025_FIX = "Fixes MC-2025.\nMore information can be found " +
 				"here: https://www.reddit.com/r/Mojira/comments/8pgd4q/final_and_proper_fix_to_" +
 				"mc2025_simple_reliable/";
