@@ -1,8 +1,6 @@
 package com.therandomlabs.randompatches.patch.endportal;
 
 import com.therandomlabs.randompatches.core.Patch;
-import net.minecraft.client.renderer.BlockModelShapes;
-import net.minecraft.init.Blocks;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.AbstractInsnNode;
 import org.objectweb.asm.tree.ClassNode;
