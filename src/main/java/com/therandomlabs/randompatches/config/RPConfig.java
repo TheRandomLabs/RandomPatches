@@ -76,11 +76,6 @@ public final class RPConfig {
 		@Config.Comment(RPStaticConfig.Comments.REMOVE_POTION_GLINT)
 		public boolean removePotionGlint = RPStaticConfig.Defaults.REMOVE_POTION_GLINT;
 
-		@Config.RequiresMcRestart
-		@Config.LangKey("randompatches.config.client.replacePortalRenderer")
-		@Config.Comment(RPStaticConfig.Comments.REPLACE_PORTAL_RENDERER)
-		public boolean replacePortalRenderer = RPStaticConfig.Defaults.REPLACE_PORTAL_RENDERER;
-
 		@Config.RequiresWorldRestart
 		@Config.LangKey("randompatches.config.client.rpreloadclient")
 		@Config.Comment(RPStaticConfig.Comments.RPRELOADCLIENT)

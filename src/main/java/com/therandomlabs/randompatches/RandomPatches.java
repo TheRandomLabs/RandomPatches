@@ -13,7 +13,6 @@ import com.therandomlabs.randompatches.patch.NetHandlerPlayServerPatch;
 import com.therandomlabs.randompatches.patch.ServerRecipeBookHelperPatch;
 import com.therandomlabs.randompatches.patch.WorldServerPatch;
 import com.therandomlabs.randompatches.patch.client.GuiIngameMenuPatch;
-import com.therandomlabs.randompatches.patch.client.GuiIngamePatch;
 import com.therandomlabs.randompatches.patch.client.ItemPotionPatch;
 import com.therandomlabs.randompatches.patch.client.LanguageListPatch;
 import com.therandomlabs.randompatches.patch.client.MinecraftPatch;
@@ -195,10 +194,6 @@ public final class RandomPatches {
 
 		if(RPStaticConfig.replaceTeleporter && RandomPatches.MC_VERSION == 12) {
 			register("net.minecraft.world.WorldServer", new WorldServerPatch());
-		}
-
-		if(RPStaticConfig.replacePortalRenderer && RandomPatches.MC_VERSION == 12) {
-			register("net.minecraft.client.gui.GuiIngame", new GuiIngamePatch());
 		}
 	}
 }

@@ -34,8 +34,6 @@ public class RPStaticConfig {
 				"force disable the \"force title screen on disconnect\" apply.";
 		public static final String REMOVE_POTION_GLINT =
 				"Whether to remove the glowing effect from potions.";
-		public static final String REPLACE_PORTAL_RENDERER = "Whether to allow other mods " +
-				"(namely RandomPortals) to replace the portal renderer.";
 		public static final String RPRELOADCLIENT = "Enables the /rpreloadclient command.";
 
 		public static final String ICON_16 = "The path to the 16x16 Minecraft window " +
@@ -91,7 +89,6 @@ public class RPStaticConfig {
 		public static final boolean PATCH_MINECRAFT_CLASS = true;
 		public static final boolean PATCH_TITLE_SCREEN_ON_DISCONNECT = true;
 		public static final boolean REMOVE_POTION_GLINT = RandomPatches.IS_DEOBFUSCATED;
-		public static final boolean REPLACE_PORTAL_RENDERER = true;
 		public static final boolean RPRELOADCLIENT = true;
 
 		public static final String ICON_16 = RandomPatches.IS_DEOBFUSCATED ?
@@ -298,15 +295,6 @@ public class RPStaticConfig {
 				"client",
 				Defaults.REMOVE_POTION_GLINT,
 				Comments.REMOVE_POTION_GLINT,
-				false,
-				true
-		);
-
-		replacePortalRenderer = getBoolean(
-				"replacePortalRenderer",
-				"client",
-				Defaults.REPLACE_PORTAL_RENDERER,
-				Comments.REPLACE_PORTAL_RENDERER,
 				false,
 				true
 		);
