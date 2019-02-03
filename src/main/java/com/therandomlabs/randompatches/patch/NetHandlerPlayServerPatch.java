@@ -108,7 +108,8 @@ public final class NetHandlerPlayServerPatch extends Patch {
 		final FieldInsnNode getKeepAliveInterval = new FieldInsnNode(
 				Opcodes.GETSTATIC,
 				RPSTATICCONFIG,
-				"keepAlivePacketIntervalMillis",
+				RandomPatches.MC_VERSION > 11 ?
+						"keepAlivePacketIntervalMillis" : "keepAlivePacketIntervalLong",
 				"J"
 		);
 

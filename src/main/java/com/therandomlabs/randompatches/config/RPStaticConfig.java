@@ -181,6 +181,7 @@ public class RPStaticConfig {
 
 	public static int keepAlivePacketInterval;
 	public static long keepAlivePacketIntervalMillis;
+	public static long keepAlivePacketIntervalLong;
 
 	public static int loginTimeout;
 	public static boolean patchLoginTimeout;
@@ -496,6 +497,7 @@ public class RPStaticConfig {
 		}
 
 		keepAlivePacketIntervalMillis = keepAlivePacketInterval * 1000L;
+		keepAlivePacketIntervalLong = keepAlivePacketInterval;
 		readTimeoutMillis = readTimeout * 1000L;
 
 		System.setProperty("fml.readTimeout", Integer.toString(readTimeout));
