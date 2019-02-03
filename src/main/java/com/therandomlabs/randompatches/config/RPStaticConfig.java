@@ -15,7 +15,8 @@ import org.lwjgl.opengl.Display;
 
 public class RPStaticConfig {
 	public static class Comments {
-		public static final String PATCH_ENTITYBOAT = "Whether to apply EntityBoat.";
+		public static final String PATCH_ENTITYBOAT =
+				"Whether to patch EntityBoat.\nThis only works on 1.9 and above.";
 		public static final String PREVENT_UNDERWATER_BOAT_PASSENGER_EJECTION = "Prevents " +
 				"underwater boat passengers from being ejected after 60 ticks (3 seconds).";
 		public static final String UNDERWATER_BOAT_BUOYANCY = "The underwater boat buoyancy.\n" +
@@ -45,20 +46,24 @@ public class RPStaticConfig {
 		public static final String END_PORTAL_TWEAKS = "Fixes the End portal and End gateway " +
 				"break particle textures and improves End portal rendering.\n" +
 				"This only works on Minecraft 1.11 and above.";
-		public static final String MC_2025_FIX = "Fixes MC-2025.\nMore information can be found " +
-				"here: https://www.reddit.com/r/Mojira/comments/8pgd4q/final_and_proper_fix_to_" +
+		public static final String MC_2025_FIX = "Fixes MC-2025.\nThis only works on 1.10 and " +
+				"above.\nMore information can be found here: " +
+				"https://www.reddit.com/r/Mojira/comments/8pgd4q/final_and_proper_fix_to_" +
 				"mc2025_simple_reliable/";
 		public static final String MINECART_AI_FIX = "Fixes MC-64836, which causes non-player " +
 				"entities to be allowed to control minecarts using their AI.";
 		public static final String PATCH_NETHANDLERPLAYSERVER = "Set this to false to " +
 				"disable the NetHandlerPlayServer patches (the speed limits and disconnect " +
-				"timeouts).\nOn Minecraft 1.8, 1.8.8 and 1.8.9, these patches are always disabled.";
+				"timeouts).\nOn 1.8, 1.8.8 and 1.8.9, these patches are always disabled.";
 		public static final String RECIPE_BOOK_NBT_FIX = "Fixes MC-129057, which prevents " +
 				"ingredients with NBT data from being transferred to the crafting grid when a " +
 				"recipe is clicked in the recipe book.";
 		public static final String REPLACE_TELEPORTER = "Whether to allow other mods " +
-				"(namely RandomPortals) to replace the default Teleporter.";
+				"(namely RandomPortals) to replace the default Teleporter on 1.12.";
 		public static final String RPRELOAD = "Enables the /rpreload command.";
+		public static final String SKULL_STACKING_FIX = "Fixes player skull stacking.";
+		public static final String SKULL_STACKING_REQUIRES_SAME_TEXTURES = "Whether skull " +
+				"stacking requires the same textures or just the same player profile.";
 
 		public static final String MAX_PLAYER_SPEED =
 				"The maximum player speed.\nThe vanilla default is 100.0.";
@@ -73,7 +78,8 @@ public class RPStaticConfig {
 		public static final String PATCH_LOGIN_TIMEOUT = "Whether to apply the login timeout.";
 		public static final String READ_TIMEOUT = "The read timeout.\nThis is the time it takes " +
 				"for a player to be disconnected after not responding to a KeepAlive packet.\n" +
-				"This value is automatically rounded up to a product of keepAlivePacketInterval.";
+				"This value is automatically rounded up to a product of " +
+				"keepAlivePacketInterval.\nThis only works on 1.12 and above.";
 	}
 
 	public static class Defaults {
@@ -104,6 +110,8 @@ public class RPStaticConfig {
 		public static final boolean RECIPE_BOOK_NBT_FIX = true;
 		public static final boolean REPLACE_TELEPORTER = true;
 		public static final boolean RPRELOAD = true;
+		public static final boolean SKULL_STACKING_FIX = true;
+		public static final boolean SKULL_STACKING_REQUIRES_SAME_TEXTURES = true;
 
 		public static final float MAX_PLAYER_SPEED = 1000000.0F;
 		public static final float MAX_PLAYER_ELYTRA_SPEED = 1000000.0F;
@@ -160,6 +168,8 @@ public class RPStaticConfig {
 	public static boolean recipeBookNBTFix;
 	public static boolean replaceTeleporter;
 	public static boolean rpreload;
+	public static boolean skullStackingFix;
+	public static boolean skullStackingRequiresSameTextures;
 
 	//Speed limits
 
@@ -376,6 +386,24 @@ public class RPStaticConfig {
 				Defaults.RPRELOAD,
 				Comments.RPRELOAD,
 				true,
+				false
+		);
+
+		skullStackingFix = getBoolean(
+				"skullStackingFix",
+				"misc",
+				Defaults.SKULL_STACKING_FIX,
+				Comments.SKULL_STACKING_FIX,
+				false,
+				true
+		);
+
+		skullStackingRequiresSameTextures = getBoolean(
+				"skullStackingRequiresSameTextures",
+				"misc",
+				Defaults.SKULL_STACKING_REQUIRES_SAME_TEXTURES,
+				Comments.SKULL_STACKING_REQUIRES_SAME_TEXTURES,
+				false,
 				false
 		);
 

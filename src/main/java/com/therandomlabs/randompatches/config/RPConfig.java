@@ -118,6 +118,16 @@ public final class RPConfig {
 		@Config.LangKey("randompatches.config.misc.rpreload")
 		@Config.Comment(RPStaticConfig.Comments.RPRELOAD)
 		public boolean rpreload = RPStaticConfig.Defaults.RPRELOAD;
+
+		@Config.RequiresMcRestart
+		@Config.LangKey("randompatches.config.misc.skullStackingFix")
+		@Config.Comment(RPStaticConfig.Comments.SKULL_STACKING_FIX)
+		public boolean skullStackingFix = RPStaticConfig.Defaults.SKULL_STACKING_FIX;
+
+		@Config.LangKey("randompatches.config.misc.skullStackingRequiresSameTextures")
+		@Config.Comment(RPStaticConfig.Comments.SKULL_STACKING_REQUIRES_SAME_TEXTURES)
+		public boolean skullStackingRequiresSameTextures =
+				RPStaticConfig.Defaults.SKULL_STACKING_REQUIRES_SAME_TEXTURES;
 	}
 
 	public static final class SpeedLimits {
@@ -398,8 +408,8 @@ public final class RPConfig {
 			for(Field field : configClass.getDeclaredFields()) {
 				final int modifiers = field.getModifiers();
 
-				if(!Modifier.isPublic(modifiers) ||
-						field.getAnnotation(Config.Ignore.class) != null) {
+				if(!Modifier.isPublic(modifiers)) {
+				//		field.getAnnotation(Config.Ignore.class) != null) {
 					continue;
 				}
 

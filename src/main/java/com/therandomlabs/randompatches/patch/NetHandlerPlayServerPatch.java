@@ -71,8 +71,14 @@ public final class NetHandlerPlayServerPatch extends Patch {
 				if(instruction.getType() == AbstractInsnNode.LDC_INSN) {
 					keepAliveInterval = (LdcInsnNode) instruction;
 
-					if(!((Long) 15000L).equals(keepAliveInterval.cst)) {
-						keepAliveInterval = null;
+					if(RandomPatches.MC_VERSION > 11) {
+						if(!((Long) 15000L).equals(keepAliveInterval.cst)) {
+							keepAliveInterval = null;
+						}
+					} else {
+						if(!((Long) 40L).equals(keepAliveInterval.cst)) {
+							keepAliveInterval = null;
+						}
 					}
 				}
 
@@ -108,6 +114,10 @@ public final class NetHandlerPlayServerPatch extends Patch {
 
 		method.instructions.insert(keepAliveInterval, getKeepAliveInterval);
 		method.instructions.remove(keepAliveInterval);
+
+		if(RandomPatches.MC_VERSION < 12) {
+			return;
+		}
 
 		final LabelNode label = new LabelNode();
 

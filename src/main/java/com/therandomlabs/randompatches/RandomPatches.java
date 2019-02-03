@@ -7,6 +7,7 @@ import com.therandomlabs.randompatches.config.RPConfig;
 import com.therandomlabs.randompatches.config.RPStaticConfig;
 import com.therandomlabs.randompatches.patch.EntityBoatPatch;
 import com.therandomlabs.randompatches.patch.EntityPatch;
+import com.therandomlabs.randompatches.patch.NBTTagCompoundPatch;
 import com.therandomlabs.randompatches.patch.MinecartPatch;
 import com.therandomlabs.randompatches.patch.NetHandlerLoginServerPatch;
 import com.therandomlabs.randompatches.patch.NetHandlerPlayServerPatch;
@@ -194,6 +195,10 @@ public final class RandomPatches {
 
 		if(RPStaticConfig.replaceTeleporter && RandomPatches.MC_VERSION == 12) {
 			register("net.minecraft.world.WorldServer", new WorldServerPatch());
+		}
+
+		if(RPStaticConfig.skullStackingFix) {
+			register("net.minecraft.nbt.NBTTagCompound", new NBTTagCompoundPatch());
 		}
 	}
 }
