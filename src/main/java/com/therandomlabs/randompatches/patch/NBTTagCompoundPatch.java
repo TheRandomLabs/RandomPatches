@@ -2,15 +2,21 @@ package com.therandomlabs.randompatches.patch;
 
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
+import com.google.common.base.Charsets;
+import com.google.common.collect.Iterables;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.minecraft.MinecraftProfileTexture;
+import com.mojang.authlib.yggdrasil.response.MinecraftTexturesPayload;
+import com.mojang.util.UUIDTypeAdapter;
 import com.therandomlabs.randompatches.config.RPStaticConfig;
 import com.therandomlabs.randompatches.core.Patch;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.SkinManager;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTUtil;
+import org.apache.commons.codec.binary.Base64;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.AbstractInsnNode;
 import org.objectweb.asm.tree.ClassNode;
@@ -18,6 +24,9 @@ import org.objectweb.asm.tree.MethodInsnNode;
 import org.objectweb.asm.tree.MethodNode;
 
 public final class NBTTagCompoundPatch extends Patch {
+	public static final Gson GSON =
+			new GsonBuilder().registerTypeAdapter(UUID.class, new UUIDTypeAdapter()).create();
+
 	@Override
 	public boolean apply(ClassNode node) {
 		final MethodNode method = findMethod(node, "equals");
@@ -113,13 +122,18 @@ public final class NBTTagCompoundPatch extends Patch {
 			return true;
 		}
 
-		final SkinManager skinManager = Minecraft.getMinecraft().getSkinManager();
-
 		final MinecraftProfileTexture texture1 =
-				skinManager.loadSkinFromCache(profile1).get(MinecraftProfileTexture.Type.SKIN);
+				getTextures(profile1).getTextures().get(MinecraftProfileTexture.Type.SKIN);
 		final MinecraftProfileTexture texture2 =
-				skinManager.loadSkinFromCache(profile2).get(MinecraftProfileTexture.Type.SKIN);
+				getTextures(profile2).getTextures().get(MinecraftProfileTexture.Type.SKIN);
 
 		return texture1 != null && texture2 != null && texture1.getUrl().equals(texture2.getUrl());
+	}
+
+	public static MinecraftTexturesPayload getTextures(GameProfile profile) {
+		final String textureProperty =
+				Iterables.getFirst(profile.getProperties().get("textures"), null).getValue();
+		final String json = new String(Base64.decodeBase64(textureProperty), Charsets.UTF_8);
+		return GSON.fromJson(json, MinecraftTexturesPayload.class);
 	}
 }
