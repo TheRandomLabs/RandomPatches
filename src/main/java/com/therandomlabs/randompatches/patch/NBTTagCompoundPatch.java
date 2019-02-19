@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.minecraft.MinecraftProfileTexture;
+import com.mojang.authlib.properties.Property;
 import com.mojang.authlib.yggdrasil.response.MinecraftTexturesPayload;
 import com.mojang.util.UUIDTypeAdapter;
 import com.therandomlabs.randompatches.config.RPStaticConfig;
@@ -122,18 +123,23 @@ public final class NBTTagCompoundPatch extends Patch {
 			return true;
 		}
 
-		final MinecraftProfileTexture texture1 =
-				getTextures(profile1).getTextures().get(MinecraftProfileTexture.Type.SKIN);
-		final MinecraftProfileTexture texture2 =
-				getTextures(profile2).getTextures().get(MinecraftProfileTexture.Type.SKIN);
+		final MinecraftProfileTexture texture1 = getSkin(profile1);
+		final MinecraftProfileTexture texture2 = getSkin(profile2);
 
 		return texture1 != null && texture2 != null && texture1.getUrl().equals(texture2.getUrl());
 	}
 
 	public static MinecraftTexturesPayload getTextures(GameProfile profile) {
-		final String textureProperty =
-				Iterables.getFirst(profile.getProperties().get("textures"), null).getValue();
-		final String json = new String(Base64.decodeBase64(textureProperty), Charsets.UTF_8);
+		final Property textureProperty =
+				Iterables.getFirst(profile.getProperties().get("textures"), null);
+		final String json =
+				new String(Base64.decodeBase64(textureProperty.getValue()), Charsets.UTF_8);
 		return GSON.fromJson(json, MinecraftTexturesPayload.class);
+	}
+
+	public static MinecraftProfileTexture getSkin(GameProfile profile) {
+		final MinecraftTexturesPayload payload = getTextures(profile);
+		return payload == null ?
+				null : payload.getTextures().get(MinecraftProfileTexture.Type.SKIN);
 	}
 }
