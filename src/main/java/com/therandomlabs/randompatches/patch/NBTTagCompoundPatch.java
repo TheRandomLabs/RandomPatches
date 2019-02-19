@@ -132,6 +132,11 @@ public final class NBTTagCompoundPatch extends Patch {
 	public static MinecraftTexturesPayload getTextures(GameProfile profile) {
 		final Property textureProperty =
 				Iterables.getFirst(profile.getProperties().get("textures"), null);
+
+		if(textureProperty == null) {
+			return null;
+		}
+
 		final String json =
 				new String(Base64.decodeBase64(textureProperty.getValue()), Charsets.UTF_8);
 		return GSON.fromJson(json, MinecraftTexturesPayload.class);
