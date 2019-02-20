@@ -21,6 +21,7 @@ randompatches.config.misc.endPortalTweaks=End portal tweaks
 randompatches.config.misc.mc2025Fix=MC-2025 fix
 randompatches.config.misc.minecartAIFix=Minecraft AI fix
 randompatches.config.misc.patchNetHandlerPlayServer=Patch NetHandlerPlayServer
+randompatches.config.misc.portalBucketReplacementFix=Portal bucket replacement fix
 randompatches.config.misc.recipeBookNBTFix=Recipe book NBT fix
 randompatches.config.misc.replaceTeleporter=Replace Teleporter
 randompatches.config.misc.rpreload=/rpreload
