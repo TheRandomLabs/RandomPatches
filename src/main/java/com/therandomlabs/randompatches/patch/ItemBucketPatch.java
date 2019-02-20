@@ -1,8 +1,8 @@
 package com.therandomlabs.randompatches.patch;
 
 import com.therandomlabs.randompatches.core.Patch;
-import jdk.internal.org.objectweb.asm.Opcodes;
 import net.minecraft.block.material.Material;
+import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.AbstractInsnNode;
 import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.MethodInsnNode;
