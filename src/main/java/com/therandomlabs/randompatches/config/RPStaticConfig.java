@@ -19,8 +19,8 @@ public class RPStaticConfig {
 				"Whether to patch EntityBoat.\nThis only works on 1.9 and above.";
 		public static final String PREVENT_UNDERWATER_BOAT_PASSENGER_EJECTION = "Prevents " +
 				"underwater boat passengers from being ejected after 60 ticks (3 seconds).";
-		public static final String UNDERWATER_BOAT_BUOYANCY = "The underwater boat buoyancy.\n" +
-				"The vanilla default is -0.0007.";
+		public static final String UNDERWATER_BOAT_BUOYANCY = "The buoyancy of boats when " +
+				"they are under flowing water.\nThe vanilla default is -0.0007.";
 
 		public static final String FAST_LANGUAGE_SWITCH = "Speeds up language switching.";
 		public static final String FORCE_TITLE_SCREEN_ON_DISCONNECT = "Forces Minecraft to show " +
@@ -55,6 +55,9 @@ public class RPStaticConfig {
 		public static final String PATCH_NETHANDLERPLAYSERVER = "Set this to false to " +
 				"disable the NetHandlerPlayServer patches (the speed limits and disconnect " +
 				"timeouts).\nOn 1.8, 1.8.8 and 1.8.9, these patches are always disabled.";
+		public static final String PORTAL_BUCKET_REPLACEMENT_FIX = "Fixes MC-11944, which " +
+				"allows players to replace End portals, End gateways and Nether portals using " +
+				"buckets.";
 		public static final String RECIPE_BOOK_NBT_FIX = "Fixes MC-129057, which prevents " +
 				"ingredients with NBT data from being transferred to the crafting grid when a " +
 				"recipe is clicked in the recipe book.";
@@ -107,6 +110,7 @@ public class RPStaticConfig {
 		public static final boolean MC_2025_FIX = true;
 		public static final boolean MINECART_AI_FIX = true;
 		public static final boolean PATCH_NETHANDLERPLAYSERVER = true;
+		public static final boolean PORTAL_BUCKET_REPLACEMENT_FIX = true;
 		public static final boolean RECIPE_BOOK_NBT_FIX = true;
 		public static final boolean REPLACE_TELEPORTER = true;
 		public static final boolean RPRELOAD = true;
@@ -165,6 +169,7 @@ public class RPStaticConfig {
 	public static boolean mc2025Fix;
 	public static boolean minecartAIFix;
 	public static boolean patchNetHandlerPlayServer;
+	public static boolean portalBucketReplacementFix;
 	public static boolean recipeBookNBTFix;
 	public static boolean replaceTeleporter;
 	public static boolean rpreload;
@@ -359,6 +364,15 @@ public class RPStaticConfig {
 				"misc",
 				Defaults.PATCH_NETHANDLERPLAYSERVER,
 				Comments.PATCH_NETHANDLERPLAYSERVER,
+				false,
+				true
+		);
+
+		portalBucketReplacementFix = getBoolean(
+				"portalBucketReplacementFix",
+				"misc",
+				Defaults.PORTAL_BUCKET_REPLACEMENT_FIX,
+				Comments.PORTAL_BUCKET_REPLACEMENT_FIX,
 				false,
 				true
 		);

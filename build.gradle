@@ -14,14 +14,14 @@ buildscript {
 
 apply plugin: "net.minecraftforge.gradle.forge"
 
-version = "1.12.2-1.13.0.1"
+version = "1.12.2-1.14.0.0"
 group = "com.therandomlabs.randompatches"
 archivesBaseName = "randompatches"
 
 sourceCompatibility = targetCompatibility = "1.8"
 
 minecraft {
-	version = "1.12.2-latest"
+	version = "1.12.2-14.23.5.2815"
 	runDir = "run"
 	mappings = "stable_39"
 

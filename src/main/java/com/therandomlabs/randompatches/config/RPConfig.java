@@ -105,6 +105,12 @@ public final class RPConfig {
 				RPStaticConfig.Defaults.PATCH_NETHANDLERPLAYSERVER;
 
 		@Config.RequiresMcRestart
+		@Config.LangKey("randompatches.config.misc.portalBucketReplacementFix")
+		@Config.Comment(RPStaticConfig.Comments.PORTAL_BUCKET_REPLACEMENT_FIX)
+		public boolean portalBucketReplacementFix =
+				RPStaticConfig.Defaults.PORTAL_BUCKET_REPLACEMENT_FIX;
+
+		@Config.RequiresMcRestart
 		@Config.LangKey("randompatches.config.misc.recipeBookNBTFix")
 		@Config.Comment(RPStaticConfig.Comments.RECIPE_BOOK_NBT_FIX)
 		public boolean recipeBookNBTFix = RPStaticConfig.Defaults.RECIPE_BOOK_NBT_FIX;

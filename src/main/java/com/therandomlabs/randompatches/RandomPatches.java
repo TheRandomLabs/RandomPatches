@@ -7,6 +7,7 @@ import com.therandomlabs.randompatches.config.RPConfig;
 import com.therandomlabs.randompatches.config.RPStaticConfig;
 import com.therandomlabs.randompatches.patch.EntityBoatPatch;
 import com.therandomlabs.randompatches.patch.EntityPatch;
+import com.therandomlabs.randompatches.patch.ItemBucketPatch;
 import com.therandomlabs.randompatches.patch.NBTTagCompoundPatch;
 import com.therandomlabs.randompatches.patch.MinecartPatch;
 import com.therandomlabs.randompatches.patch.NetHandlerLoginServerPatch;
@@ -199,6 +200,10 @@ public final class RandomPatches {
 
 		if(RPStaticConfig.skullStackingFix) {
 			register("net.minecraft.nbt.NBTTagCompound", new NBTTagCompoundPatch());
+		}
+
+		if(RPStaticConfig.portalBucketReplacementFix) {
+			register("net.minecraft.item.ItemBucket", new ItemBucketPatch());
 		}
 	}
 }
