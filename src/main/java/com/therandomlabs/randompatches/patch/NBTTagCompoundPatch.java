@@ -73,10 +73,10 @@ public final class NBTTagCompoundPatch extends Patch {
 			return true;
 		}
 
-		final Set<Map.Entry<String, NBTBase>> entries1 =
-				(Set<Map.Entry<String, NBTBase>>) tagMapEntries1;
-		final Set<Map.Entry<String, NBTBase>> entries2 =
-				(Set<Map.Entry<String, NBTBase>>) tagMapEntries2;
+		final Map.Entry[] entries1 =
+				((Set<Map.Entry>) tagMapEntries1).toArray(new Map.Entry[0]);
+		final Map.Entry[] entries2 =
+				((Set<Map.Entry>) tagMapEntries2).toArray(new Map.Entry[0]);
 
 		NBTTagCompound skullOwner1 = null;
 
