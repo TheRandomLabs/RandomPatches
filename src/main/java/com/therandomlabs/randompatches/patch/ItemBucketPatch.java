@@ -1,12 +1,16 @@
 package com.therandomlabs.randompatches.patch;
 
+import com.therandomlabs.randompatches.config.RPStaticConfig;
 import com.therandomlabs.randompatches.core.Patch;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Blocks;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.AbstractInsnNode;
 import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.MethodInsnNode;
 import org.objectweb.asm.tree.MethodNode;
+import org.objectweb.asm.tree.VarInsnNode;
 
 public final class ItemBucketPatch extends Patch {
 	public static final String IS_SOLID = getName("isSolid", "func_76220_a");
@@ -30,15 +34,28 @@ public final class ItemBucketPatch extends Patch {
 			}
 		}
 
+		((VarInsnNode) isSolid.getPrevious()).var = 4;
+
 		isSolid.setOpcode(Opcodes.INVOKESTATIC);
 		isSolid.owner = getName(ItemBucketPatch.class);
 		isSolid.name = "isSolid";
-		isSolid.desc = "(Lnet/minecraft/block/material/Material;)Z";
+		isSolid.desc = "(Lnet/minecraft/block/state/IBlockState;)Z";
 
 		return true;
 	}
 
-	public static boolean isSolid(Material material) {
-		return material.isSolid() || material == Material.PORTAL;
+	public static boolean isSolid(IBlockState state) {
+		final Material material = state.getMaterial();
+
+		if(material.isSolid()) {
+			return true;
+		}
+
+		if(!RPStaticConfig.portalBucketReplacementFixForNetherPortals &&
+				state.getBlock() == Blocks.PORTAL) {
+			return false;
+		}
+
+		return material == Material.PORTAL;
 	}
 }

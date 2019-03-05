@@ -22,6 +22,7 @@ randompatches.config.misc.mc2025Fix=MC-2025 fix
 randompatches.config.misc.minecartAIFix=Minecraft AI fix
 randompatches.config.misc.patchNetHandlerPlayServer=Patch NetHandlerPlayServer
 randompatches.config.misc.portalBucketReplacementFix=Portal bucket replacement fix
+randompatches.config.misc.portalBucketReplacementFixForNetherPortals=Portal bucket replacement fix for Nether portals
 randompatches.config.misc.recipeBookNBTFix=Recipe book NBT fix
 randompatches.config.misc.replaceTeleporter=Replace Teleporter
 randompatches.config.misc.rpreload=/rpreload

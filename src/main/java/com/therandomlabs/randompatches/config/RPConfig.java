@@ -111,6 +111,12 @@ public final class RPConfig {
 				RPStaticConfig.Defaults.PORTAL_BUCKET_REPLACEMENT_FIX;
 
 		@Config.RequiresMcRestart
+		@Config.LangKey("randompatches.config.misc.portalBucketReplacementFixForNetherPortals")
+		@Config.Comment(RPStaticConfig.Comments.PORTAL_BUCKET_REPLACEMENT_FIX_FOR_NETHER_PORTALS)
+		public boolean portalBucketReplacementFixForNetherPortals =
+				RPStaticConfig.Defaults.PORTAL_BUCKET_REPLACEMENT_FIX_FOR_NETHER_PORTALS;
+
+		@Config.RequiresMcRestart
 		@Config.LangKey("randompatches.config.misc.recipeBookNBTFix")
 		@Config.Comment(RPStaticConfig.Comments.RECIPE_BOOK_NBT_FIX)
 		public boolean recipeBookNBTFix = RPStaticConfig.Defaults.RECIPE_BOOK_NBT_FIX;

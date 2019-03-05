@@ -58,6 +58,8 @@ public class RPStaticConfig {
 		public static final String PORTAL_BUCKET_REPLACEMENT_FIX = "Fixes MC-11944, which " +
 				"allows players to replace End portals, End gateways and Nether portals using " +
 				"buckets.";
+		public static final String PORTAL_BUCKET_REPLACEMENT_FIX_FOR_NETHER_PORTALS =
+				"Enables the portal bucket replacement fix for Nether portals.";
 		public static final String RECIPE_BOOK_NBT_FIX = "Fixes MC-129057, which prevents " +
 				"ingredients with NBT data from being transferred to the crafting grid when a " +
 				"recipe is clicked in the recipe book.";
@@ -111,6 +113,7 @@ public class RPStaticConfig {
 		public static final boolean MINECART_AI_FIX = true;
 		public static final boolean PATCH_NETHANDLERPLAYSERVER = true;
 		public static final boolean PORTAL_BUCKET_REPLACEMENT_FIX = true;
+		public static final boolean PORTAL_BUCKET_REPLACEMENT_FIX_FOR_NETHER_PORTALS = false;
 		public static final boolean RECIPE_BOOK_NBT_FIX = true;
 		public static final boolean REPLACE_TELEPORTER = true;
 		public static final boolean RPRELOAD = true;
@@ -170,6 +173,7 @@ public class RPStaticConfig {
 	public static boolean minecartAIFix;
 	public static boolean patchNetHandlerPlayServer;
 	public static boolean portalBucketReplacementFix;
+	public static boolean portalBucketReplacementFixForNetherPortals;
 	public static boolean recipeBookNBTFix;
 	public static boolean replaceTeleporter;
 	public static boolean rpreload;
@@ -373,6 +377,15 @@ public class RPStaticConfig {
 				"misc",
 				Defaults.PORTAL_BUCKET_REPLACEMENT_FIX,
 				Comments.PORTAL_BUCKET_REPLACEMENT_FIX,
+				false,
+				true
+		);
+
+		portalBucketReplacementFixForNetherPortals = getBoolean(
+				"portalBucketReplacementFixForNetherPortals",
+				"misc",
+				Defaults.PORTAL_BUCKET_REPLACEMENT_FIX_FOR_NETHER_PORTALS,
+				Comments.PORTAL_BUCKET_REPLACEMENT_FIX_FOR_NETHER_PORTALS,
 				false,
 				true
 		);
