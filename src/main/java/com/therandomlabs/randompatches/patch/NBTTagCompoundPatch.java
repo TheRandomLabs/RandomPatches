@@ -1,7 +1,6 @@
 package com.therandomlabs.randompatches.patch;
 
 import java.util.Map;
-import java.util.Set;
 import java.util.UUID;
 import com.google.common.base.Charsets;
 import com.google.common.collect.Iterables;
@@ -31,89 +30,78 @@ public final class NBTTagCompoundPatch extends Patch {
 	@Override
 	public boolean apply(ClassNode node) {
 		final MethodNode method = findMethod(node, "equals");
+
+		MethodInsnNode entrySet1 = null;
+		MethodInsnNode entrySet2 = null;
 		MethodInsnNode equals = null;
 
-		for(int i = method.instructions.size() - 1; i >= 0; i--) {
+		for(int i = 0; i < method.instructions.size(); i++) {
 			final AbstractInsnNode instruction = method.instructions.get(i);
+			final int opcode = instruction.getOpcode();
 
 			//On 1.11 and below, it's an invokeinterface (Set.equals)
 			//On 1.12 and above, it's an invokestatic (Objects.equals)
-			if(instruction.getOpcode() == Opcodes.INVOKESTATIC ||
-					instruction.getOpcode() == Opcodes.INVOKEINTERFACE) {
-				equals = (MethodInsnNode) instruction;
+			if(opcode != Opcodes.INVOKESTATIC && opcode != Opcodes.INVOKEINTERFACE) {
+				continue;
+			}
 
-				if("equals".equals(equals.name)) {
-					break;
+			final MethodInsnNode methodInsnNode = (MethodInsnNode) instruction;
+
+			if(entrySet1 == null) {
+				if("entrySet".equals(methodInsnNode.name)) {
+					entrySet1 = methodInsnNode;
 				}
 
-				equals = null;
+				continue;
+			}
+
+			if(entrySet2 == null) {
+				if("entrySet".equals(methodInsnNode.name)) {
+					entrySet2 = methodInsnNode;
+				}
+
+				continue;
+			}
+
+			if("equals".equals(methodInsnNode.name)) {
+				equals = methodInsnNode;
+				break;
 			}
 		}
+
+		method.instructions.remove(entrySet1);
+		method.instructions.remove(entrySet2);
 
 		equals.setOpcode(Opcodes.INVOKESTATIC);
 		equals.owner = getName(NBTTagCompoundPatch.class);
 		equals.name = "areTagMapsEqual";
-		equals.desc = "(Ljava/lang/Object;Ljava/lang/Object;)Z";
+		equals.desc = "(Ljava/util/Map;Ljava/util/Map;)Z";
 		equals.itf = false;
 
 		return true;
 	}
 
-	@SuppressWarnings({"unchecked", "Duplicates"})
-	public static boolean areTagMapsEqual(Object tagMapEntries1, Object tagMapEntries2) {
-		if(tagMapEntries1 == tagMapEntries2) {
+	public static boolean areTagMapsEqual(Map<String, NBTBase> tagMap1,
+			Map<String, NBTBase> tagMap2) {
+		if(tagMap1.entrySet().equals(tagMap2.entrySet())) {
 			return true;
 		}
 
-		if(tagMapEntries1 == null || tagMapEntries2 == null) {
-			return false;
-		}
-
-		if(tagMapEntries1.equals(tagMapEntries2)) {
-			return true;
-		}
-
-		final Map.Entry[] entries1 =
-				((Set<Map.Entry>) tagMapEntries1).toArray(new Map.Entry[0]);
-		final Map.Entry[] entries2 =
-				((Set<Map.Entry>) tagMapEntries2).toArray(new Map.Entry[0]);
-
-		NBTTagCompound skullOwner1 = null;
-
-		for(Map.Entry<String, NBTBase> entry : entries1) {
-			if("SkullOwner".equals(entry.getKey())) {
-				final NBTBase base = entry.getValue();
-
-				if(base instanceof NBTTagCompound) {
-					skullOwner1 = (NBTTagCompound) base;
-					break;
-				}
-			}
-		}
+		final NBTBase skullOwner1 = tagMap1.get("SkullOwner");
 
 		if(skullOwner1 == null) {
 			return false;
 		}
 
-		NBTTagCompound skullOwner2 = null;
-
-		for(Map.Entry<String, NBTBase> entry : entries2) {
-			if("SkullOwner".equals(entry.getKey())) {
-				final NBTBase base = entry.getValue();
-
-				if(base instanceof NBTTagCompound) {
-					skullOwner2 = (NBTTagCompound) base;
-					break;
-				}
-			}
-		}
+		final NBTBase skullOwner2 = tagMap2.get("SkullOwner");
 
 		if(skullOwner2 == null) {
 			return false;
 		}
 
-		final GameProfile profile1 = NBTUtil.readGameProfileFromNBT(skullOwner1);
-		final GameProfile profile2 = NBTUtil.readGameProfileFromNBT(skullOwner2);
+
+		final GameProfile profile1 = NBTUtil.readGameProfileFromNBT((NBTTagCompound) skullOwner1);
+		final GameProfile profile2 = NBTUtil.readGameProfileFromNBT((NBTTagCompound) skullOwner2);
 
 		if(!profile1.equals(profile2)) {
 			return false;
