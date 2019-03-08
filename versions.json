@@ -1,6 +1,7 @@
 {
 	"homepage": "https://minecraft.curseforge.com/projects/randompatches",
 	"1.12.2": {
+		"1.12.2-1.14.1.1": "Improved the implementation of the skull stacking fix, potentially fixing a ConcurrentModificationException.",
 		"1.12.2-1.14.1.0": "Fixed a ConcurrentModificationException related to the skull stacking fix.\nFilled buckets can now replace Nether portals by default.",
 		"1.12.2-1.14.0.0": "Fixed issues related to the skull stacking fix.\nThe boat buoyancy patch now only affects boats that are under flowing water.\nImplemented a fix for MC-11944.",
 		"1.12.2-1.13.0.1": "Fixed a server crash introduced in 1.12.2-1.13.0.1.",
@@ -44,6 +45,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.12.1": {
+		"1.12.2-1.14.1.1": "Improved the implementation of the skull stacking fix, potentially fixing a ConcurrentModificationException.",
 		"1.12.2-1.14.1.0": "Fixed a ConcurrentModificationException related to the skull stacking fix.\nFilled buckets can now replace Nether portals by default.",
 		"1.12.2-1.14.0.0": "Fixed issues related to the skull stacking fix.\nThe boat buoyancy patch now only affects boats that are under flowing water.\nImplemented a fix for MC-11944.",
 		"1.12.2-1.13.0.1": "Fixed a server crash introduced in 1.12.2-1.13.0.1.",
@@ -87,6 +89,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.12": {
+		"1.12.2-1.14.1.1": "Improved the implementation of the skull stacking fix, potentially fixing a ConcurrentModificationException.",
 		"1.12.2-1.14.1.0": "Fixed a ConcurrentModificationException related to the skull stacking fix.\nFilled buckets can now replace Nether portals by default.",
 		"1.12.2-1.14.0.0": "Fixed issues related to the skull stacking fix.\nThe boat buoyancy patch now only affects boats that are under flowing water.\nImplemented a fix for MC-11944.",
 		"1.12.2-1.13.0.1": "Fixed a server crash introduced in 1.12.2-1.13.0.1.",
@@ -130,6 +133,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.11.2": {
+		"1.12.2-1.14.1.1": "Improved the implementation of the skull stacking fix, potentially fixing a ConcurrentModificationException.",
 		"1.12.2-1.14.1.0": "Fixed a ConcurrentModificationException related to the skull stacking fix.\nFilled buckets can now replace Nether portals by default.",
 		"1.12.2-1.14.0.0": "Fixed issues related to the skull stacking fix.\nThe boat buoyancy patch now only affects boats that are under flowing water.\nImplemented a fix for MC-11944.",
 		"1.12.2-1.13.0.1": "Fixed a server crash introduced in 1.12.2-1.13.0.1.",
@@ -173,6 +177,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.11": {
+		"1.12.2-1.14.1.1": "Improved the implementation of the skull stacking fix, potentially fixing a ConcurrentModificationException.",
 		"1.12.2-1.14.1.0": "Fixed a ConcurrentModificationException related to the skull stacking fix.\nFilled buckets can now replace Nether portals by default.",
 		"1.12.2-1.14.0.0": "Fixed issues related to the skull stacking fix.\nThe boat buoyancy patch now only affects boats that are under flowing water.\nImplemented a fix for MC-11944.",
 		"1.12.2-1.13.0.1": "Fixed a server crash introduced in 1.12.2-1.13.0.1.",
@@ -216,6 +221,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.10.2": {
+		"1.12.2-1.14.1.1": "Improved the implementation of the skull stacking fix, potentially fixing a ConcurrentModificationException.",
 		"1.12.2-1.14.1.0": "Fixed a ConcurrentModificationException related to the skull stacking fix.\nFilled buckets can now replace Nether portals by default.",
 		"1.12.2-1.14.0.0": "Fixed issues related to the skull stacking fix.\nThe boat buoyancy patch now only affects boats that are under flowing water.\nImplemented a fix for MC-11944.",
 		"1.12.2-1.13.0.1": "Fixed a server crash introduced in 1.12.2-1.13.0.1.",
@@ -259,6 +265,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.10": {
+		"1.12.2-1.14.1.1": "Improved the implementation of the skull stacking fix, potentially fixing a ConcurrentModificationException.",
 		"1.12.2-1.14.1.0": "Fixed a ConcurrentModificationException related to the skull stacking fix.\nFilled buckets can now replace Nether portals by default.",
 		"1.12.2-1.14.0.0": "Fixed issues related to the skull stacking fix.\nThe boat buoyancy patch now only affects boats that are under flowing water.\nImplemented a fix for MC-11944.",
 		"1.12.2-1.13.0.1": "Fixed a server crash introduced in 1.12.2-1.13.0.1.",
@@ -302,6 +309,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.9.4": {
+		"1.12.2-1.14.1.1": "Improved the implementation of the skull stacking fix, potentially fixing a ConcurrentModificationException.",
 		"1.12.2-1.14.1.0": "Fixed a ConcurrentModificationException related to the skull stacking fix.\nFilled buckets can now replace Nether portals by default.",
 		"1.12.2-1.14.0.0": "Fixed issues related to the skull stacking fix.\nThe boat buoyancy patch now only affects boats that are under flowing water.\nImplemented a fix for MC-11944.",
 		"1.12.2-1.13.0.1": "Fixed a server crash introduced in 1.12.2-1.13.0.1.",
@@ -338,6 +346,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.9": {
+		"1.12.2-1.14.1.1": "Improved the implementation of the skull stacking fix, potentially fixing a ConcurrentModificationException.",
 		"1.12.2-1.14.1.0": "Fixed a ConcurrentModificationException related to the skull stacking fix.\nFilled buckets can now replace Nether portals by default.",
 		"1.12.2-1.14.0.0": "Fixed issues related to the skull stacking fix.\nThe boat buoyancy patch now only affects boats that are under flowing water.\nImplemented a fix for MC-11944.",
 		"1.12.2-1.13.0.1": "Fixed a server crash introduced in 1.12.2-1.13.0.1.",
@@ -375,6 +384,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.8.9": {
+		"1.12.2-1.14.1.1": "Improved the implementation of the skull stacking fix, potentially fixing a ConcurrentModificationException.",
 		"1.12.2-1.14.1.0": "Fixed a ConcurrentModificationException related to the skull stacking fix.\nFilled buckets can now replace Nether portals by default.",
 		"1.12.2-1.14.0.0": "Fixed issues related to the skull stacking fix.\nThe boat buoyancy patch now only affects boats that are under flowing water.\nImplemented a fix for MC-11944.",
 		"1.12.2-1.13.0.1": "Fixed a server crash introduced in 1.12.2-1.13.0.1.",
@@ -411,6 +421,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.8.8": {
+		"1.12.2-1.14.1.1": "Improved the implementation of the skull stacking fix, potentially fixing a ConcurrentModificationException.",
 		"1.12.2-1.14.1.0": "Fixed a ConcurrentModificationException related to the skull stacking fix.\nFilled buckets can now replace Nether portals by default.",
 		"1.12.2-1.14.0.0": "Fixed issues related to the skull stacking fix.\nThe boat buoyancy patch now only affects boats that are under flowing water.\nImplemented a fix for MC-11944.",
 		"1.12.2-1.13.0.1": "Fixed a server crash introduced in 1.12.2-1.13.0.1.",
@@ -447,6 +458,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.8": {
+		"1.12.2-1.14.1.1": "Improved the implementation of the skull stacking fix, potentially fixing a ConcurrentModificationException.",
 		"1.12.2-1.14.1.0": "Fixed a ConcurrentModificationException related to the skull stacking fix.\nFilled buckets can now replace Nether portals by default.",
 		"1.12.2-1.14.0.0": "Fixed issues related to the skull stacking fix.\nThe boat buoyancy patch now only affects boats that are under flowing water.\nImplemented a fix for MC-11944.",
 		"1.12.2-1.13.0.1": "Fixed a server crash introduced in 1.12.2-1.13.0.1.",
@@ -483,27 +495,27 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"promos": {
-		"1.12.2-latest": "1.12.2-1.14.1.0",
-		"1.12.2-recommended": "1.12.2-1.14.1.0",
-		"1.12-latest": "1.12.2-1.14.1.0",
-		"1.12-recommended": "1.12.2-1.14.1.0",
-		"1.11.2-latest": "1.12.2-1.14.1.0",
-		"1.11.2-recommended": "1.12.2-1.14.1.0",
-		"1.11-latest": "1.12.2-1.14.1.0",
-		"1.11-recommended": "1.12.2-1.14.1.0",
-		"1.10.2-latest": "1.12.2-1.14.1.0",
-		"1.10.2-recommended": "1.12.2-1.14.1.0",
-		"1.10-latest": "1.12.2-1.14.1.0",
-		"1.10-recommended": "1.12.2-1.14.1.0",
-		"1.9.4-latest": "1.12.2-1.14.1.0",
-		"1.9.4-recommended": "1.12.2-1.14.1.0",
-		"1.9-latest": "1.12.2-1.14.1.0",
-		"1.9-recommended": "1.12.2-1.14.1.0",
-		"1.8.9-latest": "1.12.2-1.14.1.0",
-		"1.8.9-recommended": "1.12.2-1.14.1.0",
-		"1.8.8-latest": "1.12.2-1.14.1.0",
-		"1.8.8-recommended": "1.12.2-1.14.1.0",
-		"1.8-latest": "1.12.2-1.14.1.0",
-		"1.8-recommended": "1.12.2-1.14.1.0"
+		"1.12.2-latest": "1.12.2-1.14.1.1",
+		"1.12.2-recommended": "1.12.2-1.14.1.1",
+		"1.12-latest": "1.12.2-1.14.1.1",
+		"1.12-recommended": "1.12.2-1.14.1.1",
+		"1.11.2-latest": "1.12.2-1.14.1.1",
+		"1.11.2-recommended": "1.12.2-1.14.1.1",
+		"1.11-latest": "1.12.2-1.14.1.1",
+		"1.11-recommended": "1.12.2-1.14.1.1",
+		"1.10.2-latest": "1.12.2-1.14.1.1",
+		"1.10.2-recommended": "1.12.2-1.14.1.1",
+		"1.10-latest": "1.12.2-1.14.1.1",
+		"1.10-recommended": "1.12.2-1.14.1.1",
+		"1.9.4-latest": "1.12.2-1.14.1.1",
+		"1.9.4-recommended": "1.12.2-1.14.1.1",
+		"1.9-latest": "1.12.2-1.14.1.1",
+		"1.9-recommended": "1.12.2-1.14.1.1",
+		"1.8.9-latest": "1.12.2-1.14.1.1",
+		"1.8.9-recommended": "1.12.2-1.14.1.1",
+		"1.8.8-latest": "1.12.2-1.14.1.1",
+		"1.8.8-recommended": "1.12.2-1.14.1.1",
+		"1.8-latest": "1.12.2-1.14.1.1",
+		"1.8-recommended": "1.12.2-1.14.1.1"
 	}
 }
