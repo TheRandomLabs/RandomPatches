@@ -1,11 +1,13 @@
 package com.therandomlabs.randompatches.core;
 
 import java.io.File;
+import java.lang.reflect.Field;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 import com.google.common.collect.ImmutableList;
 import com.google.common.eventbus.EventBus;
+import com.therandomlabs.randomlib.TRLUtils;
 import com.therandomlabs.randompatches.RandomPatches;
 import com.therandomlabs.randompatches.config.RPGuiConfigFactory;
 import com.therandomlabs.randompatches.util.RPUtils;
@@ -16,6 +18,10 @@ import net.minecraftforge.fml.common.ModMetadata;
 import net.minecraftforge.fml.common.versioning.VersionRange;
 
 public class RPCoreContainer extends DummyModContainer {
+	private static final Field MOD_CONTROLLER = TRLUtils.findField(Loader.class, "modController");
+	private static final Field ACTIVE_CONTAINER =
+			TRLUtils.findField(LoadController.class, "activeContainer");
+
 	public RPCoreContainer() {
 		super(RPUtils.loadMetadata(
 				RPCore.getModFile(),
@@ -38,11 +44,17 @@ public class RPCoreContainer extends DummyModContainer {
 
 	@Override
 	public boolean registerBus(EventBus bus, LoadController controller) {
-		if(RandomPatches.MC_VERSION > 9) {
+		if(TRLUtils.MC_VERSION_NUMBER > 9) {
 			Loader.instance().setActiveModContainer(this);
-			bus.register(new RandomPatches());
+		} else {
+			try {
+				ACTIVE_CONTAINER.set(MOD_CONTROLLER.get(Loader.instance()), this);
+			} catch(IllegalAccessException ex) {
+				TRLUtils.crashReport("Failed to set active mod controller", ex);
+			}
 		}
 
+		bus.register(new RandomPatches());
 		return true;
 	}
 

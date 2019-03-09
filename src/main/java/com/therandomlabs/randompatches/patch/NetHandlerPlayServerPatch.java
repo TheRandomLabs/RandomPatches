@@ -1,5 +1,6 @@
 package com.therandomlabs.randompatches.patch;
 
+import com.therandomlabs.randomlib.TRLUtils;
 import com.therandomlabs.randompatches.RandomPatches;
 import com.therandomlabs.randompatches.config.RPConfig;
 import com.therandomlabs.randompatches.core.Patch;
@@ -74,7 +75,7 @@ public final class NetHandlerPlayServerPatch extends Patch {
 				if(instruction.getType() == AbstractInsnNode.LDC_INSN) {
 					keepAliveInterval = (LdcInsnNode) instruction;
 
-					if(RandomPatches.MC_VERSION > 11) {
+					if(TRLUtils.MC_VERSION_NUMBER > 11) {
 						if(!((Long) 15000L).equals(keepAliveInterval.cst)) {
 							keepAliveInterval = null;
 						}
@@ -111,7 +112,7 @@ public final class NetHandlerPlayServerPatch extends Patch {
 		final FieldInsnNode getKeepAliveInterval = new FieldInsnNode(
 				Opcodes.GETSTATIC,
 				TIMEOUTS_CONFIG,
-				RandomPatches.MC_VERSION > 11 ?
+				TRLUtils.MC_VERSION_NUMBER > 11 ?
 						"keepAlivePacketIntervalMillis" : "keepAlivePacketIntervalLong",
 				"J"
 		);
@@ -119,7 +120,7 @@ public final class NetHandlerPlayServerPatch extends Patch {
 		method.instructions.insert(keepAliveInterval, getKeepAliveInterval);
 		method.instructions.remove(keepAliveInterval);
 
-		if(RandomPatches.MC_VERSION < 12) {
+		if(TRLUtils.MC_VERSION_NUMBER < 12) {
 			return;
 		}
 

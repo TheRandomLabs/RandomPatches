@@ -1,5 +1,6 @@
 package com.therandomlabs.randompatches.config;
 
+import com.therandomlabs.randomlib.TRLUtils;
 import com.therandomlabs.randomlib.config.Config;
 import com.therandomlabs.randompatches.RandomPatches;
 import com.therandomlabs.randompatches.util.WindowIconHandler;
@@ -59,13 +60,13 @@ public final class RPConfig {
 					icon32 = icon16;
 				}
 
-				if(RandomPatches.IS_CLIENT && Display.isCreated()) {
+				if(TRLUtils.IS_CLIENT && Display.isCreated()) {
 					setWindowSettings();
 				}
 			}
 
 			public static void setWindowSettings() {
-				if(!setWindowSettings || !RandomPatches.IS_CLIENT || RandomPatches.ITLT_INSTALLED) {
+				if(!setWindowSettings || !TRLUtils.IS_CLIENT || RandomPatches.ITLT_INSTALLED) {
 					return;
 				}
 
@@ -121,9 +122,9 @@ public final class RPConfig {
 		public static boolean rpreloadclient = true;
 
 		public static boolean isNarratorKeybindEnabled() {
-			return narratorKeybind && RandomPatches.MC_VERSION > 11 &&
+			return narratorKeybind && TRLUtils.MC_VERSION_NUMBER > 11 &&
 					!RandomPatches.REBIND_NARRATOR_INSTALLED &&
-					RandomPatches.IS_CLIENT;
+					TRLUtils.IS_CLIENT;
 		}
 	}
 
@@ -201,11 +202,11 @@ public final class RPConfig {
 		public static boolean skullStackingRequiresSameTextures = true;
 
 		public static boolean areEndPortalTweaksEnabled() {
-			return endPortalTweaks && RandomPatches.MC_VERSION > 10 && RandomPatches.IS_CLIENT;
+			return endPortalTweaks && TRLUtils.MC_VERSION_NUMBER > 10 && TRLUtils.IS_CLIENT;
 		}
 
 		public static boolean isRecipeBookNBTFixEnabled() {
-			return recipeBookNBTFix && RandomPatches.MC_VERSION > 11 &&
+			return recipeBookNBTFix && TRLUtils.MC_VERSION_NUMBER > 11 &&
 					!RandomPatches.VANILLAFIX_INSTALLED;
 		}
 	}

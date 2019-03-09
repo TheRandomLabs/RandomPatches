@@ -1,6 +1,7 @@
 package com.therandomlabs.randompatches;
 
 import com.google.common.eventbus.Subscribe;
+import com.therandomlabs.randomlib.TRLUtils;
 import com.therandomlabs.randomlib.config.ConfigManager;
 import com.therandomlabs.randompatches.client.TileEntityEndPortalRenderer;
 import com.therandomlabs.randompatches.common.CommandRPReload;
@@ -29,8 +30,6 @@ import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
-import net.minecraftforge.fml.relauncher.FMLInjectionData;
-import net.minecraftforge.fml.relauncher.FMLLaunchHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -48,11 +47,7 @@ public final class RandomPatches {
 	public static final boolean IS_DEOBFUSCATED =
 			(boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment");
 
-	public static final boolean IS_CLIENT = FMLLaunchHandler.side().isClient();
-	public static final String MC_VERSION_STRING = (String) FMLInjectionData.data()[4];
-	public static final int MC_VERSION = Integer.parseInt(MC_VERSION_STRING.split("\\.")[1]);
-
-	public static final String DEFAULT_WINDOW_TITLE = "Minecraft " + MC_VERSION_STRING;
+	public static final String DEFAULT_WINDOW_TITLE = "Minecraft " + TRLUtils.MC_VERSION;
 
 	public static final boolean SPONGEFORGE_INSTALLED =
 			RPUtils.detect("org.spongepowered.mod.SpongeMod");
@@ -70,7 +65,7 @@ public final class RandomPatches {
 
 	@Subscribe
 	public void preInit(FMLPreInitializationEvent event) {
-		if(IS_CLIENT && RPConfig.Client.rpreloadclient) {
+		if(TRLUtils.IS_CLIENT && RPConfig.Client.rpreloadclient && TRLUtils.MC_VERSION_NUMBER > 8) {
 			ClientCommandHandler.instance.registerCommand(new CommandRPReload(Side.CLIENT));
 		}
 	}
@@ -123,15 +118,15 @@ public final class RandomPatches {
 			register("net.minecraft.client.gui.GuiIngameMenu", new GuiIngameMenuPatch());
 		}
 
-		if(RPConfig.Misc.patchNetHandlerPlayServer && RandomPatches.MC_VERSION > 8) {
+		if(RPConfig.Misc.patchNetHandlerPlayServer && TRLUtils.MC_VERSION_NUMBER > 8) {
 			register("net.minecraft.network.NetHandlerPlayServer", new NetHandlerPlayServerPatch());
 		}
 
-		if(RPConfig.Client.fastLanguageSwitch && RandomPatches.IS_CLIENT) {
+		if(RPConfig.Client.fastLanguageSwitch && TRLUtils.IS_CLIENT) {
 			register("net.minecraft.client.gui.GuiLanguage$List", new LanguageListPatch());
 		}
 
-		if(RPConfig.Client.patchMinecraftClass && RandomPatches.IS_CLIENT) {
+		if(RPConfig.Client.patchMinecraftClass && TRLUtils.IS_CLIENT) {
 			register("net.minecraft.client.Minecraft", new MinecraftPatch());
 		}
 
@@ -139,7 +134,7 @@ public final class RandomPatches {
 			register("net.minecraft.entity.item.EntityMinecart", new MinecartPatch());
 		}
 
-		if(RPConfig.Client.removePotionGlint && RandomPatches.IS_CLIENT) {
+		if(RPConfig.Client.removePotionGlint && TRLUtils.IS_CLIENT) {
 			register("net.minecraft.item.ItemPotion", new ItemPotionPatch());
 		}
 
@@ -162,15 +157,15 @@ public final class RandomPatches {
 			);
 		}
 
-		if(RPConfig.Boats.patchEntityBoat && RandomPatches.MC_VERSION > 8) {
+		if(RPConfig.Boats.patchEntityBoat && TRLUtils.MC_VERSION_NUMBER > 8) {
 			register("net.minecraft.entity.item.EntityBoat", new EntityBoatPatch());
 		}
 
-		if(RPConfig.Misc.mc2025Fix && RandomPatches.MC_VERSION > 9) {
+		if(RPConfig.Misc.mc2025Fix && TRLUtils.MC_VERSION_NUMBER > 9) {
 			register("net.minecraft.entity.Entity", new EntityPatch());
 		}
 
-		if(RPConfig.Misc.replaceTeleporter && RandomPatches.MC_VERSION == 12) {
+		if(RPConfig.Misc.replaceTeleporter && TRLUtils.MC_VERSION_NUMBER == 12) {
 			register("net.minecraft.world.WorldServer", new WorldServerPatch());
 		}
 
@@ -178,7 +173,7 @@ public final class RandomPatches {
 			register("net.minecraft.nbt.NBTTagCompound", new NBTTagCompoundPatch());
 		}
 
-		if(RPConfig.Misc.portalBucketReplacementFix) {
+		if(RPConfig.Misc.portalBucketReplacementFix && TRLUtils.MC_VERSION_NUMBER > 8) {
 			register("net.minecraft.item.ItemBucket", new ItemBucketPatch());
 		}
 	}

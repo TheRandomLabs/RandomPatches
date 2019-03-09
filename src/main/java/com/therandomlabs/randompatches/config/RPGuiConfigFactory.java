@@ -1,11 +1,11 @@
 package com.therandomlabs.randompatches.config;
 
 import com.therandomlabs.randomlib.config.TRLGuiConfigFactory;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraftforge.fml.client.config.GuiConfig;
 
 public class RPGuiConfigFactory extends TRLGuiConfigFactory {
 	@Override
-	public GuiScreen createConfigGui(GuiScreen parentScreen) {
-		return new RPGuiConfig(parentScreen);
+	public Class<? extends GuiConfig> mainConfigGuiClass() {
+		return RPGuiConfig.class;
 	}
 }
