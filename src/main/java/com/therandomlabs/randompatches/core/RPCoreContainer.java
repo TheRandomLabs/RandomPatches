@@ -7,6 +7,7 @@ import java.util.List;
 import com.google.common.collect.ImmutableList;
 import com.google.common.eventbus.EventBus;
 import com.therandomlabs.randompatches.RandomPatches;
+import com.therandomlabs.randompatches.config.RPGuiConfigFactory;
 import com.therandomlabs.randompatches.util.RPUtils;
 import net.minecraftforge.fml.common.DummyModContainer;
 import net.minecraftforge.fml.common.LoadController;
@@ -53,6 +54,11 @@ public class RPCoreContainer extends DummyModContainer {
 	@Override
 	public Class<?> getCustomResourcePackClass() {
 		return RPUtils.getResourcePackClass(this);
+	}
+
+	@Override
+	public String getGuiClassName() {
+		return RPGuiConfigFactory.class.getName();
 	}
 
 	@Override

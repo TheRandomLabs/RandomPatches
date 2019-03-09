@@ -1,7 +1,7 @@
 package com.therandomlabs.randompatches.common;
 
 import java.lang.reflect.InvocationTargetException;
-import com.therandomlabs.randompatches.util.RPUtils;
+import com.therandomlabs.randomlib.TRLUtils;
 import net.minecraft.entity.Entity;
 import net.minecraft.world.Teleporter;
 import net.minecraft.world.World;
@@ -24,7 +24,7 @@ public final class RPTeleporter extends Teleporter {
 						teleporterClass.getConstructor(WorldServer.class).newInstance(world);
 			} catch(IllegalAccessException | InstantiationException | NoSuchMethodException |
 					InvocationTargetException ex) {
-				RPUtils.crashReport("Failed to instantiate: " + teleporterClass.getName(), ex);
+				TRLUtils.crashReport("Failed to instantiate: " + teleporterClass.getName(), ex);
 			}
 
 			this.customTeleporter = teleporter;

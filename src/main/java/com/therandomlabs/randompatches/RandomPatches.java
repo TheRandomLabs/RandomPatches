@@ -4,12 +4,11 @@ import com.google.common.eventbus.Subscribe;
 import com.therandomlabs.randompatches.client.TileEntityEndPortalRenderer;
 import com.therandomlabs.randompatches.common.CommandRPReload;
 import com.therandomlabs.randompatches.config.RPConfig;
-import com.therandomlabs.randompatches.config.RPStaticConfig;
 import com.therandomlabs.randompatches.patch.EntityBoatPatch;
 import com.therandomlabs.randompatches.patch.EntityPatch;
 import com.therandomlabs.randompatches.patch.ItemBucketPatch;
-import com.therandomlabs.randompatches.patch.NBTTagCompoundPatch;
 import com.therandomlabs.randompatches.patch.MinecartPatch;
+import com.therandomlabs.randompatches.patch.NBTTagCompoundPatch;
 import com.therandomlabs.randompatches.patch.NetHandlerLoginServerPatch;
 import com.therandomlabs.randompatches.patch.NetHandlerPlayServerPatch;
 import com.therandomlabs.randompatches.patch.ServerRecipeBookHelperPatch;
@@ -26,13 +25,9 @@ import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.launchwrapper.Launch;
 import net.minecraft.tileentity.TileEntityEndPortal;
 import net.minecraftforge.client.ClientCommandHandler;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.client.event.ConfigChangedEvent;
-import net.minecraftforge.fml.common.event.FMLConstructionEvent;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.FMLInjectionData;
 import net.minecraftforge.fml.relauncher.FMLLaunchHandler;
 import net.minecraftforge.fml.relauncher.Side;
@@ -73,45 +68,23 @@ public final class RandomPatches {
 	public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
 
 	@Subscribe
-	public void construct(FMLConstructionEvent event) {
-		if(IS_CLIENT && MC_VERSION > 10) {
-			RPConfig.reload();
-		}
-	}
-
-	@Subscribe
 	public void preInit(FMLPreInitializationEvent event) {
-		if(IS_CLIENT && RPStaticConfig.rpreloadclient) {
+		if(IS_CLIENT && RPConfig.Client.rpreloadclient) {
 			ClientCommandHandler.instance.registerCommand(new CommandRPReload(Side.CLIENT));
 		}
 	}
 
 	@Subscribe
 	public void init(FMLInitializationEvent event) {
-		if(!IS_CLIENT) {
-			return;
-		}
-
-		if(MC_VERSION > 10) {
-			MinecraftForge.EVENT_BUS.register(this);
-		}
-
-		if(RPStaticConfig.isNarratorKeybindEnabled()) {
+		if(RPConfig.Client.isNarratorKeybindEnabled()) {
 			MinecraftPatch.ToggleNarratorKeybind.register();
 		}
 	}
 
 	@Subscribe
 	public void serverStarting(FMLServerStartingEvent event) {
-		if(RPStaticConfig.rpreload) {
+		if(RPConfig.Misc.rpreload) {
 			event.registerServerCommand(new CommandRPReload(Side.SERVER));
-		}
-	}
-
-	@SubscribeEvent
-	public void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event) {
-		if(event.getModID().equals(MOD_ID)) {
-			RPConfig.reload();
 		}
 	}
 
@@ -124,7 +97,7 @@ public final class RandomPatches {
 			}
 		}
 
-		if(RPStaticConfig.isEndPortalTweaksEnabled() && IS_CLIENT) {
+		if(RPConfig.Misc.areEndPortalTweaksEnabled()) {
 			final TileEntityEndPortalRenderer renderer = new TileEntityEndPortalRenderer();
 			renderer.setRendererDispatcher(TileEntityRendererDispatcher.instance);
 			TileEntityRendererDispatcher.instance.renderers.put(
@@ -132,42 +105,42 @@ public final class RandomPatches {
 			);
 		}
 
-		RPStaticConfig.setWindowSettings();
+		RPConfig.Client.Window.setWindowSettings();
 	}
 
 	public static void registerPatches() {
-		if(RPStaticConfig.patchLoginTimeout) {
+		if(RPConfig.Timeouts.patchLoginTimeout) {
 			register(
 					"net.minecraft.network.NetHandlerLoginServer",
 					new NetHandlerLoginServerPatch()
 			);
 		}
 
-		if(RPStaticConfig.patchTitleScreenOnDisconnect) {
+		if(RPConfig.Client.patchTitleScreenOnDisconnect) {
 			register("net.minecraft.client.gui.GuiIngameMenu", new GuiIngameMenuPatch());
 		}
 
-		if(RPStaticConfig.patchNetHandlerPlayServer && RandomPatches.MC_VERSION > 8) {
+		if(RPConfig.Misc.patchNetHandlerPlayServer && RandomPatches.MC_VERSION > 8) {
 			register("net.minecraft.network.NetHandlerPlayServer", new NetHandlerPlayServerPatch());
 		}
 
-		if(RPStaticConfig.fastLanguageSwitch && RandomPatches.IS_CLIENT) {
+		if(RPConfig.Client.fastLanguageSwitch && RandomPatches.IS_CLIENT) {
 			register("net.minecraft.client.gui.GuiLanguage$List", new LanguageListPatch());
 		}
 
-		if(RPStaticConfig.patchMinecraftClass && RandomPatches.IS_CLIENT) {
+		if(RPConfig.Client.patchMinecraftClass && RandomPatches.IS_CLIENT) {
 			register("net.minecraft.client.Minecraft", new MinecraftPatch());
 		}
 
-		if(RPStaticConfig.minecartAIFix) {
+		if(RPConfig.Misc.minecartAIFix) {
 			register("net.minecraft.entity.item.EntityMinecart", new MinecartPatch());
 		}
 
-		if(RPStaticConfig.removePotionGlint && RandomPatches.IS_CLIENT) {
+		if(RPConfig.Client.removePotionGlint && RandomPatches.IS_CLIENT) {
 			register("net.minecraft.item.ItemPotion", new ItemPotionPatch());
 		}
 
-		if(RPStaticConfig.isEndPortalTweaksEnabled()) {
+		if(RPConfig.Misc.areEndPortalTweaksEnabled()) {
 			register("net.minecraft.block.BlockEndPortal", new BlockEndPortalPatch());
 			register(
 					"net.minecraft.client.renderer.BlockModelShapes",
@@ -179,30 +152,30 @@ public final class RandomPatches {
 			);
 		}
 
-		if(RPStaticConfig.isRecipeBookNBTFixEnabled()) {
+		if(RPConfig.Misc.isRecipeBookNBTFixEnabled()) {
 			register(
 					"net.minecraft.util.ServerRecipeBookHelper",
 					new ServerRecipeBookHelperPatch()
 			);
 		}
 
-		if(RPStaticConfig.patchEntityBoat && RandomPatches.MC_VERSION > 8) {
+		if(RPConfig.Boats.patchEntityBoat && RandomPatches.MC_VERSION > 8) {
 			register("net.minecraft.entity.item.EntityBoat", new EntityBoatPatch());
 		}
 
-		if(RPStaticConfig.mc2025Fix && RandomPatches.MC_VERSION > 9) {
+		if(RPConfig.Misc.mc2025Fix && RandomPatches.MC_VERSION > 9) {
 			register("net.minecraft.entity.Entity", new EntityPatch());
 		}
 
-		if(RPStaticConfig.replaceTeleporter && RandomPatches.MC_VERSION == 12) {
+		if(RPConfig.Misc.replaceTeleporter && RandomPatches.MC_VERSION == 12) {
 			register("net.minecraft.world.WorldServer", new WorldServerPatch());
 		}
 
-		if(RPStaticConfig.skullStackingFix) {
+		if(RPConfig.Misc.skullStackingFix) {
 			register("net.minecraft.nbt.NBTTagCompound", new NBTTagCompoundPatch());
 		}
 
-		if(RPStaticConfig.portalBucketReplacementFix) {
+		if(RPConfig.Misc.portalBucketReplacementFix) {
 			register("net.minecraft.item.ItemBucket", new ItemBucketPatch());
 		}
 	}

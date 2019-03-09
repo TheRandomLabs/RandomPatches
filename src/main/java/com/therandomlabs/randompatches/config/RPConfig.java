@@ -1,454 +1,293 @@
 package com.therandomlabs.randompatches.config;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.Multimap;
+import com.therandomlabs.randomlib.config.Config;
 import com.therandomlabs.randompatches.RandomPatches;
-import com.therandomlabs.randompatches.util.RPUtils;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.config.Config;
-import net.minecraftforge.common.config.ConfigCategory;
-import net.minecraftforge.common.config.ConfigManager;
-import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.common.config.Property;
-import net.minecraftforge.fml.client.event.ConfigChangedEvent;
-import net.minecraftforge.fml.common.discovery.ASMDataTable;
+import com.therandomlabs.randompatches.util.WindowIconHandler;
+import org.lwjgl.opengl.Display;
 
-//The most convoluted way to implement a config GUI, but it works
-@Config(modid = RandomPatches.MOD_ID, name = RandomPatches.MOD_ID, category = "")
+@Config(modid = RandomPatches.MOD_ID)
 public final class RPConfig {
 	public static final class Boats {
-		@Config.RequiresMcRestart
-		@Config.LangKey("randompatches.config.boats.patchEntityBoat")
-		@Config.Comment(RPStaticConfig.Comments.PATCH_ENTITYBOAT)
-		public boolean patchEntityBoat = RPStaticConfig.Defaults.PATCH_ENTITYBOAT;
+		@Config.RequiresMCRestart
+		@Config.Property({
+				"Whether to patch EntityBoat.",
+				"This only works on 1.9 and above."
+		})
+		public static boolean patchEntityBoat = true;
 
-		@Config.LangKey("randompatches.config.boats.preventUnderwaterBoatPassengerEjection")
-		@Config.Comment(RPStaticConfig.Comments.PREVENT_UNDERWATER_BOAT_PASSENGER_EJECTION)
-		public boolean preventUnderwaterBoatPassengerEjection =
-				RPStaticConfig.Defaults.PREVENT_UNDERWATER_BOAT_PASSENGER_EJECTION;
+		@Config.Property(
+				"Prevents underwater boat passengers from being ejected after 60 ticks (3 seconds)."
+		)
+		public static boolean preventUnderwaterBoatPassengerEjection =
+				RandomPatches.IS_DEOBFUSCATED;
 
-		@Config.LangKey("randompatches.config.boats.underwaterBoatBuoyancy")
-		@Config.Comment(RPStaticConfig.Comments.UNDERWATER_BOAT_BUOYANCY)
-		public double underwaterBoatBuoyancy =
-				RPStaticConfig.Defaults.UNDERWATER_BOAT_BUOYANCY;
+		@Config.Property({
+				"The buoyancy of boats when they are under flowing water.",
+				"The vanilla default is -0.0007."
+		})
+		public static double underwaterBoatBuoyancy = 0.023;
 	}
 
 	public static final class Client {
-		@Config.LangKey("randompatches.config.window")
-		@Config.Comment(RPStaticConfig.WINDOW_COMMENT)
-		public final Window window = new Window();
+		public static final class Window {
+			public static final String DEFAULT_ICON = RandomPatches.IS_DEOBFUSCATED ?
+					"../src/main/resources/assets/randompatches/logo.png" : "";
 
-		@Config.RequiresMcRestart
-		@Config.LangKey("randompatches.config.client.fastLanguageSwitch")
-		@Config.Comment(RPStaticConfig.Comments.FAST_LANGUAGE_SWITCH)
-		public boolean fastLanguageSwitch = RPStaticConfig.Defaults.FAST_LANGUAGE_SWITCH;
+			@Config.Property({
+					"The path to the 16x16 Minecraft window icon.",
+					"Leave this and the 32x32 icon blank to use the default icon."
+			})
+			public static String icon16 = DEFAULT_ICON;
+			@Config.Property({
+					"The path to the 32x32 Minecraft window icon.",
+					"Leave this and the 16x16 icon blank to use the default icon."
+			})
+			public static String icon32 = DEFAULT_ICON;
 
-		@Config.LangKey("randompatches.config.client.forceTitleScreenOnDisconnect")
-		@Config.Comment(RPStaticConfig.Comments.FORCE_TITLE_SCREEN_ON_DISCONNECT)
-		public boolean forceTitleScreenOnDisconnect =
-				RPStaticConfig.Defaults.FORCE_TITLE_SCREEN_ON_DISCONNECT;
+			@Config.Property("The Minecraft window title.")
+			public static String title = RandomPatches.IS_DEOBFUSCATED ?
+					RandomPatches.NAME : RandomPatches.DEFAULT_WINDOW_TITLE;
 
-		@Config.RequiresMcRestart
-		@Config.LangKey("randompatches.config.client.narratorKeybind")
-		@Config.Comment(RPStaticConfig.Comments.NARRATOR_KEYBIND)
-		public boolean narratorKeybind = RPStaticConfig.Defaults.NARRATOR_KEYBIND;
+			public static boolean setWindowSettings = true;
 
-		@Config.RequiresMcRestart
-		@Config.LangKey("randompatches.config.client.patchMinecraftClass")
-		@Config.Comment(RPStaticConfig.Comments.PATCH_MINECRAFT_CLASS)
-		public boolean patchMinecraftClass = RPStaticConfig.Defaults.PATCH_MINECRAFT_CLASS;
+			public static void onReload() {
+				if(icon16.isEmpty() && !icon32.isEmpty()) {
+					icon16 = icon32;
+				}
 
-		@Config.RequiresMcRestart
-		@Config.LangKey("randompatches.config.client.patchTitleScreenOnDisconnect")
-		@Config.Comment(RPStaticConfig.Comments.PATCH_TITLE_SCREEN_ON_DISCONNECT)
-		public boolean patchTitleScreenOnDisconnect =
-				RPStaticConfig.Defaults.PATCH_TITLE_SCREEN_ON_DISCONNECT;
+				if(icon32.isEmpty() && !icon16.isEmpty()) {
+					icon32 = icon16;
+				}
 
-		@Config.RequiresMcRestart
-		@Config.LangKey("randompatches.config.client.removePotionGlint")
-		@Config.Comment(RPStaticConfig.Comments.REMOVE_POTION_GLINT)
-		public boolean removePotionGlint = RPStaticConfig.Defaults.REMOVE_POTION_GLINT;
+				if(RandomPatches.IS_CLIENT && Display.isCreated()) {
+					setWindowSettings();
+				}
+			}
 
-		@Config.RequiresWorldRestart
-		@Config.LangKey("randompatches.config.client.rpreloadclient")
-		@Config.Comment(RPStaticConfig.Comments.RPRELOADCLIENT)
-		public boolean rpreloadclient = RPStaticConfig.Defaults.RPRELOADCLIENT;
+			public static void setWindowSettings() {
+				if(!setWindowSettings || !RandomPatches.IS_CLIENT || RandomPatches.ITLT_INSTALLED) {
+					return;
+				}
+
+				if(!icon16.isEmpty()) {
+					//If icon16 is empty, WindowIconHandler loads the Minecraft class too early
+					WindowIconHandler.setWindowIcon();
+				}
+
+				Display.setTitle(title);
+			}
+		}
+
+		@Config.Category("Options related to the Minecraft window.")
+		public static final Window window = null;
+
+		@Config.RequiresMCRestart
+		@Config.Property("Speeds up language switching.")
+		public static boolean fastLanguageSwitch = true;
+
+		@Config.Property(
+				"Forces Minecraft to show the title screen after disconnecting rather than " +
+						"the Multiplayer or Realms menu."
+		)
+		public static boolean forceTitleScreenOnDisconnect = RandomPatches.IS_DEOBFUSCATED;
+
+		@Config.RequiresMCRestart
+		@Config.Property({
+				"Whether to add the Toggle Narrator keybind to the controls.",
+				"This only works on 1.12 as the narrator does not exist in previous versions."
+		})
+		public static boolean narratorKeybind = true;
+
+		@Config.RequiresMCRestart
+		@Config.Property(
+				"Set this to false to disable the Minecraft class patches " +
+						"(the Toggle Narrator keybind and custom window title/icon)."
+		)
+		public static boolean patchMinecraftClass = true;
+
+		@Config.RequiresMCRestart
+		@Config.Property(
+				"Set this to false to force disable the \"force title screen on disconnect\" " +
+						"patch."
+		)
+		public static boolean patchTitleScreenOnDisconnect = true;
+
+		@Config.RequiresMCRestart
+		@Config.Property("Whether to remove the glowing effect from potions.")
+		public static boolean removePotionGlint = RandomPatches.IS_DEOBFUSCATED;
+
+		@Config.RequiresWorldReload
+		@Config.Property("Enables the /rpreloadclient command.")
+		public static boolean rpreloadclient = true;
+
+		public static boolean isNarratorKeybindEnabled() {
+			return narratorKeybind && RandomPatches.MC_VERSION > 11 &&
+					!RandomPatches.REBIND_NARRATOR_INSTALLED &&
+					RandomPatches.IS_CLIENT;
+		}
 	}
 
 	public static final class Misc {
-		@Config.RequiresMcRestart
-		@Config.LangKey("randompatches.config.misc.endPortalTweaks")
-		@Config.Comment(RPStaticConfig.Comments.END_PORTAL_TWEAKS)
-		public boolean endPortalTweaks = RPStaticConfig.Defaults.END_PORTAL_TWEAKS;
+		@Config.RequiresMCRestart
+		@Config.Property({
+				"Fixes the End portal and End gateway break particle textures and " +
+						"improves End portal rendering.",
+				"This only works on Minecraft 1.11 and above."
+		})
+		public static boolean endPortalTweaks = true;
 
-		@Config.RequiresMcRestart
-		@Config.LangKey("randompatches.config.misc.mc2025Fix")
-		@Config.Comment(RPStaticConfig.Comments.MC_2025_FIX)
-		public boolean mc2025Fix = RPStaticConfig.Defaults.MC_2025_FIX;
+		@Config.RequiresMCRestart
+		@Config.Property({
+				"Fixes MC-2025.",
+				"This only works on 1.10 and above.",
+				"More information can be found here: " +
+						"https://www.reddit.com/r/Mojira/comments/8pgd4q/final_and_proper_fix_to_" +
+						"mc2025_simple_reliable/"
+		})
+		public static boolean mc2025Fix = true;
 
-		@Config.RequiresMcRestart
-		@Config.LangKey("randompatches.config.misc.minecartAIFix")
-		@Config.Comment(RPStaticConfig.Comments.MINECART_AI_FIX)
-		public boolean minecartAIFix = RPStaticConfig.Defaults.MINECART_AI_FIX;
+		@Config.RequiresMCRestart
+		@Config.Property(
+				"Fixes MC-64836, which causes non-player entities to be allowed to control " +
+						"minecarts using their AI."
+		)
+		public static boolean minecartAIFix = true;
 
-		@Config.RequiresMcRestart
-		@Config.LangKey("randompatches.config.misc.patchNetHandlerPlayServer")
-		@Config.Comment(RPStaticConfig.Comments.PATCH_NETHANDLERPLAYSERVER)
-		public boolean patchNetHandlerPlayServer =
-				RPStaticConfig.Defaults.PATCH_NETHANDLERPLAYSERVER;
+		@Config.RequiresMCRestart
+		@Config.Property({
+				"Set this to false to disable the NetHandlerPlayServer patches " +
+						"(the speed limits and disconnect timeouts).",
+				"On 1.8, 1.8.8 and 1.8.9, these patches are always disabled."
+		})
+		public static boolean patchNetHandlerPlayServer = true;
 
-		@Config.RequiresMcRestart
-		@Config.LangKey("randompatches.config.misc.portalBucketReplacementFix")
-		@Config.Comment(RPStaticConfig.Comments.PORTAL_BUCKET_REPLACEMENT_FIX)
-		public boolean portalBucketReplacementFix =
-				RPStaticConfig.Defaults.PORTAL_BUCKET_REPLACEMENT_FIX;
+		@Config.RequiresMCRestart
+		@Config.Property(
+				"Fixes MC-11944, which allows players to replace End portals, " +
+						"End gateways and Nether portals using buckets."
+		)
+		public static boolean portalBucketReplacementFix = true;
 
-		@Config.RequiresMcRestart
-		@Config.LangKey("randompatches.config.misc.portalBucketReplacementFixForNetherPortals")
-		@Config.Comment(RPStaticConfig.Comments.PORTAL_BUCKET_REPLACEMENT_FIX_FOR_NETHER_PORTALS)
-		public boolean portalBucketReplacementFixForNetherPortals =
-				RPStaticConfig.Defaults.PORTAL_BUCKET_REPLACEMENT_FIX_FOR_NETHER_PORTALS;
+		@Config.RequiresMCRestart
+		@Config.Property("Enables the portal bucket replacement fix for Nether portals.")
+		public static boolean portalBucketReplacementFixForNetherPortals = false;
 
-		@Config.RequiresMcRestart
-		@Config.LangKey("randompatches.config.misc.recipeBookNBTFix")
-		@Config.Comment(RPStaticConfig.Comments.RECIPE_BOOK_NBT_FIX)
-		public boolean recipeBookNBTFix = RPStaticConfig.Defaults.RECIPE_BOOK_NBT_FIX;
+		@Config.RequiresMCRestart
+		@Config.Property(
+				"Fixes MC-129057, which prevents ingredients with NBT data from being " +
+						"transferred to the crafting grid when a recipe is clicked in the " +
+						"recipe book."
+		)
+		public static boolean recipeBookNBTFix = true;
 
-		@Config.RequiresMcRestart
-		@Config.LangKey("randompatches.config.misc.replaceTeleporter")
-		@Config.Comment(RPStaticConfig.Comments.REPLACE_TELEPORTER)
-		public boolean replaceTeleporter = RPStaticConfig.Defaults.REPLACE_TELEPORTER;
+		@Config.RequiresMCRestart
+		@Config.Property(
+				"Whether to allow other mods (namely RandomPortals) to replace the default " +
+						"Teleporter on 1.12."
+		)
+		public static boolean replaceTeleporter = true;
 
-		@Config.RequiresWorldRestart
-		@Config.LangKey("randompatches.config.misc.rpreload")
-		@Config.Comment(RPStaticConfig.Comments.RPRELOAD)
-		public boolean rpreload = RPStaticConfig.Defaults.RPRELOAD;
+		@Config.RequiresWorldReload
+		@Config.Property("Enables the /rpreload command.")
+		public static boolean rpreload = true;
 
-		@Config.RequiresMcRestart
-		@Config.LangKey("randompatches.config.misc.skullStackingFix")
-		@Config.Comment(RPStaticConfig.Comments.SKULL_STACKING_FIX)
-		public boolean skullStackingFix = RPStaticConfig.Defaults.SKULL_STACKING_FIX;
+		@Config.RequiresMCRestart
+		@Config.Property("Fixes player skull stacking.")
+		public static boolean skullStackingFix = true;
 
-		@Config.LangKey("randompatches.config.misc.skullStackingRequiresSameTextures")
-		@Config.Comment(RPStaticConfig.Comments.SKULL_STACKING_REQUIRES_SAME_TEXTURES)
-		public boolean skullStackingRequiresSameTextures =
-				RPStaticConfig.Defaults.SKULL_STACKING_REQUIRES_SAME_TEXTURES;
+		@Config.Property(
+				"Whether skull stacking requires the same textures or just the same player profile."
+		)
+		public static boolean skullStackingRequiresSameTextures = true;
+
+		public static boolean areEndPortalTweaksEnabled() {
+			return endPortalTweaks && RandomPatches.MC_VERSION > 10 && RandomPatches.IS_CLIENT;
+		}
+
+		public static boolean isRecipeBookNBTFixEnabled() {
+			return recipeBookNBTFix && RandomPatches.MC_VERSION > 11 &&
+					!RandomPatches.VANILLAFIX_INSTALLED;
+		}
 	}
 
 	public static final class SpeedLimits {
 		@Config.RangeDouble(min = 1.0)
-		@Config.LangKey("randompatches.config.speedLimits.maxPlayerSpeed")
-		@Config.Comment(RPStaticConfig.Comments.MAX_PLAYER_SPEED)
-		public float maxPlayerSpeed = RPStaticConfig.Defaults.MAX_PLAYER_SPEED;
+		@Config.Property({
+				"The maximum player speed.",
+				"The vanilla default is 100.0."
+		})
+		public static float maxPlayerSpeed = 1000000.0F;
 
 		@Config.RangeDouble(min = 1.0)
-		@Config.LangKey("randompatches.config.speedLimits.maxPlayerElytraSpeed")
-		@Config.Comment(RPStaticConfig.Comments.MAX_PLAYER_ELYTRA_SPEED)
-		public float maxPlayerElytraSpeed = RPStaticConfig.Defaults.MAX_PLAYER_ELYTRA_SPEED;
+		@Config.Property({
+				"The maximum player elytra speed.",
+				"The vanilla default is 300.0."
+		})
+		public static float maxPlayerElytraSpeed = 1000000.0F;
 
 		@Config.RangeDouble(min = 1.0)
-		@Config.LangKey("randompatches.config.speedLimits.maxPlayerVehicleSpeed")
-		@Config.Comment(RPStaticConfig.Comments.MAX_PLAYER_VEHICLE_SPEED)
-		public double maxPlayerVehicleSpeed = RPStaticConfig.Defaults.MAX_PLAYER_VEHICLE_SPEED;
+		@Config.Property({
+				"The maximum player vehicle speed.",
+				"The vanilla default is 100.0."
+		})
+		public static double maxPlayerVehicleSpeed = 1000000.0;
 	}
 
 	public static final class Timeouts {
 		@Config.RangeInt(min = 1)
-		@Config.LangKey("randompatches.config.timeouts.keepAlivePacketInterval")
-		@Config.Comment(RPStaticConfig.Comments.KEEP_ALIVE_PACKET_INTERVAL)
-		public int keepAlivePacketInterval = RPStaticConfig.Defaults.KEEP_ALIVE_PACKET_INTERVAL;
+		@Config.Property("The interval at which the server sends the KeepAlive packet.")
+		public static int keepAlivePacketInterval = 15;
 
 		@Config.RangeInt(min = 1)
-		@Config.LangKey("randompatches.config.timeouts.loginTimeout")
-		@Config.Comment(RPStaticConfig.Comments.LOGIN_TIMEOUT)
-		public int loginTimeout = RPStaticConfig.Defaults.LOGIN_TIMEOUT;
+		@Config.Property("The login timeout.")
+		public static int loginTimeout = 900;
 
-		@Config.RequiresMcRestart
-		@Config.LangKey("randompatches.config.timeouts.patchLoginTimeout")
-		@Config.Comment(RPStaticConfig.Comments.PATCH_LOGIN_TIMEOUT)
-		public boolean patchLoginTimeout = RPStaticConfig.Defaults.PATCH_LOGIN_TIMEOUT;
+		@Config.RequiresMCRestart
+		@Config.Property("Whether to apply the login timeout.")
+		public static boolean patchLoginTimeout = true;
 
 		@Config.RangeInt(min = 1)
-		@Config.LangKey("randompatches.config.timeouts.readTimeout")
-		@Config.Comment(RPStaticConfig.Comments.READ_TIMEOUT)
-		public int readTimeout = RPStaticConfig.Defaults.READ_TIMEOUT;
-	}
+		@Config.Property({
+				"The read timeout.",
+				"This is the time it takes for a player to be disconnected after not " +
+						"responding to a KeepAlive packet.",
+				"This value is automatically rounded up to a product of keepAlivePacketInterval.",
+				"This only works on 1.12 and above."
+		})
+		public static int readTimeout = 90;
 
-	public static final class Window implements NestedCategory {
-		@Config.LangKey("randompatches.config.window.icon16")
-		@Config.Comment(RPStaticConfig.Comments.ICON_16)
-		public String icon16 = RPStaticConfig.Defaults.ICON_16;
+		public static long keepAlivePacketIntervalMillis;
+		public static long keepAlivePacketIntervalLong;
+		public static long readTimeoutMillis;
 
-		@Config.LangKey("randompatches.config.window.icon32")
-		@Config.Comment(RPStaticConfig.Comments.ICON_32)
-		public String icon32 = RPStaticConfig.Defaults.ICON_32;
-
-		@Config.LangKey("randompatches.config.window.title")
-		@Config.Comment(RPStaticConfig.Comments.TITLE)
-		public String title = RPStaticConfig.Defaults.TITLE;
-	}
-
-	public interface NestedCategory {}
-
-	@Config.LangKey("randompatches.config.boats")
-	@Config.Comment(RPStaticConfig.BOATS_COMMENT)
-	public static final Boats boats = new Boats();
-
-	@Config.LangKey("randompatches.config.client")
-	@Config.Comment(RPStaticConfig.CLIENT_COMMENT)
-	public static final Client client = new Client();
-
-	@Config.LangKey("randompatches.config.misc")
-	@Config.Comment(RPStaticConfig.MISC_COMMENT)
-	public static final Misc misc = new Misc();
-
-	@Config.LangKey("randompatches.config.speedLimits")
-	@Config.Comment(RPStaticConfig.SPEED_LIMITS_COMMENT)
-	public static final SpeedLimits speedLimits = new SpeedLimits();
-
-	@Config.LangKey("randompatches.config.timeouts")
-	@Config.Comment(RPStaticConfig.TIMEOUTS_COMMENT)
-	public static final Timeouts timeouts = new Timeouts();
-
-	private static final Field ASM_DATA = RPUtils.findField(ConfigManager.class, "asm_data");
-
-	private static final Method GET_CONFIGURATION = RPUtils.findMethod(
-			ConfigManager.class, "getConfiguration", "getConfiguration", String.class, String.class
-	);
-
-	private static final Method SYNC = RPUtils.findMethod(
-			ConfigManager.class, "sync", "sync", Configuration.class, Class.class, String.class,
-			String.class, boolean.class, Object.class
-	);
-
-	private static final Map<Class<?>, Map<Object, Field[]>> propertyCacheMap = new HashMap<>();
-	private static final Map<String, Map<Property, String>> commentMap = new HashMap<>();
-
-	public static void reload() {
-		reload(
-				RandomPatches.MOD_ID,
-				RPConfig.class,
-				RPStaticConfig.class,
-				RPStaticConfig::onReload
-		);
-	}
-
-	public static void reload(String modid, Class<?> configClass,
-			Class<?> staticConfigClass, Runnable onReload) {
-		if(!ConfigManager.hasConfigForMod(modid)) {
-			try {
-				injectASMData(modid, configClass);
-			} catch(Exception ex) {
-				RandomPatches.LOGGER.error("Failed to load config", ex);
-				return;
-			}
-		}
-
-		try {
-			Configuration config = (Configuration) GET_CONFIGURATION.invoke(null, modid, modid);
-
-			if(config == null) {
-				ConfigManager.sync(modid, Config.Type.INSTANCE);
-				config = (Configuration) GET_CONFIGURATION.invoke(null, modid, modid);
-			} else {
-				SYNC.invoke(null, config, configClass, modid, "", false, null);
+		public static void onReload() {
+			if(readTimeout < keepAlivePacketInterval) {
+				readTimeout = keepAlivePacketInterval * 2;
+			} else if(readTimeout % keepAlivePacketInterval != 0) {
+				readTimeout = keepAlivePacketInterval * (readTimeout / keepAlivePacketInterval + 1);
 			}
 
-			final Map<Object, Field[]> properties = getProperties(configClass);
+			keepAlivePacketIntervalMillis = keepAlivePacketInterval * 1000L;
+			keepAlivePacketIntervalLong = keepAlivePacketInterval;
+			readTimeoutMillis = readTimeout * 1000L;
 
-			copyValuesToStatic(properties, staticConfigClass);
-			onReload.run();
-			copyValuesFromStatic(properties, staticConfigClass);
-
-			final Map<Property, String> comments =
-					commentMap.computeIfAbsent(modid, property -> new HashMap<>());
-
-			//Remove old elements
-			for(String name : config.getCategoryNames()) {
-				final ConfigCategory category = config.getCategory(name);
-
-				category.getValues().forEach((key, property) -> {
-					final String comment = property.getComment();
-
-					if(comment == null || comment.isEmpty()) {
-						category.remove(key);
-						return;
-					}
-
-					String newComment = comments.get(property);
-
-					if(newComment == null) {
-						newComment = comment + "\nDefault: " + property.getDefault();
-						comments.put(property, newComment);
-					}
-
-					property.setComment(newComment);
-				});
-
-				if(category.getValues().isEmpty() || category.getComment() == null) {
-					config.removeCategory(category);
-				}
-			}
-
-			config.save();
-
-			SYNC.invoke(null, config, configClass, modid, "", false, null);
-
-			//Remove default values, min/max values and valid values from the comments so
-			//they don't show up twice in the configuration GUI
-			for(String name : config.getCategoryNames()) {
-				final ConfigCategory category = config.getCategory(name);
-
-				category.getValues().forEach((key, property) -> {
-					final String[] comment = property.getComment().split("\n");
-					final StringBuilder prunedComment = new StringBuilder();
-
-					for(String line : comment) {
-						if(line.startsWith("Default:") || line.startsWith("Min:")) {
-							break;
-						}
-
-						prunedComment.append(line).append("\n");
-					}
-
-					final String commentString = prunedComment.toString();
-					property.setComment(commentString.substring(0, commentString.length() - 1));
-				});
-			}
-		} catch(Exception ex) {
-			RandomPatches.LOGGER.error("Error while modifying config", ex);
+			System.setProperty("fml.readTimeout", Integer.toString(readTimeout));
+			System.setProperty("fml.loginTimeout", Integer.toString(loginTimeout));
 		}
 	}
 
-	public static void reloadFromDisk() {
-		prepareReloadFromDisk(RandomPatches.MOD_ID);
-		reload();
-	}
+	@Config.Category("Options related to boats.")
+	public static final Boats boats = null;
 
-	public static void prepareReloadFromDisk(String modid) {
-		try {
-			final Configuration config =
-					(Configuration) GET_CONFIGURATION.invoke(null, modid, modid);
-			final Configuration tempConfig = new Configuration(config.getConfigFile());
+	@Config.Category("Options related to client-sided features.")
+	public static final Client client = null;
 
-			tempConfig.load();
+	@Config.Category("Options that don't fit into any other categories.")
+	public static final Misc misc = null;
 
-			for(String name : tempConfig.getCategoryNames()) {
-				final Map<String, Property> properties = tempConfig.getCategory(name).getValues();
+	@Config.Category("Options related to the movement speed limits.")
+	public static final SpeedLimits speedLimits = null;
 
-				for(Map.Entry<String, Property> entry : properties.entrySet()) {
-					config.getCategory(name).get(entry.getKey()).set(entry.getValue().getString());
-				}
-			}
-
-			MinecraftForge.EVENT_BUS.post(new ConfigChangedEvent.PostConfigChangedEvent(
-					modid, null, true, false
-			));
-		} catch(Exception ex) {
-			RandomPatches.LOGGER.error("Error while modifying config", ex);
-		}
-	}
-
-	@SuppressWarnings("unchecked")
-	private static void injectASMData(String modid, Class<?> configClass)
-			throws IllegalAccessException {
-		final Map<String, Multimap<Config.Type, ASMDataTable.ASMData>> asmData =
-				(Map<String, Multimap<Config.Type, ASMDataTable.ASMData>>) ASM_DATA.get(null);
-
-		final Multimap<Config.Type, ASMDataTable.ASMData> data = asmData.computeIfAbsent(
-				modid,
-				id -> ArrayListMultimap.create()
-		);
-
-		final Map<String, Object> annotationInfo = new HashMap<>();
-
-		annotationInfo.put("modid", modid);
-		annotationInfo.put("name", modid);
-		annotationInfo.put("category", "");
-
-		data.put(
-				Config.Type.INSTANCE,
-				new ASMDataTable.ASMData(null, null, configClass.getName(), null, annotationInfo)
-		);
-	}
-
-	private static void copyValuesToStatic(Map<Object, Field[]> properties,
-			Class<?> staticConfigClass) throws IllegalAccessException, NoSuchFieldException {
-		for(Map.Entry<Object, Field[]> entry : properties.entrySet()) {
-			final Object object = entry.getKey();
-			final Field[] propertyArray = entry.getValue();
-
-			for(Field property : propertyArray) {
-				final Object value = property.get(object);
-				staticConfigClass.getDeclaredField(property.getName()).set(null, value);
-			}
-		}
-	}
-
-	private static void copyValuesFromStatic(Map<Object, Field[]> properties,
-			Class<?> staticConfigClass) throws IllegalAccessException, NoSuchFieldException {
-		for(Map.Entry<Object, Field[]> entry : properties.entrySet()) {
-			final Object object = entry.getKey();
-			final Field[] propertyArray = entry.getValue();
-
-			for(Field property : propertyArray) {
-				final Object value =
-						staticConfigClass.getDeclaredField(property.getName()).get(null);
-				property.set(object, value);
-			}
-		}
-	}
-
-	private static Map<Object, Field[]> getProperties(Class<?> configClass) {
-		final Map<Object, Field[]> properties =
-				propertyCacheMap.computeIfAbsent(configClass, clazz -> new HashMap<>());
-
-		if(!properties.isEmpty()) {
-			return properties;
-		}
-
-		try {
-			final Map<Object, Field> nestedCategories = new HashMap<>();
-
-			for(Field field : configClass.getDeclaredFields()) {
-				final int modifiers = field.getModifiers();
-
-				if(!Modifier.isPublic(modifiers)) {
-				//		field.getAnnotation(Config.Ignore.class) != null) {
-					continue;
-				}
-
-				final Object object = field.get(null);
-				final Field[] propertyArray = object.getClass().getDeclaredFields();
-				final List<Field> propertyList = new ArrayList<>();
-
-				for(Field property : propertyArray) {
-					if(NestedCategory.class.isAssignableFrom(property.getType())) {
-						nestedCategories.put(object, property);
-					} else {
-						propertyList.add(property);
-					}
-				}
-
-				properties.put(object, propertyList.toArray(new Field[0]));
-			}
-
-			for(Map.Entry<Object, Field> category : nestedCategories.entrySet()) {
-				final Object object = category.getValue().get(category.getKey());
-				properties.put(object, object.getClass().getDeclaredFields());
-			}
-		} catch(Exception ex) {
-			RandomPatches.LOGGER.error("Error while getting config properties", ex);
-		}
-
-		propertyCacheMap.put(configClass, properties);
-		return properties;
-	}
+	@Config.Category("Options related to the disconnect timeouts.")
+	public static final Timeouts timeouts = null;
 }

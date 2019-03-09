@@ -30,7 +30,7 @@ public final class NetHandlerLoginServerPatch extends Patch {
 
 		final FieldInsnNode getLoginTimeout = new FieldInsnNode(
 				Opcodes.GETSTATIC,
-				RPSTATICCONFIG,
+				NetHandlerPlayServerPatch.TIMEOUTS_CONFIG,
 				"loginTimeout",
 				"I"
 		);

@@ -1,6 +1,7 @@
 package com.therandomlabs.randompatches.patch;
 
 import com.therandomlabs.randompatches.RandomPatches;
+import com.therandomlabs.randompatches.config.RPConfig;
 import com.therandomlabs.randompatches.core.Patch;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.AbstractInsnNode;
@@ -15,6 +16,8 @@ import org.objectweb.asm.tree.MethodNode;
 import org.objectweb.asm.tree.VarInsnNode;
 
 public final class NetHandlerPlayServerPatch extends Patch {
+	public static final String TIMEOUTS_CONFIG = getName(RPConfig.Timeouts.class);
+	public static final String SPEED_LIMITS_CONFIG = getName(RPConfig.SpeedLimits.class);
 	public static final String SEND_PACKET = getName("sendPacket", "func_147359_a");
 
 	@Override
@@ -107,7 +110,7 @@ public final class NetHandlerPlayServerPatch extends Patch {
 
 		final FieldInsnNode getKeepAliveInterval = new FieldInsnNode(
 				Opcodes.GETSTATIC,
-				RPSTATICCONFIG,
+				TIMEOUTS_CONFIG,
 				RandomPatches.MC_VERSION > 11 ?
 						"keepAlivePacketIntervalMillis" : "keepAlivePacketIntervalLong",
 				"J"
@@ -138,7 +141,7 @@ public final class NetHandlerPlayServerPatch extends Patch {
 
 		final FieldInsnNode getReadTimeoutMillis = new FieldInsnNode(
 				Opcodes.GETSTATIC,
-				RPSTATICCONFIG,
+				TIMEOUTS_CONFIG,
 				"readTimeoutMillis",
 				"J"
 		);
@@ -185,14 +188,14 @@ public final class NetHandlerPlayServerPatch extends Patch {
 
 		final FieldInsnNode getElytraMaxSpeed = new FieldInsnNode(
 				Opcodes.GETSTATIC,
-				RPSTATICCONFIG,
+				SPEED_LIMITS_CONFIG,
 				"maxPlayerElytraSpeed",
 				"F"
 		);
 
 		final FieldInsnNode getNormalMaxSpeed = new FieldInsnNode(
 				Opcodes.GETSTATIC,
-				RPSTATICCONFIG,
+				SPEED_LIMITS_CONFIG,
 				"maxPlayerSpeed",
 				"F"
 		);
@@ -222,7 +225,7 @@ public final class NetHandlerPlayServerPatch extends Patch {
 
 		final FieldInsnNode getVehicleMaxSpeed = new FieldInsnNode(
 				Opcodes.GETSTATIC,
-				RPSTATICCONFIG,
+				SPEED_LIMITS_CONFIG,
 				"maxPlayerVehicleSpeed",
 				"D"
 		);

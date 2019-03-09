@@ -1,7 +1,7 @@
 package com.therandomlabs.randompatches.patch.client;
 
 import com.therandomlabs.randompatches.RandomPatches;
-import com.therandomlabs.randompatches.config.RPStaticConfig;
+import com.therandomlabs.randompatches.config.RPConfig;
 import com.therandomlabs.randompatches.core.Patch;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiControls;
@@ -46,11 +46,11 @@ public final class MinecraftPatch extends Patch {
 	@Override
 	public boolean apply(ClassNode node) {
 		if(!RandomPatches.ITLT_INSTALLED &&
-				!RandomPatches.DEFAULT_WINDOW_TITLE.equals(RPStaticConfig.title)) {
+				!RandomPatches.DEFAULT_WINDOW_TITLE.equals(RPConfig.Client.Window.title)) {
 			patchCreateDisplay(findMethod(node, "createDisplay", "func_175609_am"));
 		}
 
-		if(RPStaticConfig.isNarratorKeybindEnabled()) {
+		if(RPConfig.Client.isNarratorKeybindEnabled()) {
 			patchDispatchKeypresses(findMethod(node, "dispatchKeypresses", "func_152348_aa"));
 		}
 
@@ -93,7 +93,7 @@ public final class MinecraftPatch extends Patch {
 			}
 		}
 
-		ldc.cst = RPStaticConfig.title;
+		ldc.cst = RPConfig.Client.Window.title;
 	}
 
 	private static void patchDispatchKeypresses(MethodNode method) {

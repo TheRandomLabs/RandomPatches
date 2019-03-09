@@ -1,6 +1,6 @@
 package com.therandomlabs.randompatches.patch;
 
-import com.therandomlabs.randompatches.config.RPStaticConfig;
+import com.therandomlabs.randompatches.config.RPConfig;
 import com.therandomlabs.randompatches.core.Patch;
 import net.minecraft.entity.item.EntityBoat;
 import org.objectweb.asm.Opcodes;
@@ -66,7 +66,7 @@ public final class EntityBoatPatch extends Patch {
 
 		final FieldInsnNode getPreventEjection = new FieldInsnNode(
 				Opcodes.GETSTATIC,
-				RPSTATICCONFIG,
+				getName(RPConfig.Boats.class),
 				"preventUnderwaterBoatPassengerEjection",
 				"Z"
 		);
@@ -108,7 +108,7 @@ public final class EntityBoatPatch extends Patch {
 
 	public static void onUpdate(EntityBoat boat, EntityBoat.Status status) {
 		if(status == EntityBoat.Status.UNDER_FLOWING_WATER) {
-			boat.motionY += -VANILLA_UNDERWATER_BUOYANCY + RPStaticConfig.underwaterBoatBuoyancy;
+			boat.motionY += -VANILLA_UNDERWATER_BUOYANCY + RPConfig.Boats.underwaterBoatBuoyancy;
 		}
 	}
 }

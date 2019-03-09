@@ -1,8 +1,7 @@
 package com.therandomlabs.randompatches.common;
 
-import com.therandomlabs.randompatches.RandomPatches;
+import com.therandomlabs.randomlib.config.ConfigManager;
 import com.therandomlabs.randompatches.config.RPConfig;
-import com.therandomlabs.randompatches.config.RPStaticConfig;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
@@ -30,21 +29,16 @@ public class CommandRPReload extends CommandBase {
 	@Override
 	public void execute(MinecraftServer server, ICommandSender sender, String[] args)
 			throws CommandException {
+		RPConfig.Client.Window.setWindowSettings = false;
+		ConfigManager.reloadFromDisk(RPConfig.class);
+
 		if(server != null && server.isDedicatedServer()) {
-			RPStaticConfig.reload();
 			notifyCommandListener(sender, this, "RandomPatches configuration reloaded!");
 		} else {
-			RPStaticConfig.doNotSetWindowSettings();
-
-			if(RandomPatches.MC_VERSION > 10) {
-				RPConfig.reloadFromDisk();
-			} else {
-				RPStaticConfig.reload();
-			}
-
 			sender.sendMessage(new TextComponentTranslation("commands.rpreloadclient.success"));
-			RPStaticConfig.doSetWindowSettings();
 		}
+
+		RPConfig.Client.Window.setWindowSettings = true;
 	}
 
 	@Override

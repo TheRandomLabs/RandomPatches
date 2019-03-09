@@ -2,8 +2,9 @@ package com.therandomlabs.randompatches.core;
 
 import java.util.HashMap;
 import java.util.Map;
+import com.therandomlabs.randomlib.config.ConfigManager;
 import com.therandomlabs.randompatches.RandomPatches;
-import com.therandomlabs.randompatches.config.RPStaticConfig;
+import com.therandomlabs.randompatches.config.RPConfig;
 import com.therandomlabs.randompatches.patch.NetHandlerPlayServerPatch;
 import net.minecraft.launchwrapper.IClassTransformer;
 import org.objectweb.asm.ClassReader;
@@ -14,7 +15,7 @@ public class RPTransformer implements IClassTransformer {
 	private static final Map<String, Patch> PATCHES = new HashMap<>();
 
 	static {
-		RPStaticConfig.reload();
+		ConfigManager.register(RPConfig.class);
 		RandomPatches.registerPatches();
 	}
 

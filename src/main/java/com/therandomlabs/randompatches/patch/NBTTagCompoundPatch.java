@@ -11,7 +11,7 @@ import com.mojang.authlib.minecraft.MinecraftProfileTexture;
 import com.mojang.authlib.properties.Property;
 import com.mojang.authlib.yggdrasil.response.MinecraftTexturesPayload;
 import com.mojang.util.UUIDTypeAdapter;
-import com.therandomlabs.randompatches.config.RPStaticConfig;
+import com.therandomlabs.randompatches.config.RPConfig;
 import com.therandomlabs.randompatches.core.Patch;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
@@ -99,7 +99,6 @@ public final class NBTTagCompoundPatch extends Patch {
 			return false;
 		}
 
-
 		final GameProfile profile1 = NBTUtil.readGameProfileFromNBT((NBTTagCompound) skullOwner1);
 		final GameProfile profile2 = NBTUtil.readGameProfileFromNBT((NBTTagCompound) skullOwner2);
 
@@ -107,7 +106,7 @@ public final class NBTTagCompoundPatch extends Patch {
 			return false;
 		}
 
-		if(!RPStaticConfig.skullStackingRequiresSameTextures) {
+		if(!RPConfig.Misc.skullStackingRequiresSameTextures) {
 			return true;
 		}
 

@@ -5,20 +5,16 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.jar.JarFile;
+import com.therandomlabs.randomlib.TRLUtils;
 import com.therandomlabs.randompatches.RandomPatches;
 import com.therandomlabs.randompatches.core.RPCoreContainer;
-import net.minecraft.crash.CrashReport;
 import net.minecraft.launchwrapper.Launch;
-import net.minecraft.util.ReportedException;
 import net.minecraftforge.fml.common.MetadataCollection;
 import net.minecraftforge.fml.common.ModContainer;
 import net.minecraftforge.fml.common.ModMetadata;
@@ -159,34 +155,6 @@ public final class RPUtils {
 		return false;
 	}
 
-	public static Field findField(Class<?> clazz, String... names) {
-		for(Field field : clazz.getDeclaredFields()) {
-			for(String name : names) {
-				if(name.equals(field.getName())) {
-					field.setAccessible(true);
-					return field;
-				}
-			}
-		}
-
-		return null;
-	}
-
-	public static Method findMethod(Class<?> clazz, String name, String obfName,
-			Class<?>... parameterTypes) {
-		for(Method method : clazz.getDeclaredMethods()) {
-			final String methodName = method.getName();
-
-			if((name.equals(methodName) || obfName.equals(methodName)) &&
-					Arrays.equals(method.getParameterTypes(), parameterTypes)) {
-				method.setAccessible(true);
-				return method;
-			}
-		}
-
-		return null;
-	}
-
 	public static void ensureMinimumRPVersion(String minimumVersion) {
 		final VersionRange range =
 				VersionParser.parseRange("[" + minimumVersion + ",)");
@@ -194,14 +162,10 @@ public final class RPUtils {
 				new DefaultArtifactVersion(RandomPatches.MOD_ID, RandomPatches.VERSION);
 
 		if(!range.containsVersion(version)) {
-			RPUtils.crashReport(
+			TRLUtils.crashReport(
 					"RandomPatches " + minimumVersion + " or higher is required",
 					new IllegalStateException()
 			);
 		}
-	}
-
-	public static void crashReport(String message, Throwable throwable) {
-		throw new ReportedException(new CrashReport(message, throwable));
 	}
 }

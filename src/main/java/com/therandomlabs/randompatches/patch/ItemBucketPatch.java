@@ -1,6 +1,6 @@
 package com.therandomlabs.randompatches.patch;
 
-import com.therandomlabs.randompatches.config.RPStaticConfig;
+import com.therandomlabs.randompatches.config.RPConfig;
 import com.therandomlabs.randompatches.core.Patch;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -51,7 +51,7 @@ public final class ItemBucketPatch extends Patch {
 			return true;
 		}
 
-		if(!RPStaticConfig.portalBucketReplacementFixForNetherPortals &&
+		if(!RPConfig.Misc.portalBucketReplacementFixForNetherPortals &&
 				state.getBlock() == Blocks.PORTAL) {
 			return false;
 		}
