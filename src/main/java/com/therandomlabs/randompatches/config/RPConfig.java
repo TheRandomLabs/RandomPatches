@@ -171,7 +171,7 @@ public final class RPConfig {
 
 		@Config.RequiresMCRestart
 		@Config.Property("Enables the portal bucket replacement fix for Nether portals.")
-		public static boolean portalBucketReplacementFixForNetherPortals = false;
+		public static boolean portalBucketReplacementFixForNetherPortals;
 
 		@Config.RequiresMCRestart
 		@Config.Property(
