@@ -1,6 +1,7 @@
 package com.therandomlabs.randompatches;
 
 import com.google.common.eventbus.Subscribe;
+import com.therandomlabs.randomlib.config.ConfigManager;
 import com.therandomlabs.randompatches.client.TileEntityEndPortalRenderer;
 import com.therandomlabs.randompatches.common.CommandRPReload;
 import com.therandomlabs.randompatches.config.RPConfig;
@@ -76,6 +77,8 @@ public final class RandomPatches {
 
 	@Subscribe
 	public void init(FMLInitializationEvent event) {
+		ConfigManager.registerEventHandler();
+
 		if(RPConfig.Client.isNarratorKeybindEnabled()) {
 			MinecraftPatch.ToggleNarratorKeybind.register();
 		}
