@@ -33,6 +33,24 @@ dependencies {
 	compile "com.github.TheRandomLabs:RandomLib:1.12-SNAPSHOT"
 }
 
+shadowJar {
+	classifier = ""
+	relocate "com.therandomlabs.randomlib", "com.therandomlabs.randomconfigs.repackage.com.therandomlabs.randomlib"
+	configurations = [project.configurations.shadow]
+}
+
+reobf {
+	shadowJar {
+		mappingType = "SEARGE"
+	}
+}
+
+build.dependsOn shadowJar
+
+artifacts {
+	archives shadowJar
+}
+
 minecraft {
 	version = "1.12.2-14.23.5.2815"
 	runDir = "run"
