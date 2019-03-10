@@ -29,7 +29,7 @@ public class CommandRPReload extends CommandBase {
 	@Override
 	public void execute(MinecraftServer server, ICommandSender sender, String[] args)
 			throws CommandException {
-		RPConfig.Client.Window.setWindowSettings = false;
+		RPConfig.Window.setWindowSettings = false;
 		ConfigManager.reloadFromDisk(RPConfig.class);
 
 		if(server != null && server.isDedicatedServer()) {
@@ -38,7 +38,7 @@ public class CommandRPReload extends CommandBase {
 			sender.sendMessage(new TextComponentTranslation("commands.rpreloadclient.success"));
 		}
 
-		RPConfig.Client.Window.setWindowSettings = true;
+		RPConfig.Window.setWindowSettings = true;
 	}
 
 	@Override

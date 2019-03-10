@@ -29,7 +29,7 @@ public class WindowIconHandler {
 			InputStream stream32 = null;
 
 			try {
-				if(RPConfig.Client.Window.icon16.isEmpty()) {
+				if(RPConfig.Window.icon16.isEmpty()) {
 					final Minecraft mc = Minecraft.getMinecraft();
 
 					stream16 = mc.defaultResourcePack.getInputStreamAssets(
@@ -40,8 +40,8 @@ public class WindowIconHandler {
 							new ResourceLocation("icons/icon_32x32.png")
 					);
 				} else {
-					stream16 = new FileInputStream(RPConfig.Client.Window.icon16);
-					stream32 = new FileInputStream(RPConfig.Client.Window.icon32);
+					stream16 = new FileInputStream(RPConfig.Window.icon16);
+					stream32 = new FileInputStream(RPConfig.Window.icon32);
 				}
 
 				if(stream16 != null && stream32 != null) {
@@ -53,8 +53,8 @@ public class WindowIconHandler {
 			} catch(IOException ex) {
 				if(RandomPatches.IS_DEOBFUSCATED &&
 						ex instanceof FileNotFoundException &&
-						RPConfig.Client.Window.DEFAULT_ICON.equals(RPConfig.Client.Window.icon16) &&
-						RPConfig.Client.Window.DEFAULT_ICON.equals(RPConfig.Client.Window.icon32)) {
+						RPConfig.Window.DEFAULT_ICON.equals(RPConfig.Window.icon16) &&
+						RPConfig.Window.DEFAULT_ICON.equals(RPConfig.Window.icon32)) {
 					return;
 				}
 

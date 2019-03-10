@@ -46,7 +46,7 @@ public final class MinecraftPatch extends Patch {
 	@Override
 	public boolean apply(ClassNode node) {
 		if(!RandomPatches.ITLT_INSTALLED &&
-				!RandomPatches.DEFAULT_WINDOW_TITLE.equals(RPConfig.Client.Window.title)) {
+				!RandomPatches.DEFAULT_WINDOW_TITLE.equals(RPConfig.Window.title)) {
 			patchCreateDisplay(findMethod(node, "createDisplay", "func_175609_am"));
 		}
 
@@ -93,7 +93,7 @@ public final class MinecraftPatch extends Patch {
 			}
 		}
 
-		ldc.cst = RPConfig.Client.Window.title;
+		ldc.cst = RPConfig.Window.title;
 	}
 
 	private static void patchDispatchKeypresses(MethodNode method) {

@@ -103,7 +103,7 @@ public final class RandomPatches {
 			);
 		}
 
-		RPConfig.Client.Window.setWindowSettings();
+		RPConfig.Window.setWindowSettings();
 	}
 
 	public static void registerPatches() {

@@ -30,55 +30,6 @@ public final class RPConfig {
 	}
 
 	public static final class Client {
-		public static final class Window {
-			public static final String DEFAULT_ICON = RandomPatches.IS_DEOBFUSCATED ?
-					"../src/main/resources/assets/randompatches/logo.png" : "";
-
-			@Config.Property({
-					"The path to the 16x16 Minecraft window icon.",
-					"Leave this and the 32x32 icon blank to use the default icon."
-			})
-			public static String icon16 = DEFAULT_ICON;
-			@Config.Property({
-					"The path to the 32x32 Minecraft window icon.",
-					"Leave this and the 16x16 icon blank to use the default icon."
-			})
-			public static String icon32 = DEFAULT_ICON;
-
-			@Config.Property("The Minecraft window title.")
-			public static String title = RandomPatches.IS_DEOBFUSCATED ?
-					RandomPatches.NAME : RandomPatches.DEFAULT_WINDOW_TITLE;
-
-			public static boolean setWindowSettings = true;
-
-			public static void onReload() {
-				if(icon16.isEmpty() && !icon32.isEmpty()) {
-					icon16 = icon32;
-				}
-
-				if(icon32.isEmpty() && !icon16.isEmpty()) {
-					icon32 = icon16;
-				}
-
-				if(TRLUtils.IS_CLIENT && Display.isCreated()) {
-					setWindowSettings();
-				}
-			}
-
-			public static void setWindowSettings() {
-				if(!setWindowSettings || !TRLUtils.IS_CLIENT || RandomPatches.ITLT_INSTALLED) {
-					return;
-				}
-
-				if(!icon16.isEmpty()) {
-					//If icon16 is empty, WindowIconHandler loads the Minecraft class too early
-					WindowIconHandler.setWindowIcon();
-				}
-
-				Display.setTitle(title);
-			}
-		}
-
 		@Config.Category("Options related to the Minecraft window.")
 		public static final Window window = null;
 
@@ -274,6 +225,55 @@ public final class RPConfig {
 
 			System.setProperty("fml.readTimeout", Integer.toString(readTimeout));
 			System.setProperty("fml.loginTimeout", Integer.toString(loginTimeout));
+		}
+	}
+
+	public static final class Window {
+		public static final String DEFAULT_ICON = RandomPatches.IS_DEOBFUSCATED ?
+				"../src/main/resources/assets/randompatches/logo.png" : "";
+
+		@Config.Property({
+				"The path to the 16x16 Minecraft window icon.",
+				"Leave this and the 32x32 icon blank to use the default icon."
+		})
+		public static String icon16 = DEFAULT_ICON;
+		@Config.Property({
+				"The path to the 32x32 Minecraft window icon.",
+				"Leave this and the 16x16 icon blank to use the default icon."
+		})
+		public static String icon32 = DEFAULT_ICON;
+
+		@Config.Property("The Minecraft window title.")
+		public static String title = RandomPatches.IS_DEOBFUSCATED ?
+				RandomPatches.NAME : RandomPatches.DEFAULT_WINDOW_TITLE;
+
+		public static boolean setWindowSettings = true;
+
+		public static void onReload() {
+			if(icon16.isEmpty() && !icon32.isEmpty()) {
+				icon16 = icon32;
+			}
+
+			if(icon32.isEmpty() && !icon16.isEmpty()) {
+				icon32 = icon16;
+			}
+
+			if(TRLUtils.IS_CLIENT && Display.isCreated()) {
+				setWindowSettings();
+			}
+		}
+
+		public static void setWindowSettings() {
+			if(!setWindowSettings || !TRLUtils.IS_CLIENT || RandomPatches.ITLT_INSTALLED) {
+				return;
+			}
+
+			if(!icon16.isEmpty()) {
+				//If icon16 is empty, WindowIconHandler loads the Minecraft class too early
+				WindowIconHandler.setWindowIcon();
+			}
+
+			Display.setTitle(title);
 		}
 	}
 
