@@ -35,7 +35,7 @@ dependencies {
 
 shadowJar {
 	classifier = ""
-	relocate "com.therandomlabs.randomlib", "com.therandomlabs.randomconfigs.repackage.com.therandomlabs.randomlib"
+	relocate "com.therandomlabs.randomlib", "com.therandomlabs.randompatches.repackage.com.therandomlabs.randomlib"
 	configurations = [project.configurations.shadow]
 }
 
