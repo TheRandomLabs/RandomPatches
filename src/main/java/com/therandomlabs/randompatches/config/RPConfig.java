@@ -74,7 +74,7 @@ public final class RPConfig {
 
 		public static boolean isNarratorKeybindEnabled() {
 			return narratorKeybind && TRLUtils.MC_VERSION_NUMBER > 11 &&
-					!RandomPatches.REBIND_NARRATOR_INSTALLED &&
+					!RandomPatches.REBIND_INSTALLED && !RandomPatches.REBIND_NARRATOR_INSTALLED &&
 					TRLUtils.IS_CLIENT;
 		}
 	}
