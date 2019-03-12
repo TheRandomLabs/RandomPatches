@@ -1,6 +1,7 @@
 {
 	"homepage": "https://minecraft.curseforge.com/projects/randompatches",
 	"1.12.2": {
+		"1.12.2-1.15.0.1": "Fixed ReBind compatibility.",
 		"1.12.2-1.15.0.0": "Switched to RandomLib for configuration handling, which means the configuration GUI now works on all supported versions of Minecraft.\nFixed 1.8 compatibility.\nFixed localizations on older versions of Minecraft.",
 		"1.12.2-1.14.1.1": "Improved the implementation of the skull stacking fix, potentially fixing a ConcurrentModificationException.",
 		"1.12.2-1.14.1.0": "Fixed a ConcurrentModificationException related to the skull stacking fix.\nFilled buckets can now replace Nether portals by default.",
@@ -46,6 +47,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.12.1": {
+		"1.12.2-1.15.0.1": "Fixed ReBind compatibility.",
 		"1.12.2-1.15.0.0": "Switched to RandomLib for configuration handling, which means the configuration GUI now works on all supported versions of Minecraft.\nFixed 1.8 compatibility.\nFixed localizations on older versions of Minecraft.",
 		"1.12.2-1.14.1.1": "Improved the implementation of the skull stacking fix, potentially fixing a ConcurrentModificationException.",
 		"1.12.2-1.14.1.0": "Fixed a ConcurrentModificationException related to the skull stacking fix.\nFilled buckets can now replace Nether portals by default.",
@@ -91,6 +93,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.12": {
+		"1.12.2-1.15.0.1": "Fixed ReBind compatibility.",
 		"1.12.2-1.15.0.0": "Switched to RandomLib for configuration handling, which means the configuration GUI now works on all supported versions of Minecraft.\nFixed 1.8 compatibility.\nFixed localizations on older versions of Minecraft.",
 		"1.12.2-1.14.1.1": "Improved the implementation of the skull stacking fix, potentially fixing a ConcurrentModificationException.",
 		"1.12.2-1.14.1.0": "Fixed a ConcurrentModificationException related to the skull stacking fix.\nFilled buckets can now replace Nether portals by default.",
@@ -136,6 +139,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.11.2": {
+		"1.12.2-1.15.0.1": "Fixed ReBind compatibility.",
 		"1.12.2-1.15.0.0": "Switched to RandomLib for configuration handling, which means the configuration GUI now works on all supported versions of Minecraft.\nFixed 1.8 compatibility.\nFixed localizations on older versions of Minecraft.",
 		"1.12.2-1.14.1.1": "Improved the implementation of the skull stacking fix, potentially fixing a ConcurrentModificationException.",
 		"1.12.2-1.14.1.0": "Fixed a ConcurrentModificationException related to the skull stacking fix.\nFilled buckets can now replace Nether portals by default.",
@@ -181,6 +185,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.11": {
+		"1.12.2-1.15.0.1": "Fixed ReBind compatibility.",
 		"1.12.2-1.15.0.0": "Switched to RandomLib for configuration handling, which means the configuration GUI now works on all supported versions of Minecraft.\nFixed 1.8 compatibility.\nFixed localizations on older versions of Minecraft.",
 		"1.12.2-1.14.1.1": "Improved the implementation of the skull stacking fix, potentially fixing a ConcurrentModificationException.",
 		"1.12.2-1.14.1.0": "Fixed a ConcurrentModificationException related to the skull stacking fix.\nFilled buckets can now replace Nether portals by default.",
@@ -226,6 +231,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.10.2": {
+		"1.12.2-1.15.0.1": "Fixed ReBind compatibility.",
 		"1.12.2-1.15.0.0": "Switched to RandomLib for configuration handling, which means the configuration GUI now works on all supported versions of Minecraft.\nFixed 1.8 compatibility.\nFixed localizations on older versions of Minecraft.",
 		"1.12.2-1.14.1.1": "Improved the implementation of the skull stacking fix, potentially fixing a ConcurrentModificationException.",
 		"1.12.2-1.14.1.0": "Fixed a ConcurrentModificationException related to the skull stacking fix.\nFilled buckets can now replace Nether portals by default.",
@@ -271,6 +277,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.10": {
+		"1.12.2-1.15.0.1": "Fixed ReBind compatibility.",
 		"1.12.2-1.15.0.0": "Switched to RandomLib for configuration handling, which means the configuration GUI now works on all supported versions of Minecraft.\nFixed 1.8 compatibility.\nFixed localizations on older versions of Minecraft.",
 		"1.12.2-1.14.1.1": "Improved the implementation of the skull stacking fix, potentially fixing a ConcurrentModificationException.",
 		"1.12.2-1.14.1.0": "Fixed a ConcurrentModificationException related to the skull stacking fix.\nFilled buckets can now replace Nether portals by default.",
@@ -316,6 +323,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.9.4": {
+		"1.12.2-1.15.0.1": "Fixed ReBind compatibility.",
 		"1.12.2-1.15.0.0": "Switched to RandomLib for configuration handling, which means the configuration GUI now works on all supported versions of Minecraft.\nFixed 1.8 compatibility.\nFixed localizations on older versions of Minecraft.",
 		"1.12.2-1.14.1.1": "Improved the implementation of the skull stacking fix, potentially fixing a ConcurrentModificationException.",
 		"1.12.2-1.14.1.0": "Fixed a ConcurrentModificationException related to the skull stacking fix.\nFilled buckets can now replace Nether portals by default.",
@@ -354,6 +362,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.9": {
+		"1.12.2-1.15.0.1": "Fixed ReBind compatibility.",
 		"1.12.2-1.15.0.0": "Switched to RandomLib for configuration handling, which means the configuration GUI now works on all supported versions of Minecraft.\nFixed 1.8 compatibility.\nFixed localizations on older versions of Minecraft.",
 		"1.12.2-1.14.1.1": "Improved the implementation of the skull stacking fix, potentially fixing a ConcurrentModificationException.",
 		"1.12.2-1.14.1.0": "Fixed a ConcurrentModificationException related to the skull stacking fix.\nFilled buckets can now replace Nether portals by default.",
@@ -393,6 +402,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.8.9": {
+		"1.12.2-1.15.0.1": "Fixed ReBind compatibility.",
 		"1.12.2-1.15.0.0": "Switched to RandomLib for configuration handling, which means the configuration GUI now works on all supported versions of Minecraft.\nFixed 1.8 compatibility.\nFixed localizations on older versions of Minecraft.",
 		"1.12.2-1.14.1.1": "Improved the implementation of the skull stacking fix, potentially fixing a ConcurrentModificationException.",
 		"1.12.2-1.14.1.0": "Fixed a ConcurrentModificationException related to the skull stacking fix.\nFilled buckets can now replace Nether portals by default.",
@@ -431,6 +441,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.8.8": {
+		"1.12.2-1.15.0.1": "Fixed ReBind compatibility.",
 		"1.12.2-1.15.0.0": "Switched to RandomLib for configuration handling, which means the configuration GUI now works on all supported versions of Minecraft.\nFixed 1.8 compatibility.\nFixed localizations on older versions of Minecraft.",
 		"1.12.2-1.14.1.1": "Improved the implementation of the skull stacking fix, potentially fixing a ConcurrentModificationException.",
 		"1.12.2-1.14.1.0": "Fixed a ConcurrentModificationException related to the skull stacking fix.\nFilled buckets can now replace Nether portals by default.",
@@ -469,6 +480,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.8": {
+		"1.12.2-1.15.0.1": "Fixed ReBind compatibility.",
 		"1.12.2-1.15.0.0": "Switched to RandomLib for configuration handling, which means the configuration GUI now works on all supported versions of Minecraft.\nFixed 1.8 compatibility.\nFixed localizations on older versions of Minecraft.",
 		"1.12.2-1.14.1.1": "Improved the implementation of the skull stacking fix, potentially fixing a ConcurrentModificationException.",
 		"1.12.2-1.14.1.0": "Fixed a ConcurrentModificationException related to the skull stacking fix.\nFilled buckets can now replace Nether portals by default.",
@@ -507,27 +519,27 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"promos": {
-		"1.12.2-latest": "1.12.2-1.15.0.0",
-		"1.12.2-recommended": "1.12.2-1.15.0.0",
-		"1.12-latest": "1.12.2-1.15.0.0",
-		"1.12-recommended": "1.12.2-1.15.0.0",
-		"1.11.2-latest": "1.12.2-1.15.0.0",
-		"1.11.2-recommended": "1.12.2-1.15.0.0",
-		"1.11-latest": "1.12.2-1.15.0.0",
-		"1.11-recommended": "1.12.2-1.15.0.0",
-		"1.10.2-latest": "1.12.2-1.15.0.0",
-		"1.10.2-recommended": "1.12.2-1.15.0.0",
-		"1.10-latest": "1.12.2-1.15.0.0",
-		"1.10-recommended": "1.12.2-1.15.0.0",
-		"1.9.4-latest": "1.12.2-1.15.0.0",
-		"1.9.4-recommended": "1.12.2-1.15.0.0",
-		"1.9-latest": "1.12.2-1.15.0.0",
-		"1.9-recommended": "1.12.2-1.15.0.0",
-		"1.8.9-latest": "1.12.2-1.15.0.0",
-		"1.8.9-recommended": "1.12.2-1.15.0.0",
-		"1.8.8-latest": "1.12.2-1.15.0.0",
-		"1.8.8-recommended": "1.12.2-1.15.0.0",
-		"1.8-latest": "1.12.2-1.15.0.0",
-		"1.8-recommended": "1.12.2-1.15.0.0"
+		"1.12.2-latest": "1.12.2-1.15.0.1",
+		"1.12.2-recommended": "1.12.2-1.15.0.1",
+		"1.12-latest": "1.12.2-1.15.0.1",
+		"1.12-recommended": "1.12.2-1.15.0.1",
+		"1.11.2-latest": "1.12.2-1.15.0.1",
+		"1.11.2-recommended": "1.12.2-1.15.0.1",
+		"1.11-latest": "1.12.2-1.15.0.1",
+		"1.11-recommended": "1.12.2-1.15.0.1",
+		"1.10.2-latest": "1.12.2-1.15.0.1",
+		"1.10.2-recommended": "1.12.2-1.15.0.1",
+		"1.10-latest": "1.12.2-1.15.0.1",
+		"1.10-recommended": "1.12.2-1.15.0.1",
+		"1.9.4-latest": "1.12.2-1.15.0.1",
+		"1.9.4-recommended": "1.12.2-1.15.0.1",
+		"1.9-latest": "1.12.2-1.15.0.1",
+		"1.9-recommended": "1.12.2-1.15.0.1",
+		"1.8.9-latest": "1.12.2-1.15.0.1",
+		"1.8.9-recommended": "1.12.2-1.15.0.1",
+		"1.8.8-latest": "1.12.2-1.15.0.1",
+		"1.8.8-recommended": "1.12.2-1.15.0.1",
+		"1.8-latest": "1.12.2-1.15.0.1",
+		"1.8-recommended": "1.12.2-1.15.0.1"
 	}
 }
