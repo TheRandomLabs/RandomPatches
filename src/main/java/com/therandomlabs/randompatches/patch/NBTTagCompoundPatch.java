@@ -89,13 +89,13 @@ public final class NBTTagCompoundPatch extends Patch {
 
 		final NBTBase skullOwner1 = tagMap1.get("SkullOwner");
 
-		if(skullOwner1 == null) {
+		if(!(skullOwner1 instanceof NBTTagCompound)) {
 			return false;
 		}
 
 		final NBTBase skullOwner2 = tagMap2.get("SkullOwner");
 
-		if(skullOwner2 == null) {
+		if(!(skullOwner2 instanceof NBTTagCompound)) {
 			return false;
 		}
 
