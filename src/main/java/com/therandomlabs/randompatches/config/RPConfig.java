@@ -257,8 +257,10 @@ public final class RPConfig {
 			if(icon32.isEmpty() && !icon16.isEmpty()) {
 				icon32 = icon16;
 			}
+		}
 
-			if(TRLUtils.IS_CLIENT && Display.isCreated()) {
+		public static void onReloadClient() {
+			if(Display.isCreated()) {
 				setWindowSettings();
 			}
 		}

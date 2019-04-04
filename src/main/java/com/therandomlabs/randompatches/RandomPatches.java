@@ -2,9 +2,9 @@ package com.therandomlabs.randompatches;
 
 import com.google.common.eventbus.Subscribe;
 import com.therandomlabs.randomlib.TRLUtils;
+import com.therandomlabs.randomlib.config.CommandConfigReload;
 import com.therandomlabs.randomlib.config.ConfigManager;
 import com.therandomlabs.randompatches.client.TileEntityEndPortalRenderer;
-import com.therandomlabs.randompatches.common.CommandRPReload;
 import com.therandomlabs.randompatches.config.RPConfig;
 import com.therandomlabs.randompatches.patch.EntityBoatPatch;
 import com.therandomlabs.randompatches.patch.EntityPatch;
@@ -69,7 +69,13 @@ public final class RandomPatches {
 	@Subscribe
 	public void preInit(FMLPreInitializationEvent event) {
 		if(TRLUtils.IS_CLIENT && RPConfig.Client.rpreloadclient && TRLUtils.MC_VERSION_NUMBER > 8) {
-			ClientCommandHandler.instance.registerCommand(new CommandRPReload(Side.CLIENT));
+			ClientCommandHandler.instance.registerCommand(new CommandConfigReload(
+					"rpreloadclient",
+					RPConfig.class,
+					phase -> RPConfig.Window.setWindowSettings =
+							phase == CommandConfigReload.ReloadPhase.PRE,
+					Side.CLIENT
+			));
 		}
 	}
 
@@ -85,7 +91,14 @@ public final class RandomPatches {
 	@Subscribe
 	public void serverStarting(FMLServerStartingEvent event) {
 		if(RPConfig.Misc.rpreload) {
-			event.registerServerCommand(new CommandRPReload(Side.SERVER));
+			event.registerServerCommand(new CommandConfigReload(
+					"rpreload",
+					RPConfig.class,
+					phase -> RPConfig.Window.setWindowSettings =
+							phase == CommandConfigReload.ReloadPhase.PRE,
+					Side.SERVER,
+					"RandomPatches configuration reloaded!"
+			));
 		}
 	}
 
