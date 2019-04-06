@@ -6,7 +6,7 @@ import com.therandomlabs.randompatches.RandomPatches;
 import com.therandomlabs.randompatches.util.WindowIconHandler;
 import org.lwjgl.opengl.Display;
 
-@Config(modid = RandomPatches.MOD_ID)
+@Config(RandomPatches.MOD_ID)
 public final class RPConfig {
 	public static final class Boats {
 		@Config.RequiresMCRestart
