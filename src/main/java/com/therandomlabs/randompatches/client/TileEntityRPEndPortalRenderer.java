@@ -13,7 +13,7 @@ import net.minecraft.tileentity.TileEntityEndPortal;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 
-public class TileEntityEndPortalRenderer extends
+public class TileEntityRPEndPortalRenderer extends
 		TileEntitySpecialRenderer<TileEntityEndPortal> {
 	private static final ResourceLocation END_SKY_TEXTURE =
 			new ResourceLocation("textures/environment/end_sky.png");
@@ -30,11 +30,11 @@ public class TileEntityEndPortalRenderer extends
 	private final FloatBuffer buffer = GLAllocation.createDirectFloatBuffer(16);
 	private final boolean upsideDown;
 
-	public TileEntityEndPortalRenderer() {
+	public TileEntityRPEndPortalRenderer() {
 		this(false);
 	}
 
-	public TileEntityEndPortalRenderer(boolean upsideDown) {
+	public TileEntityRPEndPortalRenderer(boolean upsideDown) {
 		this.upsideDown = upsideDown;
 	}
 
@@ -48,32 +48,11 @@ public class TileEntityEndPortalRenderer extends
 		GlStateManager.getFloat(2982, MODEL_VIEW);
 		GlStateManager.getFloat(2983, PROJECTION);
 
-		final double d = x * x + y * y + z * z;
-		int i;
-
-		if(d > 36864.0) {
-			i = 1;
-		} else if(d > 25600.0) {
-			i = 3;
-		} else if(d > 16384.0) {
-			i = 5;
-		} else if(d > 9216.0) {
-			i = 7;
-		} else if(d > 4096.0) {
-			i = 9;
-		} else if(d > 1024.0) {
-			i = 11;
-		} else if(d > 576.0) {
-			i = 13;
-		} else if(d > 256.0) {
-			i = 14;
-		} else {
-			i = 15;
-		}
-
+		final int passes = getPasses(x * x + y * y + z * z);
+		final float offset = getOffset();
 		boolean flag = false;
 
-		for(int j = 0; j < i; j++) {
+		for(int j = 0; j < passes; j++) {
 			GlStateManager.pushMatrix();
 			float f1 = 2.0F / (18 - j);
 
@@ -104,6 +83,7 @@ public class TileEntityEndPortalRenderer extends
 			GlStateManager.texGen(GlStateManager.TexGen.S, 9216);
 			GlStateManager.texGen(GlStateManager.TexGen.T, 9216);
 			GlStateManager.texGen(GlStateManager.TexGen.R, 9216);
+
 			GlStateManager.texGen(
 					GlStateManager.TexGen.S, 9474, getBuffer(1.0F, 0.0F, 0.0F, 0.0F)
 			);
@@ -113,13 +93,16 @@ public class TileEntityEndPortalRenderer extends
 			GlStateManager.texGen(
 					GlStateManager.TexGen.R, 9474, getBuffer(0.0F, 0.0F, 1.0F, 0.0F)
 			);
+
 			GlStateManager.enableTexGenCoord(GlStateManager.TexGen.S);
 			GlStateManager.enableTexGenCoord(GlStateManager.TexGen.T);
 			GlStateManager.enableTexGenCoord(GlStateManager.TexGen.R);
+
 			GlStateManager.popMatrix();
 			GlStateManager.matrixMode(5890);
 			GlStateManager.pushMatrix();
 			GlStateManager.loadIdentity();
+
 			GlStateManager.translate(0.5F, 0.5F, 0.0F);
 			GlStateManager.scale(0.5F, 0.5F, 1.0F);
 
@@ -189,17 +172,17 @@ public class TileEntityEndPortalRenderer extends
 				}
 
 				if(tileEntity.shouldRenderFace(EnumFacing.DOWN)) {
-					builder.pos(x, y + 0.75, z + 1.0).color(f3, f4, f5, 1.0F).endVertex();
-					builder.pos(x + 1.0, y + 0.75, z + 1.0).color(f3, f4, f5, 1.0F).endVertex();
-					builder.pos(x + 1.0, y + 0.75, z).color(f3, f4, f5, 1.0F).endVertex();
-					builder.pos(x, y + 0.75, z).color(f3, f4, f5, 1.0F).endVertex();
+					builder.pos(x, y + offset, z + 1.0).color(f3, f4, f5, 1.0F).endVertex();
+					builder.pos(x + 1.0, y + offset, z + 1.0).color(f3, f4, f5, 1.0F).endVertex();
+					builder.pos(x + 1.0, y + offset, z).color(f3, f4, f5, 1.0F).endVertex();
+					builder.pos(x, y + offset, z).color(f3, f4, f5, 1.0F).endVertex();
 				}
 
 				if(tileEntity.shouldRenderFace(EnumFacing.UP)) {
-					builder.pos(x, y + 0.75, z).color(f3, f4, f5, 1.0F).endVertex();
-					builder.pos(x + 1.0, y + 0.75, z).color(f3, f4, f5, 1.0F).endVertex();
-					builder.pos(x + 1.0, y + 0.75, z + 1.0).color(f3, f4, f5, 1.0F).endVertex();
-					builder.pos(x, y + 0.75, z + 1.0).color(f3, f4, f5, 1.0F).endVertex();
+					builder.pos(x, y + offset, z).color(f3, f4, f5, 1.0F).endVertex();
+					builder.pos(x + 1.0, y + offset, z).color(f3, f4, f5, 1.0F).endVertex();
+					builder.pos(x + 1.0, y + offset, z + 1.0).color(f3, f4, f5, 1.0F).endVertex();
+					builder.pos(x, y + offset, z + 1.0).color(f3, f4, f5, 1.0F).endVertex();
 				}
 			}
 
@@ -220,6 +203,46 @@ public class TileEntityEndPortalRenderer extends
 		if(flag) {
 			mc.entityRenderer.setupFogColor(false);
 		}
+	}
+
+	//From 1.13+
+	private int getPasses(double d) {
+		if(d > 36864.0) {
+			return 1;
+		}
+
+		if(d > 25600.0) {
+			return 3;
+		}
+
+		if(d > 16384.0) {
+			return 5;
+		}
+
+		if(d > 9216.0) {
+			return 7;
+		}
+
+		if(d > 4096.0) {
+			return 9;
+		}
+
+		if(d > 1024.0) {
+			return 11;
+		}
+
+		if(d > 576.0) {
+			return 13;
+		}
+
+		if(d > 256.0) {
+			return 14;
+		}
+		return 15;
+	}
+
+	private float getOffset() {
+		return 0.75F;
 	}
 
 	private FloatBuffer getBuffer(float f1, float f2, float f3, float f4) {

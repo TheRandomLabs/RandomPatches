@@ -4,7 +4,7 @@ import com.google.common.eventbus.Subscribe;
 import com.therandomlabs.randomlib.TRLUtils;
 import com.therandomlabs.randomlib.config.CommandConfigReload;
 import com.therandomlabs.randomlib.config.ConfigManager;
-import com.therandomlabs.randompatches.client.TileEntityEndPortalRenderer;
+import com.therandomlabs.randompatches.client.TileEntityRPEndPortalRenderer;
 import com.therandomlabs.randompatches.config.RPConfig;
 import com.therandomlabs.randompatches.patch.EntityBoatPatch;
 import com.therandomlabs.randompatches.patch.EntityPatch;
@@ -72,7 +72,7 @@ public final class RandomPatches {
 			ClientCommandHandler.instance.registerCommand(new CommandConfigReload(
 					"rpreloadclient",
 					RPConfig.class,
-					phase -> RPConfig.Window.setWindowSettings =
+					(phase, command, sender) -> RPConfig.Window.setWindowSettings =
 							phase == CommandConfigReload.ReloadPhase.PRE,
 					Side.CLIENT
 			));
@@ -94,7 +94,7 @@ public final class RandomPatches {
 			event.registerServerCommand(new CommandConfigReload(
 					"rpreload",
 					RPConfig.class,
-					phase -> RPConfig.Window.setWindowSettings =
+					(phase, command, sender) -> RPConfig.Window.setWindowSettings =
 							phase == CommandConfigReload.ReloadPhase.PRE,
 					Side.SERVER,
 					"RandomPatches configuration reloaded!"
@@ -112,7 +112,7 @@ public final class RandomPatches {
 		}
 
 		if(RPConfig.Misc.areEndPortalTweaksEnabled()) {
-			final TileEntityEndPortalRenderer renderer = new TileEntityEndPortalRenderer();
+			final TileEntityRPEndPortalRenderer renderer = new TileEntityRPEndPortalRenderer();
 			renderer.setRendererDispatcher(TileEntityRendererDispatcher.instance);
 			TileEntityRendererDispatcher.instance.renderers.put(
 					TileEntityEndPortal.class, renderer
