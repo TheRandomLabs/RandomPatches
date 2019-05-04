@@ -90,7 +90,7 @@ public final class RandomPatches {
 
 	@Subscribe
 	public void serverStarting(FMLServerStartingEvent event) {
-		if(RPConfig.Misc.rpreload) {
+		if(RPConfig.Misc.rpreload && TRLUtils.MC_VERSION_NUMBER > 8) {
 			event.registerServerCommand(new CommandConfigReload(
 					"rpreload",
 					RPConfig.class,
