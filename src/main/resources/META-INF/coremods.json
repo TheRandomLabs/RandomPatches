@@ -1,3 +1,12 @@
 {
-	"RandomPatches NetHandlerPlayServer Transformer": "NetHandlerPlayServer.js"
+	//Client
+	"RandomPatches ItemPotion Transformer": "patches/client/ItemPotion.js",
+
+	//End Portals
+
+	//Misc
+	"RandomPatches ItemBucket Transformer": "patches/ItemBucketPatch.js",
+	"RandomPatches NetHandlerLoginServer Transformer": "patches/NetHandlerLoginServer.js",
+	"RandomPatches NetHandlerPlayServer Transformer": "patches/NetHandlerPlayServer.js"
+
 }

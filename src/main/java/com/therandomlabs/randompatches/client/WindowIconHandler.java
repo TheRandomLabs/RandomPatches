@@ -1,4 +1,4 @@
-package com.therandomlabs.randompatches.util;
+package com.therandomlabs.randompatches.client;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

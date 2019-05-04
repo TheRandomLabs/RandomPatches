@@ -1,11 +1,16 @@
 var Opcodes = Java.type("org.objectweb.asm.Opcodes");
+
+var FieldInsnNode = Java.type("org.objectweb.asm.tree.FieldInsnNode");
 var InsnNode = Java.type("org.objectweb.asm.tree.InsnNode");
+var JumpInsnNode = Java.type("org.objectweb.asm.tree.JumpInsnNode");
 var LabelNode = Java.type("org.objectweb.asm.tree.LabelNode");
 var VarInsnNode = Java.type("org.objectweb.asm.tree.VarInsnNode");
-var FieldInsnNode = Java.type("org.objectweb.asm.tree.FieldInsnNode");
-var JumpInsnNode = Java.type("org.objectweb.asm.tree.JumpInsnNode");
 
 var deobfuscated;
+
+var tickPatched;
+var processPlayerPatched;
+var processVehicleMovePatched;
 
 function log(message) {
 	print("[RandomPatches NetHandlerPlayServer Transformer]: " + message);
@@ -37,15 +42,25 @@ function initializeCoreMod() {
 				for(var i in methods) {
 					var method = methods[i];
 
+					if(tickPatched && processPlayerPatched && processVehicleMovePatched) {
+						break;
+					}
+
 					if(patch(method, "tick", "func_73660_a", patchTick)) {
+						tickPatched = true;
 						continue;
 					}
 
 					if(patch(method, "processPlayer", "func_147347_a", patchProcessPlayer)) {
+						processPlayerPatched = true;
 						continue;
 					}
 
-					patch(method, "processVehicleMove", "func_184338_a", patchProcessVehicleMove);
+					if(patch(
+							method, "processVehicleMove", "func_184338_a", patchProcessVehicleMove
+					)) {
+						processVehicleMovePatched = true;
+					}
 				}
 
 				return classNode;

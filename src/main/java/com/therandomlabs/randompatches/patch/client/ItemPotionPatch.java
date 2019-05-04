@@ -1,24 +1,18 @@
 package com.therandomlabs.randompatches.patch.client;
 
-import com.therandomlabs.randompatches.Patch;
-import org.objectweb.asm.Opcodes;
-import org.objectweb.asm.tree.ClassNode;
-import org.objectweb.asm.tree.InsnList;
-import org.objectweb.asm.tree.InsnNode;
-import org.objectweb.asm.tree.MethodNode;
+import com.therandomlabs.randompatches.RPConfig;
+import net.minecraft.item.ItemStack;
+import net.minecraft.potion.PotionUtils;
 
-public final class ItemPotionPatch extends Patch {
-	@Override
-	public boolean apply(ClassNode node) {
-		final MethodNode method = findMethod(node, "hasEffect", "func_77962_s");
+public final class ItemPotionPatch {
+	private ItemPotionPatch() {}
 
-		final InsnList list = new InsnList();
+	public static boolean hasEffect(ItemStack stack) {
+		if(stack.isEnchanted()) {
+			return true;
+		}
 
-		list.add(new InsnNode(Opcodes.ICONST_0));
-		list.add(new InsnNode(Opcodes.IRETURN));
-
-		method.instructions = list;
-
-		return true;
+		return !RPConfig.Client.removePotionGlint &&
+				!PotionUtils.getEffectsFromStack(stack).isEmpty();
 	}
 }

@@ -1,7 +1,7 @@
 package com.therandomlabs.randompatches;
 
 import com.therandomlabs.randomlib.config.Config;
-import com.therandomlabs.randompatches.util.WindowIconHandler;
+import com.therandomlabs.randompatches.client.WindowIconHandler;
 import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.glfw.GLFW;
@@ -31,6 +31,9 @@ public final class RPConfig {
 						"the Multiplayer or Realms menu."
 		)
 		public static boolean forceTitleScreenOnDisconnect = RandomPatches.IS_DEOBFUSCATED;
+
+		@Config.Property("Whether to remove the glowing effect from potions.")
+		public static boolean removePotionGlint = RandomPatches.IS_DEOBFUSCATED;
 
 		@Config.RequiresWorldReload
 		@Config.Property("Enables the /rpreloadclient command.")
