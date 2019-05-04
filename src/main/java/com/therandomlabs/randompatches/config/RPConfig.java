@@ -65,6 +65,12 @@ public final class RPConfig {
 		public static boolean patchTitleScreenOnDisconnect = true;
 
 		@Config.RequiresMCRestart
+		@Config.Property(
+				"Whether to apply the potion glint patch so that the potion glowing effect can " +
+						"be toggled."
+		)
+		public static boolean patchPotionGlint = true;
+
 		@Config.Property("Whether to remove the glowing effect from potions.")
 		public static boolean removePotionGlint = RandomPatches.IS_DEOBFUSCATED;
 

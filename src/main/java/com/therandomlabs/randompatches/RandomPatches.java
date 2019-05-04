@@ -150,7 +150,7 @@ public final class RandomPatches {
 			register("net.minecraft.entity.item.EntityMinecart", new EntityMinecartPatch());
 		}
 
-		if(RPConfig.Client.removePotionGlint && TRLUtils.IS_CLIENT) {
+		if(RPConfig.Client.patchPotionGlint && TRLUtils.IS_CLIENT) {
 			register("net.minecraft.item.ItemPotion", new ItemPotionPatch());
 		}
 

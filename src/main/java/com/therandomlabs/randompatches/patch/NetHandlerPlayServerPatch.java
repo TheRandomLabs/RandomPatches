@@ -176,8 +176,11 @@ public final class NetHandlerPlayServerPatch extends Patch {
 
 			final LdcInsnNode ldc = (LdcInsnNode) instruction;
 
-			if(elytra == null && ((Float) 300.0F).equals(ldc.cst)) {
-				elytra = ldc;
+			if(elytra == null) {
+				if(((Float) 300.0F).equals(ldc.cst)) {
+					elytra = ldc;
+				}
+
 				continue;
 			}
 
