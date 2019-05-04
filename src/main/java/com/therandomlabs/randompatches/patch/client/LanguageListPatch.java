@@ -20,7 +20,9 @@ public final class LanguageListPatch extends Patch {
 			if(instruction.getOpcode() == Opcodes.INVOKEVIRTUAL) {
 				refreshResources = (MethodInsnNode) instruction;
 
-				if("refreshResources".equals(refreshResources.name)) {
+				//On 1.8, the vanilla refreshResources is called
+				if("refreshResources".equals(refreshResources.name) ||
+						"func_110436_a".equals(refreshResources.name)) {
 					break;
 				}
 

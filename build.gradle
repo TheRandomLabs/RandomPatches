@@ -52,7 +52,7 @@ artifacts {
 }
 
 minecraft {
-	version = "1.12.2-14.23.5.2815"
+	version = "1.12.2-14.23.5.2836"
 	runDir = "run"
 	mappings = "stable_39"
 
