@@ -1,5 +1,6 @@
 {
 	//Client
+	"RandomPatches GuiIngameMenu$1 Transformer": "patches/client/GuiIngameMenu$1.js",
 	"RandomPatches GuiLanguage$List Transformer": "patches/client/GuiLanguage$List.js",
 	"RandomPatches ItemPotion Transformer": "patches/client/ItemPotion.js",
 	"RandomPatches KeyboardListener Transformer": "patches/client/KeyboardListener.js",
