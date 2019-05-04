@@ -2,8 +2,6 @@ var Opcodes = Java.type("org.objectweb.asm.Opcodes");
 
 var FieldInsnNode = Java.type("org.objectweb.asm.tree.FieldInsnNode");
 
-var deobfuscated;
-
 function log(message) {
 	print("[RandomPatches MainWindow Transformer]: " + message);
 }
@@ -13,7 +11,6 @@ function patch(method, name, srgName, patchFunction) {
 		return false;
 	}
 
-	deobfuscated = method.name == name;
 	log("Patching method: " + name + " (" + method.name + ")");
 	patchFunction(method.instructions);
 	return true;
@@ -45,6 +42,8 @@ function patchConstructor(instructions) {
 	var title;
 	var loadIcon;
 
+	var deobfuscated;
+
 	for(var i = 0; i < instructions.size(); i++) {
 		var instruction = instructions.get(i);
 
@@ -59,6 +58,7 @@ function patchConstructor(instructions) {
 		if(instruction.getOpcode() == Opcodes.INVOKESPECIAL &&
 				(instruction.name == "loadIcon" || instruction.name == "func_198110_t")) {
 			loadIcon = instruction;
+			deobfuscated = loadIcon.name == "loadIcon";
 			break;
 		}
 	}
