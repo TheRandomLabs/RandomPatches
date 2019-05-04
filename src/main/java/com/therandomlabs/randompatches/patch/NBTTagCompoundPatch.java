@@ -11,77 +11,21 @@ import com.mojang.authlib.minecraft.MinecraftProfileTexture;
 import com.mojang.authlib.properties.Property;
 import com.mojang.authlib.yggdrasil.response.MinecraftTexturesPayload;
 import com.mojang.util.UUIDTypeAdapter;
-import com.therandomlabs.randompatches.Patch;
 import com.therandomlabs.randompatches.RPConfig;
 import net.minecraft.nbt.INBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTUtil;
 import org.apache.commons.codec.binary.Base64;
-import org.objectweb.asm.Opcodes;
-import org.objectweb.asm.tree.AbstractInsnNode;
-import org.objectweb.asm.tree.ClassNode;
-import org.objectweb.asm.tree.MethodInsnNode;
-import org.objectweb.asm.tree.MethodNode;
 
-public final class NBTTagCompoundPatch extends Patch {
+public final class NBTTagCompoundPatch {
 	public static final Gson GSON =
 			new GsonBuilder().registerTypeAdapter(UUID.class, new UUIDTypeAdapter()).create();
 
-	@Override
-	public boolean apply(ClassNode node) {
-		final MethodNode method = findMethod(node, "equals");
-
-		MethodInsnNode entrySet1 = null;
-		MethodInsnNode entrySet2 = null;
-		MethodInsnNode equals = null;
-
-		for(int i = 0; i < method.instructions.size(); i++) {
-			final AbstractInsnNode instruction = method.instructions.get(i);
-			final int opcode = instruction.getOpcode();
-
-			if(opcode != Opcodes.INVOKEINTERFACE) {
-				continue;
-			}
-
-			final MethodInsnNode methodInsnNode = (MethodInsnNode) instruction;
-
-			if(entrySet1 == null) {
-				if("entrySet".equals(methodInsnNode.name)) {
-					entrySet1 = methodInsnNode;
-				}
-
-				continue;
-			}
-
-			if(entrySet2 == null) {
-				if("entrySet".equals(methodInsnNode.name)) {
-					entrySet2 = methodInsnNode;
-				}
-
-				continue;
-			}
-
-			if("equals".equals(methodInsnNode.name)) {
-				equals = methodInsnNode;
-				break;
-			}
-		}
-
-		method.instructions.remove(entrySet1);
-		method.instructions.remove(entrySet2);
-
-		equals.setOpcode(Opcodes.INVOKESTATIC);
-		equals.owner = getName(NBTTagCompoundPatch.class);
-		equals.name = "areTagMapsEqual";
-		equals.desc = "(Ljava/util/Map;Ljava/util/Map;)Z";
-		equals.itf = false;
-
-		return true;
-	}
+	private NBTTagCompoundPatch() {}
 
 	public static boolean areTagMapsEqual(Map<String, INBTBase> tagMap1,
 			Map<String, INBTBase> tagMap2) {
-		if(tagMap1.entrySet().equals(tagMap2.entrySet())) {
+		if(tagMap1.equals(tagMap2)) {
 			return true;
 		}
 

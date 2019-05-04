@@ -22,8 +22,6 @@ function initializeCoreMod() {
 				"name": "net.minecraft.item.crafting.ServerRecipePlacer"
 			},
 			"transformer": function(classNode) {
-				log("Transforming class: " + classNode.name);
-
 				var methods = classNode.methods;
 
 				for(var i in methods) {

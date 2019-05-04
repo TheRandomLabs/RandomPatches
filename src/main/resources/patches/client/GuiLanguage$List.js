@@ -24,8 +24,6 @@ function initializeCoreMod() {
 				"name": "net.minecraft.client.gui.GuiLanguage$List"
 			},
 			"transformer": function(classNode) {
-				log("Transforming class: " + classNode.name);
-
 				var methods = classNode.methods;
 
 				for(var i in methods) {

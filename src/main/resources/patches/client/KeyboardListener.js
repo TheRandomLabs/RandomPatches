@@ -25,8 +25,6 @@ function initializeCoreMod() {
 				"name": "net.minecraft.client.KeyboardListener"
 			},
 			"transformer": function(classNode) {
-				log("Transforming class: " + classNode.name);
-
 				var methods = classNode.methods;
 
 				for(var i in methods) {
