@@ -64,7 +64,7 @@ public class KeyboardListenerPatch extends Patch {
 
 		final MethodInsnNode callHandleKeypress = new MethodInsnNode(
 				Opcodes.INVOKESTATIC,
-				getName(MainWindowPatch.class),
+				getName(KeyboardListenerPatch.class),
 				"handleKeypress",
 				"()V",
 				false
