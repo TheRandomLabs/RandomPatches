@@ -129,6 +129,7 @@ public final class RPConfig {
 				"Leave this and the 32x32 icon blank to use the default icon."
 		})
 		public static String icon16 = DEFAULT_ICON;
+
 		@Config.Property({
 				"The path to the 32x32 Minecraft window icon.",
 				"Leave this and the 16x16 icon blank to use the default icon."
@@ -142,6 +143,10 @@ public final class RPConfig {
 		public static boolean setWindowSettings = true;
 
 		public static void onReload() {
+			onReload(true);
+		}
+
+		public static void onReload(boolean applySettings) {
 			if(icon16.isEmpty() && !icon32.isEmpty()) {
 				icon16 = icon32;
 			}
@@ -150,7 +155,7 @@ public final class RPConfig {
 				icon32 = icon16;
 			}
 
-			if(RandomPatches.IS_CLIENT && setWindowSettings) {
+			if(RandomPatches.IS_CLIENT && setWindowSettings && applySettings) {
 				Minecraft.getInstance().addScheduledTask(Window::setWindowSettings);
 			}
 		}
@@ -162,12 +167,13 @@ public final class RPConfig {
 				return;
 			}
 
+			final long handle = mainWindow.getHandle();
+
 			if(!icon16.isEmpty()) {
-				//If icon16 is empty, WindowIconHandler loads the Minecraft class too early
-				WindowIconHandler.setWindowIcon();
+				WindowIconHandler.setWindowIcon(handle);
 			}
 
-			GLFW.glfwSetWindowTitle(mainWindow.getHandle(), title);
+			GLFW.glfwSetWindowTitle(handle, title);
 		}
 	}
 

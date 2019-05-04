@@ -1,6 +1,7 @@
 {
 	//Client
 	"RandomPatches ItemPotion Transformer": "patches/client/ItemPotion.js",
+	"RandomPatches MainWindow Transformer": "patches/client/MainWindow.js",
 
 	//End Portals
 

@@ -28,10 +28,7 @@ public final class RandomPatches {
 
 	public RandomPatches() {
 		MinecraftForge.EVENT_BUS.addListener(this::serverStarting);
-
 		RPConfig.Timeouts.onReload();
-		RPConfig.Window.onReload();
-
 		PROXY.init();
 	}
 

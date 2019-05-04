@@ -22,7 +22,9 @@ import org.lwjgl.system.MemoryStack;
 import org.lwjgl.system.MemoryUtil;
 
 public class WindowIconHandler {
-	public static void setWindowIcon() {
+	public static void setWindowIcon(long handle) {
+		RPConfig.Window.onReload(false);
+
 		final Util.EnumOS os = Util.getOSType();
 
 		if(os != Util.EnumOS.OSX) {
@@ -83,7 +85,7 @@ public class WindowIconHandler {
 					iamgeBuffer.pixels(buffer2);
 					iamgeBuffer.position(0);
 
-					GLFW.glfwSetWindowIcon(mc.mainWindow.getHandle(), iamgeBuffer);
+					GLFW.glfwSetWindowIcon(handle, iamgeBuffer);
 
 					STBImage.stbi_image_free(buffer1);
 					STBImage.stbi_image_free(buffer2);
