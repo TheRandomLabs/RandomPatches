@@ -1,4 +1,4 @@
-package com.therandomlabs.randompatches.util;
+package com.therandomlabs.randompatches.client;
 
 import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;

@@ -3,7 +3,7 @@ package com.therandomlabs.randompatches.config;
 import com.therandomlabs.randomlib.TRLUtils;
 import com.therandomlabs.randomlib.config.Config;
 import com.therandomlabs.randompatches.RandomPatches;
-import com.therandomlabs.randompatches.util.WindowIconHandler;
+import com.therandomlabs.randompatches.client.WindowIconHandler;
 import org.lwjgl.opengl.Display;
 
 @Config(RandomPatches.MOD_ID)
@@ -26,7 +26,7 @@ public final class RPConfig {
 				"The buoyancy of boats when they are under flowing water.",
 				"The vanilla default is -0.0007."
 		})
-		public static double underwaterBoatBuoyancy = 0.023;
+		public static double underwaterBoatBuoyancy = RandomPatches.IS_DEOBFUSCATED ? 5.0 : 0.023;
 	}
 
 	public static final class Client {
@@ -266,21 +266,11 @@ public final class RPConfig {
 		}
 
 		public static void onReloadClient() {
-			if(Display.isCreated()) {
-				setWindowSettings();
-			}
-		}
-
-		public static void setWindowSettings() {
-			if(!setWindowSettings || !TRLUtils.IS_CLIENT || RandomPatches.ITLT_INSTALLED) {
+			if(!Display.isCreated() || RandomPatches.ITLT_INSTALLED) {
 				return;
 			}
 
-			if(!icon16.isEmpty()) {
-				//If icon16 is empty, WindowIconHandler loads the Minecraft class too early
-				WindowIconHandler.setWindowIcon();
-			}
-
+			WindowIconHandler.setWindowIcon();
 			Display.setTitle(title);
 		}
 	}

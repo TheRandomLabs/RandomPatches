@@ -78,15 +78,9 @@ public final class EntityPatch extends Patch {
 			}
 		}
 
-		final VarInsnNode loadThis = new VarInsnNode(
-				Opcodes.ALOAD,
-				0
-		);
+		final VarInsnNode loadThis = new VarInsnNode(Opcodes.ALOAD, 0);
 
-		final VarInsnNode loadCompound = new VarInsnNode(
-				Opcodes.ALOAD,
-				1
-		);
+		final VarInsnNode loadCompound = new VarInsnNode(Opcodes.ALOAD, 1);
 
 		final MethodInsnNode writeAABBTag = new MethodInsnNode(
 				Opcodes.INVOKESTATIC,
@@ -131,15 +125,9 @@ public final class EntityPatch extends Patch {
 
 		jumpIfShouldNotSetPosition.label = jumpTo;
 
-		final VarInsnNode loadThis = new VarInsnNode(
-				Opcodes.ALOAD,
-				0
-		);
+		final VarInsnNode loadThis = new VarInsnNode(Opcodes.ALOAD, 0);
 
-		final VarInsnNode loadCompound = new VarInsnNode(
-				Opcodes.ALOAD,
-				1
-		);
+		final VarInsnNode loadCompound = new VarInsnNode(Opcodes.ALOAD, 1);
 
 		final MethodInsnNode readAABBTag = new MethodInsnNode(
 				Opcodes.INVOKESTATIC,

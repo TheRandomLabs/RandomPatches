@@ -17,7 +17,7 @@ import com.therandomlabs.randompatches.patch.ServerRecipeBookHelperPatch;
 import com.therandomlabs.randompatches.patch.WorldServerPatch;
 import com.therandomlabs.randompatches.patch.client.GuiIngameMenuPatch;
 import com.therandomlabs.randompatches.patch.client.ItemPotionPatch;
-import com.therandomlabs.randompatches.patch.client.LanguageListPatch;
+import com.therandomlabs.randompatches.patch.client.GuiLanguageListPatch;
 import com.therandomlabs.randompatches.patch.client.MinecraftPatch;
 import com.therandomlabs.randompatches.patch.endportal.BlockEndPortalPatch;
 import com.therandomlabs.randompatches.patch.endportal.BlockModelShapesPatch;
@@ -118,8 +118,6 @@ public final class RandomPatches {
 					TileEntityEndPortal.class, renderer
 			);
 		}
-
-		RPConfig.Window.setWindowSettings();
 	}
 
 	public static void registerPatches() {
@@ -139,7 +137,7 @@ public final class RandomPatches {
 		}
 
 		if(RPConfig.Client.fastLanguageSwitch && TRLUtils.IS_CLIENT) {
-			register("net.minecraft.client.gui.GuiLanguage$List", new LanguageListPatch());
+			register("net.minecraft.client.gui.GuiLanguage$List", new GuiLanguageListPatch());
 		}
 
 		if(RPConfig.Client.patchMinecraftClass && TRLUtils.IS_CLIENT) {

@@ -1,6 +1,7 @@
 package com.therandomlabs.randompatches.patch.client;
 
 import com.therandomlabs.randompatches.RandomPatches;
+import com.therandomlabs.randompatches.client.WindowIconHandler;
 import com.therandomlabs.randompatches.config.RPConfig;
 import com.therandomlabs.randompatches.core.Patch;
 import net.minecraft.client.Minecraft;
@@ -15,6 +16,7 @@ import org.lwjgl.input.Keyboard;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.AbstractInsnNode;
 import org.objectweb.asm.tree.ClassNode;
+import org.objectweb.asm.tree.InsnNode;
 import org.objectweb.asm.tree.IntInsnNode;
 import org.objectweb.asm.tree.LdcInsnNode;
 import org.objectweb.asm.tree.MethodInsnNode;
@@ -23,6 +25,8 @@ import org.objectweb.asm.tree.MethodNode;
 public final class MinecraftPatch extends Patch {
 	public static final class ToggleNarratorKeybind {
 		public static KeyBinding keybind;
+
+		private ToggleNarratorKeybind() {}
 
 		public static void register() {
 			keybind = new KeyBinding("key.narrator", new IKeyConflictContext() {
@@ -45,9 +49,14 @@ public final class MinecraftPatch extends Patch {
 
 	@Override
 	public boolean apply(ClassNode node) {
-		if(!RandomPatches.ITLT_INSTALLED &&
-				!RandomPatches.DEFAULT_WINDOW_TITLE.equals(RPConfig.Window.title)) {
-			patchCreateDisplay(findMethod(node, "createDisplay", "func_175609_am"));
+		if(!RandomPatches.ITLT_INSTALLED) {
+			if(!RandomPatches.DEFAULT_WINDOW_TITLE.equals(RPConfig.Window.title)) {
+				patchCreateDisplay(findMethod(node, "createDisplay", "func_175609_am"));
+			}
+
+			if(!RPConfig.Window.icon16.isEmpty()) {
+				patchSetWindowIcon(findMethod(node, "setWindowIcon", "func_175594_ao"));
+			}
 		}
 
 		if(RPConfig.Client.isNarratorKeybindEnabled()) {
@@ -79,8 +88,6 @@ public final class MinecraftPatch extends Patch {
 	}
 
 	private static void patchCreateDisplay(MethodNode method) {
-		LdcInsnNode ldc = null;
-
 		for(int i = 0; i < method.instructions.size(); i++) {
 			final AbstractInsnNode instruction = method.instructions.get(i);
 
@@ -88,12 +95,24 @@ public final class MinecraftPatch extends Patch {
 				final MethodInsnNode setTitle = (MethodInsnNode) instruction;
 
 				if("setTitle".equals(setTitle.name)) {
-					ldc = (LdcInsnNode) setTitle.getPrevious();
+					((LdcInsnNode) setTitle.getPrevious()).cst = RPConfig.Window.title;
+					return;
 				}
 			}
 		}
+	}
 
-		ldc.cst = RPConfig.Window.title;
+	private static void patchSetWindowIcon(MethodNode method) {
+		final MethodInsnNode setWindowIcon = new MethodInsnNode(
+				Opcodes.INVOKESTATIC,
+				getName(WindowIconHandler.class),
+				"setWindowIcon",
+				"()V",
+				false
+		);
+
+		method.instructions.insertBefore(method.instructions.getFirst(), setWindowIcon);
+		method.instructions.insert(setWindowIcon, new InsnNode(Opcodes.RETURN));
 	}
 
 	private static void patchDispatchKeypresses(MethodNode method) {

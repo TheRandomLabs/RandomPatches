@@ -8,7 +8,7 @@ import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.MethodInsnNode;
 import org.objectweb.asm.tree.MethodNode;
 
-public final class LanguageListPatch extends Patch {
+public final class GuiLanguageListPatch extends Patch {
 	@Override
 	public boolean apply(ClassNode node) {
 		final MethodNode method = findMethod(node, "elementClicked", "func_148144_a");
@@ -32,7 +32,7 @@ public final class LanguageListPatch extends Patch {
 
 		final MethodInsnNode callReloadLanguage = new MethodInsnNode(
 				Opcodes.INVOKESTATIC,
-				getName(LanguageListPatch.class),
+				getName(GuiLanguageListPatch.class),
 				"reloadLanguage",
 				"()V",
 				false

@@ -4,7 +4,6 @@ import com.therandomlabs.randompatches.core.Patch;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.FieldInsnNode;
-import org.objectweb.asm.tree.InsnList;
 import org.objectweb.asm.tree.InsnNode;
 import org.objectweb.asm.tree.JumpInsnNode;
 import org.objectweb.asm.tree.LabelNode;
@@ -16,7 +15,6 @@ public final class TileEntityEndPortalPatch extends Patch {
 	@Override
 	public boolean apply(ClassNode node) {
 		final MethodNode method = findMethod(node, "shouldRenderFace", "func_184313_a");
-		final InsnList list = new InsnList();
 
 		final LabelNode labelReturnTrue = new LabelNode();
 
@@ -56,19 +54,19 @@ public final class TileEntityEndPortalPatch extends Patch {
 
 		final InsnNode returnTrue = new InsnNode(Opcodes.IRETURN);
 
-		list.add(loadFacing);
-		list.add(getUp);
-		list.add(returnTrueIfEqual);
-		list.add(loadFacing2);
-		list.add(getDown);
-		list.add(returnTrueIfEqual2);
-		list.add(loadZero);
-		list.add(returnFalse);
-		list.add(labelReturnTrue);
-		list.add(loadOne);
-		list.add(returnTrue);
+		method.instructions.clear();
 
-		method.instructions = list;
+		method.instructions.add(loadFacing);
+		method.instructions.add(getUp);
+		method.instructions.add(returnTrueIfEqual);
+		method.instructions.add(loadFacing2);
+		method.instructions.add(getDown);
+		method.instructions.add(returnTrueIfEqual2);
+		method.instructions.add(loadZero);
+		method.instructions.add(returnFalse);
+		method.instructions.add(labelReturnTrue);
+		method.instructions.add(loadOne);
+		method.instructions.add(returnTrue);
 
 		return true;
 	}
