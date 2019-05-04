@@ -4,7 +4,7 @@ import com.google.common.eventbus.Subscribe;
 import com.therandomlabs.randomlib.TRLUtils;
 import com.therandomlabs.randomlib.config.CommandConfigReload;
 import com.therandomlabs.randomlib.config.ConfigManager;
-import com.therandomlabs.randompatches.client.TileEntityRPEndPortalRenderer;
+import com.therandomlabs.randompatches.client.TileEntityEndPortalRenderer;
 import com.therandomlabs.randompatches.config.RPConfig;
 import com.therandomlabs.randompatches.patch.EntityBoatPatch;
 import com.therandomlabs.randompatches.patch.EntityPatch;
@@ -112,7 +112,7 @@ public final class RandomPatches {
 		}
 
 		if(RPConfig.Misc.areEndPortalTweaksEnabled()) {
-			final TileEntityRPEndPortalRenderer renderer = new TileEntityRPEndPortalRenderer();
+			final TileEntityEndPortalRenderer renderer = new TileEntityEndPortalRenderer();
 			renderer.setRendererDispatcher(TileEntityRendererDispatcher.instance);
 			TileEntityRendererDispatcher.instance.renderers.put(
 					TileEntityEndPortal.class, renderer

@@ -9,8 +9,6 @@ import org.objectweb.asm.tree.MethodInsnNode;
 import org.objectweb.asm.tree.MethodNode;
 
 public final class LanguageListPatch extends Patch {
-	public static final String REFRESH_RESOURCES = getName("refreshResources", "func_110436_a");
-
 	@Override
 	public boolean apply(ClassNode node) {
 		final MethodNode method = findMethod(node, "elementClicked", "func_148144_a");
@@ -22,7 +20,7 @@ public final class LanguageListPatch extends Patch {
 			if(instruction.getOpcode() == Opcodes.INVOKEVIRTUAL) {
 				refreshResources = (MethodInsnNode) instruction;
 
-				if(REFRESH_RESOURCES.equals(refreshResources.name)) {
+				if("refreshResources".equals(refreshResources.name)) {
 					break;
 				}
 
