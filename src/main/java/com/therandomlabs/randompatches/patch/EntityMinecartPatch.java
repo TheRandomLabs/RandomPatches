@@ -7,7 +7,7 @@ import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.MethodNode;
 import org.objectweb.asm.tree.TypeInsnNode;
 
-public final class MinecartPatch extends Patch {
+public final class EntityMinecartPatch extends Patch {
 	@Override
 	public boolean apply(ClassNode node) {
 		final MethodNode method = findMethod(node, "moveAlongTrack", "func_180460_a");

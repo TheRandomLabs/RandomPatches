@@ -9,7 +9,7 @@ import com.therandomlabs.randompatches.config.RPConfig;
 import com.therandomlabs.randompatches.patch.EntityBoatPatch;
 import com.therandomlabs.randompatches.patch.EntityPatch;
 import com.therandomlabs.randompatches.patch.ItemBucketPatch;
-import com.therandomlabs.randompatches.patch.MinecartPatch;
+import com.therandomlabs.randompatches.patch.EntityMinecartPatch;
 import com.therandomlabs.randompatches.patch.NBTTagCompoundPatch;
 import com.therandomlabs.randompatches.patch.NetHandlerLoginServerPatch;
 import com.therandomlabs.randompatches.patch.NetHandlerPlayServerPatch;
@@ -147,7 +147,7 @@ public final class RandomPatches {
 		}
 
 		if(RPConfig.Misc.minecartAIFix) {
-			register("net.minecraft.entity.item.EntityMinecart", new MinecartPatch());
+			register("net.minecraft.entity.item.EntityMinecart", new EntityMinecartPatch());
 		}
 
 		if(RPConfig.Client.removePotionGlint && TRLUtils.IS_CLIENT) {

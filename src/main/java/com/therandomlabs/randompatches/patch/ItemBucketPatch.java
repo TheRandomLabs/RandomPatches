@@ -34,6 +34,7 @@ public final class ItemBucketPatch extends Patch {
 			}
 		}
 
+		//Get IBlockState
 		((VarInsnNode) isSolid.getPrevious()).var = 4;
 
 		isSolid.setOpcode(Opcodes.INVOKESTATIC);
