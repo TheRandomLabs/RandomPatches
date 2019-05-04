@@ -72,7 +72,7 @@ public final class NetHandlerPlayServerPatch extends Patch {
 			final AbstractInsnNode instruction = method.instructions.get(i);
 
 			if(keepAliveInterval == null) {
-				if(instruction.getType() == AbstractInsnNode.LDC_INSN) {
+				if(instruction.getOpcode() == Opcodes.LDC) {
 					keepAliveInterval = (LdcInsnNode) instruction;
 
 					if(TRLUtils.MC_VERSION_NUMBER > 11) {
