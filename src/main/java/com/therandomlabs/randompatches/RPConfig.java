@@ -19,7 +19,7 @@ public final class RPConfig {
 				"The buoyancy of boats when they are under flowing water.",
 				"The vanilla default is -0.0007."
 		})
-		public static double underwaterBoatBuoyancy = 0.023;
+		public static double underwaterBoatBuoyancy = RandomPatches.IS_DEOBFUSCATED ? 5.0 : 0.023;
 	}
 
 	public static final class Client {

@@ -6,7 +6,8 @@
 	"RandomPatches KeyboardListener Transformer": "patches/client/KeyboardListener.js",
 	"RandomPatches MainWindow Transformer": "patches/client/MainWindow.js",
 	//Misc
-	"RandomPatches ItemBucket Transformer": "patches/ItemBucketPatch.js",
+	"RandomPatches EntityBoat Transformer": "patches/EntityBoat.js",
+	"RandomPatches ItemBucket Transformer": "patches/ItemBucket.js",
 	"RandomPatches NBTTagCompound Transformer": "patches/NBTTagCompound.js",
 	"RandomPatches NetHandlerLoginServer Transformer": "patches/NetHandlerLoginServer.js",
 	"RandomPatches NetHandlerPlayServer Transformer": "patches/NetHandlerPlayServer.js",
