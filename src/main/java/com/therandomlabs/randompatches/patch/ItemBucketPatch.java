@@ -23,7 +23,7 @@ public final class ItemBucketPatch extends Patch {
 		for(int i = 0; i < method.instructions.size(); i++) {
 			final AbstractInsnNode instruction = method.instructions.get(i);
 
-			if(instruction instanceof MethodInsnNode) {
+			if(instruction.getOpcode() == Opcodes.INVOKEVIRTUAL) {
 				isSolid = (MethodInsnNode) instruction;
 
 				if(IS_SOLID.equals(isSolid.name)) {
