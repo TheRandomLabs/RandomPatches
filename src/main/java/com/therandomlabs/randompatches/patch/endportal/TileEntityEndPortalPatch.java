@@ -1,6 +1,6 @@
 package com.therandomlabs.randompatches.patch.endportal;
 
-import com.therandomlabs.randompatches.core.Patch;
+import com.therandomlabs.randompatches.Patch;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.FieldInsnNode;

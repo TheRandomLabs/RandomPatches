@@ -7,14 +7,14 @@ import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GLAllocation;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
+import net.minecraft.client.renderer.tileentity.TileEntityEndPortalRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.tileentity.TileEntityEndPortal;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.Util;
 
-public class TileEntityEndPortalRenderer extends
-		TileEntitySpecialRenderer<TileEntityEndPortal> {
+public class TileEntityRPEndPortalRenderer extends TileEntityEndPortalRenderer {
 	private static final ResourceLocation END_SKY_TEXTURE =
 			new ResourceLocation("textures/environment/end_sky.png");
 	private static final ResourceLocation END_PORTAL_TEXTURE =
@@ -25,55 +25,34 @@ public class TileEntityEndPortalRenderer extends
 	private static final FloatBuffer MODEL_VIEW = GLAllocation.createDirectFloatBuffer(16);
 	private static final FloatBuffer PROJECTION = GLAllocation.createDirectFloatBuffer(16);
 
-	private static final Minecraft mc = Minecraft.getMinecraft();
+	private static final Minecraft mc = Minecraft.getInstance();
 
 	private final FloatBuffer buffer = GLAllocation.createDirectFloatBuffer(16);
 	private final boolean upsideDown;
 
-	public TileEntityEndPortalRenderer() {
+	public TileEntityRPEndPortalRenderer() {
 		this(false);
 	}
 
-	public TileEntityEndPortalRenderer(boolean upsideDown) {
+	public TileEntityRPEndPortalRenderer(boolean upsideDown) {
 		this.upsideDown = upsideDown;
 	}
 
 	@Override
 	public void render(TileEntityEndPortal tileEntity, double x, double y, double z,
-			float partialTicks, int destroyStage, float alpha) {
+			float partialTicks, int destroyStage) {
 		GlStateManager.disableLighting();
 
 		RANDOM.setSeed(31100L);
 
-		GlStateManager.getFloat(2982, MODEL_VIEW);
-		GlStateManager.getFloat(2983, PROJECTION);
+		GlStateManager.getFloatv(2982, MODEL_VIEW);
+		GlStateManager.getFloatv(2983, PROJECTION);
 
-		final double d = x * x + y * y + z * z;
-		int i;
-
-		if(d > 36864.0) {
-			i = 1;
-		} else if(d > 25600.0) {
-			i = 3;
-		} else if(d > 16384.0) {
-			i = 5;
-		} else if(d > 9216.0) {
-			i = 7;
-		} else if(d > 4096.0) {
-			i = 9;
-		} else if(d > 1024.0) {
-			i = 11;
-		} else if(d > 576.0) {
-			i = 13;
-		} else if(d > 256.0) {
-			i = 14;
-		} else {
-			i = 15;
-		}
-
+		final int passes = getPasses(x * x + y * y + z * z);
+		final float offset = getOffset();
 		boolean flag = false;
 
-		for(int j = 0; j < i; j++) {
+		for(int j = 0; j < passes; j++) {
 			GlStateManager.pushMatrix();
 			float f1 = 2.0F / (18 - j);
 
@@ -90,7 +69,7 @@ public class TileEntityEndPortalRenderer extends
 			if(j >= 1) {
 				bindTexture(END_PORTAL_TEXTURE);
 				flag = true;
-				mc.entityRenderer.setupFogColor(true);
+				mc.gameRenderer.setupFogColor(true);
 			}
 
 			if(j == 1) {
@@ -101,40 +80,44 @@ public class TileEntityEndPortalRenderer extends
 				);
 			}
 
-			GlStateManager.texGen(GlStateManager.TexGen.S, 9216);
-			GlStateManager.texGen(GlStateManager.TexGen.T, 9216);
-			GlStateManager.texGen(GlStateManager.TexGen.R, 9216);
-			GlStateManager.texGen(
+			GlStateManager.texGenMode(GlStateManager.TexGen.S, 9216);
+			GlStateManager.texGenMode(GlStateManager.TexGen.T, 9216);
+			GlStateManager.texGenMode(GlStateManager.TexGen.R, 9216);
+
+			GlStateManager.texGenParam(
 					GlStateManager.TexGen.S, 9474, getBuffer(1.0F, 0.0F, 0.0F, 0.0F)
 			);
-			GlStateManager.texGen(
+			GlStateManager.texGenParam(
 					GlStateManager.TexGen.T, 9474, getBuffer(0.0F, 1.0F, 0.0F, 0.0F)
 			);
-			GlStateManager.texGen(
+			GlStateManager.texGenParam(
 					GlStateManager.TexGen.R, 9474, getBuffer(0.0F, 0.0F, 1.0F, 0.0F)
 			);
-			GlStateManager.enableTexGenCoord(GlStateManager.TexGen.S);
-			GlStateManager.enableTexGenCoord(GlStateManager.TexGen.T);
-			GlStateManager.enableTexGenCoord(GlStateManager.TexGen.R);
+
+			GlStateManager.enableTexGen(GlStateManager.TexGen.S);
+			GlStateManager.enableTexGen(GlStateManager.TexGen.T);
+			GlStateManager.enableTexGen(GlStateManager.TexGen.R);
+
 			GlStateManager.popMatrix();
 			GlStateManager.matrixMode(5890);
 			GlStateManager.pushMatrix();
 			GlStateManager.loadIdentity();
-			GlStateManager.translate(0.5F, 0.5F, 0.0F);
-			GlStateManager.scale(0.5F, 0.5F, 1.0F);
+
+			GlStateManager.translatef(0.5F, 0.5F, 0.0F);
+			GlStateManager.scalef(0.5F, 0.5F, 1.0F);
 
 			final float f2 = j + 1.0F;
 
-			GlStateManager.translate(
+			GlStateManager.translatef(
 					17.0F / f2,
-					(2.0F + f2 / 1.5F) * (Minecraft.getSystemTime() % 800000.0F / 800000.0F),
+					(2.0F + f2 / 1.5F) * (Util.milliTime() % 800000.0F / 800000.0F),
 					0.0F
 			);
-			GlStateManager.rotate((f2 * f2 * 4321.0F + f2 * 9.0F) * 2.0F, 0.0F, 0.0F, 1.0F);
-			GlStateManager.scale(4.5F - f2 / 4.0F, 4.5F - f2 / 4.0F, 1.0F);
+			GlStateManager.rotatef((f2 * f2 * 4321.0F + f2 * 9.0F) * 2.0F, 0.0F, 0.0F, 1.0F);
+			GlStateManager.scalef(4.5F - f2 / 4.0F, 4.5F - f2 / 4.0F, 1.0F);
 
-			GlStateManager.multMatrix(PROJECTION);
-			GlStateManager.multMatrix(MODEL_VIEW);
+			GlStateManager.multMatrixf(PROJECTION);
+			GlStateManager.multMatrixf(MODEL_VIEW);
 
 			final Tessellator tessellator = Tessellator.getInstance();
 			final BufferBuilder builder = tessellator.getBuffer();
@@ -189,17 +172,17 @@ public class TileEntityEndPortalRenderer extends
 				}
 
 				if(tileEntity.shouldRenderFace(EnumFacing.DOWN)) {
-					builder.pos(x, y + 0.75, z + 1.0).color(f3, f4, f5, 1.0F).endVertex();
-					builder.pos(x + 1.0, y + 0.75, z + 1.0).color(f3, f4, f5, 1.0F).endVertex();
-					builder.pos(x + 1.0, y + 0.75, z).color(f3, f4, f5, 1.0F).endVertex();
-					builder.pos(x, y + 0.75, z).color(f3, f4, f5, 1.0F).endVertex();
+					builder.pos(x, y + offset, z + 1.0).color(f3, f4, f5, 1.0F).endVertex();
+					builder.pos(x + 1.0, y + offset, z + 1.0).color(f3, f4, f5, 1.0F).endVertex();
+					builder.pos(x + 1.0, y + offset, z).color(f3, f4, f5, 1.0F).endVertex();
+					builder.pos(x, y + offset, z).color(f3, f4, f5, 1.0F).endVertex();
 				}
 
 				if(tileEntity.shouldRenderFace(EnumFacing.UP)) {
-					builder.pos(x, y + 0.75, z).color(f3, f4, f5, 1.0F).endVertex();
-					builder.pos(x + 1.0, y + 0.75, z).color(f3, f4, f5, 1.0F).endVertex();
-					builder.pos(x + 1.0, y + 0.75, z + 1.0).color(f3, f4, f5, 1.0F).endVertex();
-					builder.pos(x, y + 0.75, z + 1.0).color(f3, f4, f5, 1.0F).endVertex();
+					builder.pos(x, y + offset, z).color(f3, f4, f5, 1.0F).endVertex();
+					builder.pos(x + 1.0, y + offset, z).color(f3, f4, f5, 1.0F).endVertex();
+					builder.pos(x + 1.0, y + offset, z + 1.0).color(f3, f4, f5, 1.0F).endVertex();
+					builder.pos(x, y + offset, z + 1.0).color(f3, f4, f5, 1.0F).endVertex();
 				}
 			}
 
@@ -212,13 +195,13 @@ public class TileEntityEndPortalRenderer extends
 		}
 
 		GlStateManager.disableBlend();
-		GlStateManager.disableTexGenCoord(GlStateManager.TexGen.S);
-		GlStateManager.disableTexGenCoord(GlStateManager.TexGen.T);
-		GlStateManager.disableTexGenCoord(GlStateManager.TexGen.R);
+		GlStateManager.disableTexGen(GlStateManager.TexGen.S);
+		GlStateManager.disableTexGen(GlStateManager.TexGen.T);
+		GlStateManager.disableTexGen(GlStateManager.TexGen.R);
 		GlStateManager.enableLighting();
 
 		if(flag) {
-			mc.entityRenderer.setupFogColor(false);
+			mc.gameRenderer.setupFogColor(false);
 		}
 	}
 

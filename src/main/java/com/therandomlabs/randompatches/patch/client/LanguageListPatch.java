@@ -1,6 +1,6 @@
 package com.therandomlabs.randompatches.patch.client;
 
-import com.therandomlabs.randompatches.core.Patch;
+import com.therandomlabs.randompatches.Patch;
 import net.minecraft.client.Minecraft;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.AbstractInsnNode;
@@ -9,8 +9,6 @@ import org.objectweb.asm.tree.MethodInsnNode;
 import org.objectweb.asm.tree.MethodNode;
 
 public final class LanguageListPatch extends Patch {
-	public static final String REFRESH_RESOURCES = getName("refreshResources", "func_110436_a");
-
 	@Override
 	public boolean apply(ClassNode node) {
 		final MethodNode method = findMethod(node, "elementClicked", "func_148144_a");
@@ -22,7 +20,7 @@ public final class LanguageListPatch extends Patch {
 			if(instruction.getOpcode() == Opcodes.INVOKEVIRTUAL) {
 				refreshResources = (MethodInsnNode) instruction;
 
-				if(REFRESH_RESOURCES.equals(refreshResources.name)) {
+				if("refreshResources".equals(refreshResources.name)) {
 					break;
 				}
 
@@ -50,7 +48,7 @@ public final class LanguageListPatch extends Patch {
 	}
 
 	public static void reloadLanguage() {
-		final Minecraft mc = Minecraft.getMinecraft();
+		final Minecraft mc = Minecraft.getInstance();
 		mc.getLanguageManager().onResourceManagerReload(mc.getResourceManager());
 	}
 }

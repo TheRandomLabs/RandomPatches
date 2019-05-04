@@ -1,9 +1,8 @@
 package com.therandomlabs.randompatches.patch;
 
-import com.therandomlabs.randomlib.TRLUtils;
+import com.therandomlabs.randompatches.Patch;
+import com.therandomlabs.randompatches.RPConfig;
 import com.therandomlabs.randompatches.RandomPatches;
-import com.therandomlabs.randompatches.config.RPConfig;
-import com.therandomlabs.randompatches.core.Patch;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.AbstractInsnNode;
 import org.objectweb.asm.tree.ClassNode;
@@ -23,7 +22,7 @@ public final class NetHandlerPlayServerPatch extends Patch {
 
 	@Override
 	public boolean apply(ClassNode node) {
-		patchUpdate(findMethod(node, "update", "func_73660_a"));
+		patchTick(findMethod(node, "tick", "func_73660_a"));
 
 		if(!RandomPatches.SPONGEFORGE_INSTALLED) {
 			patchProcessPlayer(findMethod(node, "processPlayer", "func_147347_a"));
@@ -63,7 +62,7 @@ public final class NetHandlerPlayServerPatch extends Patch {
 	} */
 
 	@SuppressWarnings("Duplicates")
-	private static void patchUpdate(MethodNode method) {
+	private static void patchTick(MethodNode method) {
 		LdcInsnNode keepAliveInterval = null;
 		JumpInsnNode ifeq = null;
 		MethodInsnNode sendPacket = null;
@@ -72,17 +71,11 @@ public final class NetHandlerPlayServerPatch extends Patch {
 			final AbstractInsnNode instruction = method.instructions.get(i);
 
 			if(keepAliveInterval == null) {
-				if(instruction.getType() == AbstractInsnNode.LDC_INSN) {
+				if(instruction.getOpcode() == Opcodes.LDC) {
 					keepAliveInterval = (LdcInsnNode) instruction;
 
-					if(TRLUtils.MC_VERSION_NUMBER > 11) {
-						if(!((Long) 15000L).equals(keepAliveInterval.cst)) {
-							keepAliveInterval = null;
-						}
-					} else {
-						if(!((Long) 40L).equals(keepAliveInterval.cst)) {
-							keepAliveInterval = null;
-						}
+					if(!((Long) 15000L).equals(keepAliveInterval.cst)) {
+						keepAliveInterval = null;
 					}
 				}
 
@@ -112,17 +105,12 @@ public final class NetHandlerPlayServerPatch extends Patch {
 		final FieldInsnNode getKeepAliveInterval = new FieldInsnNode(
 				Opcodes.GETSTATIC,
 				TIMEOUTS_CONFIG,
-				TRLUtils.MC_VERSION_NUMBER > 11 ?
-						"keepAlivePacketIntervalMillis" : "keepAlivePacketIntervalLong",
+				"keepAlivePacketIntervalMillis",
 				"J"
 		);
 
 		method.instructions.insert(keepAliveInterval, getKeepAliveInterval);
 		method.instructions.remove(keepAliveInterval);
-
-		if(TRLUtils.MC_VERSION_NUMBER < 12) {
-			return;
-		}
 
 		final LabelNode label = new LabelNode();
 
@@ -176,8 +164,11 @@ public final class NetHandlerPlayServerPatch extends Patch {
 
 			final LdcInsnNode ldc = (LdcInsnNode) instruction;
 
-			if(elytra == null && ((Float) 300.0F).equals(ldc.cst)) {
-				elytra = ldc;
+			if(elytra == null) {
+				if(((Float) 300.0F).equals(ldc.cst)) {
+					elytra = ldc;
+				}
+
 				continue;
 			}
 

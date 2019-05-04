@@ -1,7 +1,7 @@
 package com.therandomlabs.randompatches.patch.client;
 
-import com.therandomlabs.randompatches.config.RPConfig;
-import com.therandomlabs.randompatches.core.Patch;
+import com.therandomlabs.randompatches.Patch;
+import com.therandomlabs.randompatches.RPConfig;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.AbstractInsnNode;
 import org.objectweb.asm.tree.ClassNode;
@@ -12,11 +12,12 @@ import org.objectweb.asm.tree.LabelNode;
 import org.objectweb.asm.tree.MethodNode;
 import org.objectweb.asm.tree.VarInsnNode;
 
+//net/minecraft/client/gui/GuiIngameMenu$1
 public final class GuiIngameMenuPatch extends Patch {
 	@SuppressWarnings("Duplicates")
 	@Override
 	public boolean apply(ClassNode node) {
-		final MethodNode method = findMethod(node, "actionPerformed", "func_146284_a");
+		final MethodNode method = findMethod(node, "onClick", "func_194829_a ");
 		AbstractInsnNode storeIsIntegratedServerRunning = null;
 
 		for(int i = 0; i < method.instructions.size(); i++) {
@@ -37,7 +38,7 @@ public final class GuiIngameMenuPatch extends Patch {
 		);
 		final JumpInsnNode jumpIfNotEnabled = new JumpInsnNode(Opcodes.IFEQ, label);
 		final InsnNode loadTrue = new InsnNode(Opcodes.ICONST_1);
-		final VarInsnNode storeTrue = new VarInsnNode(Opcodes.ISTORE, 2);
+		final VarInsnNode storeTrue = new VarInsnNode(Opcodes.ISTORE, 5);
 
 		method.instructions.insert(storeIsIntegratedServerRunning, getEnabled);
 		method.instructions.insert(getEnabled, jumpIfNotEnabled);

@@ -1,7 +1,8 @@
 package com.therandomlabs.randompatches.common;
 
 import java.lang.reflect.InvocationTargetException;
-import com.therandomlabs.randomlib.TRLUtils;
+import net.minecraft.crash.CrashReport;
+import net.minecraft.crash.ReportedException;
 import net.minecraft.entity.Entity;
 import net.minecraft.world.Teleporter;
 import net.minecraft.world.World;
@@ -16,18 +17,17 @@ public final class RPTeleporter extends Teleporter {
 
 		if(teleporterClass == null) {
 			customTeleporter = null;
-		} else {
-			Teleporter teleporter = null;
+			return;
+		}
 
-			try {
-				teleporter =
-						teleporterClass.getConstructor(WorldServer.class).newInstance(world);
-			} catch(IllegalAccessException | InstantiationException | NoSuchMethodException |
-					InvocationTargetException ex) {
-				TRLUtils.crashReport("Failed to instantiate: " + teleporterClass.getName(), ex);
-			}
-
-			this.customTeleporter = teleporter;
+		try {
+			customTeleporter =
+					teleporterClass.getConstructor(WorldServer.class).newInstance(world);
+		} catch(IllegalAccessException | InstantiationException | NoSuchMethodException |
+				InvocationTargetException ex) {
+			throw new ReportedException(
+					new CrashReport("Failed to instantiate: " + teleporterClass.getName(), ex)
+			);
 		}
 	}
 
@@ -59,11 +59,11 @@ public final class RPTeleporter extends Teleporter {
 	}
 
 	@Override
-	public void removeStalePortalLocations(long worldTime) {
+	public void tick(long worldTime) {
 		if(customTeleporter == null) {
-			super.removeStalePortalLocations(worldTime);
+			super.tick(worldTime);
 		} else {
-			customTeleporter.removeStalePortalLocations(worldTime);
+			customTeleporter.tick(worldTime);
 		}
 	}
 

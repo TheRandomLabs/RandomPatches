@@ -2,103 +2,74 @@ buildscript {
 	repositories {
 		jcenter()
 
+		mavenCentral()
+
 		maven {
 			url "http://files.minecraftforge.net/maven"
 		}
 	}
 
 	dependencies {
-		classpath "net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT"
-		classpath "com.github.jengelman.gradle.plugins:shadow:2.0.0"
+		classpath group: "net.minecraftforge.gradle", name: "ForgeGradle", version: "3.+", changing: true
 	}
 }
 
-apply plugin: "net.minecraftforge.gradle.forge"
-apply plugin: "com.github.johnrengelman.shadow"
+apply plugin: "net.minecraftforge.gradle"
 
-version = "1.12.2-1.15.0.2"
+version = "1.13.2-1.15.0.3"
 group = "com.therandomlabs.randompatches"
 archivesBaseName = "randompatches"
 
-sourceCompatibility = targetCompatibility = "1.8"
+sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = "1.8"
 
-repositories {
-	maven {
-		url "https://jitpack.io"
+minecraft {
+	mappings channel: "snapshot", version: "20190409-1.13.2"
+
+	runs {
+		client {
+			workingDirectory project.file("run")
+
+			property "forge.logging.markers", "SCAN,REGISTRIES,REGISTRYDUMP"
+			property "forge.logging.console.level", "debug"
+
+			mods {
+				randompatches {
+					source sourceSets.main
+				}
+			}
+		}
+
+		server {
+			workingDirectory project.file("run")
+
+			property "forge.logging.markers", "SCAN,REGISTRIES,REGISTRYDUMP"
+			property "forge.logging.console.level", "debug"
+
+			mods {
+				randompatches {
+					source sourceSets.main
+				}
+			}
+		}
 	}
 }
 
 dependencies {
-	shadow "com.github.TheRandomLabs:RandomLib:1.12-SNAPSHOT"
-	compile "com.github.TheRandomLabs:RandomLib:1.12-SNAPSHOT"
-}
-
-shadowJar {
-	classifier = ""
-	relocate "com.therandomlabs.randomlib", "com.therandomlabs.randompatches.repackage.com.therandomlabs.randomlib"
-	configurations = [project.configurations.shadow]
-}
-
-reobf {
-	shadowJar {
-		mappingType = "SEARGE"
-	}
-}
-
-build.dependsOn shadowJar
-
-artifacts {
-	archives shadowJar
-}
-
-minecraft {
-	version = "1.12.2-14.23.5.2815"
-	runDir = "run"
-	mappings = "stable_39"
-
-	replace "@VERSION@", project.version
-	replace "@FINGERPRINT@", project.findProperty("signSHA1")
-}
-
-processResources {
-	//Ensure this task is redone when the versions change
-	inputs.property "version", project.version
-	inputs.property "mcversion", project.minecraft.version
-
-	//Replace version and mcversion in mcmod.info
-	from(sourceSets.main.resources.srcDirs) {
-		include "mcmod.info"
-		expand "version": project.version, "mcversion": project.minecraft.version
-	}
+	minecraft "net.minecraftforge:forge:1.13.2-25.0.191"
 }
 
 jar {
-	manifest {
-		attributes "Manifest-Version": "1.0"
-		attributes "FMLCorePlugin": "com.therandomlabs.randompatches.core.RPCore"
-	}
+    manifest {
+        attributes([
+			"FMLCorePlugin": "com.therandomlabs.randompatches.core.RPCore",
+            "Specification-Title": project.name,
+            "Specification-Vendor": "TheRandomLabs",
+            "Specification-Version": "1",
+            "Implementation-Title": project.name,
+            "Implementation-Version": "${version}",
+            "Implementation-Vendor": "TheRandomLabs",
+            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+			"Fingerprint": project.findProperty("signSHA1")
+        ])
+    }
 }
-
-task signJar(type: SignJar, dependsOn: reobfJar) {
-	onlyIf {
-		project.hasProperty("keyStore")
-	}
-
-	keyStore = project.findProperty("keyStore")
-	alias = project.findProperty("keyStoreAlias")
-	storePass = project.findProperty("keyStorePass")
-	keyPass = project.findProperty("keyStoreKeyPass")
-	inputFile = jar.archivePath
-	outputFile = jar.archivePath
-}
-
-task deobfJar(type: Jar) {
-	from sourceSets.main.output
-	classifier = "deobf"
-}
-
-artifacts {
-	archives deobfJar
-}
-
-build.dependsOn signJar

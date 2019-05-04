@@ -11,9 +11,9 @@ import com.mojang.authlib.minecraft.MinecraftProfileTexture;
 import com.mojang.authlib.properties.Property;
 import com.mojang.authlib.yggdrasil.response.MinecraftTexturesPayload;
 import com.mojang.util.UUIDTypeAdapter;
-import com.therandomlabs.randompatches.config.RPConfig;
-import com.therandomlabs.randompatches.core.Patch;
-import net.minecraft.nbt.NBTBase;
+import com.therandomlabs.randompatches.Patch;
+import com.therandomlabs.randompatches.RPConfig;
+import net.minecraft.nbt.INBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTUtil;
 import org.apache.commons.codec.binary.Base64;
@@ -39,9 +39,7 @@ public final class NBTTagCompoundPatch extends Patch {
 			final AbstractInsnNode instruction = method.instructions.get(i);
 			final int opcode = instruction.getOpcode();
 
-			//On 1.11 and below, it's an invokeinterface (Set.equals)
-			//On 1.12 and above, it's an invokestatic (Objects.equals)
-			if(opcode != Opcodes.INVOKESTATIC && opcode != Opcodes.INVOKEINTERFACE) {
+			if(opcode != Opcodes.INVOKEINTERFACE) {
 				continue;
 			}
 
@@ -81,26 +79,26 @@ public final class NBTTagCompoundPatch extends Patch {
 		return true;
 	}
 
-	public static boolean areTagMapsEqual(Map<String, NBTBase> tagMap1,
-			Map<String, NBTBase> tagMap2) {
+	public static boolean areTagMapsEqual(Map<String, INBTBase> tagMap1,
+			Map<String, INBTBase> tagMap2) {
 		if(tagMap1.entrySet().equals(tagMap2.entrySet())) {
 			return true;
 		}
 
-		final NBTBase skullOwner1 = tagMap1.get("SkullOwner");
+		final INBTBase skullOwner1 = tagMap1.get("SkullOwner");
 
 		if(!(skullOwner1 instanceof NBTTagCompound)) {
 			return false;
 		}
 
-		final NBTBase skullOwner2 = tagMap2.get("SkullOwner");
+		final INBTBase skullOwner2 = tagMap2.get("SkullOwner");
 
 		if(!(skullOwner2 instanceof NBTTagCompound)) {
 			return false;
 		}
 
-		final GameProfile profile1 = NBTUtil.readGameProfileFromNBT((NBTTagCompound) skullOwner1);
-		final GameProfile profile2 = NBTUtil.readGameProfileFromNBT((NBTTagCompound) skullOwner2);
+		final GameProfile profile1 = NBTUtil.readGameProfile((NBTTagCompound) skullOwner1);
+		final GameProfile profile2 = NBTUtil.readGameProfile((NBTTagCompound) skullOwner2);
 
 		if(!profile1.equals(profile2)) {
 			return false;

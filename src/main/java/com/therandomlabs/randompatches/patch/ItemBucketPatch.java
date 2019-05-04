@@ -1,7 +1,7 @@
 package com.therandomlabs.randompatches.patch;
 
-import com.therandomlabs.randompatches.config.RPConfig;
-import com.therandomlabs.randompatches.core.Patch;
+import com.therandomlabs.randompatches.Patch;
+import com.therandomlabs.randompatches.RPConfig;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -34,7 +34,8 @@ public final class ItemBucketPatch extends Patch {
 			}
 		}
 
-		((VarInsnNode) isSolid.getPrevious()).var = 4;
+		//Get IBlockState
+		((VarInsnNode) isSolid.getPrevious()).var = 5;
 
 		isSolid.setOpcode(Opcodes.INVOKESTATIC);
 		isSolid.owner = getName(ItemBucketPatch.class);
@@ -52,7 +53,7 @@ public final class ItemBucketPatch extends Patch {
 		}
 
 		if(!RPConfig.Misc.portalBucketReplacementFixForNetherPortals &&
-				state.getBlock() == Blocks.PORTAL) {
+				state.getBlock() == Blocks.NETHER_PORTAL) {
 			return false;
 		}
 

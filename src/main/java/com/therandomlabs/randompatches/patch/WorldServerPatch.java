@@ -1,6 +1,6 @@
 package com.therandomlabs.randompatches.patch;
 
-import com.therandomlabs.randompatches.core.Patch;
+import com.therandomlabs.randompatches.Patch;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.AbstractInsnNode;
 import org.objectweb.asm.tree.ClassNode;

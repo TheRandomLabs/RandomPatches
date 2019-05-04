@@ -1,6 +1,5 @@
-package com.therandomlabs.randompatches.core;
+package com.therandomlabs.randompatches;
 
-import com.therandomlabs.randompatches.RandomPatches;
 import org.apache.commons.lang3.StringUtils;
 import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.MethodNode;

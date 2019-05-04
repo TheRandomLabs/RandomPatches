@@ -1,7 +1,7 @@
 package com.therandomlabs.randompatches.patch;
 
-import com.therandomlabs.randompatches.config.RPConfig;
-import com.therandomlabs.randompatches.core.Patch;
+import com.therandomlabs.randompatches.Patch;
+import com.therandomlabs.randompatches.RPConfig;
 import net.minecraft.entity.item.EntityBoat;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.AbstractInsnNode;
@@ -24,7 +24,7 @@ public final class EntityBoatPatch extends Patch {
 	@SuppressWarnings("Duplicates")
 	@Override
 	public boolean apply(ClassNode node) {
-		final MethodNode method = findMethod(node, "onUpdate", "func_70071_h_");
+		final MethodNode method = findMethod(node, "tick", "func_70071_h_");
 		InsnNode returnVoid = null;
 
 		for(int i = method.instructions.size() - 1; i >= 0; i--) {

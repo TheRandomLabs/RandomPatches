@@ -1,24 +1,25 @@
 package com.therandomlabs.randompatches.util;
 
-import java.awt.Graphics2D;
-import java.awt.GraphicsConfiguration;
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
-import java.awt.RenderingHints;
-import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
-import javax.imageio.ImageIO;
+import java.nio.IntBuffer;
+import com.therandomlabs.randompatches.RPConfig;
 import com.therandomlabs.randompatches.RandomPatches;
-import com.therandomlabs.randompatches.config.RPConfig;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.texture.TextureUtil;
+import net.minecraft.resources.ResourcePackType;
+import net.minecraft.resources.VanillaPack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Util;
 import org.apache.commons.io.IOUtils;
-import org.lwjgl.opengl.Display;
+import org.lwjgl.glfw.GLFW;
+import org.lwjgl.glfw.GLFWImage;
+import org.lwjgl.stb.STBImage;
+import org.lwjgl.system.MemoryStack;
+import org.lwjgl.system.MemoryUtil;
 
 public class WindowIconHandler {
 	public static void setWindowIcon() {
@@ -28,15 +29,19 @@ public class WindowIconHandler {
 			InputStream stream16 = null;
 			InputStream stream32 = null;
 
-			try {
-				if(RPConfig.Window.icon16.isEmpty()) {
-					final Minecraft mc = Minecraft.getMinecraft();
+			try(MemoryStack memoryStack = MemoryStack.stackPush()) {
+				final Minecraft mc = Minecraft.getInstance();
 
-					stream16 = mc.defaultResourcePack.getInputStreamAssets(
+				if(RPConfig.Window.icon16.isEmpty()) {
+					final VanillaPack vanillaPack = mc.getPackFinder().getVanillaPack();
+
+					stream16 = vanillaPack.getResourceStream(
+							ResourcePackType.CLIENT_RESOURCES,
 							new ResourceLocation("icons/icon_16x16.png")
 					);
 
-					stream32 = mc.defaultResourcePack.getInputStreamAssets(
+					stream32 = vanillaPack.getResourceStream(
+							ResourcePackType.CLIENT_RESOURCES,
 							new ResourceLocation("icons/icon_32x32.png")
 					);
 				} else {
@@ -45,10 +50,43 @@ public class WindowIconHandler {
 				}
 
 				if(stream16 != null && stream32 != null) {
-					Display.setIcon(new ByteBuffer[] {
-							readImageToBuffer(stream16, 16),
-							readImageToBuffer(stream32, 32)
-					});
+					final IntBuffer i = memoryStack.mallocInt(1);
+					final IntBuffer j = memoryStack.mallocInt(1);
+					final IntBuffer k = memoryStack.mallocInt(1);
+
+					final GLFWImage.Buffer iamgeBuffer = GLFWImage.mallocStack(2, memoryStack);
+
+					final ByteBuffer buffer1 = readImageToBuffer(stream16, i, j, k);
+
+					if(buffer1 == null) {
+						throw new IllegalStateException(
+								"Could not load icon: " + STBImage.stbi_failure_reason()
+						);
+					}
+
+					iamgeBuffer.position(0);
+					iamgeBuffer.width(i.get(0));
+					iamgeBuffer.height(j.get(0));
+					iamgeBuffer.pixels(buffer1);
+
+					final ByteBuffer buffer2 = readImageToBuffer(stream32, i, j, k);
+
+					if(buffer2 == null) {
+						throw new IllegalStateException(
+								"Could not load icon: " + STBImage.stbi_failure_reason()
+						);
+					}
+
+					iamgeBuffer.position(1);
+					iamgeBuffer.width(i.get(0));
+					iamgeBuffer.height(j.get(0));
+					iamgeBuffer.pixels(buffer2);
+					iamgeBuffer.position(0);
+
+					GLFW.glfwSetWindowIcon(mc.mainWindow.getHandle(), iamgeBuffer);
+
+					STBImage.stbi_image_free(buffer1);
+					STBImage.stbi_image_free(buffer2);
 				}
 			} catch(IOException ex) {
 				if(RandomPatches.IS_DEOBFUSCATED &&
@@ -66,56 +104,21 @@ public class WindowIconHandler {
 		}
 	}
 
-	private static ByteBuffer readImageToBuffer(InputStream stream, int dimensions)
-			throws IOException {
-		BufferedImage image = ImageIO.read(stream);
+	private static ByteBuffer readImageToBuffer(InputStream stream, IntBuffer i, IntBuffer j,
+			IntBuffer k) throws IOException {
+		ByteBuffer buffer1 = null;
+		final ByteBuffer buffer2;
 
-		if(image.getWidth() != dimensions || image.getHeight() != dimensions) {
-			final GraphicsEnvironment environment =
-					GraphicsEnvironment.getLocalGraphicsEnvironment();
-
-			final GraphicsDevice device = environment.getDefaultScreenDevice();
-
-			final GraphicsConfiguration gc = device.getDefaultConfiguration();
-
-			final BufferedImage resized = gc.createCompatibleImage(
-					dimensions,
-					dimensions,
-					image.getTransparency()
-			);
-
-			final Graphics2D graphics = resized.createGraphics();
-
-			graphics.setRenderingHint(
-					RenderingHints.KEY_INTERPOLATION,
-					RenderingHints.VALUE_INTERPOLATION_BILINEAR
-			);
-
-			graphics.setRenderingHint(
-					RenderingHints.KEY_RENDERING,
-					RenderingHints.VALUE_RENDER_QUALITY
-			);
-
-			graphics.setRenderingHint(
-					RenderingHints.KEY_ANTIALIASING,
-					RenderingHints.VALUE_ANTIALIAS_ON
-			);
-
-			graphics.drawImage(image, 0, 0, dimensions, dimensions, null);
-
-			graphics.dispose();
-
-			image = resized;
+		try {
+			buffer1 = TextureUtil.readToNativeBuffer(stream);
+			buffer1.rewind();
+			buffer2 = STBImage.stbi_load_from_memory(buffer1, i, j, k, 0);
+		} finally {
+			if(buffer1 != null) {
+				MemoryUtil.memFree(buffer1);
+			}
 		}
 
-		final int[] aint = image.getRGB(0, 0, dimensions, dimensions, null, 0, dimensions);
-		final ByteBuffer buffer = ByteBuffer.allocate(aint.length * 4);
-
-		for(int i : aint) {
-			buffer.putInt(i << 8 | i >> 24 & 255);
-		}
-
-		buffer.flip();
-		return buffer;
+		return buffer2;
 	}
 }
