@@ -19,8 +19,6 @@ public final class RandomPatches {
 	public static final boolean IS_CLIENT = FMLEnvironment.dist.isClient();
 	public static final boolean IS_DEOBFUSCATED = true;
 
-	public static final boolean SPONGEFORGE_INSTALLED = false;
-
 	public static final String DEFAULT_WINDOW_TITLE = "Minecraft " + MCPVersion.getMCVersion();
 
 	public static final CommonProxy PROXY =
