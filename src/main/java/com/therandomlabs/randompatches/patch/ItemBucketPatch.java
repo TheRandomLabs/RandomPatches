@@ -8,8 +8,8 @@ import net.minecraft.init.Blocks;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.AbstractInsnNode;
 import org.objectweb.asm.tree.ClassNode;
+import org.objectweb.asm.tree.InsnList;
 import org.objectweb.asm.tree.MethodInsnNode;
-import org.objectweb.asm.tree.MethodNode;
 import org.objectweb.asm.tree.VarInsnNode;
 
 public final class ItemBucketPatch extends Patch {
@@ -17,11 +17,12 @@ public final class ItemBucketPatch extends Patch {
 
 	@Override
 	public boolean apply(ClassNode node) {
-		final MethodNode method = findMethod(node, "tryPlaceContainedLiquid", "func_180616_a");
+		final InsnList instructions =
+				findInstructions(node, "tryPlaceContainedLiquid", "func_180616_a");
 		MethodInsnNode isSolid = null;
 
-		for(int i = 0; i < method.instructions.size(); i++) {
-			final AbstractInsnNode instruction = method.instructions.get(i);
+		for(int i = 0; i < instructions.size(); i++) {
+			final AbstractInsnNode instruction = instructions.get(i);
 
 			if(instruction.getOpcode() == Opcodes.INVOKEVIRTUAL) {
 				isSolid = (MethodInsnNode) instruction;
@@ -37,6 +38,7 @@ public final class ItemBucketPatch extends Patch {
 		//Get IBlockState
 		((VarInsnNode) isSolid.getPrevious()).var = 4;
 
+		//Call ItemBucketPatch.isSolid
 		isSolid.setOpcode(Opcodes.INVOKESTATIC);
 		isSolid.owner = getName(ItemBucketPatch.class);
 		isSolid.name = "isSolid";

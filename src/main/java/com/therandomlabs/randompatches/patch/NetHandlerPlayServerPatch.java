@@ -8,12 +8,12 @@ import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.AbstractInsnNode;
 import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.FieldInsnNode;
+import org.objectweb.asm.tree.InsnList;
 import org.objectweb.asm.tree.InsnNode;
 import org.objectweb.asm.tree.JumpInsnNode;
 import org.objectweb.asm.tree.LabelNode;
 import org.objectweb.asm.tree.LdcInsnNode;
 import org.objectweb.asm.tree.MethodInsnNode;
-import org.objectweb.asm.tree.MethodNode;
 import org.objectweb.asm.tree.VarInsnNode;
 
 public final class NetHandlerPlayServerPatch extends Patch {
@@ -23,11 +23,11 @@ public final class NetHandlerPlayServerPatch extends Patch {
 
 	@Override
 	public boolean apply(ClassNode node) {
-		patchUpdate(findMethod(node, "update", "func_73660_a"));
+		patchUpdate(findInstructions(node, "update", "func_73660_a"));
 
 		if(!RandomPatches.SPONGEFORGE_INSTALLED) {
-			patchProcessPlayer(findMethod(node, "processPlayer", "func_147347_a"));
-			patchProcessVehicleMove(findMethod(node, "processVehicleMove", "func_184338_a"));
+			patchProcessPlayer(findInstructions(node, "processPlayer", "func_147347_a"));
+			patchProcessVehicleMove(findInstructions(node, "processVehicleMove", "func_184338_a"));
 		}
 
 		return true;
@@ -63,13 +63,13 @@ public final class NetHandlerPlayServerPatch extends Patch {
 	} */
 
 	@SuppressWarnings("Duplicates")
-	private static void patchUpdate(MethodNode method) {
+	private static void patchUpdate(InsnList instructions) {
 		LdcInsnNode keepAliveInterval = null;
-		JumpInsnNode ifeq = null;
+		JumpInsnNode jumpIfShouldNotDisconnect = null;
 		MethodInsnNode sendPacket = null;
 
-		for(int i = 0; i < method.instructions.size(); i++) {
-			final AbstractInsnNode instruction = method.instructions.get(i);
+		for(int i = 0; i < instructions.size(); i++) {
+			final AbstractInsnNode instruction = instructions.get(i);
 
 			if(keepAliveInterval == null) {
 				if(instruction.getOpcode() == Opcodes.LDC) {
@@ -89,10 +89,14 @@ public final class NetHandlerPlayServerPatch extends Patch {
 				continue;
 			}
 
-			if(ifeq == null) {
+			if(TRLUtils.MC_VERSION_NUMBER < 12) {
+				break;
+			}
+
+			if(jumpIfShouldNotDisconnect == null) {
 				if(instruction.getOpcode() == Opcodes.IFEQ &&
 						instruction.getPrevious().getOpcode() == Opcodes.GETFIELD) {
-					ifeq = (JumpInsnNode) instruction;
+					jumpIfShouldNotDisconnect = (JumpInsnNode) instruction;
 				}
 
 				continue;
@@ -109,16 +113,16 @@ public final class NetHandlerPlayServerPatch extends Patch {
 			}
 		}
 
-		final FieldInsnNode getKeepAliveInterval = new FieldInsnNode(
+		//Get RPConfig.Timeouts.keepAlivePacketInterval (in milliseconds above 1.11)
+		instructions.insert(keepAliveInterval, new FieldInsnNode(
 				Opcodes.GETSTATIC,
 				TIMEOUTS_CONFIG,
 				TRLUtils.MC_VERSION_NUMBER > 11 ?
 						"keepAlivePacketIntervalMillis" : "keepAlivePacketIntervalLong",
 				"J"
-		);
+		));
 
-		method.instructions.insert(keepAliveInterval, getKeepAliveInterval);
-		method.instructions.remove(keepAliveInterval);
+		instructions.remove(keepAliveInterval);
 
 		if(TRLUtils.MC_VERSION_NUMBER < 12) {
 			return;
@@ -126,49 +130,51 @@ public final class NetHandlerPlayServerPatch extends Patch {
 
 		final LabelNode label = new LabelNode();
 
-		final VarInsnNode loadCurrentTime = new VarInsnNode(Opcodes.LLOAD, 1);
+		final InsnList newInstructions = new InsnList();
 
-		final VarInsnNode loadThis = new VarInsnNode(Opcodes.ALOAD, 0);
-		final FieldInsnNode getLastPingTime = new FieldInsnNode(
+		//Get i (currentTimeMillis)
+		newInstructions.add(new VarInsnNode(Opcodes.LLOAD, 1));
+
+		//Get NetHandlerPlayServer (this)
+		newInstructions.add(new VarInsnNode(Opcodes.ALOAD, 0));
+
+		//Get NetHandlerPlayServer.field_194402_f (lastPingTime)
+		newInstructions.add(new FieldInsnNode(
 				Opcodes.GETFIELD,
 				"net/minecraft/network/NetHandlerPlayServer",
 				"field_194402_f",
 				"J"
-		);
+		));
 
-		//i - field_194402_f
-		//currentTime - lastPingTime
-		final InsnNode subtract = new InsnNode(Opcodes.LSUB);
+		//Substract field_199402_f (lastPingTime) from i (currentTimeMillis):
+		//currentTimeMillis - lastPingTime
+		newInstructions.add(new InsnNode(Opcodes.LSUB));
 
-		final FieldInsnNode getReadTimeoutMillis = new FieldInsnNode(
+		//Get RPConfig.Timeouts.readTimeoutMillis
+		newInstructions.add(new FieldInsnNode(
 				Opcodes.GETSTATIC,
 				TIMEOUTS_CONFIG,
 				"readTimeoutMillis",
 				"J"
-		);
+		));
 
+		//Compare the subtraction result to readTimeoutMillis and jump if it is not larger:
 		//if(currentTime - lastPingTime >= RPStaticConfig.readTimeoutMillis)
-		final InsnNode compare = new InsnNode(Opcodes.LCMP);
-		final JumpInsnNode jumpIfNotLarger = new JumpInsnNode(Opcodes.IFLT, label);
+		newInstructions.add(new InsnNode(Opcodes.LCMP));
+		newInstructions.add(new JumpInsnNode(Opcodes.IFLT, label));
 
-		method.instructions.insert(ifeq, loadCurrentTime);
-		method.instructions.insert(loadCurrentTime, loadThis);
-		method.instructions.insert(loadThis, getLastPingTime);
-		method.instructions.insert(getLastPingTime, subtract);
-		method.instructions.insert(subtract, getReadTimeoutMillis);
-		method.instructions.insert(getReadTimeoutMillis, compare);
-		method.instructions.insert(compare, jumpIfNotLarger);
+		instructions.insert(jumpIfShouldNotDisconnect, newInstructions);
 
 		//Break out of the if(i - field_194402_f >= 15000L) statement
-		method.instructions.insert(sendPacket, label);
+		instructions.insert(sendPacket, label);
 	}
 
-	private static void patchProcessPlayer(MethodNode method) {
+	private static void patchProcessPlayer(InsnList instructions) {
 		LdcInsnNode elytra = null;
 		LdcInsnNode normal = null;
 
-		for(int i = 0; i < method.instructions.size(); i++) {
-			final AbstractInsnNode instruction = method.instructions.get(i);
+		for(int i = 0; i < instructions.size(); i++) {
+			final AbstractInsnNode instruction = instructions.get(i);
 
 			if(instruction.getOpcode() != Opcodes.LDC) {
 				continue;
@@ -190,32 +196,32 @@ public final class NetHandlerPlayServerPatch extends Patch {
 			}
 		}
 
-		final FieldInsnNode getElytraMaxSpeed = new FieldInsnNode(
+		//Get RPConfig.SpeedLimits.maxPlayerElytraSpeed
+		instructions.insert(elytra, new FieldInsnNode(
 				Opcodes.GETSTATIC,
 				SPEED_LIMITS_CONFIG,
 				"maxPlayerElytraSpeed",
 				"F"
-		);
+		));
 
-		final FieldInsnNode getNormalMaxSpeed = new FieldInsnNode(
+		instructions.remove(elytra);
+
+		//Get RPConfig.SpeedLimits.maxPlayerSpeed
+		instructions.insert(normal, new FieldInsnNode(
 				Opcodes.GETSTATIC,
 				SPEED_LIMITS_CONFIG,
 				"maxPlayerSpeed",
 				"F"
-		);
+		));
 
-		method.instructions.insert(elytra, getElytraMaxSpeed);
-		method.instructions.remove(elytra);
-
-		method.instructions.insert(normal, getNormalMaxSpeed);
-		method.instructions.remove(normal);
+		instructions.remove(normal);
 	}
 
-	private static void patchProcessVehicleMove(MethodNode method) {
+	private static void patchProcessVehicleMove(InsnList instructions) {
 		LdcInsnNode speed = null;
 
-		for(int i = 0; i < method.instructions.size(); i++) {
-			final AbstractInsnNode instruction = method.instructions.get(i);
+		for(int i = 0; i < instructions.size(); i++) {
+			final AbstractInsnNode instruction = instructions.get(i);
 
 			if(instruction.getOpcode() == Opcodes.LDC) {
 				final LdcInsnNode ldc = (LdcInsnNode) instruction;
@@ -227,14 +233,14 @@ public final class NetHandlerPlayServerPatch extends Patch {
 			}
 		}
 
-		final FieldInsnNode getVehicleMaxSpeed = new FieldInsnNode(
+		//Get RPConfig.SpeedLimits.maxPlayerVehicleSpeed
+		instructions.insert(speed, new FieldInsnNode(
 				Opcodes.GETSTATIC,
 				SPEED_LIMITS_CONFIG,
 				"maxPlayerVehicleSpeed",
 				"D"
-		);
+		));
 
-		method.instructions.insert(speed, getVehicleMaxSpeed);
-		method.instructions.remove(speed);
+		instructions.remove(speed);
 	}
 }

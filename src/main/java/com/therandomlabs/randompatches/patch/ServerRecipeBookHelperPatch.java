@@ -6,18 +6,18 @@ import net.minecraft.item.ItemStack;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.AbstractInsnNode;
 import org.objectweb.asm.tree.ClassNode;
+import org.objectweb.asm.tree.InsnList;
 import org.objectweb.asm.tree.MethodInsnNode;
-import org.objectweb.asm.tree.MethodNode;
 
 public final class ServerRecipeBookHelperPatch extends Patch {
 	@Override
 	public boolean apply(ClassNode node) {
-		final MethodNode method = findMethod(node, "func_194325_a");
+		final InsnList instructions = findInstructions(node, "func_194325_a");
 
 		MethodInsnNode findSlotMatchingUnusedItem = null;
 
-		for(int i = 0; i < method.instructions.size(); i++) {
-			final AbstractInsnNode instruction = method.instructions.get(i);
+		for(int i = 0; i < instructions.size(); i++) {
+			final AbstractInsnNode instruction = instructions.get(i);
 
 			if(instruction.getOpcode() == Opcodes.INVOKEVIRTUAL) {
 				findSlotMatchingUnusedItem = (MethodInsnNode) instruction;
@@ -25,6 +25,7 @@ public final class ServerRecipeBookHelperPatch extends Patch {
 			}
 		}
 
+		//Call ServerRecipeBookHelper.findSlotMatchingUnusedItem
 		findSlotMatchingUnusedItem.setOpcode(Opcodes.INVOKESTATIC);
 		findSlotMatchingUnusedItem.owner = getName(ServerRecipeBookHelperPatch.class);
 		findSlotMatchingUnusedItem.name = "findSlotMatchingUnusedItem";

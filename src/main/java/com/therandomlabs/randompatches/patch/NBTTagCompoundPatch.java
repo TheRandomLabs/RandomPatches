@@ -20,8 +20,8 @@ import org.apache.commons.codec.binary.Base64;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.AbstractInsnNode;
 import org.objectweb.asm.tree.ClassNode;
+import org.objectweb.asm.tree.InsnList;
 import org.objectweb.asm.tree.MethodInsnNode;
-import org.objectweb.asm.tree.MethodNode;
 
 public final class NBTTagCompoundPatch extends Patch {
 	public static final Gson GSON =
@@ -29,14 +29,14 @@ public final class NBTTagCompoundPatch extends Patch {
 
 	@Override
 	public boolean apply(ClassNode node) {
-		final MethodNode method = findMethod(node, "equals");
+		final InsnList instructions = findInstructions(node, "equals");
 
 		MethodInsnNode entrySet1 = null;
 		MethodInsnNode entrySet2 = null;
 		MethodInsnNode equals = null;
 
-		for(int i = 0; i < method.instructions.size(); i++) {
-			final AbstractInsnNode instruction = method.instructions.get(i);
+		for(int i = 0; i < instructions.size(); i++) {
+			final AbstractInsnNode instruction = instructions.get(i);
 			final int opcode = instruction.getOpcode();
 
 			//On 1.11 and below, it's an invokeinterface (Set.equals)
@@ -69,9 +69,10 @@ public final class NBTTagCompoundPatch extends Patch {
 			}
 		}
 
-		method.instructions.remove(entrySet1);
-		method.instructions.remove(entrySet2);
+		instructions.remove(entrySet1);
+		instructions.remove(entrySet2);
 
+		//Call NBTTagCompoundPatch.areTagMapsEqual
 		equals.setOpcode(Opcodes.INVOKESTATIC);
 		equals.owner = getName(NBTTagCompoundPatch.class);
 		equals.name = "areTagMapsEqual";
