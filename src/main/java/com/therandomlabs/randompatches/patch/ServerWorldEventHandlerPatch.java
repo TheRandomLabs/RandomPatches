@@ -13,6 +13,7 @@ import org.objectweb.asm.tree.MethodInsnNode;
 import org.objectweb.asm.tree.MethodNode;
 import org.objectweb.asm.tree.VarInsnNode;
 
+//Taken and adapted from https://github.com/Fuzss/particlefixes
 public final class ServerWorldEventHandlerPatch extends Patch {
 	@Override
 	public boolean apply(ClassNode node) {
@@ -81,13 +82,25 @@ public final class ServerWorldEventHandlerPatch extends Patch {
 	public static void spawnParticle(WorldServer world, int particleID, boolean ignoreRange,
 			double x, double y, double z, double xSpeed, double ySpeed, double zSpeed,
 			int... parameters) {
-		world.spawnParticle(
-				Objects.requireNonNull(EnumParticleTypes.getParticleFromId(particleID)),
-				x, y, z,
-				1,
-				0.0, 0.0, 0.0,
-				(xSpeed * ySpeed * zSpeed) / 3.0,
-				parameters
-		);
+		final EnumParticleTypes particleType =
+				Objects.requireNonNull(EnumParticleTypes.getParticleFromId(particleID));
+
+		//In SPacketParticles, there are always as many ints written to the PacketBuffer as there
+		//are arguments defined for that particle type, however, there is no check in vanilla to
+		//ensure there are as many parameters as required, leading to an
+		//ArrayIndexOutOfBoundsException.
+		//This exception would also occur in vanilla when calling EntityLivingBase#updateItemUse
+		//on the server when there are no subtypes for an item if not for MC-10369, which this
+		//patch fixes.
+		if(parameters.length == particleType.getArgumentCount()) {
+			world.spawnParticle(
+					particleType,
+					x, y, z,
+					1,
+					0.0, 0.0, 0.0,
+					(xSpeed * ySpeed * zSpeed) / 3.0,
+					parameters
+			);
+		}
 	}
 }
