@@ -10,10 +10,10 @@ import net.minecraftforge.common.util.Constants;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.AbstractInsnNode;
 import org.objectweb.asm.tree.ClassNode;
+import org.objectweb.asm.tree.InsnList;
 import org.objectweb.asm.tree.JumpInsnNode;
 import org.objectweb.asm.tree.LabelNode;
 import org.objectweb.asm.tree.MethodInsnNode;
-import org.objectweb.asm.tree.MethodNode;
 import org.objectweb.asm.tree.VarInsnNode;
 
 public final class EntityPatch extends Patch {
@@ -22,8 +22,8 @@ public final class EntityPatch extends Patch {
 
 	@Override
 	public boolean apply(ClassNode node) {
-		patchWriteToNBT(findMethod(node, "writeToNBT", "func_189511_e"));
-		patchReadFromNBT(findMethod(node, "readFromNBT", "func_70020_e"));
+		patchWriteToNBT(findInstructions(node, "writeToNBT", "func_189511_e"));
+		patchReadFromNBT(findInstructions(node, "readFromNBT", "func_70020_e"));
 
 		return true;
 	}
@@ -61,11 +61,11 @@ public final class EntityPatch extends Patch {
 		));
 	}
 
-	private static void patchWriteToNBT(MethodNode method) {
+	private static void patchWriteToNBT(InsnList instructions) {
 		MethodInsnNode setTag = null;
 
-		for(int i = 0; i < method.instructions.size(); i++) {
-			final AbstractInsnNode instruction = method.instructions.get(i);
+		for(int i = 0; i < instructions.size(); i++) {
+			final AbstractInsnNode instruction = instructions.get(i);
 
 			if(instruction.getOpcode() == Opcodes.INVOKEVIRTUAL) {
 				setTag = (MethodInsnNode) instruction;
@@ -78,30 +78,33 @@ public final class EntityPatch extends Patch {
 			}
 		}
 
-		final VarInsnNode loadThis = new VarInsnNode(Opcodes.ALOAD, 0);
+		final InsnList newInstructions = new InsnList();
 
-		final VarInsnNode loadCompound = new VarInsnNode(Opcodes.ALOAD, 1);
+		//Get Entity (this)
+		newInstructions.add(new VarInsnNode(Opcodes.ALOAD, 0));
 
-		final MethodInsnNode writeAABBTag = new MethodInsnNode(
+		//Get NBTTagCompound
+		newInstructions.add(new VarInsnNode(Opcodes.ALOAD, 1));
+
+		//Call EntityPatch.writeAABBTag
+		newInstructions.add(new MethodInsnNode(
 				Opcodes.INVOKESTATIC,
 				ENTITYPATCH,
 				"writeAABBTag",
 				"(Lnet/minecraft/entity/Entity;Lnet/minecraft/nbt/NBTTagCompound;)V",
 				false
-		);
+		));
 
-		method.instructions.insert(setTag, loadThis);
-		method.instructions.insert(loadThis, loadCompound);
-		method.instructions.insert(loadCompound, writeAABBTag);
+		instructions.insert(setTag, newInstructions);
 	}
 
 	@SuppressWarnings("Duplicates")
-	private static void patchReadFromNBT(MethodNode method) {
+	private static void patchReadFromNBT(InsnList instructions) {
 		JumpInsnNode jumpIfShouldNotSetPosition = null;
 		MethodInsnNode setPosition = null;
 
-		for(int i = method.instructions.size() - 1; i >= 0; i--) {
-			final AbstractInsnNode instruction = method.instructions.get(i);
+		for(int i = instructions.size() - 1; i >= 0; i--) {
+			final AbstractInsnNode instruction = instructions.get(i);
 
 			if(setPosition == null) {
 				if(instruction.getOpcode() == Opcodes.INVOKEVIRTUAL) {
@@ -121,25 +124,29 @@ public final class EntityPatch extends Patch {
 			}
 		}
 
+		final InsnList newInstructions = new InsnList();
+
 		final LabelNode jumpTo = new LabelNode();
 
 		jumpIfShouldNotSetPosition.label = jumpTo;
 
-		final VarInsnNode loadThis = new VarInsnNode(Opcodes.ALOAD, 0);
+		newInstructions.add(jumpTo);
 
-		final VarInsnNode loadCompound = new VarInsnNode(Opcodes.ALOAD, 1);
+		//Get Entity (this)
+		newInstructions.add(new VarInsnNode(Opcodes.ALOAD, 0));
 
-		final MethodInsnNode readAABBTag = new MethodInsnNode(
+		//Get NBTTagCompound
+		newInstructions.add(new VarInsnNode(Opcodes.ALOAD, 1));
+
+		//Call EntityPatch.readAABBTag
+		newInstructions.add(new MethodInsnNode(
 				Opcodes.INVOKESTATIC,
 				ENTITYPATCH,
 				"readAABBTag",
 				"(Lnet/minecraft/entity/Entity;Lnet/minecraft/nbt/NBTTagCompound;)V",
 				false
-		);
+		));
 
-		method.instructions.insert(setPosition, jumpTo);
-		method.instructions.insert(jumpTo, loadThis);
-		method.instructions.insert(loadThis, loadCompound);
-		method.instructions.insert(loadCompound, readAABBTag);
+		instructions.insert(setPosition, newInstructions);
 	}
 }

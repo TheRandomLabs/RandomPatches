@@ -137,15 +137,15 @@ public final class MinecraftPatch extends Patch {
 			}
 		}
 
-		final MethodInsnNode callHandleKeypress = new MethodInsnNode(
+		//Call MinecraftPatch.handleKeypress
+		instructions.insertBefore(isB.getPrevious(), new MethodInsnNode(
 				Opcodes.INVOKESTATIC,
 				getName(MinecraftPatch.class),
 				"handleKeypress",
 				"()V",
 				false
-		);
+		));
 
-		instructions.insertBefore(isB.getPrevious(), callHandleKeypress);
 		isB.operand = KEY_UNUSED;
 	}
 }

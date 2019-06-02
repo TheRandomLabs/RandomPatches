@@ -22,7 +22,7 @@ public final class ItemPotionPatch extends Patch {
 
 		instructions.clear();
 
-		//Load ItemStack
+		//Get ItemStack
 		instructions.add(new VarInsnNode(Opcodes.ALOAD, 1));
 
 		//Call ItemPotionPatch.hasEffect

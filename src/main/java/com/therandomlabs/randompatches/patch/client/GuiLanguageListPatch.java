@@ -30,18 +30,18 @@ public final class GuiLanguageListPatch extends Patch {
 			}
 		}
 
-		final MethodInsnNode callReloadLanguage = new MethodInsnNode(
+		//Call GuiLanguageListPatch.reloadLanguage
+		instructions.insert(refreshResources, new MethodInsnNode(
 				Opcodes.INVOKESTATIC,
 				getName(GuiLanguageListPatch.class),
 				"reloadLanguage",
 				"()V",
 				false
-		);
-
-		instructions.insert(refreshResources, callReloadLanguage);
+		));
 
 		final AbstractInsnNode previous = refreshResources.getPrevious();
 
+		//It works, don't question
 		instructions.remove(previous.getPrevious());
 		instructions.remove(previous);
 		instructions.remove(refreshResources);
