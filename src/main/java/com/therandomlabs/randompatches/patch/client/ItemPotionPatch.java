@@ -6,31 +6,36 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionUtils;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.ClassNode;
+import org.objectweb.asm.tree.InsnList;
 import org.objectweb.asm.tree.InsnNode;
 import org.objectweb.asm.tree.MethodInsnNode;
-import org.objectweb.asm.tree.MethodNode;
 import org.objectweb.asm.tree.VarInsnNode;
 
 public final class ItemPotionPatch extends Patch {
 	@Override
 	public boolean apply(ClassNode node) {
-		MethodNode method = findMethod(node, "hasEffect", "func_77962_s");
+		InsnList instructions = findInstructions(node, "hasEffect", "func_77962_s");
 
-		if(method == null) {
-			method = findMethod(node, "hasEffect", "func_77636_d");
+		if(instructions == null) {
+			instructions = findInstructions(node, "hasEffect", "func_77636_d");
 		}
 
-		method.instructions.clear();
+		instructions.clear();
 
-		method.instructions.add(new VarInsnNode(Opcodes.ALOAD, 1));
-		method.instructions.add(new MethodInsnNode(
+		//Load ItemStack
+		instructions.add(new VarInsnNode(Opcodes.ALOAD, 1));
+
+		//Call ItemPotionPatch.hasEffect
+		instructions.add(new MethodInsnNode(
 				Opcodes.INVOKESTATIC,
 				getName(ItemPotionPatch.class),
 				"hasEffect",
 				"(Lnet/minecraft/item/ItemStack;)Z",
 				false
 		));
-		method.instructions.add(new InsnNode(Opcodes.IRETURN));
+
+		//Return ItemPotionPatch.hasEffect
+		instructions.add(new InsnNode(Opcodes.IRETURN));
 
 		return true;
 	}

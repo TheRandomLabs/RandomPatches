@@ -13,7 +13,7 @@ import net.minecraft.tileentity.TileEntityEndPortal;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 
-public class TileEntityEndPortalRenderer extends
+public class RPTileEntityEndPortalRenderer extends
 		TileEntitySpecialRenderer<TileEntityEndPortal> {
 	private static final ResourceLocation END_SKY_TEXTURE =
 			new ResourceLocation("textures/environment/end_sky.png");
@@ -30,11 +30,11 @@ public class TileEntityEndPortalRenderer extends
 	private final FloatBuffer buffer = GLAllocation.createDirectFloatBuffer(16);
 	private final boolean upsideDown;
 
-	public TileEntityEndPortalRenderer() {
+	public RPTileEntityEndPortalRenderer() {
 		this(false);
 	}
 
-	public TileEntityEndPortalRenderer(boolean upsideDown) {
+	public RPTileEntityEndPortalRenderer(boolean upsideDown) {
 		this.upsideDown = upsideDown;
 	}
 

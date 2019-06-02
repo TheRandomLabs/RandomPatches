@@ -6,6 +6,7 @@ import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.AbstractInsnNode;
 import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.FieldInsnNode;
+import org.objectweb.asm.tree.InsnList;
 import org.objectweb.asm.tree.InsnNode;
 import org.objectweb.asm.tree.JumpInsnNode;
 import org.objectweb.asm.tree.LabelNode;
@@ -16,11 +17,11 @@ public final class GuiIngameMenuPatch extends Patch {
 	@SuppressWarnings("Duplicates")
 	@Override
 	public boolean apply(ClassNode node) {
-		final MethodNode method = findMethod(node, "actionPerformed", "func_146284_a");
+		final InsnList instructions = findInstructions(node, "actionPerformed", "func_146284_a");
 		AbstractInsnNode storeIsIntegratedServerRunning = null;
 
-		for(int i = 0; i < method.instructions.size(); i++) {
-			final AbstractInsnNode instruction = method.instructions.get(i);
+		for(int i = 0; i < instructions.size(); i++) {
+			final AbstractInsnNode instruction = instructions.get(i);
 
 			if(instruction.getOpcode() == Opcodes.ISTORE) {
 				storeIsIntegratedServerRunning = instruction;
@@ -28,22 +29,30 @@ public final class GuiIngameMenuPatch extends Patch {
 			}
 		}
 
+		final InsnList newInstructions = new InsnList();
+
 		final LabelNode label = new LabelNode();
-		final FieldInsnNode getEnabled = new FieldInsnNode(
+
+		//Get RPConfig.Client.forceTitleScreenOnDisconnect
+		newInstructions.add(new FieldInsnNode(
 				Opcodes.GETSTATIC,
 				getName(RPConfig.Client.class),
 				"forceTitleScreenOnDisconnect",
 				"Z"
-		);
-		final JumpInsnNode jumpIfNotEnabled = new JumpInsnNode(Opcodes.IFEQ, label);
-		final InsnNode loadTrue = new InsnNode(Opcodes.ICONST_1);
-		final VarInsnNode storeTrue = new VarInsnNode(Opcodes.ISTORE, 2);
+		));
 
-		method.instructions.insert(storeIsIntegratedServerRunning, getEnabled);
-		method.instructions.insert(getEnabled, jumpIfNotEnabled);
-		method.instructions.insert(jumpIfNotEnabled, loadTrue);
-		method.instructions.insert(loadTrue, storeTrue);
-		method.instructions.insert(storeTrue, label);
+		//Jump if not enabled
+		newInstructions.add(new JumpInsnNode(Opcodes.IFEQ, label));
+
+		//Load true
+		newInstructions.add(new InsnNode(Opcodes.ICONST_1));
+
+		//Store true to flag (isIntegratedServerRunning)
+		newInstructions.add(new VarInsnNode(Opcodes.ISTORE, 2));
+
+		newInstructions.add(label);
+
+		instructions.insert(storeIsIntegratedServerRunning, newInstructions);
 
 		return true;
 	}

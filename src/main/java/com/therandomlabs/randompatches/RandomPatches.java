@@ -4,20 +4,20 @@ import com.google.common.eventbus.Subscribe;
 import com.therandomlabs.randomlib.TRLUtils;
 import com.therandomlabs.randomlib.config.CommandConfigReload;
 import com.therandomlabs.randomlib.config.ConfigManager;
-import com.therandomlabs.randompatches.client.TileEntityEndPortalRenderer;
+import com.therandomlabs.randompatches.client.RPTileEntityEndPortalRenderer;
 import com.therandomlabs.randompatches.config.RPConfig;
 import com.therandomlabs.randompatches.patch.EntityBoatPatch;
+import com.therandomlabs.randompatches.patch.EntityMinecartPatch;
 import com.therandomlabs.randompatches.patch.EntityPatch;
 import com.therandomlabs.randompatches.patch.ItemBucketPatch;
-import com.therandomlabs.randompatches.patch.EntityMinecartPatch;
 import com.therandomlabs.randompatches.patch.NBTTagCompoundPatch;
 import com.therandomlabs.randompatches.patch.NetHandlerLoginServerPatch;
 import com.therandomlabs.randompatches.patch.NetHandlerPlayServerPatch;
 import com.therandomlabs.randompatches.patch.ServerRecipeBookHelperPatch;
-import com.therandomlabs.randompatches.patch.WorldServerPatch;
+import com.therandomlabs.randompatches.patch.ServerWorldEventHandlerPatch;
 import com.therandomlabs.randompatches.patch.client.GuiIngameMenuPatch;
-import com.therandomlabs.randompatches.patch.client.ItemPotionPatch;
 import com.therandomlabs.randompatches.patch.client.GuiLanguageListPatch;
+import com.therandomlabs.randompatches.patch.client.ItemPotionPatch;
 import com.therandomlabs.randompatches.patch.client.MinecraftPatch;
 import com.therandomlabs.randompatches.patch.endportal.BlockEndPortalPatch;
 import com.therandomlabs.randompatches.patch.endportal.BlockModelShapesPatch;
@@ -112,7 +112,7 @@ public final class RandomPatches {
 		}
 
 		if(RPConfig.Misc.areEndPortalTweaksEnabled()) {
-			final TileEntityEndPortalRenderer renderer = new TileEntityEndPortalRenderer();
+			final RPTileEntityEndPortalRenderer renderer = new RPTileEntityEndPortalRenderer();
 			renderer.setRendererDispatcher(TileEntityRendererDispatcher.instance);
 			TileEntityRendererDispatcher.instance.renderers.put(
 					TileEntityEndPortal.class, renderer
@@ -121,21 +121,6 @@ public final class RandomPatches {
 	}
 
 	public static void registerPatches() {
-		if(RPConfig.Timeouts.patchLoginTimeout) {
-			register(
-					"net.minecraft.network.NetHandlerLoginServer",
-					new NetHandlerLoginServerPatch()
-			);
-		}
-
-		if(RPConfig.Client.patchTitleScreenOnDisconnect) {
-			register("net.minecraft.client.gui.GuiIngameMenu", new GuiIngameMenuPatch());
-		}
-
-		if(RPConfig.Misc.patchNetHandlerPlayServer && TRLUtils.MC_VERSION_NUMBER > 8) {
-			register("net.minecraft.network.NetHandlerPlayServer", new NetHandlerPlayServerPatch());
-		}
-
 		if(RPConfig.Client.fastLanguageSwitch && TRLUtils.IS_CLIENT) {
 			register("net.minecraft.client.gui.GuiLanguage$List", new GuiLanguageListPatch());
 		}
@@ -144,12 +129,19 @@ public final class RandomPatches {
 			register("net.minecraft.client.Minecraft", new MinecraftPatch());
 		}
 
-		if(RPConfig.Misc.minecartAIFix) {
-			register("net.minecraft.entity.item.EntityMinecart", new EntityMinecartPatch());
-		}
-
 		if(RPConfig.Client.patchPotionGlint && TRLUtils.IS_CLIENT) {
 			register("net.minecraft.item.ItemPotion", new ItemPotionPatch());
+		}
+
+		if(RPConfig.Client.patchTitleScreenOnDisconnect) {
+			register("net.minecraft.client.gui.GuiIngameMenu", new GuiIngameMenuPatch());
+		}
+
+		if(RPConfig.Timeouts.patchLoginTimeout) {
+			register(
+					"net.minecraft.network.NetHandlerLoginServer",
+					new NetHandlerLoginServerPatch()
+			);
 		}
 
 		if(RPConfig.Misc.areEndPortalTweaksEnabled()) {
@@ -164,10 +156,18 @@ public final class RandomPatches {
 			);
 		}
 
-		if(RPConfig.Misc.isRecipeBookNBTFixEnabled()) {
+		if(RPConfig.Misc.mc2025Fix && TRLUtils.MC_VERSION_NUMBER > 9) {
+			register("net.minecraft.entity.Entity", new EntityPatch());
+		}
+
+		if(RPConfig.Misc.minecartAIFix) {
+			register("net.minecraft.entity.item.EntityMinecart", new EntityMinecartPatch());
+		}
+
+		if(RPConfig.Misc.particleFixes && TRLUtils.MC_VERSION_NUMBER > 9) {
 			register(
-					"net.minecraft.util.ServerRecipeBookHelper",
-					new ServerRecipeBookHelperPatch()
+					"net.minecraft.world.ServerWorldEventHandler",
+					new ServerWorldEventHandlerPatch()
 			);
 		}
 
@@ -175,20 +175,23 @@ public final class RandomPatches {
 			register("net.minecraft.entity.item.EntityBoat", new EntityBoatPatch());
 		}
 
-		if(RPConfig.Misc.mc2025Fix && TRLUtils.MC_VERSION_NUMBER > 9) {
-			register("net.minecraft.entity.Entity", new EntityPatch());
-		}
-
-		if(RPConfig.Misc.replaceTeleporter && TRLUtils.MC_VERSION_NUMBER == 12) {
-			register("net.minecraft.world.WorldServer", new WorldServerPatch());
-		}
-
-		if(RPConfig.Misc.skullStackingFix) {
-			register("net.minecraft.nbt.NBTTagCompound", new NBTTagCompoundPatch());
+		if(RPConfig.Misc.patchNetHandlerPlayServer && TRLUtils.MC_VERSION_NUMBER > 8) {
+			register("net.minecraft.network.NetHandlerPlayServer", new NetHandlerPlayServerPatch());
 		}
 
 		if(RPConfig.Misc.portalBucketReplacementFix && TRLUtils.MC_VERSION_NUMBER > 8) {
 			register("net.minecraft.item.ItemBucket", new ItemBucketPatch());
+		}
+
+		if(RPConfig.Misc.isRecipeBookNBTFixEnabled()) {
+			register(
+					"net.minecraft.util.ServerRecipeBookHelper",
+					new ServerRecipeBookHelperPatch()
+			);
+		}
+
+		if(RPConfig.Misc.skullStackingFix) {
+			register("net.minecraft.nbt.NBTTagCompound", new NBTTagCompoundPatch());
 		}
 	}
 }

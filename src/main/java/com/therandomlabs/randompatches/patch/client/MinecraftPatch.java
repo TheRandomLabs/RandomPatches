@@ -16,11 +16,11 @@ import org.lwjgl.input.Keyboard;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.AbstractInsnNode;
 import org.objectweb.asm.tree.ClassNode;
+import org.objectweb.asm.tree.InsnList;
 import org.objectweb.asm.tree.InsnNode;
 import org.objectweb.asm.tree.IntInsnNode;
 import org.objectweb.asm.tree.LdcInsnNode;
 import org.objectweb.asm.tree.MethodInsnNode;
-import org.objectweb.asm.tree.MethodNode;
 
 public final class MinecraftPatch extends Patch {
 	public static final class ToggleNarratorKeybind {
@@ -51,16 +51,16 @@ public final class MinecraftPatch extends Patch {
 	public boolean apply(ClassNode node) {
 		if(!RandomPatches.ITLT_INSTALLED) {
 			if(!RandomPatches.DEFAULT_WINDOW_TITLE.equals(RPConfig.Window.title)) {
-				patchCreateDisplay(findMethod(node, "createDisplay", "func_175609_am"));
+				patchCreateDisplay(findInstructions(node, "createDisplay", "func_175609_am"));
 			}
 
 			if(!RPConfig.Window.icon16.isEmpty()) {
-				patchSetWindowIcon(findMethod(node, "setWindowIcon", "func_175594_ao"));
+				patchSetWindowIcon(findInstructions(node, "setWindowIcon", "func_175594_ao"));
 			}
 		}
 
 		if(RPConfig.Client.isNarratorKeybindEnabled()) {
-			patchDispatchKeypresses(findMethod(node, "dispatchKeypresses", "func_152348_aa"));
+			patchDispatchKeypresses(findInstructions(node, "dispatchKeypresses", "func_152348_aa"));
 		}
 
 		return true;
@@ -87,9 +87,9 @@ public final class MinecraftPatch extends Patch {
 		}
 	}
 
-	private static void patchCreateDisplay(MethodNode method) {
-		for(int i = 0; i < method.instructions.size(); i++) {
-			final AbstractInsnNode instruction = method.instructions.get(i);
+	private static void patchCreateDisplay(InsnList instructions) {
+		for(int i = 0; i < instructions.size(); i++) {
+			final AbstractInsnNode instruction = instructions.get(i);
 
 			if(instruction.getOpcode() == Opcodes.INVOKESTATIC) {
 				final MethodInsnNode setTitle = (MethodInsnNode) instruction;
@@ -102,24 +102,29 @@ public final class MinecraftPatch extends Patch {
 		}
 	}
 
-	private static void patchSetWindowIcon(MethodNode method) {
-		final MethodInsnNode setWindowIcon = new MethodInsnNode(
+	private static void patchSetWindowIcon(InsnList instructions) {
+		final InsnList newInstructions = new InsnList();
+
+		//Call WindowIconHandler.setWindowIcon
+		newInstructions.add(new MethodInsnNode(
 				Opcodes.INVOKESTATIC,
 				getName(WindowIconHandler.class),
 				"setWindowIcon",
 				"()V",
 				false
-		);
+		));
 
-		method.instructions.insertBefore(method.instructions.getFirst(), setWindowIcon);
-		method.instructions.insert(setWindowIcon, new InsnNode(Opcodes.RETURN));
+		//Return
+		newInstructions.add(new InsnNode(Opcodes.RETURN));
+
+		instructions.insertBefore(instructions.getFirst(), newInstructions);
 	}
 
-	private static void patchDispatchKeypresses(MethodNode method) {
+	private static void patchDispatchKeypresses(InsnList instructions) {
 		IntInsnNode isB = null;
 
-		for(int i = 0; i < method.instructions.size(); i++) {
-			final AbstractInsnNode instruction = method.instructions.get(i);
+		for(int i = 0; i < instructions.size(); i++) {
+			final AbstractInsnNode instruction = instructions.get(i);
 
 			if(instruction.getOpcode() == Opcodes.BIPUSH) {
 				isB = (IntInsnNode) instruction;
@@ -140,7 +145,7 @@ public final class MinecraftPatch extends Patch {
 				false
 		);
 
-		method.instructions.insertBefore(isB.getPrevious(), callHandleKeypress);
+		instructions.insertBefore(isB.getPrevious(), callHandleKeypress);
 		isB.operand = KEY_UNUSED;
 	}
 }

@@ -5,17 +5,17 @@ import net.minecraft.client.Minecraft;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.AbstractInsnNode;
 import org.objectweb.asm.tree.ClassNode;
+import org.objectweb.asm.tree.InsnList;
 import org.objectweb.asm.tree.MethodInsnNode;
-import org.objectweb.asm.tree.MethodNode;
 
 public final class GuiLanguageListPatch extends Patch {
 	@Override
 	public boolean apply(ClassNode node) {
-		final MethodNode method = findMethod(node, "elementClicked", "func_148144_a");
+		final InsnList instructions = findInstructions(node, "elementClicked", "func_148144_a");
 		MethodInsnNode refreshResources = null;
 
-		for(int i = 0; i < method.instructions.size(); i++) {
-			final AbstractInsnNode instruction = method.instructions.get(i);
+		for(int i = 0; i < instructions.size(); i++) {
+			final AbstractInsnNode instruction = instructions.get(i);
 
 			if(instruction.getOpcode() == Opcodes.INVOKEVIRTUAL) {
 				refreshResources = (MethodInsnNode) instruction;
@@ -38,13 +38,13 @@ public final class GuiLanguageListPatch extends Patch {
 				false
 		);
 
-		method.instructions.insert(refreshResources, callReloadLanguage);
+		instructions.insert(refreshResources, callReloadLanguage);
 
 		final AbstractInsnNode previous = refreshResources.getPrevious();
 
-		method.instructions.remove(previous.getPrevious());
-		method.instructions.remove(previous);
-		method.instructions.remove(refreshResources);
+		instructions.remove(previous.getPrevious());
+		instructions.remove(previous);
+		instructions.remove(refreshResources);
 
 		return true;
 	}

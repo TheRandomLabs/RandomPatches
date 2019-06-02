@@ -113,6 +113,15 @@ public final class RPConfig {
 
 		@Config.RequiresMCRestart
 		@Config.Property({
+				"Fixes MC-10369 (server-side particle spawning not creating particles for " +
+						"clients) and MC-93826 (breeding hearts only showing once instead of all " +
+						"of the time an animal can breed.",
+				"This only works on 1.10 and above."
+		})
+		public static boolean particleFixes = true;
+
+		@Config.RequiresMCRestart
+		@Config.Property({
 				"Set this to false to disable the NetHandlerPlayServer patches " +
 						"(the speed limits and disconnect timeouts).",
 				"On 1.8, 1.8.8 and 1.8.9, these patches are always disabled."
@@ -136,13 +145,6 @@ public final class RPConfig {
 						"recipe book."
 		)
 		public static boolean recipeBookNBTFix = true;
-
-		@Config.RequiresMCRestart
-		@Config.Property(
-				"Whether to allow other mods (namely RandomPortals) to replace the default " +
-						"Teleporter on 1.12."
-		)
-		public static boolean replaceTeleporter = true;
 
 		@Config.RequiresWorldReload
 		@Config.Property("Enables the /rpreload command.")

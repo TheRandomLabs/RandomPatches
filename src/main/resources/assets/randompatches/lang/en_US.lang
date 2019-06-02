@@ -21,6 +21,7 @@ randompatches.config.misc.tooltip=Options that don't fit into any other categori
 randompatches.config.misc.endPortalTweaks=End portal tweaks
 randompatches.config.misc.mc2025Fix=MC-2025 fix
 randompatches.config.misc.minecartAIFix=Minecraft AI fix
+randompatches.config.misc.particleFixes=Particle fixes
 randompatches.config.misc.patchNetHandlerPlayServer=Patch NetHandlerPlayServer
 randompatches.config.misc.portalBucketReplacementFix=Portal bucket replacement fix
 randompatches.config.misc.portalBucketReplacementFixForNetherPortals=Portal bucket replacement fix for Nether portals

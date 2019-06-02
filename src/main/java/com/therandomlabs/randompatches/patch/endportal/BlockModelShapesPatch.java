@@ -5,7 +5,7 @@ import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.AbstractInsnNode;
 import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.FieldInsnNode;
-import org.objectweb.asm.tree.MethodNode;
+import org.objectweb.asm.tree.InsnList;
 
 public final class BlockModelShapesPatch extends Patch {
 	public static final String AIR = getName("AIR", "field_150350_a");
@@ -14,12 +14,13 @@ public final class BlockModelShapesPatch extends Patch {
 
 	@Override
 	public boolean apply(ClassNode node) {
-		final MethodNode method = findMethod(node, "registerAllBlocks", "func_178119_d");
+		final InsnList instructions = findInstructions(node, "registerAllBlocks", "func_178119_d");
+
 		FieldInsnNode getEndPortal = null;
 		FieldInsnNode getEndGateway = null;
 
-		for(int i = 0; i < method.instructions.size(); i++) {
-			final AbstractInsnNode instruction = method.instructions.get(i);
+		for(int i = 0; i < instructions.size(); i++) {
+			final AbstractInsnNode instruction = instructions.get(i);
 
 			if(instruction.getOpcode() == Opcodes.GETSTATIC) {
 				if(getEndPortal == null) {
