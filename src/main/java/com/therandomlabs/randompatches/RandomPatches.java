@@ -22,6 +22,8 @@ import com.therandomlabs.randompatches.patch.client.MinecraftPatch;
 import com.therandomlabs.randompatches.patch.endportal.BlockEndPortalPatch;
 import com.therandomlabs.randompatches.patch.endportal.BlockModelShapesPatch;
 import com.therandomlabs.randompatches.patch.endportal.TileEntityEndPortalPatch;
+import com.therandomlabs.randompatches.patch.packetsize.NettyCompressionDecoderPatch;
+import com.therandomlabs.randompatches.patch.packetsize.PacketBufferPatch;
 import com.therandomlabs.randompatches.util.RPUtils;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.launchwrapper.Launch;
@@ -177,6 +179,14 @@ public final class RandomPatches {
 
 		if(RPConfig.Misc.patchNetHandlerPlayServer && TRLUtils.MC_VERSION_NUMBER > 8) {
 			register("net.minecraft.network.NetHandlerPlayServer", new NetHandlerPlayServerPatch());
+		}
+
+		if(RPConfig.Misc.patchPacketSizeLimit) {
+			register(
+					"net.minecraft.network.NettyCompressionDecoder",
+					new NettyCompressionDecoderPatch()
+			);
+			register("net.minecraft.network.PacketBuffer", new PacketBufferPatch());
 		}
 
 		if(RPConfig.Misc.portalBucketReplacementFix && TRLUtils.MC_VERSION_NUMBER > 8) {

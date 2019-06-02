@@ -4,6 +4,7 @@ import com.therandomlabs.randomlib.TRLUtils;
 import com.therandomlabs.randomlib.config.Config;
 import com.therandomlabs.randompatches.RandomPatches;
 import com.therandomlabs.randompatches.client.WindowIconHandler;
+import com.therandomlabs.randompatches.patch.packetsize.NettyCompressionDecoderPatch;
 import org.lwjgl.opengl.Display;
 
 @Config(RandomPatches.MOD_ID)
@@ -129,6 +130,17 @@ public final class RPConfig {
 		public static boolean patchNetHandlerPlayServer = true;
 
 		@Config.RequiresMCRestart
+		@Config.Property("Whether to patch the packet size limit.")
+		public static boolean patchPacketSizeLimit = true;
+
+		@Config.RangeInt(min = 257)
+		@Config.Property({
+				"The packet size limit.",
+				"The vanilla limit is " + NettyCompressionDecoderPatch.VANILLA_LIMIT + "."
+		})
+		public static int packetSizeLimit = 0x1000000;
+
+		@Config.RequiresMCRestart
 		@Config.Property(
 				"Fixes MC-11944, which allows players to replace End portals, " +
 						"End gateways and Nether portals using buckets."
@@ -159,6 +171,8 @@ public final class RPConfig {
 		)
 		public static boolean skullStackingRequiresSameTextures = true;
 
+		public static long packetSizeLimitLong;
+
 		public static boolean areEndPortalTweaksEnabled() {
 			return endPortalTweaks && TRLUtils.MC_VERSION_NUMBER > 10 && TRLUtils.IS_CLIENT;
 		}
@@ -166,6 +180,10 @@ public final class RPConfig {
 		public static boolean isRecipeBookNBTFixEnabled() {
 			return recipeBookNBTFix && TRLUtils.MC_VERSION_NUMBER > 11 &&
 					!RandomPatches.VANILLAFIX_INSTALLED;
+		}
+
+		public static void onReload() {
+			packetSizeLimitLong = packetSizeLimit;
 		}
 	}
 
