@@ -39,8 +39,8 @@ public final class NBTTagCompoundPatch extends Patch {
 			final AbstractInsnNode instruction = instructions.get(i);
 			final int opcode = instruction.getOpcode();
 
-			//On 1.11 and below, it's an invokeinterface (Set.equals)
-			//On 1.12 and above, it's an invokestatic (Objects.equals)
+			//On 1.11 and below, it's an invokeinterface (Set#equals)
+			//On 1.12 and above, it's an invokestatic (Objects#equals)
 			if(opcode != Opcodes.INVOKESTATIC && opcode != Opcodes.INVOKEINTERFACE) {
 				continue;
 			}
@@ -72,7 +72,7 @@ public final class NBTTagCompoundPatch extends Patch {
 		instructions.remove(entrySet1);
 		instructions.remove(entrySet2);
 
-		//Call NBTTagCompoundPatch.areTagMapsEqual
+		//Call NBTTagCompoundPatch#areTagMapsEqual
 		equals.setOpcode(Opcodes.INVOKESTATIC);
 		equals.owner = getName(NBTTagCompoundPatch.class);
 		equals.name = "areTagMapsEqual";

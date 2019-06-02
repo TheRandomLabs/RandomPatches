@@ -38,7 +38,7 @@ public final class ItemBucketPatch extends Patch {
 		//Get IBlockState
 		((VarInsnNode) isSolid.getPrevious()).var = 4;
 
-		//Call ItemBucketPatch.isSolid
+		//Call ItemBucketPatch#isSolid
 		isSolid.setOpcode(Opcodes.INVOKESTATIC);
 		isSolid.owner = getName(ItemBucketPatch.class);
 		isSolid.name = "isSolid";

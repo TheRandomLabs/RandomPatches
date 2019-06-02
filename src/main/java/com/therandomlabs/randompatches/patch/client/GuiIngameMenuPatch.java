@@ -32,7 +32,7 @@ public final class GuiIngameMenuPatch extends Patch {
 
 		final LabelNode label = new LabelNode();
 
-		//Get RPConfig.Client.forceTitleScreenOnDisconnect
+		//Get RPConfig.Client#forceTitleScreenOnDisconnect
 		newInstructions.add(new FieldInsnNode(
 				Opcodes.GETSTATIC,
 				getName(RPConfig.Client.class),

@@ -105,7 +105,7 @@ public final class MinecraftPatch extends Patch {
 	private static void patchSetWindowIcon(InsnList instructions) {
 		final InsnList newInstructions = new InsnList();
 
-		//Call WindowIconHandler.setWindowIcon
+		//Call WindowIconHandler#setWindowIcon
 		newInstructions.add(new MethodInsnNode(
 				Opcodes.INVOKESTATIC,
 				getName(WindowIconHandler.class),
@@ -137,7 +137,7 @@ public final class MinecraftPatch extends Patch {
 			}
 		}
 
-		//Call MinecraftPatch.handleKeypress
+		//Call MinecraftPatch#handleKeypress
 		instructions.insertBefore(isB.getPrevious(), new MethodInsnNode(
 				Opcodes.INVOKESTATIC,
 				getName(MinecraftPatch.class),

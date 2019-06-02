@@ -21,7 +21,7 @@ public final class BlockEndPortalPatch extends Patch {
 		//Get side
 		instructions.add(new VarInsnNode(Opcodes.ALOAD, 4));
 
-		//Call BlockEndPortalPatch.shouldSideBeRendered
+		//Call BlockEndPortalPatch#shouldSideBeRendered
 		instructions.add(new MethodInsnNode(
 				Opcodes.INVOKESTATIC,
 				getName(BlockEndPortalPatch.class),
@@ -30,7 +30,7 @@ public final class BlockEndPortalPatch extends Patch {
 				false
 		));
 
-		//Return BlockEndPortalPatch.shouldSideBeRendered
+		//Return BlockEndPortalPatch#shouldSideBeRendered
 		instructions.add(new InsnNode(Opcodes.IRETURN));
 
 		return true;

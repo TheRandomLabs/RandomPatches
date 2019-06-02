@@ -28,7 +28,7 @@ public final class NetHandlerLoginServerPatch extends Patch {
 			}
 		}
 
-		//Get RPConfig.Timeouts.loginTimeout
+		//Get RPConfig.Timeouts#loginTimeout
 		instructions.insert(loginTimeout, new FieldInsnNode(
 				Opcodes.GETSTATIC,
 				NetHandlerPlayServerPatch.TIMEOUTS_CONFIG,

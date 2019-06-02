@@ -46,7 +46,7 @@ public final class EntityBoatPatch extends Patch {
 		//Get EntityBoat (this)
 		newInstructions.add(new VarInsnNode(Opcodes.ALOAD, 0));
 
-		//Get EntityBoat.status
+		//Get EntityBoat#status
 		newInstructions.add(new FieldInsnNode(
 				Opcodes.GETFIELD,
 				"net/minecraft/entity/item/EntityBoat",
@@ -54,7 +54,7 @@ public final class EntityBoatPatch extends Patch {
 				"Lnet/minecraft/entity/item/EntityBoat$Status;"
 		));
 
-		//Call EntityBoatPatch.onUpdate
+		//Call EntityBoatPatch#onUpdate
 		newInstructions.add(new MethodInsnNode(
 				Opcodes.INVOKESTATIC,
 				getName(EntityBoatPatch.class),
@@ -64,7 +64,7 @@ public final class EntityBoatPatch extends Patch {
 				false
 		));
 
-		//Get RPConfig.Boats.preventUnderwaterBoatPassengerEjection
+		//Get RPConfig.Boats#preventUnderwaterBoatPassengerEjection
 		newInstructions.add(new FieldInsnNode(
 				Opcodes.GETSTATIC,
 				getName(RPConfig.Boats.class),
@@ -81,7 +81,7 @@ public final class EntityBoatPatch extends Patch {
 		//Load 0.0F
 		newInstructions.add(new InsnNode(Opcodes.FCONST_0));
 
-		//Set EntityBoat.outOfControlTicks to 0.0F
+		//Set EntityBoat#outOfControlTicks to 0.0F
 		newInstructions.add(new FieldInsnNode(
 				Opcodes.PUTFIELD,
 				"net/minecraft/entity/item/EntityBoat",

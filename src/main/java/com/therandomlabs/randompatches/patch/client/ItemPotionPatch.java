@@ -25,7 +25,7 @@ public final class ItemPotionPatch extends Patch {
 		//Get ItemStack
 		instructions.add(new VarInsnNode(Opcodes.ALOAD, 1));
 
-		//Call ItemPotionPatch.hasEffect
+		//Call ItemPotionPatch#hasEffect
 		instructions.add(new MethodInsnNode(
 				Opcodes.INVOKESTATIC,
 				getName(ItemPotionPatch.class),
@@ -34,7 +34,7 @@ public final class ItemPotionPatch extends Patch {
 				false
 		));
 
-		//Return ItemPotionPatch.hasEffect
+		//Return ItemPotionPatch#hasEffect
 		instructions.add(new InsnNode(Opcodes.IRETURN));
 
 		return true;

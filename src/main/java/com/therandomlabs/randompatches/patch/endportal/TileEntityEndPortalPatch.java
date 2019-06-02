@@ -19,7 +19,7 @@ public final class TileEntityEndPortalPatch extends Patch {
 		//Get face
 		instructions.add(new VarInsnNode(Opcodes.ALOAD, 1));
 
-		//Call BlockEndPortalPatch.shouldSideBeRendered
+		//Call BlockEndPortalPatch#shouldSideBeRendered
 		instructions.add(new MethodInsnNode(
 				Opcodes.INVOKESTATIC,
 				getName(BlockEndPortalPatch.class),
@@ -28,7 +28,7 @@ public final class TileEntityEndPortalPatch extends Patch {
 				false
 		));
 
-		//Return BlockEndPortalPatch.shouldSideBeRendered
+		//Return BlockEndPortalPatch#shouldSideBeRendered
 		instructions.add(new InsnNode(Opcodes.IRETURN));
 
 		return true;

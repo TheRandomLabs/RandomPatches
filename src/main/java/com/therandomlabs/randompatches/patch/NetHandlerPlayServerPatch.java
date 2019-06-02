@@ -113,7 +113,7 @@ public final class NetHandlerPlayServerPatch extends Patch {
 			}
 		}
 
-		//Get RPConfig.Timeouts.keepAlivePacketInterval (in milliseconds above 1.11)
+		//Get RPConfig.Timeouts#keepAlivePacketInterval (in milliseconds above 1.11)
 		instructions.insert(keepAliveInterval, new FieldInsnNode(
 				Opcodes.GETSTATIC,
 				TIMEOUTS_CONFIG,
@@ -138,7 +138,7 @@ public final class NetHandlerPlayServerPatch extends Patch {
 		//Get NetHandlerPlayServer (this)
 		newInstructions.add(new VarInsnNode(Opcodes.ALOAD, 0));
 
-		//Get NetHandlerPlayServer.field_194402_f (lastPingTime)
+		//Get NetHandlerPlayServer#field_194402_f (lastPingTime)
 		newInstructions.add(new FieldInsnNode(
 				Opcodes.GETFIELD,
 				"net/minecraft/network/NetHandlerPlayServer",
@@ -150,7 +150,7 @@ public final class NetHandlerPlayServerPatch extends Patch {
 		//currentTimeMillis - lastPingTime
 		newInstructions.add(new InsnNode(Opcodes.LSUB));
 
-		//Get RPConfig.Timeouts.readTimeoutMillis
+		//Get RPConfig.Timeouts#readTimeoutMillis
 		newInstructions.add(new FieldInsnNode(
 				Opcodes.GETSTATIC,
 				TIMEOUTS_CONFIG,
@@ -159,7 +159,7 @@ public final class NetHandlerPlayServerPatch extends Patch {
 		));
 
 		//Compare the subtraction result to readTimeoutMillis and jump if it is not larger:
-		//if(currentTime - lastPingTime >= RPStaticConfig.readTimeoutMillis)
+		//if(currentTime - lastPingTime >= RPStaticConfig#readTimeoutMillis)
 		newInstructions.add(new InsnNode(Opcodes.LCMP));
 		newInstructions.add(new JumpInsnNode(Opcodes.IFLT, label));
 
@@ -196,7 +196,7 @@ public final class NetHandlerPlayServerPatch extends Patch {
 			}
 		}
 
-		//Get RPConfig.SpeedLimits.maxPlayerElytraSpeed
+		//Get RPConfig.SpeedLimits#maxPlayerElytraSpeed
 		instructions.insert(elytra, new FieldInsnNode(
 				Opcodes.GETSTATIC,
 				SPEED_LIMITS_CONFIG,
@@ -206,7 +206,7 @@ public final class NetHandlerPlayServerPatch extends Patch {
 
 		instructions.remove(elytra);
 
-		//Get RPConfig.SpeedLimits.maxPlayerSpeed
+		//Get RPConfig.SpeedLimits#maxPlayerSpeed
 		instructions.insert(normal, new FieldInsnNode(
 				Opcodes.GETSTATIC,
 				SPEED_LIMITS_CONFIG,
@@ -233,7 +233,7 @@ public final class NetHandlerPlayServerPatch extends Patch {
 			}
 		}
 
-		//Get RPConfig.SpeedLimits.maxPlayerVehicleSpeed
+		//Get RPConfig.SpeedLimits#maxPlayerVehicleSpeed
 		instructions.insert(speed, new FieldInsnNode(
 				Opcodes.GETSTATIC,
 				SPEED_LIMITS_CONFIG,

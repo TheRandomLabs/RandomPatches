@@ -86,7 +86,7 @@ public final class EntityPatch extends Patch {
 		//Get NBTTagCompound
 		newInstructions.add(new VarInsnNode(Opcodes.ALOAD, 1));
 
-		//Call EntityPatch.writeAABBTag
+		//Call EntityPatch#writeAABBTag
 		newInstructions.add(new MethodInsnNode(
 				Opcodes.INVOKESTATIC,
 				ENTITYPATCH,
@@ -138,7 +138,7 @@ public final class EntityPatch extends Patch {
 		//Get NBTTagCompound
 		newInstructions.add(new VarInsnNode(Opcodes.ALOAD, 1));
 
-		//Call EntityPatch.readAABBTag
+		//Call EntityPatch#readAABBTag
 		newInstructions.add(new MethodInsnNode(
 				Opcodes.INVOKESTATIC,
 				ENTITYPATCH,

@@ -25,7 +25,7 @@ public final class ServerRecipeBookHelperPatch extends Patch {
 			}
 		}
 
-		//Call ServerRecipeBookHelper.findSlotMatchingUnusedItem
+		//Call ServerRecipeBookHelper#findSlotMatchingUnusedItem
 		findSlotMatchingUnusedItem.setOpcode(Opcodes.INVOKESTATIC);
 		findSlotMatchingUnusedItem.owner = getName(ServerRecipeBookHelperPatch.class);
 		findSlotMatchingUnusedItem.name = "findSlotMatchingUnusedItem";
@@ -49,7 +49,7 @@ public final class ServerRecipeBookHelperPatch extends Patch {
 	}
 
 	public static boolean stackEqualExact(ItemStack stack1, ItemStack stack2) {
-		//(OreDictionary.WILDCARD_VALUE = Short.MAX_VALUE)
+		//OreDictionary#WILDCARD_VALUE is Short#MAX_VALUE
 		return stack1.getItem() == stack2.getItem() && (stack1.getMetadata() == Short.MAX_VALUE ||
 				stack1.getMetadata() == stack2.getMetadata());
 	}

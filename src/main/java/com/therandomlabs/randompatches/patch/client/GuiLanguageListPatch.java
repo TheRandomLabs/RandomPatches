@@ -30,7 +30,7 @@ public final class GuiLanguageListPatch extends Patch {
 			}
 		}
 
-		//Call GuiLanguageListPatch.reloadLanguage
+		//Call GuiLanguageListPatch#reloadLanguage
 		instructions.insert(refreshResources, new MethodInsnNode(
 				Opcodes.INVOKESTATIC,
 				getName(GuiLanguageListPatch.class),
