@@ -15,35 +15,29 @@ public final class BlockModelShapesPatch extends Patch {
 	@Override
 	public boolean apply(ClassNode node) {
 		final InsnList instructions = findInstructions(node, "registerAllBlocks", "func_178119_d");
-
-		FieldInsnNode getEndPortal = null;
-		FieldInsnNode getEndGateway = null;
+		boolean endPortalRemoved = false;
 
 		for(int i = 0; i < instructions.size(); i++) {
 			final AbstractInsnNode instruction = instructions.get(i);
 
 			if(instruction.getOpcode() == Opcodes.GETSTATIC) {
-				if(getEndPortal == null) {
-					getEndPortal = (FieldInsnNode) instruction;
+				final FieldInsnNode field = (FieldInsnNode) instruction;
 
-					if(!END_PORTAL.equals(getEndPortal.name)) {
-						getEndPortal = null;
+				if(!endPortalRemoved) {
+					if(END_PORTAL.equals(field.name)) {
+						field.name = AIR;
 					}
 
 					continue;
 				}
 
-				getEndGateway = (FieldInsnNode) instruction;
-
-				if(END_GATEWAY.equals(getEndGateway.name)) {
-					break;
+				if(END_GATEWAY.equals(field.name)) {
+					field.name = AIR;
+					return true;
 				}
 			}
 		}
 
-		getEndPortal.name = AIR;
-		getEndGateway.name = AIR;
-
-		return true;
+		return false;
 	}
 }
