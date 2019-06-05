@@ -62,7 +62,7 @@ function patchOnClick(instructions) {
 	//Get RPConfig.Client#forceTitleScreenOnDisconnect
 	newInstructions.add(new FieldInsnNode(
 			Opcodes.GETSTATIC,
-			getName(RPConfig.Client.class),
+			"com/therandomlabs/randompatches/RPConfig$Client",
 			"forceTitleScreenOnDisconnect",
 			"Z"
 	));

@@ -5,8 +5,6 @@ var LabelNode = Java.type("org.objectweb.asm.tree.LabelNode");
 var MethodInsnNode = Java.type("org.objectweb.asm.tree.MethodInsnNode");
 var VarInsnNode = Java.type("org.objectweb.asm.tree.VarInsnNode");
 
-var deobfuscated;
-
 var writeWithoutTypeIdPatched;
 var readPatched;
 
@@ -19,7 +17,6 @@ function patch(method, name, srgName, patchFunction) {
 		return false;
 	}
 
-	deobfuscated = method.name == name;
 	log("Patching method: " + name + " (" + method.name + ")");
 	patchFunction(method.instructions);
 	return true;

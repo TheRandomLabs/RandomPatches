@@ -48,10 +48,23 @@ public final class RPConfig {
 		@Config.Property("Enables the /rpreload command.")
 		public static boolean rpreload = true;
 
+		@Config.RangeInt(min = 257)
+		@Config.Property({
+				"The packet size limit.",
+				"The vanilla limit is " + 0x200000 + "."
+		})
+		public static int packetSizeLimit = 0x1000000;
+
 		@Config.Property(
 				"Whether skull stacking requires the same textures or just the same player profile."
 		)
 		public static boolean skullStackingRequiresSameTextures = true;
+
+		public static long packetSizeLimitLong;
+
+		public static void onReload() {
+			packetSizeLimitLong = packetSizeLimit;
+		}
 	}
 
 	public static final class SpeedLimits {

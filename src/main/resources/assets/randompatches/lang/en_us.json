@@ -10,6 +10,7 @@
 	"randompatches.config.misc.tooltip": "Options that don't fit into any other categories.",
 	"randompatches.config.misc.endPortalTweaks": "End portal tweaks",
 	"randompatches.config.misc.mc2025Fix": "MC-2025 fix",
+	"randompatches.config.misc.packetSizeLimit": "Packet size limit",
 	"randompatches.config.misc.portalBucketReplacementFixForNetherPortals": "Portal bucket replacement fix for Nether portals",
 	"randompatches.config.misc.rpreload": "/rpreload",
 	"randompatches.config.misc.skullStackingRequiresSameTextures": "Skull stacking requires same textures",
