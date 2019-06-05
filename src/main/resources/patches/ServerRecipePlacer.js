@@ -1,11 +1,14 @@
+var ASMAPI = Java.type("net.minecraftforge.coremod.api.ASMAPI");
 var Opcodes = Java.type("org.objectweb.asm.Opcodes");
+
+var CONSUME_INGREDIENT = ASMAPI.mapMethod("func_194325_a");
 
 function log(message) {
 	print("[RandomPatches ServerRecipePlacer Transformer]: " + message);
 }
 
-function patch(method, name, srgName, patchFunction) {
-	if(method.name != name && method.name != srgName) {
+function patch(method, name, patchFunction) {
+	if(method.name != name) {
 		return false;
 	}
 
@@ -25,10 +28,7 @@ function initializeCoreMod() {
 				var methods = classNode.methods;
 
 				for(var i in methods) {
-					if(patch(
-							methods[i], "consumeIngredient", "func_194325_a",
-							patchConsumeIngredient
-					)) {
+					if(patch(methods[i], CONSUME_INGREDIENT, patchConsumeIngredient)) {
 						break;
 					}
 				}

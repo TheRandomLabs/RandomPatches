@@ -1,13 +1,16 @@
+var ASMAPI = Java.type("net.minecraftforge.coremod.api.ASMAPI");
 var Opcodes = Java.type("org.objectweb.asm.Opcodes");
 
 var FieldInsnNode = Java.type("org.objectweb.asm.tree.FieldInsnNode");
+
+var TICK = ASMAPI.mapMethod("func_73660_a");
 
 function log(message) {
 	print("[RandomPatches NetHandlerLoginServer Transformer]: " + message);
 }
 
-function patch(method, name, srgName, patchFunction) {
-	if(method.name != name && method.name != srgName) {
+function patch(method, name, patchFunction) {
+	if(method.name != name) {
 		return false;
 	}
 
@@ -27,7 +30,7 @@ function initializeCoreMod() {
 				var methods = classNode.methods;
 
 				for(var i in methods) {
-					if(patch(methods[i], "tick", "func_73660_a", patchTick)) {
+					if(patch(methods[i], TICK, patchTick)) {
 						break;
 					}
 				}

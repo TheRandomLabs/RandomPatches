@@ -1,19 +1,20 @@
+var ASMAPI = Java.type("net.minecraftforge.coremod.api.ASMAPI");
 var Opcodes = Java.type("org.objectweb.asm.Opcodes");
 
 var FieldInsnNode = Java.type("org.objectweb.asm.tree.FieldInsnNode");
 
-var deobfuscated;
+var LOAD_ICON = ASMAPI.mapMethod("func_198110_t");
+var HANDLE = ASMAPI.mapField("field_198119_f");
 
 function log(message) {
 	print("[RandomPatches MainWindow Transformer]: " + message);
 }
 
-function patch(method, name, srgName, patchFunction) {
-	if(method.name != name && method.name != srgName) {
+function patch(method, name, patchFunction) {
+	if(method.name != name) {
 		return false;
 	}
 
-	deobfuscated = method.name == name;
 	log("Patching method: " + name + " (" + method.name + ")");
 	patchFunction(method.instructions);
 	return true;
@@ -30,7 +31,7 @@ function initializeCoreMod() {
 				var methods = classNode.methods;
 
 				for(var i in methods) {
-					if(patch(methods[i], "<init>", "<init>", patchConstructor)) {
+					if(patch(methods[i], "<init>", patchInit)) {
 						break;
 					}
 				}
@@ -41,11 +42,9 @@ function initializeCoreMod() {
 	};
 }
 
-function patchConstructor(instructions) {
+function patchInit(instructions) {
 	var title;
 	var loadIcon;
-
-	var deobfuscated;
 
 	for(var i = 0; i < instructions.size(); i++) {
 		var instruction = instructions.get(i);
@@ -58,10 +57,8 @@ function patchConstructor(instructions) {
 			continue;
 		}
 
-		if(instruction.getOpcode() == Opcodes.INVOKESPECIAL &&
-				(instruction.name == "loadIcon" || instruction.name == "func_198110_t")) {
+		if(instruction.getOpcode() == Opcodes.INVOKESPECIAL && instruction.name == LOAD_ICON) {
 			loadIcon = instruction;
-			deobfuscated = loadIcon.name == "loadIcon";
 			break;
 		}
 	}
@@ -81,7 +78,7 @@ function patchConstructor(instructions) {
 	instructions.insert(loadIcon.getPrevious(), new FieldInsnNode(
 			Opcodes.GETFIELD,
 			"net/minecraft/client/MainWindow",
-			deobfuscated ? "handle" : "field_198119_f",
+			HANDLE,
 			"J"
 	));
 

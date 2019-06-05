@@ -1,3 +1,4 @@
+var ASMAPI = Java.type("net.minecraftforge.coremod.api.ASMAPI");
 var Opcodes = Java.type("org.objectweb.asm.Opcodes");
 
 var InsnList = Java.type("org.objectweb.asm.tree.InsnList");
@@ -5,12 +6,14 @@ var InsnNode = Java.type("org.objectweb.asm.tree.InsnNode");
 var MethodInsnNode = Java.type("org.objectweb.asm.tree.MethodInsnNode");
 var VarInsnNode = Java.type("org.objectweb.asm.tree.VarInsnNode");
 
+var SHOULD_RENDER_FACE = ASMAPI.mapMethod("func_184313_a");
+
 function log(message) {
 	print("[RandomPatches TileEntityEndPortal Transformer]: " + message);
 }
 
-function patch(method, name, srgName, patchFunction) {
-	if(method.name != name && method.name != srgName) {
+function patch(method, name, patchFunction) {
+	if(method.name != name) {
 		return false;
 	}
 
@@ -30,9 +33,7 @@ function initializeCoreMod() {
 				var methods = classNode.methods;
 
 				for(var i in methods) {
-					if(patch(
-							methods[i], "shouldRenderFace", "func_184313_a ", patchShouldRenderFace
-					)) {
+					if(patch(methods[i], SHOULD_RENDER_FACE, patchShouldRenderFace)) {
 						break;
 					}
 				}

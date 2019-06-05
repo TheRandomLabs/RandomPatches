@@ -1,15 +1,18 @@
+var ASMAPI = Java.type("net.minecraftforge.coremod.api.ASMAPI");
 var Opcodes = Java.type("org.objectweb.asm.Opcodes");
 
 var InsnNode = Java.type("org.objectweb.asm.tree.InsnNode");
 var MethodInsnNode = Java.type("org.objectweb.asm.tree.MethodInsnNode");
 var VarInsnNode = Java.type("org.objectweb.asm.tree.VarInsnNode");
 
+var HAS_EFFECT = ASMAPI.mapMethod("func_77962_s");
+
 function log(message) {
 	print("[RandomPatches ItemPotion Transformer]: " + message);
 }
 
-function patch(method, name, srgName, patchFunction) {
-	if(method.name != name && method.name != srgName) {
+function patch(method, name, patchFunction) {
+	if(method.name != name) {
 		return false;
 	}
 
@@ -29,7 +32,7 @@ function initializeCoreMod() {
 				var methods = classNode.methods;
 
 				for(var i in methods) {
-					if(patch(methods[i], "hasEffect", "func_77962_s", patchHasEffect)) {
+					if(patch(methods[i], HAS_EFFECT, patchHasEffect)) {
 						break;
 					}
 				}

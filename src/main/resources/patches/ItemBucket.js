@@ -1,11 +1,15 @@
+var ASMAPI = Java.type("net.minecraftforge.coremod.api.ASMAPI");
 var Opcodes = Java.type("org.objectweb.asm.Opcodes");
+
+var TRY_PLACE_CONTAINED_LIQUID = ASMAPI.mapMethod("func_180616_a");
+var IS_SOLID = ASMAPI.mapMethod("func_76220_a");
 
 function log(message) {
 	print("[RandomPatches ItemBucket Transformer]: " + message);
 }
 
-function patch(method, name, srgName, patchFunction) {
-	if(method.name != name && method.name != srgName) {
+function patch(method, name, patchFunction) {
+	if(method.name != name) {
 		return false;
 	}
 
@@ -26,8 +30,7 @@ function initializeCoreMod() {
 
 				for(var i in methods) {
 					if(patch(
-							methods[i], "tryPlaceContainedLiquid", "func_180616_a",
-							patchTryPlaceContainedLiquid
+							methods[i], TRY_PLACE_CONTAINED_LIQUID, patchTryPlaceContainedLiquid
 					)) {
 						break;
 					}
@@ -45,8 +48,7 @@ function patchTryPlaceContainedLiquid(instructions) {
 	for(var i = 0; i < instructions.size(); i++) {
 		var instruction = instructions.get(i);
 
-		if(instruction.getOpcode() == Opcodes.INVOKEVIRTUAL &&
-				(instruction.name == "isSolid" || instruction.name == "func_76220_a")) {
+		if(instruction.getOpcode() == Opcodes.INVOKEVIRTUAL && instruction.name == IS_SOLID) {
 			isSolid = instruction;
 			break;
 		}

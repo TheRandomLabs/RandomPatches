@@ -1,13 +1,17 @@
+var ASMAPI = Java.type("net.minecraftforge.coremod.api.ASMAPI");
 var Opcodes = Java.type("org.objectweb.asm.Opcodes");
 
 var MethodInsnNode = Java.type("org.objectweb.asm.tree.MethodInsnNode");
+
+var TICK = ASMAPI.mapMethod("func_70071_h_");
+var SNEAK = ASMAPI.mapField("field_78899_d");
 
 function log(message) {
 	print("[RandomPatches EntityPlayerSP Transformer]: " + message);
 }
 
-function patch(method, name, srgName, patchFunction) {
-	if(method.name != name && method.name != srgName) {
+function patch(method, name, patchFunction) {
+	if(method.name != name) {
 		return false;
 	}
 
@@ -29,7 +33,7 @@ function initializeCoreMod() {
 				var methods = classNode.methods;
 
 				for(var i in methods) {
-					if(patch(methods[i], "tick", "func_70071_h_", patchTick)) {
+					if(patch(methods[i], TICK, patchTick)) {
 						break;
 					}
 				}
@@ -47,7 +51,7 @@ function patchTick(instructions) {
 		var instruction = instructions.get(i);
 
 		if(instruction.getOpcode() == Opcodes.GETFIELD) {
-			if(instruction.name == "sneak" || instruction.name == "field_78899_d") {
+			if(instruction.name == SNEAK) {
 				shouldSneak = instruction;
 				break;
 			}

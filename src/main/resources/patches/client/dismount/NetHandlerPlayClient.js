@@ -1,13 +1,17 @@
+var ASMAPI = Java.type("net.minecraftforge.coremod.api.ASMAPI");
 var Opcodes = Java.type("org.objectweb.asm.Opcodes");
 
 var FieldInsnNode = Java.type("org.objectweb.asm.tree.FieldInsnNode");
+
+var HANDLE_SET_PASSENGERS = ASMAPI.mapMethod("func_184328_a");
+var KEY_BIND_SNEAK = ASMAPI.mapField("field_74311_E");
 
 function log(message) {
 	print("[RandomPatches NetHandlerPlayClient Transformer]: " + message);
 }
 
-function patch(method, name, srgName, patchFunction) {
-	if(method.name != name && method.name != srgName) {
+function patch(method, name, patchFunction) {
+	if(method.name != name) {
 		return false;
 	}
 
@@ -29,7 +33,7 @@ function initializeCoreMod() {
 				var methods = classNode.methods;
 
 				for(var i in methods) {
-					if(patch(methods[i], "handleSetPassengers", "func_184328_a", patchHandleSetPassengers)) {
+					if(patch(methods[i], HANDLE_SET_PASSENGERS, patchHandleSetPassengers)) {
 						break;
 					}
 				}
@@ -46,8 +50,7 @@ function patchHandleSetPassengers(instructions) {
 	for(var i = 0; i < instructions.size(); i++) {
 		var instruction = instructions.get(i);
 
-		if(instruction.getOpcode() == Opcodes.GETFIELD &&
-				(instruction.name == "keyBindSneak" || instruction.name == "field_74311_E")) {
+		if(instruction.getOpcode() == Opcodes.GETFIELD && instruction.name == KEY_BIND_SNEAK) {
 			getSneakKeybind = instruction;
 			break;
 		}

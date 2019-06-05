@@ -1,9 +1,14 @@
+var ASMAPI = Java.type("net.minecraftforge.coremod.api.ASMAPI");
 var Opcodes = Java.type("org.objectweb.asm.Opcodes");
 
 var InsnList = Java.type("org.objectweb.asm.tree.InsnList");
 var LabelNode = Java.type("org.objectweb.asm.tree.LabelNode");
 var MethodInsnNode = Java.type("org.objectweb.asm.tree.MethodInsnNode");
 var VarInsnNode = Java.type("org.objectweb.asm.tree.VarInsnNode");
+
+var WRITE_WITHOUT_TYPE_ID = ASMAPI.mapMethod("func_189511_e");
+var READ = ASMAPI.mapMethod("func_70020_e");
+var SET_POSITION = ASMAPI.mapMethod("func_70107_b");
 
 var writeWithoutTypeIdPatched;
 var readPatched;
@@ -12,8 +17,8 @@ function log(message) {
 	print("[RandomPatches Entity Transformer]: " + message);
 }
 
-function patch(method, name, srgName, patchFunction) {
-	if(method.name != name && method.name != srgName) {
+function patch(method, name, patchFunction) {
+	if(method.name != name) {
 		return false;
 	}
 
@@ -39,14 +44,12 @@ function initializeCoreMod() {
 						break;
 					}
 
-					if(patch(
-							method, "writeWithoutTypeId", "func_189511_e", patchWriteWithoutTypeId
-					)) {
+					if(patch(method, WRITE_WITHOUT_TYPE_ID, patchWriteWithoutTypeId)) {
 						writeWithoutTypeIdPatched = true;
 						continue;
 					}
 
-					if(patch(method, "read", "func_70020_e", patchRead)) {
+					if(patch(method, READ, patchRead)) {
 						readPatched = true;
 					}
 				}
@@ -99,7 +102,7 @@ function patchRead(instructions) {
 
 		if(setPosition == null) {
 			if(instruction.getOpcode() == Opcodes.INVOKEVIRTUAL &&
-					(instruction.name == "setPosition" || instruction.name == "func_70107_b")) {
+					instruction.name == SET_POSITION) {
 				setPosition = instruction;
 			}
 

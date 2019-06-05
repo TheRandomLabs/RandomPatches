@@ -8,7 +8,7 @@ public final class EntityBoatPatch {
 
 	private EntityBoatPatch() {}
 
-	public static void onUpdate(EntityBoat boat, EntityBoat.Status status) {
+	public static void tick(EntityBoat boat, EntityBoat.Status status) {
 		if(status == EntityBoat.Status.UNDER_FLOWING_WATER) {
 			boat.motionY += RPConfig.Boats.underwaterBoatBuoyancy - VANILLA_UNDERWATER_BUOYANCY;
 		}

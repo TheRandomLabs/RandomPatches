@@ -8,8 +8,8 @@ function log(message) {
 	print("[RandomPatches NettyCompressionDecoder Transformer]: " + message);
 }
 
-function patch(method, name, srgName, patchFunction) {
-	if(method.name != name && method.name != srgName) {
+function patch(method, name, patchFunction) {
+	if(method.name != name) {
 		return false;
 	}
 
@@ -31,7 +31,7 @@ function initializeCoreMod() {
 				var methods = classNode.methods;
 
 				for(var i in methods) {
-					if(patch(methods[i], "decode", "decode", patchDecode)) {
+					if(patch(methods[i], "decode", patchDecode)) {
 						break;
 					}
 				}

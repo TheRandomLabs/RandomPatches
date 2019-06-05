@@ -1,3 +1,4 @@
+var ASMAPI = Java.type("net.minecraftforge.coremod.api.ASMAPI");
 var Opcodes = Java.type("org.objectweb.asm.Opcodes");
 
 var FieldInsnNode = Java.type("org.objectweb.asm.tree.FieldInsnNode");
@@ -7,12 +8,14 @@ var JumpInsnNode = Java.type("org.objectweb.asm.tree.JumpInsnNode");
 var LabelNode = Java.type("org.objectweb.asm.tree.LabelNode");
 var VarInsnNode = Java.type("org.objectweb.asm.tree.VarInsnNode");
 
+var ON_CLICK = ASMAPI.mapMethod("func_194829_a");
+
 function log(message) {
 	print("[RandomPatches GuiIngameMenu$1 Transformer]: " + message);
 }
 
-function patch(method, name, srgName, patchFunction) {
-	if(method.name != name && method.name != srgName) {
+function patch(method, name, patchFunction) {
+	if(method.name != name) {
 		return false;
 	}
 
@@ -32,7 +35,7 @@ function initializeCoreMod() {
 				var methods = classNode.methods;
 
 				for(var i in methods) {
-					if(patch(methods[i], "onClick", "func_194829_a", patchOnClick)) {
+					if(patch(methods[i], ON_CLICK, patchOnClick)) {
 						break;
 					}
 				}

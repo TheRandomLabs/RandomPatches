@@ -1,3 +1,4 @@
+var ASMAPI = Java.type("net.minecraftforge.coremod.api.ASMAPI");
 var Opcodes = Java.type("org.objectweb.asm.Opcodes");
 
 var FieldInsnNode = Java.type("org.objectweb.asm.tree.FieldInsnNode");
@@ -5,18 +6,18 @@ var InsnNode = Java.type("org.objectweb.asm.tree.InsnNode");
 var MethodInsnNode = Java.type("org.objectweb.asm.tree.MethodInsnNode");
 var VarInsnNode = Java.type("org.objectweb.asm.tree.VarInsnNode");
 
-var deobfuscated;
+var ADD_PARTICLE = ASMAPI.mapMethod("func_195461_a");
+var WORLD = ASMAPI.mapField("field_72782_b");
 
 function log(message) {
 	print("[RandomPatches ServerWorldEventHandler Transformer]: " + message);
 }
 
-function patch(method, name, srgName, desc, patchFunction) {
-	if((method.name != name && method.name != srgName) || method.desc != desc) {
+function patch(method, name, desc, patchFunction) {
+	if(method.name != name || method.desc != desc) {
 		return false;
 	}
 
-	deobfuscated = method.name == name;
 	log("Patching method: " + name + " (" + method.name + ")");
 	patchFunction(method.instructions);
 	return true;
@@ -34,7 +35,7 @@ function initializeCoreMod() {
 
 				for(var i in methods) {
 					if(patch(
-							methods[i], "addParticle", "func_195461_a",
+							methods[i], ADD_PARTICLE,
 							"(Lnet/minecraft/particles/IParticleData;ZDDDDDD)V", patchAddParticle
 					)) {
 						break;
@@ -57,7 +58,7 @@ function patchAddParticle(instructions) {
 	instructions.add(new FieldInsnNode(
 			Opcodes.GETFIELD,
 			"net/minecraft/world/ServerWorldEventHandler",
-			deobfuscated ? "world" : "field_72782_b",
+			WORLD,
 			"Lnet/minecraft/world/WorldServer;"
 	));
 

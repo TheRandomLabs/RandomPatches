@@ -1,3 +1,4 @@
+var ASMAPI = Java.type("net.minecraftforge.coremod.api.ASMAPI");
 var Opcodes = Java.type("org.objectweb.asm.Opcodes");
 
 var FieldInsnNode = Java.type("org.objectweb.asm.tree.FieldInsnNode");
@@ -7,22 +8,25 @@ var JumpInsnNode = Java.type("org.objectweb.asm.tree.JumpInsnNode");
 var LabelNode = Java.type("org.objectweb.asm.tree.LabelNode");
 var VarInsnNode = Java.type("org.objectweb.asm.tree.VarInsnNode");
 
-var deobfuscated;
-
 var tickPatched;
 var processPlayerPatched;
 var processVehicleMovePatched;
+
+var TICK = ASMAPI.mapMethod("func_73660_a");
+var PROCESS_PLAYER = ASMAPI.mapMethod("func_147347_a");
+var PROCESS_VEHICLE_MOVE = ASMAPI.mapMethod("func_184338_a");
+var SEND_PACKET = ASMAPI.mapMethod("func_147359_a");
+var KEEP_ALIVE_TIME = ASMAPI.mapField("field_194402_f");
 
 function log(message) {
 	print("[RandomPatches NetHandlerPlayServer Transformer]: " + message);
 }
 
-function patch(method, name, srgName, patchFunction) {
-	if(method.name != name && method.name != srgName) {
+function patch(method, name, patchFunction) {
+	if(method.name != name) {
 		return false;
 	}
 
-	deobfuscated = method.name == name;
 	log("Patching method: " + name + " (" + method.name + ")");
 	patchFunction(method.instructions);
 	return true;
@@ -45,19 +49,17 @@ function initializeCoreMod() {
 						break;
 					}
 
-					if(patch(method, "tick", "func_73660_a", patchTick)) {
+					if(patch(method, TICK, patchTick)) {
 						tickPatched = true;
 						continue;
 					}
 
-					if(patch(method, "processPlayer", "func_147347_a", patchProcessPlayer)) {
+					if(patch(method, PROCESS_PLAYER, patchProcessPlayer)) {
 						processPlayerPatched = true;
 						continue;
 					}
 
-					if(patch(
-							method, "processVehicleMove", "func_184338_a", patchProcessVehicleMove
-					)) {
+					if(patch(method, PROCESS_VEHICLE_MOVE, patchProcessVehicleMove)) {
 						processVehicleMovePatched = true;
 					}
 				}
@@ -122,8 +124,7 @@ function patchTick(instructions) {
 			continue;
 		}
 
-		if(instruction.getOpcode() == Opcodes.INVOKEVIRTUAL &&
-				(instruction.name == "sendPacket" || instruction.name == "func_147359_a")) {
+		if(instruction.getOpcode() == Opcodes.INVOKEVIRTUAL && instruction.name == SEND_PACKET) {
 			sendPacket = instruction;
 			break;
 		}
@@ -153,7 +154,7 @@ function patchTick(instructions) {
 	newInstructions.add(new FieldInsnNode(
 			Opcodes.GETFIELD,
 			"net/minecraft/network/NetHandlerPlayServer",
-			deobfuscated ? "keepAliveTime" : "field_194402_f",
+			KEEP_ALIVE_TIME,
 			"J"
 	));
 

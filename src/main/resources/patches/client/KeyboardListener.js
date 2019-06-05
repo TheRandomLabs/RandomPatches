@@ -1,14 +1,20 @@
+var ASMAPI = Java.type("net.minecraftforge.coremod.api.ASMAPI");
 var Opcodes = Java.type("org.objectweb.asm.Opcodes");
 
 var MethodInsnNode = Java.type("org.objectweb.asm.tree.MethodInsnNode");
 var VarInsnNode = Java.type("org.objectweb.asm.tree.VarInsnNode");
 
+var ON_KEY_EVENT = ASMAPI.mapMethod("func_197961_a");
+
+var KEY_B = 0x42;
+var KEY_UNUSED = 0x54;
+
 function log(message) {
 	print("[RandomPatches KeyboardListener Transformer]: " + message);
 }
 
-function patch(method, name, srgName, patchFunction) {
-	if(method.name != name && method.name != srgName) {
+function patch(method, name, patchFunction) {
+	if(method.name != name) {
 		return false;
 	}
 
@@ -28,7 +34,7 @@ function initializeCoreMod() {
 				var methods = classNode.methods;
 
 				for(var i in methods) {
-					if(patch(methods[i], "onKeyEvent", "func_197961_a", patchOnKeyEvent)) {
+					if(patch(methods[i], ON_KEY_EVENT, patchOnKeyEvent)) {
 						break;
 					}
 				}
@@ -40,9 +46,6 @@ function initializeCoreMod() {
 }
 
 function patchOnKeyEvent(instructions) {
-	var KEY_B = 0x42;
-	var KEY_UNUSED = 0x54;
-
 	var isB;
 
 	for(var i = 0; i < instructions.size(); i++) {
