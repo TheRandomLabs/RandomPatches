@@ -74,6 +74,7 @@ public final class RPConfig {
 		@Config.Property("Whether to remove the glowing effect from potions.")
 		public static boolean removePotionGlint = RandomPatches.IS_DEOBFUSCATED;
 
+		@Config.MCVersion("[1.9,1.13)")
 		@Config.RequiresWorldReload
 		@Config.Property("Enables the /rpreloadclient command.")
 		public static boolean rpreloadclient = true;
@@ -161,6 +162,7 @@ public final class RPConfig {
 		)
 		public static boolean recipeBookNBTFix = true;
 
+		@Config.MCVersion("[1.9,1.13)")
 		@Config.RequiresWorldReload
 		@Config.Property("Enables the /rpreload command.")
 		public static boolean rpreload = true;
