@@ -46,9 +46,11 @@ function patchEquals(instructions) {
 
 		if(instruction.getOpcode() == Opcodes.INVOKESTATIC && instruction.name == "equals") {
 			equals = instruction;
+			break;
 		}
 	}
 
+	//Call NBTTagCompoundPatch#areTagMapsEqual
 	equals.owner = "com/therandomlabs/randompatches/patch/NBTTagCompoundPatch";
 	equals.name = "areTagMapsEqual";
 	equals.desc = "(Ljava/util/Map;Ljava/util/Map;)Z";

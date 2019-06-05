@@ -1,6 +1,7 @@
 var Opcodes = Java.type("org.objectweb.asm.Opcodes");
 
 var FieldInsnNode = Java.type("org.objectweb.asm.tree.FieldInsnNode");
+var InsnList = Java.type("org.objectweb.asm.tree.InsnList");
 var InsnNode = Java.type("org.objectweb.asm.tree.InsnNode");
 var JumpInsnNode = Java.type("org.objectweb.asm.tree.JumpInsnNode");
 var LabelNode = Java.type("org.objectweb.asm.tree.LabelNode");
@@ -43,7 +44,7 @@ function initializeCoreMod() {
 }
 
 function patchOnClick(instructions) {
-	var storeIsIntegratedServerRunning;
+	var storeIsIntegratedServerRunning = null;
 
 	for(var i = 0; i < instructions.size(); i++) {
 		var instruction = instructions.get(i);
@@ -54,20 +55,28 @@ function patchOnClick(instructions) {
 		}
 	}
 
+	var newInstructions = new InsnList();
+
 	var label = new LabelNode();
-	var getEnabled = new FieldInsnNode(
+
+	//Get RPConfig.Client#forceTitleScreenOnDisconnect
+	newInstructions.add(new FieldInsnNode(
 			Opcodes.GETSTATIC,
-			"com/therandomlabs/randompatches/RPConfig$Client",
+			getName(RPConfig.Client.class),
 			"forceTitleScreenOnDisconnect",
 			"Z"
-	);
-	var jumpIfNotEnabled = new JumpInsnNode(Opcodes.IFEQ, label);
-	var loadTrue = new InsnNode(Opcodes.ICONST_1);
-	var storeTrue = new VarInsnNode(Opcodes.ISTORE, 5);
+	));
 
-	instructions.insert(storeIsIntegratedServerRunning, getEnabled);
-	instructions.insert(getEnabled, jumpIfNotEnabled);
-	instructions.insert(jumpIfNotEnabled, loadTrue);
-	instructions.insert(loadTrue, storeTrue);
-	instructions.insert(storeTrue, label);
+	//Jump if not enabled
+	newInstructions.add(new JumpInsnNode(Opcodes.IFEQ, label));
+
+	//Load true
+	newInstructions.add(new InsnNode(Opcodes.ICONST_1));
+
+	//Store true to flag (isIntegratedServerRunning)
+	newInstructions.add(new VarInsnNode(Opcodes.ISTORE, 5));
+
+	newInstructions.add(label);
+
+	instructions.insert(storeIsIntegratedServerRunning, newInstructions);
 }

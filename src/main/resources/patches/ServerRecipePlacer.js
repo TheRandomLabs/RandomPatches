@@ -51,6 +51,7 @@ function patchConsumeIngredient(instructions) {
 		}
 	}
 
+	//Call ServerRecipeBookHelper#findSlotMatchingUnusedItem
 	findSlotMatchingUnusedItem.setOpcode(Opcodes.INVOKESTATIC);
 	findSlotMatchingUnusedItem.owner =
 			"com/therandomlabs/randompatches/patch/ServerRecipePlacerPatch";

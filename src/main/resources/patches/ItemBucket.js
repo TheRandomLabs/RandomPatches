@@ -55,6 +55,7 @@ function patchTryPlaceContainedLiquid(instructions) {
 	//Get IBlockState
 	isSolid.getPrevious().var = 5;
 
+	//Call ItemBucketPatch#isSolid
 	isSolid.setOpcode(Opcodes.INVOKESTATIC);
 	isSolid.owner = "com/therandomlabs/randompatches/patch/ItemBucketPatch";
 	isSolid.name = "isSolid";

@@ -45,55 +45,20 @@ function initializeCoreMod() {
 }
 
 function patchShouldRenderFace(instructions) {
-	var labelReturnTrue = new LabelNode();
-
-	var loadFacing = new VarInsnNode(Opcodes.ALOAD, 1);
-
-	var getUp = new FieldInsnNode(
-			Opcodes.GETSTATIC,
-			"net/minecraft/util/EnumFacing",
-			"UP",
-			"Lnet/minecraft/util/EnumFacing;"
-	);
-
-	var returnTrueIfEqual = new JumpInsnNode(
-			Opcodes.IF_ACMPEQ,
-			labelReturnTrue
-	);
-
-	var loadFacing2 = new VarInsnNode(Opcodes.ALOAD, 1);
-
-	var getDown = new FieldInsnNode(
-			Opcodes.GETSTATIC,
-			"net/minecraft/util/EnumFacing",
-			"DOWN",
-			"Lnet/minecraft/util/EnumFacing;"
-	);
-
-	var returnTrueIfEqual2 = new JumpInsnNode(
-			Opcodes.IF_ACMPEQ,
-			labelReturnTrue
-	);
-
-	var loadZero = new InsnNode(Opcodes.ICONST_0);
-
-	var returnFalse = new InsnNode(Opcodes.IRETURN);
-
-	var loadOne = new InsnNode(Opcodes.ICONST_1);
-
-	var returnTrue = new InsnNode(Opcodes.IRETURN);
-
 	instructions.clear();
 
-	instructions.add(loadFacing);
-	instructions.add(getUp);
-	instructions.add(returnTrueIfEqual);
-	instructions.add(loadFacing2);
-	instructions.add(getDown);
-	instructions.add(returnTrueIfEqual2);
-	instructions.add(loadZero);
-	instructions.add(returnFalse);
-	instructions.add(labelReturnTrue);
-	instructions.add(loadOne);
-	instructions.add(returnTrue);
+	//Get face
+	instructions.add(new VarInsnNode(Opcodes.ALOAD, 1));
+
+	//Call TileEntityEndPortalPatch#shouldRenderFace
+	instructions.add(new MethodInsnNode(
+			Opcodes.INVOKESTATIC,
+			"com.therandomlabs.randompatches.patch.TileEntityEndPortalPatch",
+			"shouldRenderFace",
+			"(Lnet/minecraft/util/EnumFacing;)Z",
+			false
+	));
+
+	//Return TileEntityEndPortalPatch#shouldRenderFace
+	instructions.add(new InsnNode(Opcodes.IRETURN));
 }

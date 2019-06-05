@@ -51,6 +51,7 @@ function patchElementClicked(instructions) {
 		}
 	}
 
+	//Call GuiLanguageListPatch#reloadLanguage
 	instructions.insert(refreshResources, new MethodInsnNode(
 			Opcodes.INVOKESTATIC,
 			"com/therandomlabs/randompatches/patch/client/GuiLanguageListPatch",

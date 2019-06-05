@@ -10,7 +10,7 @@ public final class EntityBoatPatch {
 
 	public static void onUpdate(EntityBoat boat, EntityBoat.Status status) {
 		if(status == EntityBoat.Status.UNDER_FLOWING_WATER) {
-			boat.motionY += -VANILLA_UNDERWATER_BUOYANCY + RPConfig.Boats.underwaterBoatBuoyancy;
+			boat.motionY += RPConfig.Boats.underwaterBoatBuoyancy - VANILLA_UNDERWATER_BUOYANCY;
 		}
 	}
 }

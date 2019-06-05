@@ -1,6 +1,7 @@
 var Opcodes = Java.type("org.objectweb.asm.Opcodes");
 
 var FieldInsnNode = Java.type("org.objectweb.asm.tree.FieldInsnNode");
+var InsnList = Java.type("org.objectweb.asm.tree.InsnList");
 var InsnNode = Java.type("org.objectweb.asm.tree.InsnNode");
 var JumpInsnNode = Java.type("org.objectweb.asm.tree.JumpInsnNode");
 var LabelNode = Java.type("org.objectweb.asm.tree.LabelNode");
@@ -98,7 +99,7 @@ void update() {
 
 function patchTick(instructions) {
 	var keepAliveInterval;
-	var ifeq;
+	var jumpIfShouldNotDisconnect;
 	var sendPacket;
 
 	for(var i = 0; i < instructions.size(); i++) {
@@ -112,10 +113,10 @@ function patchTick(instructions) {
 			continue;
 		}
 
-		if(ifeq == null) {
+		if(jumpIfShouldNotDisconnect == null) {
 			if(instruction.getOpcode() == Opcodes.IFEQ &&
 					instruction.getPrevious().getOpcode() == Opcodes.GETFIELD) {
-				ifeq = instruction;
+				jumpIfShouldNotDisconnect = instruction;
 			}
 
 			continue;
@@ -128,52 +129,54 @@ function patchTick(instructions) {
 		}
 	}
 
-	var getKeepAliveInterval = new FieldInsnNode(
+	//Get RPConfig.Timeouts#keepAlivePacketIntervalMillis
+	instructions.insert(keepAliveInterval, new FieldInsnNode(
 			Opcodes.GETSTATIC,
 			"com/therandomlabs/randompatches/RPConfig$Timeouts",
 			"keepAlivePacketIntervalMillis",
 			"J"
-	);
+	));
 
-	instructions.insert(keepAliveInterval, getKeepAliveInterval);
 	instructions.remove(keepAliveInterval);
 
 	var label = new LabelNode();
 
-	var loadCurrentTime = new VarInsnNode(Opcodes.LLOAD, 1);
+	var newInstructions = new InsnList();
 
-	var loadThis = new VarInsnNode(Opcodes.ALOAD, 0);
-	var getKeepAliveTime = new FieldInsnNode(
+	//Get i (currentTimeMillis)
+	newInstructions.add(new VarInsnNode(Opcodes.LLOAD, 1));
+
+	//Get NetHandlerPlayServer (this)
+	newInstructions.add(new VarInsnNode(Opcodes.ALOAD, 0));
+
+	//Get NetHandlerPlayServer#keepAliveTime
+	newInstructions.add(new FieldInsnNode(
 			Opcodes.GETFIELD,
 			"net/minecraft/network/NetHandlerPlayServer",
 			deobfuscated ? "keepAliveTime" : "field_194402_f",
 			"J"
-	);
+	));
 
-	//i - field_194402_f
-	//currentTime - keepAliveTime
-	var subtract = new InsnNode(Opcodes.LSUB);
+	//Substract field_199402_f (keepAliveTime) from i (currentTimeMillis):
+	//currentTimeMillis - keepAliveTime
+	newInstructions.add(new InsnNode(Opcodes.LSUB));
 
-	var getReadTimeoutMillis = new FieldInsnNode(
+	//Get RPConfig.Timeouts#readTimeoutMillis
+	newInstructions.add(new FieldInsnNode(
 			Opcodes.GETSTATIC,
 			"com/therandomlabs/randompatches/RPConfig$Timeouts",
 			"readTimeoutMillis",
 			"J"
-	);
+	));
 
-	//if(currentTime - keepAliveTime >= RPStaticConfig.readTimeoutMillis)
-	var compare = new InsnNode(Opcodes.LCMP);
-	var jumpIfNotLarger = new JumpInsnNode(Opcodes.IFLT, label);
+	//Compare the subtraction result to readTimeoutMillis and jump if it is not larger:
+	//if(currentTimeMillis - lastPingTime >= RPStaticConfig#readTimeoutMillis)
+	newInstructions.add(new InsnNode(Opcodes.LCMP));
+	newInstructions.add(new JumpInsnNode(Opcodes.IFLT, label));
 
-	instructions.insert(ifeq, loadCurrentTime);
-	instructions.insert(loadCurrentTime, loadThis);
-	instructions.insert(loadThis, getKeepAliveTime);
-	instructions.insert(getKeepAliveTime, subtract);
-	instructions.insert(subtract, getReadTimeoutMillis);
-	instructions.insert(getReadTimeoutMillis, compare);
-	instructions.insert(compare, jumpIfNotLarger);
+	instructions.insert(jumpIfShouldNotDisconnect, newInstructions);
 
-	//Break out of the if(i - field_194402_f >= 15000L) statement
+	//Break out of the if(i - keepAliveTime >= 15000L) statement
 	instructions.insert(sendPacket, label);
 }
 
@@ -202,24 +205,24 @@ function patchProcessPlayer(instructions) {
 		}
 	}
 
-	var getElytraMaxSpeed = new FieldInsnNode(
+	//Get RPConfig.SpeedLimits#maxPlayerElytraSpeed
+	instructions.insert(elytra, new FieldInsnNode(
 			Opcodes.GETSTATIC,
 			"com/therandomlabs/randompatches/RPConfig$SpeedLimits",
 			"maxPlayerElytraSpeed",
 			"F"
-	);
+	));
 
-	var getNormalMaxSpeed = new FieldInsnNode(
+	instructions.remove(elytra);
+
+	//Get RPConfig.SpeedLimits#maxPlayerSpeed
+	instructions.insert(normal, new FieldInsnNode(
 			Opcodes.GETSTATIC,
 			"com/therandomlabs/randompatches/RPConfig$SpeedLimits",
 			"maxPlayerSpeed",
 			"F"
-	);
+	));
 
-	instructions.insert(elytra, getElytraMaxSpeed);
-	instructions.remove(elytra);
-
-	instructions.insert(normal, getNormalMaxSpeed);
 	instructions.remove(normal);
 }
 
@@ -235,13 +238,13 @@ function patchProcessVehicleMove(instructions) {
 		}
 	}
 
-	var getVehicleMaxSpeed = new FieldInsnNode(
+	//Get RPConfig.SpeedLimits#maxPlayerVehicleSpeed
+	instructions.insert(speed, new FieldInsnNode(
 			Opcodes.GETSTATIC,
 			"com/therandomlabs/randompatches/RPConfig$SpeedLimits",
 			"maxPlayerVehicleSpeed",
 			"D"
-	);
+	));
 
-	instructions.insert(speed, getVehicleMaxSpeed);
 	instructions.remove(speed);
 }

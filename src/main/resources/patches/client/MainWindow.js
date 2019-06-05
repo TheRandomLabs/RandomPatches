@@ -63,15 +63,18 @@ function patchConstructor(instructions) {
 		}
 	}
 
+	//Get RPConfig.Window#title
 	instructions.insert(title, new FieldInsnNode(
 			Opcodes.GETSTATIC,
 			"com/therandomlabs/randompatches/RPConfig$Window",
 			"title",
 			"Ljava/lang/String;"
 	));
+
 	instructions.remove(title);
 
-	//loadIcon.getPrevious() is ALOAD 0
+	//loadIcon.getPrevious() is ALOAD 0 (gets MainWindow (this))
+	//Get MainWindow#handle
 	instructions.insert(loadIcon.getPrevious(), new FieldInsnNode(
 			Opcodes.GETFIELD,
 			"net/minecraft/client/MainWindow",
@@ -79,6 +82,7 @@ function patchConstructor(instructions) {
 			"J"
 	));
 
+	//Call WindowIconHandler#setWindowIcon
 	loadIcon.opcode = Opcodes.INVOKESTATIC;
 	loadIcon.owner = "com/therandomlabs/randompatches/client/WindowIconHandler";
 	loadIcon.name = "setWindowIcon";

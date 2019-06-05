@@ -50,13 +50,13 @@ function patchTick(instructions) {
 		}
 	}
 
-	var getLoginTimeout = new FieldInsnNode(
+	//Get RPConfig.Timeouts#loginTimeout
+	instructions.insert(loginTimeout, new FieldInsnNode(
 			Opcodes.GETSTATIC,
 			"com/therandomlabs/randompatches/RPConfig$Timeouts",
 			"loginTimeout",
 			"I"
-	);
+	));
 
-	instructions.insert(loginTimeout, getLoginTimeout);
 	instructions.remove(loginTimeout);
 }

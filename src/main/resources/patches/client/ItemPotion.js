@@ -43,7 +43,10 @@ function initializeCoreMod() {
 function patchHasEffect(instructions) {
 	instructions.clear();
 
+	//Get ItemStack
 	instructions.add(new VarInsnNode(Opcodes.ALOAD, 1));
+
+	//Call ItemPotionPatch#hasEffect
 	instructions.add(new MethodInsnNode(
 			Opcodes.INVOKESTATIC,
 			"com/therandomlabs/randompatches/patch/client/ItemPotionPatch",
@@ -51,5 +54,7 @@ function patchHasEffect(instructions) {
 			"(Lnet/minecraft/item/ItemStack;)Z",
 			false
 	));
+
+	//Return ItemPotionPatch#hasEffect
 	instructions.add(new InsnNode(Opcodes.IRETURN));
 }

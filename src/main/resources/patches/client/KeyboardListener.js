@@ -54,18 +54,17 @@ function patchOnKeyEvent(instructions) {
 		}
 	}
 
-	var getKey = new VarInsnNode(Opcodes.ILOAD, 3);
+	//Get key
+	instructions.insertBefore(isB.getPrevious(), new VarInsnNode(Opcodes.ILOAD, 3));
 
-	var handleKeypress = new MethodInsnNode(
+	//Call KeyboardListenerPatch#handleKeypress
+	instructions.insert(getKey, new MethodInsnNode(
 			Opcodes.INVOKESTATIC,
 			"com/therandomlabs/randompatches/patch/client/KeyboardListenerPatch",
 			"handleKeypress",
 			"(I)V",
 			false
-	);
-
-	instructions.insertBefore(isB.getPrevious(), getKey);
-	instructions.insert(getKey, handleKeypress)
+	));
 
 	isB.operand = KEY_UNUSED;
 }

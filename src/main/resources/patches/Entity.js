@@ -1,5 +1,6 @@
 var Opcodes = Java.type("org.objectweb.asm.Opcodes");
 
+var InsnList = Java.type("org.objectweb.asm.tree.InsnList");
 var LabelNode = Java.type("org.objectweb.asm.tree.LabelNode");
 var MethodInsnNode = Java.type("org.objectweb.asm.tree.MethodInsnNode");
 var VarInsnNode = Java.type("org.objectweb.asm.tree.VarInsnNode");
@@ -72,21 +73,24 @@ function patchWriteWithoutTypeId(instructions) {
 		}
 	}
 
-	var loadThis = new VarInsnNode(Opcodes.ALOAD, 0);
+	var newInstructions = new InsnList();
 
-	var loadCompound = new VarInsnNode(Opcodes.ALOAD, 1);
+	//Get Entity (this)
+	newInstructions.add(new VarInsnNode(Opcodes.ALOAD, 0));
 
-	var writeAABBTag = new MethodInsnNode(
+	//Get NBTTagCompound
+	newInstructions.add(new VarInsnNode(Opcodes.ALOAD, 1));
+
+	//Call EntityPatch#writeAABBTag
+	newInstructions.add(new MethodInsnNode(
 			Opcodes.INVOKESTATIC,
 			"com/therandomlabs/randompatches/patch/EntityPatch",
 			"writeAABBTag",
 			"(Lnet/minecraft/entity/Entity;Lnet/minecraft/nbt/NBTTagCompound;)V",
 			false
-	);
+	));
 
-	instructions.insert(setTag, loadThis);
-	instructions.insert(loadThis, loadCompound);
-	instructions.insert(loadCompound, writeAABBTag);
+	instructions.insert(setTag, newInstructions);
 }
 
 function patchRead(instructions) {
@@ -111,24 +115,28 @@ function patchRead(instructions) {
 		}
 	}
 
+	var newInstructions = new InsnList();
+
 	var jumpTo = new LabelNode();
 
 	jumpIfShouldNotSetPosition.label = jumpTo;
 
-	var loadThis = new VarInsnNode(Opcodes.ALOAD, 0);
+	newInstructions.add(jumpTo);
 
-	var loadCompound = new VarInsnNode(Opcodes.ALOAD, 1);
+	//Get Entity (this)
+	newInstructions.add(new VarInsnNode(Opcodes.ALOAD, 0));
 
-	var readAABBTag = new MethodInsnNode(
+	//Get NBTTagCompound
+	newInstructions.add(new VarInsnNode(Opcodes.ALOAD, 1));
+
+	//Call EntityPatch#readAABBTag
+	newInstructions.add(new MethodInsnNode(
 			Opcodes.INVOKESTATIC,
 			"com/therandomlabs/randompatches/patch/EntityPatch",
 			"readAABBTag",
 			"(Lnet/minecraft/entity/Entity;Lnet/minecraft/nbt/NBTTagCompound;)V",
 			false
-	);
+	));
 
-	instructions.insert(setPosition, jumpTo);
-	instructions.insert(jumpTo, loadThis);
-	instructions.insert(loadThis, loadCompound);
-	instructions.insert(loadCompound, readAABBTag);
+	instructions.insert(setPosition, newInstructions);
 }

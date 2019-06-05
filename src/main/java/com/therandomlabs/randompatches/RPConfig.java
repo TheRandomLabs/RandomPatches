@@ -95,8 +95,7 @@ public final class RPConfig {
 				"The read timeout.",
 				"This is the time it takes for a player to be disconnected after not " +
 						"responding to a KeepAlive packet.",
-				"This value is automatically rounded up to a product of keepAlivePacketInterval.",
-				"This only works on 1.12 and above."
+				"This value is automatically rounded up to a product of keepAlivePacketInterval."
 		})
 		public static int readTimeout = 90;
 
