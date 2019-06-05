@@ -4,7 +4,7 @@
 		"1.13.2-1.15.1.0": "Initial port to Minecraft 1.13.2."
 	},
 	"1.12.2": {
-		"1.12.2-1.16.0.0": "Removed the Teleporter replacement patch.",
+		"1.12.2-1.16.0.0": "Cleaned up the code.\nRemoved the Teleporter replacement patch.\nImplemented particle fixes.\nAdded a configuration option to change the packet size limit.\nImplemented a dismount keybind which is separate from the sneak keybind. It is disabled by default.\nConfiguration options no longer exist on versions of Minecraft they have no effect on.",
 		"1.12.2-1.15.1.0": "The potion glowing effect is now toggleable in-game.\nCustom window icons are now loaded earlier.\nFixed 1.8 compatibility again.",
 		"1.12.2-1.15.0.3": "Fixed the faster language switching patch.\nChanged the End portal and End gateway break particle textures to obsidian to match Minecraft 1.13+.",
 		"1.12.2-1.15.0.2": "Fixed a ClassCastException related to the skull stacking fix.",
@@ -54,6 +54,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.12.1": {
+		"1.12.2-1.16.0.0": "Cleaned up the code.\nRemoved the Teleporter replacement patch.\nImplemented particle fixes.\nAdded a configuration option to change the packet size limit.\nImplemented a dismount keybind which is separate from the sneak keybind. It is disabled by default.\nConfiguration options no longer exist on versions of Minecraft they have no effect on.",
 		"1.12.2-1.15.1.0": "The potion glowing effect is now toggleable in-game.\nCustom window icons are now loaded earlier.\nFixed 1.8 compatibility again.",
 		"1.12.2-1.15.0.3": "Fixed the faster language switching patch.\nChanged the End portal and End gateway break particle textures to obsidian to match Minecraft 1.13+.",
 		"1.12.2-1.15.0.2": "Fixed a ClassCastException related to the skull stacking fix.",
@@ -103,6 +104,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.12": {
+		"1.12.2-1.16.0.0": "Cleaned up the code.\nRemoved the Teleporter replacement patch.\nImplemented particle fixes.\nAdded a configuration option to change the packet size limit.\nImplemented a dismount keybind which is separate from the sneak keybind. It is disabled by default.\nConfiguration options no longer exist on versions of Minecraft they have no effect on.",
 		"1.12.2-1.15.1.0": "The potion glowing effect is now toggleable in-game.\nCustom window icons are now loaded earlier.\nFixed 1.8 compatibility again.",
 		"1.12.2-1.15.0.3": "Fixed the faster language switching patch.\nChanged the End portal and End gateway break particle textures to obsidian to match Minecraft 1.13+.",
 		"1.12.2-1.15.0.2": "Fixed a ClassCastException related to the skull stacking fix.",
@@ -152,6 +154,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.11.2": {
+		"1.12.2-1.16.0.0": "Cleaned up the code.\nRemoved the Teleporter replacement patch.\nImplemented particle fixes.\nAdded a configuration option to change the packet size limit.\nImplemented a dismount keybind which is separate from the sneak keybind. It is disabled by default.\nConfiguration options no longer exist on versions of Minecraft they have no effect on.",
 		"1.12.2-1.15.1.0": "The potion glowing effect is now toggleable in-game.\nCustom window icons are now loaded earlier.\nFixed 1.8 compatibility again.",
 		"1.12.2-1.15.0.3": "Fixed the faster language switching patch.\nChanged the End portal and End gateway break particle textures to obsidian to match Minecraft 1.13+.",
 		"1.12.2-1.15.0.2": "Fixed a ClassCastException related to the skull stacking fix.",
@@ -201,6 +204,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.11": {
+		"1.12.2-1.16.0.0": "Cleaned up the code.\nRemoved the Teleporter replacement patch.\nImplemented particle fixes.\nAdded a configuration option to change the packet size limit.\nImplemented a dismount keybind which is separate from the sneak keybind. It is disabled by default.\nConfiguration options no longer exist on versions of Minecraft they have no effect on.",
 		"1.12.2-1.15.1.0": "The potion glowing effect is now toggleable in-game.\nCustom window icons are now loaded earlier.\nFixed 1.8 compatibility again.",
 		"1.12.2-1.15.0.3": "Fixed the faster language switching patch.\nChanged the End portal and End gateway break particle textures to obsidian to match Minecraft 1.13+.",
 		"1.12.2-1.15.0.2": "Fixed a ClassCastException related to the skull stacking fix.",
@@ -250,6 +254,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.10.2": {
+		"1.12.2-1.16.0.0": "Cleaned up the code.\nRemoved the Teleporter replacement patch.\nImplemented particle fixes.\nAdded a configuration option to change the packet size limit.\nImplemented a dismount keybind which is separate from the sneak keybind. It is disabled by default.\nConfiguration options no longer exist on versions of Minecraft they have no effect on.",
 		"1.12.2-1.15.1.0": "The potion glowing effect is now toggleable in-game.\nCustom window icons are now loaded earlier.\nFixed 1.8 compatibility again.",
 		"1.12.2-1.15.0.3": "Fixed the faster language switching patch.\nChanged the End portal and End gateway break particle textures to obsidian to match Minecraft 1.13+.",
 		"1.12.2-1.15.0.2": "Fixed a ClassCastException related to the skull stacking fix.",
@@ -299,6 +304,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.10": {
+		"1.12.2-1.16.0.0": "Cleaned up the code.\nRemoved the Teleporter replacement patch.\nImplemented particle fixes.\nAdded a configuration option to change the packet size limit.\nImplemented a dismount keybind which is separate from the sneak keybind. It is disabled by default.\nConfiguration options no longer exist on versions of Minecraft they have no effect on.",
 		"1.12.2-1.15.1.0": "The potion glowing effect is now toggleable in-game.\nCustom window icons are now loaded earlier.\nFixed 1.8 compatibility again.",
 		"1.12.2-1.15.0.3": "Fixed the faster language switching patch.\nChanged the End portal and End gateway break particle textures to obsidian to match Minecraft 1.13+.",
 		"1.12.2-1.15.0.2": "Fixed a ClassCastException related to the skull stacking fix.",
@@ -348,6 +354,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.9.4": {
+		"1.12.2-1.16.0.0": "Cleaned up the code.\nRemoved the Teleporter replacement patch.\nImplemented particle fixes.\nAdded a configuration option to change the packet size limit.\nImplemented a dismount keybind which is separate from the sneak keybind. It is disabled by default.\nConfiguration options no longer exist on versions of Minecraft they have no effect on.",
 		"1.12.2-1.15.1.0": "The potion glowing effect is now toggleable in-game.\nCustom window icons are now loaded earlier.\nFixed 1.8 compatibility again.",
 		"1.12.2-1.15.0.3": "Fixed the faster language switching patch.\nChanged the End portal and End gateway break particle textures to obsidian to match Minecraft 1.13+.",
 		"1.12.2-1.15.0.2": "Fixed a ClassCastException related to the skull stacking fix.",
@@ -390,6 +397,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.9": {
+		"1.12.2-1.16.0.0": "Cleaned up the code.\nRemoved the Teleporter replacement patch.\nImplemented particle fixes.\nAdded a configuration option to change the packet size limit.\nImplemented a dismount keybind which is separate from the sneak keybind. It is disabled by default.\nConfiguration options no longer exist on versions of Minecraft they have no effect on.",
 		"1.12.2-1.15.1.0": "The potion glowing effect is now toggleable in-game.\nCustom window icons are now loaded earlier.\nFixed 1.8 compatibility again.",
 		"1.12.2-1.15.0.3": "Fixed the faster language switching patch.\nChanged the End portal and End gateway break particle textures to obsidian to match Minecraft 1.13+.",
 		"1.12.2-1.15.0.2": "Fixed a ClassCastException related to the skull stacking fix.",
@@ -407,7 +415,6 @@
 		"1.12.2-1.11.0.3": "Improved the configuration.",
 		"1.12.2-1.11.0.2": "Fixed compatibility with the Golden Lasso from Extra Utilities 2 and similar items by storing entities' bounding boxes as relative instead of absolute.",
 		"1.12.2-1.11.0.1": "Improved the configuration.",
-		"1.12.2-1.11.0.0": "Improved the configuration.",
 		"1.12.2-1.11.0.0": "Improved the configuration.",
 		"1.12.2-1.10.0.0": "Removed RandomPortals support.\nFixed a typo in the configuration.\nCode cleanup and refactor.",
 		"1.12.2-1.9.1.2": "Fixed End portal teleportation.",
@@ -433,6 +440,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.8.9": {
+		"1.12.2-1.16.0.0": "Cleaned up the code.\nRemoved the Teleporter replacement patch.\nImplemented particle fixes.\nAdded a configuration option to change the packet size limit.\nImplemented a dismount keybind which is separate from the sneak keybind. It is disabled by default.\nConfiguration options no longer exist on versions of Minecraft they have no effect on.",
 		"1.12.2-1.15.1.0": "The potion glowing effect is now toggleable in-game.\nCustom window icons are now loaded earlier.\nFixed 1.8 compatibility again.",
 		"1.12.2-1.15.0.3": "Fixed the faster language switching patch.\nChanged the End portal and End gateway break particle textures to obsidian to match Minecraft 1.13+.",
 		"1.12.2-1.15.0.2": "Fixed a ClassCastException related to the skull stacking fix.",
@@ -475,6 +483,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.8.8": {
+		"1.12.2-1.16.0.0": "Cleaned up the code.\nRemoved the Teleporter replacement patch.\nImplemented particle fixes.\nAdded a configuration option to change the packet size limit.\nImplemented a dismount keybind which is separate from the sneak keybind. It is disabled by default.\nConfiguration options no longer exist on versions of Minecraft they have no effect on.",
 		"1.12.2-1.15.1.0": "The potion glowing effect is now toggleable in-game.\nCustom window icons are now loaded earlier.\nFixed 1.8 compatibility again.",
 		"1.12.2-1.15.0.3": "Fixed the faster language switching patch.\nChanged the End portal and End gateway break particle textures to obsidian to match Minecraft 1.13+.",
 		"1.12.2-1.15.0.2": "Fixed a ClassCastException related to the skull stacking fix.",
@@ -517,6 +526,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.8": {
+		"1.12.2-1.16.0.0": "Cleaned up the code.\nRemoved the Teleporter replacement patch.\nImplemented particle fixes.\nAdded a configuration option to change the packet size limit.\nImplemented a dismount keybind which is separate from the sneak keybind. It is disabled by default.\nConfiguration options no longer exist on versions of Minecraft they have no effect on.",
 		"1.12.2-1.15.1.0": "The potion glowing effect is now toggleable in-game.\nCustom window icons are now loaded earlier.\nFixed 1.8 compatibility again.",
 		"1.12.2-1.15.0.3": "Fixed the faster language switching patch.\nChanged the End portal and End gateway break particle textures to obsidian to match Minecraft 1.13+.",
 		"1.12.2-1.15.0.2": "Fixed a ClassCastException related to the skull stacking fix.",
@@ -561,27 +571,27 @@
 	"promos": {
 		"1.13.2-latest": "1.13.2-1.15.1.0",
 		"1.13.2-recommended": "1.13.2-1.15.1.0",
-		"1.12.2-latest": "1.12.2-1.15.1.0",
-		"1.12.2-recommended": "1.12.2-1.15.1.0",
-		"1.12-latest": "1.12.2-1.15.1.0",
-		"1.12-recommended": "1.12.2-1.15.1.0",
-		"1.11.2-latest": "1.12.2-1.15.1.0",
-		"1.11.2-recommended": "1.12.2-1.15.1.0",
-		"1.11-latest": "1.12.2-1.15.1.0",
-		"1.11-recommended": "1.12.2-1.15.1.0",
-		"1.10.2-latest": "1.12.2-1.15.1.0",
-		"1.10.2-recommended": "1.12.2-1.15.1.0",
-		"1.10-latest": "1.12.2-1.15.1.0",
-		"1.10-recommended": "1.12.2-1.15.1.0",
-		"1.9.4-latest": "1.12.2-1.15.1.0",
-		"1.9.4-recommended": "1.12.2-1.15.1.0",
-		"1.9-latest": "1.12.2-1.15.1.0",
-		"1.9-recommended": "1.12.2-1.15.1.0",
-		"1.8.9-latest": "1.12.2-1.15.1.0",
-		"1.8.9-recommended": "1.12.2-1.15.1.0",
-		"1.8.8-latest": "1.12.2-1.15.1.0",
-		"1.8.8-recommended": "1.12.2-1.15.1.0",
-		"1.8-latest": "1.12.2-1.15.1.0",
-		"1.8-recommended": "1.12.2-1.15.1.0"
+		"1.12.2-latest": "1.12.2-1.16.0.0",
+		"1.12.2-recommended": "1.12.2-1.16.0.0",
+		"1.12-latest": "1.12.2-1.16.0.0",
+		"1.12-recommended": "1.12.2-1.16.0.0",
+		"1.11.2-latest": "1.12.2-1.16.0.0",
+		"1.11.2-recommended": "1.12.2-1.16.0.0",
+		"1.11-latest": "1.12.2-1.16.0.0",
+		"1.11-recommended": "1.12.2-1.16.0.0",
+		"1.10.2-latest": "1.12.2-1.16.0.0",
+		"1.10.2-recommended": "1.12.2-1.16.0.0",
+		"1.10-latest": "1.12.2-1.16.0.0",
+		"1.10-recommended": "1.12.2-1.16.0.0",
+		"1.9.4-latest": "1.12.2-1.16.0.0",
+		"1.9.4-recommended": "1.12.2-1.16.0.0",
+		"1.9-latest": "1.12.2-1.16.0.0",
+		"1.9-recommended": "1.12.2-1.16.0.0",
+		"1.8.9-latest": "1.12.2-1.16.0.0",
+		"1.8.9-recommended": "1.12.2-1.16.0.0",
+		"1.8.8-latest": "1.12.2-1.16.0.0",
+		"1.8.8-recommended": "1.12.2-1.16.0.0",
+		"1.8-latest": "1.12.2-1.16.0.0",
+		"1.8-recommended": "1.12.2-1.16.0.0"
 	}
 }
