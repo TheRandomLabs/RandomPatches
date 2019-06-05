@@ -35,6 +35,7 @@ public class RPTransformer implements IClassTransformer {
 
 		try {
 			if(!patch.apply(node)) {
+				RandomPatches.LOGGER.info("Didn't transform class: " + transformedName);
 				return basicClass;
 			}
 

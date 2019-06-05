@@ -1,5 +1,6 @@
 package com.therandomlabs.randompatches.patch.client;
 
+import com.therandomlabs.randomlib.TRLUtils;
 import com.therandomlabs.randompatches.core.Patch;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.AbstractInsnNode;
@@ -9,11 +10,13 @@ import org.objectweb.asm.tree.InsnList;
 
 public final class NetHandlerPlayClientPatch extends Patch {
 	public static final String KEY_BIND_SNEAK = getName("keyBindSneak", "field_74311_E");
+	public static final String HANDLE_SET_PASSENGERS_SRG =
+			TRLUtils.MC_VERSION_NUMBER > 8 ? "func_184328_a" : "func_147243_a";
 
 	@Override
 	public boolean apply(ClassNode node) {
 		final InsnList instructions =
-				findInstructions(node, "handleSetPassengers", "func_184328_a");
+				findInstructions(node, "handleSetPassengers", HANDLE_SET_PASSENGERS_SRG);
 
 		FieldInsnNode getSneakKeybind = null;
 
@@ -42,10 +45,14 @@ public final class NetHandlerPlayClientPatch extends Patch {
 		));
 
 		final AbstractInsnNode getGameSettings = getSneakKeybind.getPrevious();
-		final AbstractInsnNode getMinecraft = getGameSettings.getPrevious();
 
-		instructions.remove(getMinecraft.getPrevious());
-		instructions.remove(getMinecraft);
+		if(TRLUtils.MC_VERSION_NUMBER > 8) {
+			final AbstractInsnNode getMinecraft = getGameSettings.getPrevious();
+
+			instructions.remove(getMinecraft.getPrevious());
+			instructions.remove(getMinecraft);
+		}
+
 		instructions.remove(getGameSettings);
 		instructions.remove(getSneakKeybind);
 
