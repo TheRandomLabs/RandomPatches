@@ -44,11 +44,11 @@ public final class EntityPlayerSPPatch extends Patch {
 			}
 		}
 
-		//Call EntityPlayerSPPPatch#shouldSneak
+		//Call EntityPlayerSPPPatch#shouldDismount
 		instructions.insert(shouldSneak, new MethodInsnNode(
 				Opcodes.INVOKESTATIC,
 				getName(EntityPlayerSPPatch.class),
-				"shouldSneak",
+				"shouldDismount",
 				"()Z",
 				false
 		));
@@ -62,7 +62,7 @@ public final class EntityPlayerSPPatch extends Patch {
 		return true;
 	}
 
-	public static boolean shouldSneak() {
+	public static boolean shouldDismount() {
 		return DismountKeybind.keybind.isKeyDown();
 	}
 }
