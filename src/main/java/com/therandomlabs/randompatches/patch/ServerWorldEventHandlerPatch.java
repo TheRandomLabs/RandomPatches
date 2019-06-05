@@ -65,7 +65,7 @@ public final class ServerWorldEventHandlerPatch extends Patch {
 		//Get parameters
 		instructions.add(new VarInsnNode(Opcodes.ALOAD, 15));
 
-		//Spawn particle
+		//Call ServerWorldEventHandlerPatch#spawnParticle
 		instructions.add(new MethodInsnNode(
 				Opcodes.INVOKESTATIC,
 				getName(ServerWorldEventHandlerPatch.class),
