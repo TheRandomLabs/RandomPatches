@@ -15,10 +15,12 @@ import com.therandomlabs.randompatches.patch.NetHandlerLoginServerPatch;
 import com.therandomlabs.randompatches.patch.NetHandlerPlayServerPatch;
 import com.therandomlabs.randompatches.patch.ServerRecipeBookHelperPatch;
 import com.therandomlabs.randompatches.patch.ServerWorldEventHandlerPatch;
+import com.therandomlabs.randompatches.patch.client.EntityPlayerSPPatch;
 import com.therandomlabs.randompatches.patch.client.GuiIngameMenuPatch;
 import com.therandomlabs.randompatches.patch.client.GuiLanguageListPatch;
 import com.therandomlabs.randompatches.patch.client.ItemPotionPatch;
 import com.therandomlabs.randompatches.patch.client.MinecraftPatch;
+import com.therandomlabs.randompatches.patch.client.NetHandlerPlayClientPatch;
 import com.therandomlabs.randompatches.patch.endportal.BlockEndPortalPatch;
 import com.therandomlabs.randompatches.patch.endportal.BlockModelShapesPatch;
 import com.therandomlabs.randompatches.patch.endportal.TileEntityEndPortalPatch;
@@ -51,8 +53,8 @@ public final class RandomPatches {
 
 	public static final String DEFAULT_WINDOW_TITLE = "Minecraft " + TRLUtils.MC_VERSION;
 
-	public static final boolean SPONGEFORGE_INSTALLED =
-			RPUtils.detect("org.spongepowered.mod.SpongeMod");
+	public static final boolean BIGGER_PACKETS_PLEASE_INSTALLED =
+			RPUtils.detect("net.elnounch.mc.biggerpacketsplz.BiggerBacketsPlzCoreMod");
 
 	public static final boolean ITLT_INSTALLED =
 			RPUtils.detect("dk.zlepper.itlt.about.mod");
@@ -62,6 +64,12 @@ public final class RandomPatches {
 
 	public static final boolean REBIND_NARRATOR_INSTALLED =
 			RPUtils.detect("quaternary.rebindnarrator.RebindNarrator");
+
+	public static final boolean SPONGEFORGE_INSTALLED =
+			RPUtils.detect("org.spongepowered.mod.SpongeMod");
+
+	public static final boolean UNRIDE_KEYBIND_INSTALLED =
+			RPUtils.detect("io.github.barteks2x.unridekeybind.core.UnRideKeybindCoremod");
 
 	public static final boolean VANILLAFIX_INSTALLED =
 			RPUtils.detect("org.dimdev.vanillafix.VanillaFix");
@@ -84,6 +92,10 @@ public final class RandomPatches {
 	@Subscribe
 	public void init(FMLInitializationEvent event) {
 		ConfigManager.registerEventHandler();
+
+		if(RPConfig.Client.isDismountKeybindEnabled()) {
+			EntityPlayerSPPatch.DismountKeybind.register();
+		}
 
 		if(RPConfig.Client.isNarratorKeybindEnabled()) {
 			MinecraftPatch.ToggleNarratorKeybind.register();
@@ -123,6 +135,14 @@ public final class RandomPatches {
 	}
 
 	public static void registerPatches() {
+		if(RPConfig.Client.isDismountKeybindEnabled()) {
+			register("net.minecraft.client.entity.EntityPlayerSP", new EntityPlayerSPPatch());
+			register(
+					"net.minecraft.client.network.NetHandlerPlayClient",
+					new NetHandlerPlayClientPatch()
+			);
+		}
+
 		if(RPConfig.Client.fastLanguageSwitch && TRLUtils.IS_CLIENT) {
 			register("net.minecraft.client.gui.GuiLanguage$List", new GuiLanguageListPatch());
 		}
@@ -137,13 +157,6 @@ public final class RandomPatches {
 
 		if(RPConfig.Client.patchTitleScreenOnDisconnect) {
 			register("net.minecraft.client.gui.GuiIngameMenu", new GuiIngameMenuPatch());
-		}
-
-		if(RPConfig.Timeouts.patchLoginTimeout) {
-			register(
-					"net.minecraft.network.NetHandlerLoginServer",
-					new NetHandlerLoginServerPatch()
-			);
 		}
 
 		if(RPConfig.Misc.areEndPortalTweaksEnabled()) {
@@ -181,7 +194,7 @@ public final class RandomPatches {
 			register("net.minecraft.network.NetHandlerPlayServer", new NetHandlerPlayServerPatch());
 		}
 
-		if(RPConfig.Misc.patchPacketSizeLimit) {
+		if(RPConfig.Misc.patchPacketSizeLimit && !BIGGER_PACKETS_PLEASE_INSTALLED) {
 			register(
 					"net.minecraft.network.NettyCompressionDecoder",
 					new NettyCompressionDecoderPatch()
@@ -202,6 +215,13 @@ public final class RandomPatches {
 
 		if(RPConfig.Misc.skullStackingFix) {
 			register("net.minecraft.nbt.NBTTagCompound", new NBTTagCompoundPatch());
+		}
+
+		if(RPConfig.Timeouts.patchLoginTimeout) {
+			register(
+					"net.minecraft.network.NetHandlerLoginServer",
+					new NetHandlerLoginServerPatch()
+			);
 		}
 	}
 }

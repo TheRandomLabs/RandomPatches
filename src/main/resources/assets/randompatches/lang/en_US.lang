@@ -6,6 +6,7 @@ randompatches.config.boats.underwaterBoatBuoyancy=Underwater boat buoyancy
 
 randompatches.config.client=Client-sided
 randompatches.config.client.tooltip=Options related to client-sided features.
+randompatches.config.client.dismountKeybind=Dismount keybind
 randompatches.config.client.fastLanguageSwitch=Fast language switch
 randompatches.config.client.forceTitleScreenOnDisconnect=Force title screen on disconnect
 randompatches.config.client.narratorKeybind=Toggle Narrator keybind
@@ -52,4 +53,5 @@ randompatches.config.client.window.title=Window title
 commands.rpreloadclient.usage=/rpreloadclient
 commands.rpreloadclient.success=RandomPatches client-sided configuration reloaded!
 
+key.dismount=Dismount
 key.narrator=Toggle Narrator

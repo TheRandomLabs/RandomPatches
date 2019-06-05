@@ -35,6 +35,10 @@ public final class RPConfig {
 		public static final Window window = null;
 
 		@Config.RequiresMCRestart
+		@Config.Property("Adds a separate keybind for dismounting.")
+		public static boolean dismountKeybind = RandomPatches.IS_DEOBFUSCATED;
+
+		@Config.RequiresMCRestart
 		@Config.Property("Speeds up language switching.")
 		public static boolean fastLanguageSwitch = true;
 
@@ -78,6 +82,10 @@ public final class RPConfig {
 		@Config.RequiresWorldReload
 		@Config.Property("Enables the /rpreloadclient command.")
 		public static boolean rpreloadclient = true;
+
+		public static boolean isDismountKeybindEnabled() {
+			return dismountKeybind && !RandomPatches.UNRIDE_KEYBIND_INSTALLED && TRLUtils.IS_CLIENT;
+		}
 
 		public static boolean isNarratorKeybindEnabled() {
 			return narratorKeybind && TRLUtils.MC_VERSION_NUMBER > 11 &&
