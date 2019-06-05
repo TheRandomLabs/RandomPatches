@@ -43,20 +43,20 @@ public final class NetHandlerPlayServerPatch extends Patch {
 	boolean shouldDisconnect;
 
 	void update() {
-		final long currentTime = currentTimeMillis();
+		final long currentTimeMillis = currentTimeMillis();
 
-		if(currentTime - lastPingTime >= KEEP_ALIVE_PACKET_INTERVAL) {
+		if(currentTimeMillis - lastPingTime >= KEEP_ALIVE_PACKET_INTERVAL) {
 			if(shouldDisconnect) {
 				//Inserting code here
-				if(currentTime - lastPingTime >= READ_TIMEOUT) {
+				if(currentTimeMillis - lastPingTime >= READ_TIMEOUT) {
 					//This line is kept from vanilla
 					disconnect(new TextComponentTranslation("disconnect.timeout"));
 				}
 				//End code insertion
 			} else {
 				shouldDisconnect = true;
-				lastPingTime = currentTime;
-				keepAliveID = currentTime;
+				lastPingTime = currentTimeMillis;
+				keepAliveID = currentTimeMillis;
 				sendPacket(new SPacketKeepAlive(keepAliveID));
 			}
 		}
@@ -159,7 +159,7 @@ public final class NetHandlerPlayServerPatch extends Patch {
 		));
 
 		//Compare the subtraction result to readTimeoutMillis and jump if it is not larger:
-		//if(currentTime - lastPingTime >= RPStaticConfig#readTimeoutMillis)
+		//if(currentTimeMillis - lastPingTime >= RPStaticConfig#readTimeoutMillis)
 		newInstructions.add(new InsnNode(Opcodes.LCMP));
 		newInstructions.add(new JumpInsnNode(Opcodes.IFLT, label));
 
