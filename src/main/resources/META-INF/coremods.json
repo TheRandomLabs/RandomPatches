@@ -5,6 +5,9 @@
 	"RandomPatches ItemPotion Transformer": "patches/client/ItemPotion.js",
 	"RandomPatches KeyboardListener Transformer": "patches/client/KeyboardListener.js",
 	"RandomPatches MainWindow Transformer": "patches/client/MainWindow.js",
+	//Dismount
+	"RandomPatches EntityPlayerSP Transformer": "patches/client/dismount/EntityPlayerSP.js",
+	"RandomPatches NetHandlerPlayClient Transformer": "patches/client/dismount/NetHandlerPlayClient.js",
 	//Packet size
 	"RandomPatches NettyCompressionDecoder Transformer": "patches/packetsize/NettyCompressionDecoder.js",
 	"RandomPatches PacketBuffer Transformer": "patches/packetsize/PacketBuffer.js",

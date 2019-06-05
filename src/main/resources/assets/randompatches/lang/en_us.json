@@ -29,5 +29,6 @@
 	"randompatches.config.client.window.title": "Window title",
 	"commands.rpreloadclient.usage": "/rpreloadclient",
 	"commands.rpreloadclient.success": "RandomPatches client-sided configuration reloaded!",
+	"key.dismount": "Dismount",
 	"key.narrator": "Toggle Narrator"
 }
