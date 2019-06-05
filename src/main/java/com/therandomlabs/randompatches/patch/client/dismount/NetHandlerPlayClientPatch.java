@@ -39,7 +39,7 @@ public final class NetHandlerPlayClientPatch extends Patch {
 		//"Press <key> to dismount"
 		instructions.insert(getSneakKeybind, new FieldInsnNode(
 				Opcodes.GETSTATIC,
-				"com/therandomlabs/randompatches/patch/client/EntityPlayerSPPatch$DismountKeybind",
+				getName(EntityPlayerSPPatch.class) + "$DismountKeybind",
 				"keybind",
 				"Lnet/minecraft/client/settings/KeyBinding;"
 		));
