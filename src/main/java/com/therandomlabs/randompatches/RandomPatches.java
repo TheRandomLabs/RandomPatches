@@ -59,6 +59,9 @@ public final class RandomPatches {
 	public static final boolean ITLT_INSTALLED =
 			RPUtils.detect("dk.zlepper.itlt.about.mod");
 
+	public static final boolean PARTICLE_FIXES_INSTALLED =
+			RPUtils.detect("com.fuzs.particlefixes.ParticleFixes");
+
 	public static final boolean REBIND_INSTALLED =
 			RPUtils.detect("austeretony.rebind.common.core.ReBindCorePlugin");
 
@@ -179,7 +182,8 @@ public final class RandomPatches {
 			register("net.minecraft.entity.item.EntityMinecart", new EntityMinecartPatch());
 		}
 
-		if(RPConfig.Misc.particleFixes && TRLUtils.MC_VERSION_NUMBER > 9) {
+		if(RPConfig.Misc.particleFixes && TRLUtils.MC_VERSION_NUMBER > 9 &&
+				!PARTICLE_FIXES_INSTALLED) {
 			register(
 					"net.minecraft.world.ServerWorldEventHandler",
 					new ServerWorldEventHandlerPatch()
