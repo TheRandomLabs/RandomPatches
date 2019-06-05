@@ -11,10 +11,7 @@ import org.lwjgl.opengl.Display;
 public final class RPConfig {
 	public static final class Boats {
 		@Config.RequiresMCRestart
-		@Config.Property({
-				"Whether to patch EntityBoat.",
-				"This only works on 1.9 and above."
-		})
+		@Config.Property("Whether to patch EntityBoat.")
 		public static boolean patchEntityBoat = true;
 
 		@Config.Property(
@@ -48,11 +45,9 @@ public final class RPConfig {
 		)
 		public static boolean forceTitleScreenOnDisconnect = RandomPatches.IS_DEOBFUSCATED;
 
+		@Config.MCVersion("[1.12,1.13)")
 		@Config.RequiresMCRestart
-		@Config.Property({
-				"Whether to add the Toggle Narrator keybind to the controls.",
-				"This only works on 1.12 as the narrator does not exist in previous versions."
-		})
+		@Config.Property("Whether to add the Toggle Narrator keybind to the controls.")
 		public static boolean narratorKeybind = true;
 
 		@Config.RequiresMCRestart
@@ -95,18 +90,18 @@ public final class RPConfig {
 	}
 
 	public static final class Misc {
+		@Config.MCVersion("[1.11,1.13)")
 		@Config.RequiresMCRestart
-		@Config.Property({
+		@Config.Property(
 				"Fixes the End portal and End gateway break particle textures and " +
-						"improves End portal rendering.",
-				"This only works on Minecraft 1.11 and above."
-		})
+						"improves End portal rendering."
+		)
 		public static boolean endPortalTweaks = true;
 
+		@Config.MCVersion("[1.10,1.13)")
 		@Config.RequiresMCRestart
 		@Config.Property({
 				"Fixes MC-2025.",
-				"This only works on 1.10 and above.",
 				"More information can be found here: " +
 						"https://www.reddit.com/r/Mojira/comments/8pgd4q/final_and_proper_fix_to_" +
 						"mc2025_simple_reliable/"
@@ -120,20 +115,20 @@ public final class RPConfig {
 		)
 		public static boolean minecartAIFix = true;
 
+		@Config.MCVersion("[1.10,1.13)")
 		@Config.RequiresMCRestart
-		@Config.Property({
+		@Config.Property(
 				"Fixes MC-10369 (server-side particle spawning not creating particles for " +
 						"clients) and MC-93826 (breeding hearts only showing once instead of all " +
-						"of the time an animal can breed.",
-				"This only works on 1.10 and above."
-		})
+						"of the time an animal can breed."
+		)
 		public static boolean particleFixes = true;
 
+		@Config.MCVersion("[1.9,1.13)")
 		@Config.RequiresMCRestart
 		@Config.Property({
 				"Set this to false to disable the NetHandlerPlayServer patches " +
-						"(the speed limits and disconnect timeouts).",
-				"On 1.8, 1.8.8 and 1.8.9, these patches are always disabled."
+						"(the speed limits and disconnect timeouts)."
 		})
 		public static boolean patchNetHandlerPlayServer = true;
 
@@ -231,13 +226,13 @@ public final class RPConfig {
 		@Config.Property("Whether to apply the login timeout.")
 		public static boolean patchLoginTimeout = true;
 
+		@Config.MCVersion("[1.12,1.13)")
 		@Config.RangeInt(min = 1)
 		@Config.Property({
 				"The read timeout.",
 				"This is the time it takes for a player to be disconnected after not " +
 						"responding to a KeepAlive packet.",
-				"This value is automatically rounded up to a product of keepAlivePacketInterval.",
-				"This only works on 1.12 and above."
+				"This value is automatically rounded up to a product of keepAlivePacketInterval."
 		})
 		public static int readTimeout = 90;
 
@@ -303,6 +298,7 @@ public final class RPConfig {
 		}
 	}
 
+	@Config.MCVersion("[1.9,1.13)")
 	@Config.Category("Options related to boats.")
 	public static final Boats boats = null;
 
