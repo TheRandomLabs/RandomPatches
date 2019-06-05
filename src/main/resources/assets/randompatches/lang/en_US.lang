@@ -12,7 +12,6 @@ randompatches.config.client.patchMinecraftClass=Patch Minecraft class
 randompatches.config.client.patchTitleScreenOnDisconnect=Patch title screen on disconnect
 randompatches.config.client.patchPotionGlint=Patch potion glint
 randompatches.config.client.removePotionGlint=Remove potion glint
-randompatches.config.client.replacePortalRenderer=Replace portal renderer
 randompatches.config.client.rpreloadclient=/rpreloadclient
 
 randompatches.config.misc=Miscellaneous
@@ -26,7 +25,6 @@ randompatches.config.misc.packetSizeLimit=Packet size limit
 randompatches.config.misc.portalBucketReplacementFix=Portal bucket replacement fix
 randompatches.config.misc.portalBucketReplacementFixForNetherPortals=Portal bucket replacement fix for Nether portals
 randompatches.config.misc.recipeBookNBTFix=Recipe book NBT fix
-randompatches.config.misc.replaceTeleporter=Replace Teleporter
 randompatches.config.misc.rpreload=/rpreload
 randompatches.config.misc.skullStackingFix=Skull stacking fix
 randompatches.config.misc.skullStackingRequiresSameTextures=Skull stacking requires same textures
