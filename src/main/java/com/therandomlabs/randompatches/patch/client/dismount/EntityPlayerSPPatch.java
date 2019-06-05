@@ -1,4 +1,4 @@
-package com.therandomlabs.randompatches.patch.client;
+package com.therandomlabs.randompatches.patch.client.dismount;
 
 import com.therandomlabs.randompatches.core.Patch;
 import net.minecraft.client.settings.KeyBinding;

@@ -1,4 +1,4 @@
-package com.therandomlabs.randompatches.patch.client;
+package com.therandomlabs.randompatches.patch.client.dismount;
 
 import com.therandomlabs.randomlib.TRLUtils;
 import com.therandomlabs.randompatches.core.Patch;
