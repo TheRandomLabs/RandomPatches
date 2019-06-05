@@ -1,6 +1,7 @@
 {
 	"homepage": "https://minecraft.curseforge.com/projects/randompatches",
 	"1.13.2": {
+		"1.13.2-1.16.0.0": "Cleaned up the code.\nImplemented particle fixes.\nIncreased the packet size limit.\nImplemented a dismount keybind which is separate from the sneak keybind.",
 		"1.13.2-1.15.1.0": "Initial port to Minecraft 1.13.2."
 	},
 	"1.12.2": {
@@ -569,8 +570,8 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"promos": {
-		"1.13.2-latest": "1.13.2-1.15.1.0",
-		"1.13.2-recommended": "1.13.2-1.15.1.0",
+		"1.13.2-latest": "1.13.2-1.16.0.0",
+		"1.13.2-recommended": "1.13.2-1.16.0.0",
 		"1.12.2-latest": "1.12.2-1.16.0.0",
 		"1.12.2-recommended": "1.12.2-1.16.0.0",
 		"1.12-latest": "1.12.2-1.16.0.0",
