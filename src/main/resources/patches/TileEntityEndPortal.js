@@ -1,9 +1,8 @@
 var Opcodes = Java.type("org.objectweb.asm.Opcodes");
 
-var FieldInsnNode = Java.type("org.objectweb.asm.tree.FieldInsnNode");
+var InsnList = Java.type("org.objectweb.asm.tree.InsnList");
 var InsnNode = Java.type("org.objectweb.asm.tree.InsnNode");
-var JumpInsnNode = Java.type("org.objectweb.asm.tree.JumpInsnNode");
-var LabelNode = Java.type("org.objectweb.asm.tree.LabelNode");
+var MethodInsnNode = Java.type("org.objectweb.asm.tree.MethodInsnNode");
 var VarInsnNode = Java.type("org.objectweb.asm.tree.VarInsnNode");
 
 function log(message) {
@@ -45,20 +44,22 @@ function initializeCoreMod() {
 }
 
 function patchShouldRenderFace(instructions) {
-	instructions.clear();
+	var newInstructions = new InsnList();
 
 	//Get face
-	instructions.add(new VarInsnNode(Opcodes.ALOAD, 1));
+	newInstructions.add(new VarInsnNode(Opcodes.ALOAD, 1));
 
 	//Call TileEntityEndPortalPatch#shouldRenderFace
-	instructions.add(new MethodInsnNode(
+	newInstructions.add(new MethodInsnNode(
 			Opcodes.INVOKESTATIC,
-			"com.therandomlabs.randompatches.patch.TileEntityEndPortalPatch",
+			"com/therandomlabs/randompatches/patch/TileEntityEndPortalPatch",
 			"shouldRenderFace",
 			"(Lnet/minecraft/util/EnumFacing;)Z",
 			false
 	));
 
 	//Return TileEntityEndPortalPatch#shouldRenderFace
-	instructions.add(new InsnNode(Opcodes.IRETURN));
+	newInstructions.add(new InsnNode(Opcodes.IRETURN));
+
+	instructions.insertBefore(instructions.getFirst(), newInstructions);
 }

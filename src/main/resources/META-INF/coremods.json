@@ -13,5 +13,6 @@
 	"RandomPatches NetHandlerLoginServer Transformer": "patches/NetHandlerLoginServer.js",
 	"RandomPatches NetHandlerPlayServer Transformer": "patches/NetHandlerPlayServer.js",
 	"RandomPatches ServerRecipePlacer Transformer": "patches/ServerRecipePlacer.js",
+	"RandomPatches ServerWorldEventHandler Transformer": "patches/ServerWorldEventHandler.js",
 	"RandomPatches TileEntityEndPortal Transformer": "patches/TileEntityEndPortal.js"
 }

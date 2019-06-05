@@ -55,7 +55,9 @@ function patchOnKeyEvent(instructions) {
 	}
 
 	//Get key
-	instructions.insertBefore(isB.getPrevious(), new VarInsnNode(Opcodes.ILOAD, 3));
+	var getKey = new VarInsnNode(Opcodes.ILOAD, 3);
+
+	instructions.insertBefore(isB.getPrevious(), getKey);
 
 	//Call KeyboardListenerPatch#handleKeypress
 	instructions.insert(getKey, new MethodInsnNode(
