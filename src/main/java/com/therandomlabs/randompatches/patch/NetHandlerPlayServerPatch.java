@@ -62,7 +62,6 @@ public final class NetHandlerPlayServerPatch extends Patch {
 		}
 	} */
 
-	@SuppressWarnings("Duplicates")
 	private static void patchUpdate(InsnList instructions) {
 		LdcInsnNode keepAliveInterval = null;
 		JumpInsnNode jumpIfShouldNotDisconnect = null;

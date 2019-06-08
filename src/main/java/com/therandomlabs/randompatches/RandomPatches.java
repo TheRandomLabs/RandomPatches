@@ -15,11 +15,11 @@ import com.therandomlabs.randompatches.patch.NetHandlerLoginServerPatch;
 import com.therandomlabs.randompatches.patch.NetHandlerPlayServerPatch;
 import com.therandomlabs.randompatches.patch.ServerRecipeBookHelperPatch;
 import com.therandomlabs.randompatches.patch.ServerWorldEventHandlerPatch;
-import com.therandomlabs.randompatches.patch.client.dismount.EntityPlayerSPPatch;
 import com.therandomlabs.randompatches.patch.client.GuiIngameMenuPatch;
 import com.therandomlabs.randompatches.patch.client.GuiLanguageListPatch;
 import com.therandomlabs.randompatches.patch.client.ItemPotionPatch;
 import com.therandomlabs.randompatches.patch.client.MinecraftPatch;
+import com.therandomlabs.randompatches.patch.client.dismount.EntityPlayerSPPatch;
 import com.therandomlabs.randompatches.patch.client.dismount.NetHandlerPlayClientPatch;
 import com.therandomlabs.randompatches.patch.endportal.BlockEndPortalPatch;
 import com.therandomlabs.randompatches.patch.endportal.BlockModelShapesPatch;
@@ -138,6 +138,10 @@ public final class RandomPatches {
 	}
 
 	public static void registerPatches() {
+		if(RPConfig.Boats.patchEntityBoat && TRLUtils.MC_VERSION_NUMBER > 8) {
+			register("net.minecraft.entity.item.EntityBoat", new EntityBoatPatch());
+		}
+
 		if(RPConfig.Client.isDismountKeybindEnabled()) {
 			register("net.minecraft.client.entity.EntityPlayerSP", new EntityPlayerSPPatch());
 			register(
@@ -188,10 +192,6 @@ public final class RandomPatches {
 					"net.minecraft.world.ServerWorldEventHandler",
 					new ServerWorldEventHandlerPatch()
 			);
-		}
-
-		if(RPConfig.Boats.patchEntityBoat && TRLUtils.MC_VERSION_NUMBER > 8) {
-			register("net.minecraft.entity.item.EntityBoat", new EntityBoatPatch());
 		}
 
 		if(RPConfig.Misc.patchNetHandlerPlayServer && TRLUtils.MC_VERSION_NUMBER > 8) {

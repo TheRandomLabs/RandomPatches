@@ -28,24 +28,24 @@ public final class EntityPlayerSPPatch extends Patch {
 	@Override
 	public boolean apply(ClassNode node) {
 		final InsnList instructions = findInstructions(node, "onUpdate", "func_70071_h_");
-		FieldInsnNode shouldSneak = null;
+		FieldInsnNode shouldDismount = null;
 
 		for(int i = 0; i < instructions.size(); i++) {
 			final AbstractInsnNode instruction = instructions.get(i);
 
 			if(instruction.getOpcode() == Opcodes.GETFIELD) {
-				shouldSneak = (FieldInsnNode) instruction;
+				shouldDismount = (FieldInsnNode) instruction;
 
-				if(SNEAK.equals(shouldSneak.name)) {
+				if(SNEAK.equals(shouldDismount.name)) {
 					break;
 				}
 
-				shouldSneak = null;
+				shouldDismount = null;
 			}
 		}
 
 		//Call EntityPlayerSPPPatch#shouldDismount
-		instructions.insert(shouldSneak, new MethodInsnNode(
+		instructions.insert(shouldDismount, new MethodInsnNode(
 				Opcodes.INVOKESTATIC,
 				getName(EntityPlayerSPPatch.class),
 				"shouldDismount",
@@ -53,11 +53,11 @@ public final class EntityPlayerSPPatch extends Patch {
 				false
 		));
 
-		final AbstractInsnNode getMovementInput = shouldSneak.getPrevious();
+		final AbstractInsnNode getMovementInput = shouldDismount.getPrevious();
 
 		instructions.remove(getMovementInput.getPrevious());
 		instructions.remove(getMovementInput);
-		instructions.remove(shouldSneak);
+		instructions.remove(shouldDismount);
 
 		return true;
 	}

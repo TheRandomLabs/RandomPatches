@@ -75,6 +75,7 @@ processResources {
 jar {
 	manifest {
 		attributes "Manifest-Version": "1.0"
+		attributes "FMLAT": "randompatches_at.cfg"
 		attributes "FMLCorePlugin": "com.therandomlabs.randompatches.core.RPCore"
 	}
 }

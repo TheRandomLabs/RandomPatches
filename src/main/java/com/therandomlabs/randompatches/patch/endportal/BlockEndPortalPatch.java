@@ -10,7 +10,6 @@ import org.objectweb.asm.tree.MethodInsnNode;
 import org.objectweb.asm.tree.VarInsnNode;
 
 public final class BlockEndPortalPatch extends Patch {
-	@SuppressWarnings("Duplicates")
 	@Override
 	public boolean apply(ClassNode node) {
 		final InsnList instructions =

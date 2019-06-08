@@ -9,7 +9,6 @@ import org.objectweb.asm.tree.MethodInsnNode;
 import org.objectweb.asm.tree.VarInsnNode;
 
 public final class TileEntityEndPortalPatch extends Patch {
-	@SuppressWarnings("Duplicates")
 	@Override
 	public boolean apply(ClassNode node) {
 		final InsnList instructions = findInstructions(node, "shouldRenderFace", "func_184313_a");

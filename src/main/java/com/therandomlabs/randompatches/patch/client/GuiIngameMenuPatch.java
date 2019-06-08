@@ -13,7 +13,6 @@ import org.objectweb.asm.tree.LabelNode;
 import org.objectweb.asm.tree.VarInsnNode;
 
 public final class GuiIngameMenuPatch extends Patch {
-	@SuppressWarnings("Duplicates")
 	@Override
 	public boolean apply(ClassNode node) {
 		final InsnList instructions = findInstructions(node, "actionPerformed", "func_146284_a");

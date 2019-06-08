@@ -98,7 +98,6 @@ public final class EntityPatch extends Patch {
 		instructions.insert(setTag, newInstructions);
 	}
 
-	@SuppressWarnings("Duplicates")
 	private static void patchReadFromNBT(InsnList instructions) {
 		JumpInsnNode jumpIfShouldNotSetPosition = null;
 		MethodInsnNode setPosition = null;
