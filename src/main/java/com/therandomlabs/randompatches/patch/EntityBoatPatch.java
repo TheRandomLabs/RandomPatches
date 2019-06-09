@@ -12,5 +12,9 @@ public final class EntityBoatPatch {
 		if(status == EntityBoat.Status.UNDER_FLOWING_WATER) {
 			boat.motionY += RPConfig.Boats.underwaterBoatBuoyancy - VANILLA_UNDERWATER_BUOYANCY;
 		}
+
+		if(RPConfig.Boats.preventUnderwaterBoatPassengerEjection) {
+			boat.outOfControlTicks = 0.0F;
+		}
 	}
 }
