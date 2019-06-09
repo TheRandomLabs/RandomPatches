@@ -13,6 +13,7 @@ import org.lwjgl.glfw.GLFW;
 
 public final class KeyboardListenerPatch {
 	public static final class ToggleNarratorKeybind {
+		public static final Minecraft mc = Minecraft.getInstance();
 		public static KeyBinding keybind;
 
 		private ToggleNarratorKeybind() {}
@@ -23,7 +24,7 @@ public final class KeyboardListenerPatch {
 					new IKeyConflictContext() {
 						@Override
 						public boolean isActive() {
-							return !(Minecraft.getInstance().currentScreen instanceof GuiControls);
+							return !(mc.currentScreen instanceof GuiControls);
 						}
 
 						@Override
@@ -52,7 +53,7 @@ public final class KeyboardListenerPatch {
 			return;
 		}
 
-		final Minecraft mc = Minecraft.getInstance();
+		final Minecraft mc = ToggleNarratorKeybind.mc;
 
 		mc.gameSettings.setOptionValue(GameSettings.Options.NARRATOR, 1);
 
