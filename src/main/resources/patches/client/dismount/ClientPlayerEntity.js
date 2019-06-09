@@ -25,7 +25,7 @@ function initializeCoreMod() {
 		"RandomPatches ClientPlayerEntity Transformer": {
 			"target": {
 				"type": "CLASS",
-				"name": "net.minecraft.client.entity.ClientPlayerEntity"
+				"name": "net.minecraft.client.entity.player.ClientPlayerEntity"
 			},
 			"transformer": function(classNode) {
 				log("Transforming class: " + classNode.name);

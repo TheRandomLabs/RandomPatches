@@ -25,7 +25,7 @@ function initializeCoreMod() {
 		"RandomPatches ClientPlayNetHandler Transformer": {
 			"target": {
 				"type": "CLASS",
-				"name": "net.minecraft.client.network.ClientPlayNetHandler"
+				"name": "net.minecraft.client.network.play.ClientPlayNetHandler"
 			},
 			"transformer": function(classNode) {
 				log("Transforming class: " + classNode.name);

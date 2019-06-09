@@ -24,7 +24,7 @@ function initializeCoreMod() {
 		"RandomPatches ServerLoginNetHandler Transformer": {
 			"target": {
 				"type": "CLASS",
-				"name": "net.minecraft.network.ServerLoginNetHandler"
+				"name": "net.minecraft.network.login.ServerLoginNetHandler"
 			},
 			"transformer": function(classNode) {
 				var methods = classNode.methods;

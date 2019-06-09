@@ -11,7 +11,7 @@ var VarInsnNode = Java.type("org.objectweb.asm.tree.VarInsnNode");
 var ON_CLICK = ASMAPI.mapMethod("func_194829_a");
 
 function log(message) {
-	print("[RandomPatches GuiIngameMenu$1 Transformer]: " + message);
+	print("[RandomPatches IngameMenuScreen Transformer]: " + message);
 }
 
 function patch(method, name, patchFunction) {
@@ -26,10 +26,10 @@ function patch(method, name, patchFunction) {
 
 function initializeCoreMod() {
 	return {
-		"RandomPatches GuiIngameMenu$1 Transformer": {
+		"RandomPatches IngameMenuScreen Transformer": {
 			"target": {
 				"type": "CLASS",
-				"name": "net.minecraft.client.gui.GuiIngameMenu$1"
+				"name": "net.minecraft.client.gui.screen.IngameMenuScreen"
 			},
 			"transformer": function(classNode) {
 				var methods = classNode.methods;

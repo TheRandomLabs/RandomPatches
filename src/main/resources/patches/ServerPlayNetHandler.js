@@ -37,7 +37,7 @@ function initializeCoreMod() {
 		"RandomPatches ServerPlayNetHandler Transformer": {
 			"target": {
 				"type": "CLASS",
-				"name": "net.minecraft.network.ServerPlayNetHandler"
+				"name": "net.minecraft.network.play.ServerPlayNetHandler"
 			},
 			"transformer": function(classNode) {
 				var methods = classNode.methods;
@@ -153,7 +153,7 @@ function patchTick(instructions) {
 	//Get ServerPlayNetHandler#keepAliveTime
 	newInstructions.add(new FieldInsnNode(
 			Opcodes.GETFIELD,
-			"net/minecraft/network/ServerPlayNetHandler",
+			"net/minecraft/network/play/ServerPlayNetHandler",
 			KEEP_ALIVE_TIME,
 			"J"
 	));

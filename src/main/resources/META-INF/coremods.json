@@ -1,8 +1,8 @@
 {
 	//Client
-	"RandomPatches GuiIngameMenu$1 Transformer": "patches/client/GuiIngameMenu$1.js",
+	"RandomPatches IngameMenuScreen$1 Transformer": "patches/client/IngameMenuScreen$1.js",
 	"RandomPatches KeyboardListener Transformer": "patches/client/KeyboardListener.js",
-	"RandomPatches LanguageScreen$List Transformer": "patches/client/LanguageScreen$List.js",
+	"RandomPatches LanguageScreen Transformer": "patches/client/LanguageScreen.js",
 	"RandomPatches MainWindow Transformer": "patches/client/MainWindow.js",
 	"RandomPatches Minecraft Transformer": "patches/client/Minecraft.js",
 	"RandomPatches PotionItem Transformer": "patches/client/PotionItem.js",
