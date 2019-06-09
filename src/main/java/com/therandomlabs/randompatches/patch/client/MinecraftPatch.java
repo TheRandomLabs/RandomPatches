@@ -24,6 +24,7 @@ import org.objectweb.asm.tree.MethodInsnNode;
 
 public final class MinecraftPatch extends Patch {
 	public static final class ToggleNarratorKeybind {
+		public static final Minecraft mc = Minecraft.getMinecraft();
 		public static KeyBinding keybind;
 
 		private ToggleNarratorKeybind() {}
@@ -32,7 +33,7 @@ public final class MinecraftPatch extends Patch {
 			keybind = new KeyBinding("key.narrator", new IKeyConflictContext() {
 				@Override
 				public boolean isActive() {
-					return !(Minecraft.getMinecraft().currentScreen instanceof GuiControls);
+					return !(mc.currentScreen instanceof GuiControls);
 				}
 
 				@Override
@@ -78,7 +79,7 @@ public final class MinecraftPatch extends Patch {
 			return;
 		}
 
-		final Minecraft mc = Minecraft.getMinecraft();
+		final Minecraft mc = ToggleNarratorKeybind.mc;
 
 		mc.gameSettings.setOptionValue(GameSettings.Options.NARRATOR, 1);
 
