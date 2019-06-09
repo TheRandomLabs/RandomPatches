@@ -12,37 +12,36 @@ import com.mojang.authlib.properties.Property;
 import com.mojang.authlib.yggdrasil.response.MinecraftTexturesPayload;
 import com.mojang.util.UUIDTypeAdapter;
 import com.therandomlabs.randompatches.RPConfig;
-import net.minecraft.nbt.INBTBase;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.INBT;
 import net.minecraft.nbt.NBTUtil;
 import org.apache.commons.codec.binary.Base64;
 
-public final class NBTTagCompoundPatch {
+public final class CompoundNBTPatch {
 	public static final Gson GSON =
 			new GsonBuilder().registerTypeAdapter(UUID.class, new UUIDTypeAdapter()).create();
 
-	private NBTTagCompoundPatch() {}
+	private CompoundNBTPatch() {}
 
-	public static boolean areTagMapsEqual(Map<String, INBTBase> tagMap1,
-			Map<String, INBTBase> tagMap2) {
+	public static boolean areTagMapsEqual(Map<String, INBT> tagMap1, Map<String, INBT> tagMap2) {
 		if(tagMap1.equals(tagMap2)) {
 			return true;
 		}
 
-		final INBTBase skullOwner1 = tagMap1.get("SkullOwner");
+		final INBT skullOwner1 = tagMap1.get("SkullOwner");
 
-		if(!(skullOwner1 instanceof NBTTagCompound)) {
+		if(!(skullOwner1 instanceof CompoundNBT)) {
 			return false;
 		}
 
-		final INBTBase skullOwner2 = tagMap2.get("SkullOwner");
+		final INBT skullOwner2 = tagMap2.get("SkullOwner");
 
-		if(!(skullOwner2 instanceof NBTTagCompound)) {
+		if(!(skullOwner2 instanceof CompoundNBT)) {
 			return false;
 		}
 
-		final GameProfile profile1 = NBTUtil.readGameProfile((NBTTagCompound) skullOwner1);
-		final GameProfile profile2 = NBTUtil.readGameProfile((NBTTagCompound) skullOwner2);
+		final GameProfile profile1 = NBTUtil.readGameProfile((CompoundNBT) skullOwner1);
+		final GameProfile profile2 = NBTUtil.readGameProfile((CompoundNBT) skullOwner2);
 
 		if(!profile1.equals(profile2)) {
 			return false;

@@ -5,7 +5,7 @@ var TRY_PLACE_CONTAINED_LIQUID = ASMAPI.mapMethod("func_180616_a");
 var IS_SOLID = ASMAPI.mapMethod("func_76220_a");
 
 function log(message) {
-	print("[RandomPatches ItemBucket Transformer]: " + message);
+	print("[RandomPatches BucketItem Transformer]: " + message);
 }
 
 function patch(method, name, patchFunction) {
@@ -20,10 +20,10 @@ function patch(method, name, patchFunction) {
 
 function initializeCoreMod() {
 	return {
-		"RandomPatches ItemBucket Transformer": {
+		"RandomPatches BucketItem Transformer": {
 			"target": {
 				"type": "CLASS",
-				"name": "net.minecraft.item.ItemBucket"
+				"name": "net.minecraft.item.BucketItem"
 			},
 			"transformer": function(classNode) {
 				var methods = classNode.methods;
@@ -54,12 +54,12 @@ function patchTryPlaceContainedLiquid(instructions) {
 		}
 	}
 
-	//Get IBlockState
+	//Get BlockState
 	isSolid.getPrevious().var = 5;
 
-	//Call ItemBucketPatch#isSolid
+	//Call BucketItemPatch#isSolid
 	isSolid.setOpcode(Opcodes.INVOKESTATIC);
-	isSolid.owner = "com/therandomlabs/randompatches/patch/ItemBucketPatch";
+	isSolid.owner = "com/therandomlabs/randompatches/patch/BucketItemPatch";
 	isSolid.name = "isSolid";
-	isSolid.desc = "(Lnet/minecraft/block/state/IBlockState;)Z";
+	isSolid.desc = "(Lnet/minecraft/block/BlockState;)Z";
 }

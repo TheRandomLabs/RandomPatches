@@ -9,7 +9,7 @@ var VarInsnNode = Java.type("org.objectweb.asm.tree.VarInsnNode");
 var SHOULD_RENDER_FACE = ASMAPI.mapMethod("func_184313_a");
 
 function log(message) {
-	print("[RandomPatches TileEntityEndPortal Transformer]: " + message);
+	print("[RandomPatches EndPortalTileEntity Transformer]: " + message);
 }
 
 function patch(method, name, patchFunction) {
@@ -24,10 +24,10 @@ function patch(method, name, patchFunction) {
 
 function initializeCoreMod() {
 	return {
-		"RandomPatches TileEntityEndPortal Transformer": {
+		"RandomPatches EndPortalTileEntity Transformer": {
 			"target": {
 				"type": "CLASS",
-				"name": "net.minecraft.tileentity.TileEntityEndPortal"
+				"name": "net.minecraft.tileentity.EndPortalTileEntity"
 			},
 			"transformer": function(classNode) {
 				var methods = classNode.methods;
@@ -50,16 +50,16 @@ function patchShouldRenderFace(instructions) {
 	//Get face
 	newInstructions.add(new VarInsnNode(Opcodes.ALOAD, 1));
 
-	//Call TileEntityEndPortalPatch#shouldRenderFace
+	//Call EndPortalTileEntityPatch#shouldRenderFace
 	newInstructions.add(new MethodInsnNode(
 			Opcodes.INVOKESTATIC,
-			"com/therandomlabs/randompatches/patch/TileEntityEndPortalPatch",
+			"com/therandomlabs/randompatches/patch/EndPortalTileEntityPatch",
 			"shouldRenderFace",
-			"(Lnet/minecraft/util/EnumFacing;)Z",
+			"(Lnet/minecraft/util/Direction;)Z",
 			false
 	));
 
-	//Return TileEntityEndPortalPatch#shouldRenderFace
+	//Return EndPortalTileEntityPatch#shouldRenderFace
 	newInstructions.add(new InsnNode(Opcodes.IRETURN));
 
 	instructions.insertBefore(instructions.getFirst(), newInstructions);

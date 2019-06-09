@@ -2,19 +2,19 @@ package com.therandomlabs.randompatches.client;
 
 import java.nio.FloatBuffer;
 import java.util.Random;
+import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GLAllocation;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.tileentity.TileEntityEndPortalRenderer;
+import net.minecraft.client.renderer.tileentity.EndPortalTileEntityRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.tileentity.TileEntityEndPortal;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.tileentity.EndPortalTileEntity;
+import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Util;
 
-public class RPTileEntityEndPortalRenderer extends TileEntityEndPortalRenderer {
+public class RPEndPortalTileEntityRenderer extends EndPortalTileEntityRenderer {
 	private static final ResourceLocation END_SKY_TEXTURE =
 			new ResourceLocation("textures/environment/end_sky.png");
 	private static final ResourceLocation END_PORTAL_TEXTURE =
@@ -30,23 +30,23 @@ public class RPTileEntityEndPortalRenderer extends TileEntityEndPortalRenderer {
 	private final FloatBuffer buffer = GLAllocation.createDirectFloatBuffer(16);
 	private final boolean upsideDown;
 
-	public RPTileEntityEndPortalRenderer() {
+	public RPEndPortalTileEntityRenderer() {
 		this(false);
 	}
 
-	public RPTileEntityEndPortalRenderer(boolean upsideDown) {
+	public RPEndPortalTileEntityRenderer(boolean upsideDown) {
 		this.upsideDown = upsideDown;
 	}
 
 	@Override
-	public void render(TileEntityEndPortal tileEntity, double x, double y, double z,
+	public void render(EndPortalTileEntity tileEntity, double x, double y, double z,
 			float partialTicks, int destroyStage) {
 		GlStateManager.disableLighting();
 
 		RANDOM.setSeed(31100L);
 
-		GlStateManager.getFloatv(2982, MODEL_VIEW);
-		GlStateManager.getFloatv(2983, PROJECTION);
+		GlStateManager.getMatrix(2982, MODEL_VIEW);
+		GlStateManager.getMatrix(2983, PROJECTION);
 
 		final int passes = getPasses(x * x + y * y + z * z);
 		final float offset = getOffset();
@@ -116,8 +116,8 @@ public class RPTileEntityEndPortalRenderer extends TileEntityEndPortalRenderer {
 			GlStateManager.rotatef((f2 * f2 * 4321.0F + f2 * 9.0F) * 2.0F, 0.0F, 0.0F, 1.0F);
 			GlStateManager.scalef(4.5F - f2 / 4.0F, 4.5F - f2 / 4.0F, 1.0F);
 
-			GlStateManager.multMatrixf(PROJECTION);
-			GlStateManager.multMatrixf(MODEL_VIEW);
+			GlStateManager.multMatrix(PROJECTION);
+			GlStateManager.multMatrix(MODEL_VIEW);
 
 			final Tessellator tessellator = Tessellator.getInstance();
 			final BufferBuilder builder = tessellator.getBuffer();
@@ -129,56 +129,56 @@ public class RPTileEntityEndPortalRenderer extends TileEntityEndPortalRenderer {
 			final float f5 = (RANDOM.nextFloat() * 0.5F + 0.5F) * f1;
 
 			if(upsideDown) {
-				if(tileEntity.shouldRenderFace(EnumFacing.DOWN)) {
+				if(tileEntity.shouldRenderFace(Direction.DOWN)) {
 					builder.pos(x, y + 0.25, z + 1.0).color(f3, f4, f5, 1.0F).endVertex();
 					builder.pos(x + 1.0, y + 0.25, z + 1.0).color(f3, f4, f5, 1.0F).endVertex();
 					builder.pos(x + 1.0, y + 0.25, z).color(f3, f4, f5, 1.0F).endVertex();
 					builder.pos(x, y + 0.25, z).color(f3, f4, f5, 1.0F).endVertex();
 				}
 
-				if(tileEntity.shouldRenderFace(EnumFacing.UP)) {
+				if(tileEntity.shouldRenderFace(Direction.UP)) {
 					builder.pos(x, y + 0.25, z).color(f3, f4, f5, 1.0F).endVertex();
 					builder.pos(x + 1.0, y + 0.25, z).color(f3, f4, f5, 1.0F).endVertex();
 					builder.pos(x + 1.0, y + 0.25, z + 1.0).color(f3, f4, f5, 1.0F).endVertex();
 					builder.pos(x, y + 0.25, z + 1.0).color(f3, f4, f5, 1.0F).endVertex();
 				}
 			} else {
-				if(tileEntity.shouldRenderFace(EnumFacing.SOUTH)) {
+				if(tileEntity.shouldRenderFace(Direction.SOUTH)) {
 					builder.pos(x, y, z + 0.5).color(f3, f4, f5, 1.0F).endVertex();
 					builder.pos(x + 1.0, y, z + 0.5).color(f3, f4, f5, 1.0F).endVertex();
 					builder.pos(x + 1.0, y + 1.0, z + 0.5).color(f3, f4, f5, 1.0F).endVertex();
 					builder.pos(x, y + 1.0, z + 0.5).color(f3, f4, f5, 1.0F).endVertex();
 				}
 
-				if(tileEntity.shouldRenderFace(EnumFacing.NORTH)) {
+				if(tileEntity.shouldRenderFace(Direction.NORTH)) {
 					builder.pos(x, y + 1.0, z + 0.5).color(f3, f4, f5, 1.0F).endVertex();
 					builder.pos(x + 1.0, y + 1.0, z + 0.5).color(f3, f4, f5, 1.0F).endVertex();
 					builder.pos(x + 1.0, y, z + 0.5).color(f3, f4, f5, 1.0F).endVertex();
 					builder.pos(x, y, z + 0.5).color(f3, f4, f5, 1.0F).endVertex();
 				}
 
-				if(tileEntity.shouldRenderFace(EnumFacing.EAST)) {
+				if(tileEntity.shouldRenderFace(Direction.EAST)) {
 					builder.pos(x + 0.5, y + 1.0, z).color(f3, f4, f5, 1.0F).endVertex();
 					builder.pos(x + 0.5, y + 1.0, z + 1.0).color(f3, f4, f5, 1.0F).endVertex();
 					builder.pos(x + 0.5, y, z + 1.0).color(f3, f4, f5, 1.0F).endVertex();
 					builder.pos(x + 0.5, y, z).color(f3, f4, f5, 1.0F).endVertex();
 				}
 
-				if(tileEntity.shouldRenderFace(EnumFacing.WEST)) {
+				if(tileEntity.shouldRenderFace(Direction.WEST)) {
 					builder.pos(x + 0.5, y, z).color(f3, f4, f5, 1.0F).endVertex();
 					builder.pos(x + 0.5, y, z + 1.0).color(f3, f4, f5, 1.0F).endVertex();
 					builder.pos(x + 0.5, y + 1.0, z + 1.0).color(f3, f4, f5, 1.0F).endVertex();
 					builder.pos(x + 0.5, y + 1.0, z).color(f3, f4, f5, 1.0F).endVertex();
 				}
 
-				if(tileEntity.shouldRenderFace(EnumFacing.DOWN)) {
+				if(tileEntity.shouldRenderFace(Direction.DOWN)) {
 					builder.pos(x, y + offset, z + 1.0).color(f3, f4, f5, 1.0F).endVertex();
 					builder.pos(x + 1.0, y + offset, z + 1.0).color(f3, f4, f5, 1.0F).endVertex();
 					builder.pos(x + 1.0, y + offset, z).color(f3, f4, f5, 1.0F).endVertex();
 					builder.pos(x, y + offset, z).color(f3, f4, f5, 1.0F).endVertex();
 				}
 
-				if(tileEntity.shouldRenderFace(EnumFacing.UP)) {
+				if(tileEntity.shouldRenderFace(Direction.UP)) {
 					builder.pos(x, y + offset, z).color(f3, f4, f5, 1.0F).endVertex();
 					builder.pos(x + 1.0, y + offset, z).color(f3, f4, f5, 1.0F).endVertex();
 					builder.pos(x + 1.0, y + offset, z + 1.0).color(f3, f4, f5, 1.0F).endVertex();

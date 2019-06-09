@@ -1,10 +1,6 @@
-var ASMAPI = Java.type("net.minecraftforge.coremod.api.ASMAPI");
 var Opcodes = Java.type("org.objectweb.asm.Opcodes");
 
 var FieldInsnNode = Java.type("org.objectweb.asm.tree.FieldInsnNode");
-
-var LOAD_ICON = ASMAPI.mapMethod("func_198110_t");
-var HANDLE = ASMAPI.mapField("field_198119_f");
 
 function log(message) {
 	print("[RandomPatches MainWindow Transformer]: " + message);
@@ -44,21 +40,12 @@ function initializeCoreMod() {
 
 function patchInit(instructions) {
 	var title;
-	var loadIcon;
 
 	for(var i = 0; i < instructions.size(); i++) {
 		var instruction = instructions.get(i);
 
-		if(title == null) {
-			if(instruction.getOpcode() == Opcodes.LDC && instruction.cst == "Minecraft 1.13.2") {
-				title = instruction;
-			}
-
-			continue;
-		}
-
-		if(instruction.getOpcode() == Opcodes.INVOKESPECIAL && instruction.name == LOAD_ICON) {
-			loadIcon = instruction;
+		if(instruction.getOpcode() == Opcodes.ALOAD && instruction.var == 5) {
+			title = instruction;
 			break;
 		}
 	}
@@ -72,19 +59,4 @@ function patchInit(instructions) {
 	));
 
 	instructions.remove(title);
-
-	//loadIcon.getPrevious() is ALOAD 0 (gets MainWindow (this))
-	//Get MainWindow#handle
-	instructions.insert(loadIcon.getPrevious(), new FieldInsnNode(
-			Opcodes.GETFIELD,
-			"net/minecraft/client/MainWindow",
-			HANDLE,
-			"J"
-	));
-
-	//Call WindowIconHandler#setWindowIcon
-	loadIcon.opcode = Opcodes.INVOKESTATIC;
-	loadIcon.owner = "com/therandomlabs/randompatches/client/WindowIconHandler";
-	loadIcon.name = "setWindowIcon";
-	loadIcon.desc = "(J)V"
 }

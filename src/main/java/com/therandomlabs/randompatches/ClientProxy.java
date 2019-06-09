@@ -1,23 +1,23 @@
 package com.therandomlabs.randompatches;
 
-import com.therandomlabs.randompatches.client.RPTileEntityEndPortalRenderer;
+import com.therandomlabs.randompatches.client.RPEndPortalTileEntityRenderer;
 import com.therandomlabs.randompatches.patch.client.KeyboardListenerPatch;
-import com.therandomlabs.randompatches.patch.client.dismount.EntityPlayerSPPatch;
+import com.therandomlabs.randompatches.patch.client.dismount.ClientPlayerEntityPatch;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
-import net.minecraft.tileentity.TileEntityEndPortal;
+import net.minecraft.tileentity.EndPortalTileEntity;
 
 public class ClientProxy extends CommonProxy {
 	@Override
 	public void init() {
 		super.init();
 
-		EntityPlayerSPPatch.DismountKeybind.register();
+		ClientPlayerEntityPatch.DismountKeybind.register();
 		KeyboardListenerPatch.ToggleNarratorKeybind.register();
 
-		final RPTileEntityEndPortalRenderer renderer = new RPTileEntityEndPortalRenderer();
+		final RPEndPortalTileEntityRenderer renderer = new RPEndPortalTileEntityRenderer();
 		renderer.setRendererDispatcher(TileEntityRendererDispatcher.instance);
 		TileEntityRendererDispatcher.instance.setSpecialRenderer(
-				TileEntityEndPortal.class, renderer
+				EndPortalTileEntity.class, renderer
 		);
 	}
 }

@@ -1,24 +1,24 @@
 {
 	//Client
 	"RandomPatches GuiIngameMenu$1 Transformer": "patches/client/GuiIngameMenu$1.js",
-	"RandomPatches GuiLanguage$List Transformer": "patches/client/GuiLanguage$List.js",
-	"RandomPatches ItemPotion Transformer": "patches/client/ItemPotion.js",
 	"RandomPatches KeyboardListener Transformer": "patches/client/KeyboardListener.js",
+	"RandomPatches LanguageScreen$List Transformer": "patches/client/LanguageScreen$List.js",
 	"RandomPatches MainWindow Transformer": "patches/client/MainWindow.js",
+	"RandomPatches Minecraft Transformer": "patches/client/Minecraft.js",
+	"RandomPatches PotionItem Transformer": "patches/client/PotionItem.js",
 	//Dismount
-	"RandomPatches EntityPlayerSP Transformer": "patches/client/dismount/EntityPlayerSP.js",
-	"RandomPatches NetHandlerPlayClient Transformer": "patches/client/dismount/NetHandlerPlayClient.js",
+	"RandomPatches ClientPlayerEntity Transformer": "patches/client/dismount/ClientPlayerEntity.js",
+	"RandomPatches ClientPlayNetHandler Transformer": "patches/client/dismount/ClientPlayNetHandler.js",
 	//Packet size
 	"RandomPatches NettyCompressionDecoder Transformer": "patches/packetsize/NettyCompressionDecoder.js",
 	"RandomPatches PacketBuffer Transformer": "patches/packetsize/PacketBuffer.js",
 	//Misc
+	"RandomPatches BoatEntity Transformer": "patches/BoatEntity.js",
+	"RandomPatches BucketItem Transformer": "patches/BucketItem.js",
+	"RandomPatches CompoundNBT Transformer": "patches/CompoundNBT.js",
+	"RandomPatches EndPortalTileEntity Transformer": "patches/EndPortalTileEntity.js",
 	"RandomPatches Entity Transformer": "patches/Entity.js",
-	"RandomPatches EntityBoat Transformer": "patches/EntityBoat.js",
-	"RandomPatches ItemBucket Transformer": "patches/ItemBucket.js",
-	"RandomPatches NBTTagCompound Transformer": "patches/NBTTagCompound.js",
-	"RandomPatches NetHandlerLoginServer Transformer": "patches/NetHandlerLoginServer.js",
-	"RandomPatches NetHandlerPlayServer Transformer": "patches/NetHandlerPlayServer.js",
-	"RandomPatches ServerRecipePlacer Transformer": "patches/ServerRecipePlacer.js",
-	"RandomPatches ServerWorldEventHandler Transformer": "patches/ServerWorldEventHandler.js",
-	"RandomPatches TileEntityEndPortal Transformer": "patches/TileEntityEndPortal.js"
+	"RandomPatches ServerLoginNetHandler Transformer": "patches/ServerLoginNetHandler.js",
+	"RandomPatches ServerPlayNetHandler Transformer": "patches/ServerPlayNetHandler.js",
+	"RandomPatches ServerRecipePlacer Transformer": "patches/ServerRecipePlacer.js"
 }

@@ -19,7 +19,7 @@ var SEND_PACKET = ASMAPI.mapMethod("func_147359_a");
 var KEEP_ALIVE_TIME = ASMAPI.mapField("field_194402_f");
 
 function log(message) {
-	print("[RandomPatches NetHandlerPlayServer Transformer]: " + message);
+	print("[RandomPatches ServerPlayNetHandler Transformer]: " + message);
 }
 
 function patch(method, name, patchFunction) {
@@ -34,10 +34,10 @@ function patch(method, name, patchFunction) {
 
 function initializeCoreMod() {
 	return {
-		"RandomPatches NetHandlerPlayServer Transformer": {
+		"RandomPatches ServerPlayNetHandler Transformer": {
 			"target": {
 				"type": "CLASS",
-				"name": "net.minecraft.network.NetHandlerPlayServer"
+				"name": "net.minecraft.network.ServerPlayNetHandler"
 			},
 			"transformer": function(classNode) {
 				var methods = classNode.methods;
@@ -147,13 +147,13 @@ function patchTick(instructions) {
 	//Get i (currentTimeMillis)
 	newInstructions.add(new VarInsnNode(Opcodes.LLOAD, 1));
 
-	//Get NetHandlerPlayServer (this)
+	//Get ServerPlayNetHandler (this)
 	newInstructions.add(new VarInsnNode(Opcodes.ALOAD, 0));
 
-	//Get NetHandlerPlayServer#keepAliveTime
+	//Get ServerPlayNetHandler#keepAliveTime
 	newInstructions.add(new FieldInsnNode(
 			Opcodes.GETFIELD,
-			"net/minecraft/network/NetHandlerPlayServer",
+			"net/minecraft/network/ServerPlayNetHandler",
 			KEEP_ALIVE_TIME,
 			"J"
 	));

@@ -7,7 +7,7 @@ var HANDLE_SET_PASSENGERS = ASMAPI.mapMethod("func_184328_a");
 var KEY_BIND_SNEAK = ASMAPI.mapField("field_74311_E");
 
 function log(message) {
-	print("[RandomPatches NetHandlerPlayClient Transformer]: " + message);
+	print("[RandomPatches ClientPlayNetHandler Transformer]: " + message);
 }
 
 function patch(method, name, patchFunction) {
@@ -22,10 +22,10 @@ function patch(method, name, patchFunction) {
 
 function initializeCoreMod() {
 	return {
-		"RandomPatches NetHandlerPlayClient Transformer": {
+		"RandomPatches ClientPlayNetHandler Transformer": {
 			"target": {
 				"type": "CLASS",
-				"name": "net.minecraft.client.network.NetHandlerPlayClient"
+				"name": "net.minecraft.client.network.ClientPlayNetHandler"
 			},
 			"transformer": function(classNode) {
 				log("Transforming class: " + classNode.name);
@@ -56,13 +56,13 @@ function patchHandleSetPassengers(instructions) {
 		}
 	}
 
-	//Get EntityPlayerSPPatch.DismountKeybind#keybind
+	//Get ClientPlayerEntityPatch.DismountKeybind#keybind
 	//We do this so the dismount key is shown instead of the sneak key in
 	//"Press <key> to dismount"
 	instructions.insert(getSneakKeybind, new FieldInsnNode(
 			Opcodes.GETSTATIC,
 			"com/therandomlabs/randompatches/patch/client/dismount/" +
-					"EntityPlayerSPPatch$DismountKeybind",
+					"ClientPlayerEntityPatch$DismountKeybind",
 			"keybind",
 			"Lnet/minecraft/client/settings/KeyBinding;"
 	));

@@ -6,10 +6,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
+import com.mojang.blaze3d.platform.TextureUtil;
 import com.therandomlabs.randompatches.RPConfig;
 import com.therandomlabs.randompatches.RandomPatches;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.texture.TextureUtil;
 import net.minecraft.resources.ResourcePackType;
 import net.minecraft.resources.VanillaPack;
 import net.minecraft.util.ResourceLocation;
@@ -22,12 +22,16 @@ import org.lwjgl.system.MemoryStack;
 import org.lwjgl.system.MemoryUtil;
 
 public class WindowIconHandler {
+	public static void setWindowIcon() {
+		setWindowIcon(Minecraft.getInstance().mainWindow.getHandle());
+	}
+
 	public static void setWindowIcon(long handle) {
 		RPConfig.Window.onReload(false);
 
-		final Util.EnumOS os = Util.getOSType();
+		final Util.OS os = Util.getOSType();
 
-		if(os != Util.EnumOS.OSX) {
+		if(os != Util.OS.OSX) {
 			InputStream stream16 = null;
 			InputStream stream32 = null;
 
@@ -112,7 +116,7 @@ public class WindowIconHandler {
 		final ByteBuffer buffer2;
 
 		try {
-			buffer1 = TextureUtil.readToNativeBuffer(stream);
+			buffer1 = TextureUtil.readResource(stream);
 			buffer1.rewind();
 			buffer2 = STBImage.stbi_load_from_memory(buffer1, i, j, k, 0);
 		} finally {

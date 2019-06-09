@@ -5,7 +5,7 @@ import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import org.lwjgl.glfw.GLFW;
 
-public final class EntityPlayerSPPatch {
+public final class ClientPlayerEntityPatch {
 	public static final class DismountKeybind {
 		public static KeyBinding keybind;
 
@@ -22,7 +22,7 @@ public final class EntityPlayerSPPatch {
 		}
 	}
 
-	private EntityPlayerSPPatch() {}
+	private ClientPlayerEntityPatch() {}
 
 	public static boolean shouldDismount() {
 		return DismountKeybind.keybind.isKeyDown();

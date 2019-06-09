@@ -6,7 +6,7 @@ var FieldInsnNode = Java.type("org.objectweb.asm.tree.FieldInsnNode");
 var TICK = ASMAPI.mapMethod("func_73660_a");
 
 function log(message) {
-	print("[RandomPatches NetHandlerLoginServer Transformer]: " + message);
+	print("[RandomPatches ServerLoginNetHandler Transformer]: " + message);
 }
 
 function patch(method, name, patchFunction) {
@@ -21,10 +21,10 @@ function patch(method, name, patchFunction) {
 
 function initializeCoreMod() {
 	return {
-		"RandomPatches NetHandlerLoginServer Transformer": {
+		"RandomPatches ServerLoginNetHandler Transformer": {
 			"target": {
 				"type": "CLASS",
-				"name": "net.minecraft.network.NetHandlerLoginServer"
+				"name": "net.minecraft.network.ServerLoginNetHandler"
 			},
 			"transformer": function(classNode) {
 				var methods = classNode.methods;

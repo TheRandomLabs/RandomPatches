@@ -1,7 +1,7 @@
 var Opcodes = Java.type("org.objectweb.asm.Opcodes");
 
 function log(message) {
-	print("[RandomPatches NBTTagCompound Transformer]: " + message);
+	print("[RandomPatches CompoundNBT Transformer]: " + message);
 }
 
 function patch(method, name, patchFunction) {
@@ -16,10 +16,10 @@ function patch(method, name, patchFunction) {
 
 function initializeCoreMod() {
 	return {
-		"RandomPatches NBTTagCompound Transformer": {
+		"RandomPatches CompoundNBT Transformer": {
 			"target": {
 				"type": "CLASS",
-				"name": "net.minecraft.nbt.NBTTagCompound"
+				"name": "net.minecraft.nbt.CompoundNBT"
 			},
 			"transformer": function(classNode) {
 				log("Transforming class: " + classNode.name);
@@ -50,8 +50,8 @@ function patchEquals(instructions) {
 		}
 	}
 
-	//Call NBTTagCompoundPatch#areTagMapsEqual
-	equals.owner = "com/therandomlabs/randompatches/patch/NBTTagCompoundPatch";
+	//Call CompoundNBTPatch#areTagMapsEqual
+	equals.owner = "com/therandomlabs/randompatches/patch/CompoundNBTPatch";
 	equals.name = "areTagMapsEqual";
 	equals.desc = "(Ljava/util/Map;Ljava/util/Map;)Z";
 	equals.itf = false;

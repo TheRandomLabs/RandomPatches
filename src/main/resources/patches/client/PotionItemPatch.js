@@ -8,7 +8,7 @@ var VarInsnNode = Java.type("org.objectweb.asm.tree.VarInsnNode");
 var HAS_EFFECT = ASMAPI.mapMethod("func_77962_s");
 
 function log(message) {
-	print("[RandomPatches ItemPotion Transformer]: " + message);
+	print("[RandomPatches PotionItem Transformer]: " + message);
 }
 
 function patch(method, name, patchFunction) {
@@ -23,10 +23,10 @@ function patch(method, name, patchFunction) {
 
 function initializeCoreMod() {
 	return {
-		"RandomPatches ItemPotion Transformer": {
+		"RandomPatches PotionItem Transformer": {
 			"target": {
 				"type": "CLASS",
-				"name": "net.minecraft.item.ItemPotion"
+				"name": "net.minecraft.item.PotionItem"
 			},
 			"transformer": function(classNode) {
 				var methods = classNode.methods;
@@ -49,15 +49,15 @@ function patchHasEffect(instructions) {
 	//Get ItemStack
 	instructions.add(new VarInsnNode(Opcodes.ALOAD, 1));
 
-	//Call ItemPotionPatch#hasEffect
+	//Call PotionItemPatch#hasEffect
 	instructions.add(new MethodInsnNode(
 			Opcodes.INVOKESTATIC,
-			"com/therandomlabs/randompatches/patch/client/ItemPotionPatch",
+			"com/therandomlabs/randompatches/patch/client/PotionItemPatch",
 			"hasEffect",
 			"(Lnet/minecraft/item/ItemStack;)Z",
 			false
 	));
 
-	//Return ItemPotionPatch#hasEffect
+	//Return PotionItemPatch#hasEffect
 	instructions.add(new InsnNode(Opcodes.IRETURN));
 }

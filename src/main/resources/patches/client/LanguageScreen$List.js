@@ -6,7 +6,7 @@ var MethodInsnNode = Java.type("org.objectweb.asm.tree.MethodInsnNode");
 var ELEMENT_CLICKED = ASMAPI.mapMethod("func_148144_a");
 
 function log(message) {
-	print("[RandomPatches GuiLanguage$List Transformer]: " + message);
+	print("[RandomPatches LanguageScreen$List Transformer]: " + message);
 }
 
 function patch(method, name, patchFunction) {
@@ -21,10 +21,10 @@ function patch(method, name, patchFunction) {
 
 function initializeCoreMod() {
 	return {
-		"RandomPatches GuiLanguage$List Transformer": {
+		"RandomPatches LanguageScreen$List Transformer": {
 			"target": {
 				"type": "CLASS",
-				"name": "net.minecraft.client.gui.GuiLanguage$List"
+				"name": "net.minecraft.client.gui.LanguageScreen$List"
 			},
 			"transformer": function(classNode) {
 				var methods = classNode.methods;
@@ -54,10 +54,10 @@ function patchElementClicked(instructions) {
 		}
 	}
 
-	//Call GuiLanguageListPatch#reloadLanguage
+	//Call LanguageScreenListPatch#reloadLanguage
 	instructions.insert(refreshResources, new MethodInsnNode(
 			Opcodes.INVOKESTATIC,
-			"com/therandomlabs/randompatches/patch/client/GuiLanguageListPatch",
+			"com/therandomlabs/randompatches/patch/client/LanguageScreenListPatch",
 			"reloadLanguage",
 			"()V",
 			false

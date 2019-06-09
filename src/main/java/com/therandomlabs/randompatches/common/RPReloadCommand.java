@@ -5,8 +5,8 @@ import com.mojang.brigadier.CommandDispatcher;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.text.TextComponentString;
-import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 
 public class RPReloadCommand {
@@ -28,13 +28,13 @@ public class RPReloadCommand {
 
 		if(isServer) {
 			source.sendFeedback(
-					new TextComponentString("RandomPatches configuration reloaded!"),
+					new StringTextComponent("RandomPatches configuration reloaded!"),
 					true
 			);
 		} else {
 			//noinspection NoTranslation
 			source.sendFeedback(
-					new TextComponentTranslation("commands.rpreloadclient.success"),
+					new TranslationTextComponent("commands.rpreloadclient.success"),
 					true
 			);
 		}

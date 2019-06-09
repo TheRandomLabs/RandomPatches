@@ -1,9 +1,11 @@
 package com.therandomlabs.randompatches.patch.client;
 
-import net.minecraft.client.GameSettings;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiControls;
-import net.minecraft.client.gui.ScreenChatOptions;
+import net.minecraft.client.gui.AccessibilityScreen;
+import net.minecraft.client.gui.screen.ChatOptionsScreen;
+import net.minecraft.client.gui.screen.ControlsScreen;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.settings.AbstractOption;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.client.util.InputMappings;
 import net.minecraftforge.client.settings.IKeyConflictContext;
@@ -13,6 +15,7 @@ import org.lwjgl.glfw.GLFW;
 
 public final class KeyboardListenerPatch {
 	public static final class ToggleNarratorKeybind {
+		public static final Minecraft mc = Minecraft.getInstance();
 		public static KeyBinding keybind;
 
 		private ToggleNarratorKeybind() {}
@@ -23,7 +26,7 @@ public final class KeyboardListenerPatch {
 					new IKeyConflictContext() {
 						@Override
 						public boolean isActive() {
-							return !(Minecraft.getInstance().currentScreen instanceof GuiControls);
+							return !(mc.field_71462_r instanceof ControlsScreen);
 						}
 
 						@Override
@@ -52,12 +55,16 @@ public final class KeyboardListenerPatch {
 			return;
 		}
 
-		final Minecraft mc = Minecraft.getInstance();
+		final Minecraft mc = ToggleNarratorKeybind.mc;
 
-		mc.gameSettings.setOptionValue(GameSettings.Options.NARRATOR, 1);
+		AbstractOption.field_216715_v.func_216722_a(mc.gameSettings, 1);
 
-		if(mc.currentScreen instanceof ScreenChatOptions) {
-			((ScreenChatOptions) mc.currentScreen).updateNarratorButton();
+		final Screen currentScreen = mc.field_71462_r;
+
+		if(currentScreen instanceof ChatOptionsScreen) {
+			((ChatOptionsScreen) currentScreen).updateNarratorButton();
+		} else if(currentScreen instanceof AccessibilityScreen) {
+			((AccessibilityScreen) currentScreen).func_212985_a();
 		}
 	}
 }

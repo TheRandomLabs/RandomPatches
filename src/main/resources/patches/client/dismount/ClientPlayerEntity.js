@@ -7,7 +7,7 @@ var TICK = ASMAPI.mapMethod("func_70071_h_");
 var SNEAK = ASMAPI.mapField("field_78899_d");
 
 function log(message) {
-	print("[RandomPatches EntityPlayerSP Transformer]: " + message);
+	print("[RandomPatches ClientPlayerEntity Transformer]: " + message);
 }
 
 function patch(method, name, patchFunction) {
@@ -22,10 +22,10 @@ function patch(method, name, patchFunction) {
 
 function initializeCoreMod() {
 	return {
-		"RandomPatches EntityPlayerSP Transformer": {
+		"RandomPatches ClientPlayerEntity Transformer": {
 			"target": {
 				"type": "CLASS",
-				"name": "net.minecraft.client.entity.EntityPlayerSP"
+				"name": "net.minecraft.client.entity.ClientPlayerEntity"
 			},
 			"transformer": function(classNode) {
 				log("Transforming class: " + classNode.name);
@@ -58,10 +58,10 @@ function patchTick(instructions) {
 		}
 	}
 
-	//Call EntityPlayerSPPPatch#shouldDismount
+	//Call ClientPlayerEntityPPatch#shouldDismount
 	instructions.insert(shouldSneak, new MethodInsnNode(
 			Opcodes.INVOKESTATIC,
-			"com/therandomlabs/randompatches/patch/client/dismount/EntityPlayerSPPatch",
+			"com/therandomlabs/randompatches/patch/client/dismount/ClientPlayerEntityPatch",
 			"shouldDismount",
 			"()Z",
 			false

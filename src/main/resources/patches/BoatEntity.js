@@ -3,18 +3,14 @@ var Opcodes = Java.type("org.objectweb.asm.Opcodes");
 
 var FieldInsnNode = Java.type("org.objectweb.asm.tree.FieldInsnNode");
 var InsnList = Java.type("org.objectweb.asm.tree.InsnList");
-var InsnNode = Java.type("org.objectweb.asm.tree.InsnNode");
-var JumpInsnNode = Java.type("org.objectweb.asm.tree.JumpInsnNode");
-var LabelNode = Java.type("org.objectweb.asm.tree.LabelNode");
 var MethodInsnNode = Java.type("org.objectweb.asm.tree.MethodInsnNode");
 var VarInsnNode = Java.type("org.objectweb.asm.tree.VarInsnNode");
 
 var TICK = ASMAPI.mapMethod("func_70071_h_");
 var STATUS = ASMAPI.mapField("field_184469_aF");
-var OUT_OF_CONTROL_TICKS = ASMAPI.mapField("field_184474_h");
 
 function log(message) {
-	print("[RandomPatches EntityBoat Transformer]: " + message);
+	print("[RandomPatches BoatEntity Transformer]: " + message);
 }
 
 function patch(method, name, patchFunction) {
@@ -29,10 +25,10 @@ function patch(method, name, patchFunction) {
 
 function initializeCoreMod() {
 	return {
-		"RandomPatches EntityBoat Transformer": {
+		"RandomPatches BoatEntity Transformer": {
 			"target": {
 				"type": "CLASS",
-				"name": "net.minecraft.entity.item.EntityBoat"
+				"name": "net.minecraft.entity.item.BoatEntity"
 			},
 			"transformer": function(classNode) {
 				var methods = classNode.methods;
@@ -63,58 +59,29 @@ function patchTick(instructions) {
 
 	var newInstructions = new InsnList();
 
-	var returnLabel = new LabelNode();
-
-	//Get EntityBoat (this)
+	//Get BoatEntity (this)
 	newInstructions.add(new VarInsnNode(Opcodes.ALOAD, 0));
 
-	//Get EntityBoat (this)
+	//Get BoatEntity (this)
 	newInstructions.add(new VarInsnNode(Opcodes.ALOAD, 0));
 
-	//Get EntityBoat#status
+	//Get BoatEntity#status
 	newInstructions.add(new FieldInsnNode(
 			Opcodes.GETFIELD,
-			"net/minecraft/entity/item/EntityBoat",
+			"net/minecraft/entity/item/BoatEntity",
 			STATUS,
-			"Lnet/minecraft/entity/item/EntityBoat$Status;"
+			"Lnet/minecraft/entity/item/BoatEntity$Status;"
 	));
 
-	//Call EntityBoatPatch#tick
+	//Call BoatEntityPatch#tick
 	newInstructions.add(new MethodInsnNode(
 			Opcodes.INVOKESTATIC,
-			"com/therandomlabs/randompatches/patch/EntityBoatPatch",
+			"com/therandomlabs/randompatches/patch/BoatEntityPatch",
 			"tick",
-			"(Lnet/minecraft/entity/item/EntityBoat;" +
-			"Lnet/minecraft/entity/item/EntityBoat$Status;)V",
+			"(Lnet/minecraft/entity/item/BoatEntity;" +
+			"Lnet/minecraft/entity/item/BoatEntity$Status;)V",
 			false
 	));
-
-	//Get RPConfig.Boats#preventUnderwaterBoatPassengerEjection
-	newInstructions.add(new FieldInsnNode(
-			Opcodes.GETSTATIC,
-			"com/therandomlabs/randompatches/RPConfig$Boats",
-			"preventUnderwaterBoatPassengerEjection",
-			"Z"
-	));
-
-	//Return if false
-	newInstructions.add(new JumpInsnNode(Opcodes.IFEQ, returnLabel));
-
-	//Get EntityBoat (this)
-	newInstructions.add(new VarInsnNode(Opcodes.ALOAD, 0));
-
-	//Load 0.0F
-	newInstructions.add(new InsnNode(Opcodes.FCONST_0));
-
-	//Set EntityBoat#outOfControlTicks to 0.0F
-	newInstructions.add(new FieldInsnNode(
-			Opcodes.PUTFIELD,
-			"net/minecraft/entity/item/EntityBoat",
-			OUT_OF_CONTROL_TICKS,
-			"F"
-	));
-
-	newInstructions.add(returnLabel);
 
 	instructions.insertBefore(returnVoid, newInstructions);
 }

@@ -168,7 +168,7 @@ public final class RPConfig {
 			}
 
 			if(RandomPatches.IS_CLIENT && setWindowSettings && applySettings) {
-				Minecraft.getInstance().addScheduledTask(Window::setWindowSettings);
+				Minecraft.getInstance().execute(Window::setWindowSettings);
 			}
 		}
 

@@ -67,7 +67,7 @@ function patchWriteWithoutTypeId(instructions) {
 		var instruction = instructions.get(i);
 
 		if(instruction.getOpcode() == Opcodes.INVOKEVIRTUAL &&
-				instruction.owner == "net/minecraft/nbt/NBTTagCompound") {
+				instruction.owner == "net/minecraft/nbt/CompoundNBT") {
 			setTag = instruction;
 			break;
 		}
@@ -78,7 +78,7 @@ function patchWriteWithoutTypeId(instructions) {
 	//Get Entity (this)
 	newInstructions.add(new VarInsnNode(Opcodes.ALOAD, 0));
 
-	//Get NBTTagCompound
+	//Get CompoundNBT
 	newInstructions.add(new VarInsnNode(Opcodes.ALOAD, 1));
 
 	//Call EntityPatch#writeAABBTag
@@ -86,7 +86,7 @@ function patchWriteWithoutTypeId(instructions) {
 			Opcodes.INVOKESTATIC,
 			"com/therandomlabs/randompatches/patch/EntityPatch",
 			"writeAABBTag",
-			"(Lnet/minecraft/entity/Entity;Lnet/minecraft/nbt/NBTTagCompound;)V",
+			"(Lnet/minecraft/entity/Entity;Lnet/minecraft/nbt/CompoundNBT;)V",
 			false
 	));
 
@@ -126,7 +126,7 @@ function patchRead(instructions) {
 	//Get Entity (this)
 	newInstructions.add(new VarInsnNode(Opcodes.ALOAD, 0));
 
-	//Get NBTTagCompound
+	//Get CompoundNBT
 	newInstructions.add(new VarInsnNode(Opcodes.ALOAD, 1));
 
 	//Call EntityPatch#readAABBTag
@@ -134,7 +134,7 @@ function patchRead(instructions) {
 			Opcodes.INVOKESTATIC,
 			"com/therandomlabs/randompatches/patch/EntityPatch",
 			"readAABBTag",
-			"(Lnet/minecraft/entity/Entity;Lnet/minecraft/nbt/NBTTagCompound;)V",
+			"(Lnet/minecraft/entity/Entity;Lnet/minecraft/nbt/CompoundNBT;)V",
 			false
 	));
 
