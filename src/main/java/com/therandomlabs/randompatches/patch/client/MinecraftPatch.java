@@ -55,7 +55,7 @@ public final class MinecraftPatch extends Patch {
 				patchCreateDisplay(findInstructions(node, "createDisplay", "func_175609_am"));
 			}
 
-			if(!RPConfig.Window.icon16.isEmpty()) {
+			if(!RPConfig.Window.icon16String.isEmpty()) {
 				patchSetWindowIcon(findInstructions(node, "setWindowIcon", "func_175594_ao"));
 			}
 		}

@@ -1,5 +1,7 @@
 package com.therandomlabs.randompatches.config;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import com.therandomlabs.randomlib.TRLUtils;
 import com.therandomlabs.randomlib.config.Config;
 import com.therandomlabs.randompatches.RandomPatches;
@@ -259,33 +261,41 @@ public final class RPConfig {
 	}
 
 	public static final class Window {
-		public static final String DEFAULT_ICON = RandomPatches.IS_DEOBFUSCATED ?
-				"../src/main/resources/assets/randompatches/logo.png" : "";
+		public static final Path DEFAULT_ICON = Paths.get(
+				RandomPatches.IS_DEOBFUSCATED ?
+						"../src/main/resources/assets/randompatches/logo.png" : ""
+		);
 
 		@Config.Property({
 				"The path to the 16x16 Minecraft window icon.",
 				"Leave this and the 32x32 icon blank to use the default icon."
 		})
-		public static String icon16 = DEFAULT_ICON;
+		public static Path icon16 = DEFAULT_ICON;
 
 		@Config.Property({
 				"The path to the 32x32 Minecraft window icon.",
 				"Leave this and the 16x16 icon blank to use the default icon."
 		})
-		public static String icon32 = DEFAULT_ICON;
+		public static Path icon32 = DEFAULT_ICON;
 
 		@Config.Property("The Minecraft window title.")
 		public static String title = RandomPatches.IS_DEOBFUSCATED ?
 				RandomPatches.NAME : RandomPatches.DEFAULT_WINDOW_TITLE;
 
+		public static String icon16String;
+		public static String icon32String;
+
 		public static boolean setWindowSettings = true;
 
 		public static void onReload() {
-			if(icon16.isEmpty() && !icon32.isEmpty()) {
+			icon16String = icon16.toString();
+			icon32String = icon32.toString();
+
+			if(icon16String.isEmpty() && !icon32String.isEmpty()) {
 				icon16 = icon32;
 			}
 
-			if(icon32.isEmpty() && !icon16.isEmpty()) {
+			if(icon32String.isEmpty() && !icon16String.isEmpty()) {
 				icon32 = icon16;
 			}
 		}
