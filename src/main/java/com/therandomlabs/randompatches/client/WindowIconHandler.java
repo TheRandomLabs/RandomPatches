@@ -34,7 +34,7 @@ public class WindowIconHandler {
 			try(MemoryStack memoryStack = MemoryStack.stackPush()) {
 				final Minecraft mc = Minecraft.getInstance();
 
-				if(RPConfig.Window.icon16.isEmpty()) {
+				if(RPConfig.Window.icon16String.isEmpty()) {
 					final VanillaPack vanillaPack = mc.getPackFinder().getVanillaPack();
 
 					stream16 = vanillaPack.getResourceStream(
@@ -47,8 +47,8 @@ public class WindowIconHandler {
 							new ResourceLocation("icons/icon_32x32.png")
 					);
 				} else {
-					stream16 = new FileInputStream(RPConfig.Window.icon16);
-					stream32 = new FileInputStream(RPConfig.Window.icon32);
+					stream16 = new FileInputStream(RPConfig.Window.icon16String);
+					stream32 = new FileInputStream(RPConfig.Window.icon32String);
 				}
 
 				if(stream16 != null && stream32 != null) {
