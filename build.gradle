@@ -61,8 +61,8 @@ dependencies {
 }
 
 jar {
-    manifest {
-        attributes([
+	manifest {
+		attributes([
 			"FMLCorePlugin": "com.therandomlabs.randompatches.core.RPCore",
 			"Specification-Title": project.name,
 			"Specification-Vendor": "TheRandomLabs",
@@ -72,8 +72,8 @@ jar {
 			"Implementation-Vendor": "TheRandomLabs",
 			"Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
 			"Fingerprint": project.findProperty("signSHA1")
-        ])
-    }
+		])
+	}
 }
 
 import net.minecraftforge.gradle.common.task.SignJar
