@@ -57,20 +57,20 @@ minecraft {
 }
 
 dependencies {
-	minecraft "net.minecraftforge:forge:1.14.2-26.0.12"
+	minecraft "net.minecraftforge:forge:1.14.2-26.0.13"
 }
 
 jar {
     manifest {
         attributes([
 			"FMLCorePlugin": "com.therandomlabs.randompatches.core.RPCore",
-            "Specification-Title": project.name,
-            "Specification-Vendor": "TheRandomLabs",
-            "Specification-Version": "1",
-            "Implementation-Title": project.name,
-            "Implementation-Version": "${version}",
-            "Implementation-Vendor": "TheRandomLabs",
-            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+			"Specification-Title": project.name,
+			"Specification-Vendor": "TheRandomLabs",
+			"Specification-Version": "1",
+			"Implementation-Title": project.name,
+			"Implementation-Version": "${version}",
+			"Implementation-Vendor": "TheRandomLabs",
+			"Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
 			"Fingerprint": project.findProperty("signSHA1")
         ])
     }
