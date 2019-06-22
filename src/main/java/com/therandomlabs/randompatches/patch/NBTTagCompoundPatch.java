@@ -82,8 +82,9 @@ public final class NBTTagCompoundPatch extends Patch {
 		return true;
 	}
 
-	public static boolean areTagMapsEqual(Map<String, NBTBase> tagMap1,
-			Map<String, NBTBase> tagMap2) {
+	public static boolean areTagMapsEqual(
+			Map<String, NBTBase> tagMap1, Map<String, NBTBase> tagMap2
+	) {
 		if(tagMap1.equals(tagMap2)) {
 			return true;
 		}

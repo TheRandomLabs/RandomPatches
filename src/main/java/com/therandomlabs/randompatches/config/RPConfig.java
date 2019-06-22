@@ -136,6 +136,13 @@ public final class RPConfig {
 		public static boolean patchNetHandlerPlayServer = true;
 
 		@Config.RequiresMCRestart
+		@Config.Property(
+				"Whether to patch NextTickListEntry to prevent a " +
+						"\"TickNextTick list out of synch\" IllegalStateException."
+		)
+		public static boolean patchNextTickListEntry = true;
+
+		@Config.RequiresMCRestart
 		@Config.Property("Whether to patch the packet size limit.")
 		public static boolean patchPacketSizeLimit = true;
 

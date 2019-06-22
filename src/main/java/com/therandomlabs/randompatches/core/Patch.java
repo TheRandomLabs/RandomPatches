@@ -40,8 +40,9 @@ public abstract class Patch {
 		return method == null ? null : method.instructions;
 	}
 
-	public static InsnList findInstructions(ClassNode node, String name, String srgName,
-			String desc) {
+	public static InsnList findInstructions(
+			ClassNode node, String name, String srgName, String desc
+	) {
 		final MethodNode method = findMethod(node, name, srgName, desc);
 		return method == null ? null : method.instructions;
 	}

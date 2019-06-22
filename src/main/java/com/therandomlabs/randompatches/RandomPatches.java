@@ -13,6 +13,7 @@ import com.therandomlabs.randompatches.patch.ItemBucketPatch;
 import com.therandomlabs.randompatches.patch.NBTTagCompoundPatch;
 import com.therandomlabs.randompatches.patch.NetHandlerLoginServerPatch;
 import com.therandomlabs.randompatches.patch.NetHandlerPlayServerPatch;
+import com.therandomlabs.randompatches.patch.NextTickListEntryPatch;
 import com.therandomlabs.randompatches.patch.ServerRecipeBookHelperPatch;
 import com.therandomlabs.randompatches.patch.ServerWorldEventHandlerPatch;
 import com.therandomlabs.randompatches.patch.client.GuiIngameMenuPatch;
@@ -196,6 +197,10 @@ public final class RandomPatches {
 
 		if(RPConfig.Misc.patchNetHandlerPlayServer && TRLUtils.MC_VERSION_NUMBER > 8) {
 			register("net.minecraft.network.NetHandlerPlayServer", new NetHandlerPlayServerPatch());
+		}
+
+		if(RPConfig.Misc.patchNextTickListEntry) {
+			register("net.minecraft.world.NextTickListEntry", new NextTickListEntryPatch());
 		}
 
 		if(RPConfig.Misc.patchPacketSizeLimit && !BIGGER_PACKETS_PLEASE_INSTALLED) {
