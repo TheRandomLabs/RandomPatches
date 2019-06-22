@@ -1,6 +1,7 @@
 {
 	"homepage": "https://minecraft.curseforge.com/projects/randompatches",
 	"1.14.2": {
+		"1.14.2-1.16.2.0": "Optimized bamboo block rendering.",
 		"1.14.2-1.16.1.0": "Initial port to Minecraft 1.14.2."
 	},
 	"1.13.2": {
@@ -598,8 +599,8 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"promos": {
-		"1.14.2-latest": "1.14.2-1.16.1.0",
-		"1.14.2-recommended": "1.14.2-1.16.1.0",
+		"1.14.2-latest": "1.14.2-1.16.2.0",
+		"1.14.2-recommended": "1.14.2-1.16.2.0",
 		"1.13.2-latest": "1.13.2-1.16.2.0",
 		"1.13.2-recommended": "1.13.2-1.16.2.0",
 		"1.12.2-latest": "1.12.2-1.16.2.0",
