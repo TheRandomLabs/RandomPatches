@@ -60,6 +60,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.12.1": {
+		"1.12.2-1.16.2.0": "Improved the window icon configuration options.\nAttempted a fix for the \"TickNextTick out of synch\" IllegalStateException.",
 		"1.12.2-1.16.1.0": "Minor fixes and improvements.",
 		"1.12.2-1.16.0.0": "Cleaned up the code.\nRemoved the Teleporter replacement patch.\nImplemented particle fixes.\nAdded a configuration option to change the packet size limit.\nImplemented a dismount keybind which is separate from the sneak keybind. It is disabled by default.\nConfiguration options no longer exist on versions of Minecraft they have no effect on.",
 		"1.12.2-1.15.1.0": "The potion glowing effect is now toggleable in-game.\nCustom window icons are now loaded earlier.\nFixed 1.8 compatibility again.",
@@ -111,6 +112,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.12": {
+		"1.12.2-1.16.2.0": "Improved the window icon configuration options.\nAttempted a fix for the \"TickNextTick out of synch\" IllegalStateException.",
 		"1.12.2-1.16.1.0": "Minor fixes and improvements.",
 		"1.12.2-1.16.0.0": "Cleaned up the code.\nRemoved the Teleporter replacement patch.\nImplemented particle fixes.\nAdded a configuration option to change the packet size limit.\nImplemented a dismount keybind which is separate from the sneak keybind. It is disabled by default.\nConfiguration options no longer exist on versions of Minecraft they have no effect on.",
 		"1.12.2-1.15.1.0": "The potion glowing effect is now toggleable in-game.\nCustom window icons are now loaded earlier.\nFixed 1.8 compatibility again.",
@@ -162,6 +164,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.11.2": {
+		"1.12.2-1.16.2.0": "Improved the window icon configuration options.\nAttempted a fix for the \"TickNextTick out of synch\" IllegalStateException.",
 		"1.12.2-1.16.1.0": "Minor fixes and improvements.",
 		"1.12.2-1.16.0.0": "Cleaned up the code.\nRemoved the Teleporter replacement patch.\nImplemented particle fixes.\nAdded a configuration option to change the packet size limit.\nImplemented a dismount keybind which is separate from the sneak keybind. It is disabled by default.\nConfiguration options no longer exist on versions of Minecraft they have no effect on.",
 		"1.12.2-1.15.1.0": "The potion glowing effect is now toggleable in-game.\nCustom window icons are now loaded earlier.\nFixed 1.8 compatibility again.",
@@ -213,6 +216,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.11": {
+		"1.12.2-1.16.2.0": "Improved the window icon configuration options.\nAttempted a fix for the \"TickNextTick out of synch\" IllegalStateException.",
 		"1.12.2-1.16.1.0": "Minor fixes and improvements.",
 		"1.12.2-1.16.0.0": "Cleaned up the code.\nRemoved the Teleporter replacement patch.\nImplemented particle fixes.\nAdded a configuration option to change the packet size limit.\nImplemented a dismount keybind which is separate from the sneak keybind. It is disabled by default.\nConfiguration options no longer exist on versions of Minecraft they have no effect on.",
 		"1.12.2-1.15.1.0": "The potion glowing effect is now toggleable in-game.\nCustom window icons are now loaded earlier.\nFixed 1.8 compatibility again.",
@@ -264,6 +268,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.10.2": {
+		"1.12.2-1.16.2.0": "Improved the window icon configuration options.\nAttempted a fix for the \"TickNextTick out of synch\" IllegalStateException.",
 		"1.12.2-1.16.1.0": "Minor fixes and improvements.",
 		"1.12.2-1.16.0.0": "Cleaned up the code.\nRemoved the Teleporter replacement patch.\nImplemented particle fixes.\nAdded a configuration option to change the packet size limit.\nImplemented a dismount keybind which is separate from the sneak keybind. It is disabled by default.\nConfiguration options no longer exist on versions of Minecraft they have no effect on.",
 		"1.12.2-1.15.1.0": "The potion glowing effect is now toggleable in-game.\nCustom window icons are now loaded earlier.\nFixed 1.8 compatibility again.",
@@ -315,6 +320,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.10": {
+		"1.12.2-1.16.2.0": "Improved the window icon configuration options.\nAttempted a fix for the \"TickNextTick out of synch\" IllegalStateException.",
 		"1.12.2-1.16.1.0": "Minor fixes and improvements.",
 		"1.12.2-1.16.0.0": "Cleaned up the code.\nRemoved the Teleporter replacement patch.\nImplemented particle fixes.\nAdded a configuration option to change the packet size limit.\nImplemented a dismount keybind which is separate from the sneak keybind. It is disabled by default.\nConfiguration options no longer exist on versions of Minecraft they have no effect on.",
 		"1.12.2-1.15.1.0": "The potion glowing effect is now toggleable in-game.\nCustom window icons are now loaded earlier.\nFixed 1.8 compatibility again.",
@@ -366,6 +372,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.9.4": {
+		"1.12.2-1.16.2.0": "Improved the window icon configuration options.\nAttempted a fix for the \"TickNextTick out of synch\" IllegalStateException.",
 		"1.12.2-1.16.1.0": "Minor fixes and improvements.",
 		"1.12.2-1.16.0.0": "Cleaned up the code.\nRemoved the Teleporter replacement patch.\nImplemented particle fixes.\nAdded a configuration option to change the packet size limit.\nImplemented a dismount keybind which is separate from the sneak keybind. It is disabled by default.\nConfiguration options no longer exist on versions of Minecraft they have no effect on.",
 		"1.12.2-1.15.1.0": "The potion glowing effect is now toggleable in-game.\nCustom window icons are now loaded earlier.\nFixed 1.8 compatibility again.",
@@ -410,6 +417,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.9": {
+		"1.12.2-1.16.2.0": "Improved the window icon configuration options.\nAttempted a fix for the \"TickNextTick out of synch\" IllegalStateException.",
 		"1.12.2-1.16.1.0": "Minor fixes and improvements.",
 		"1.12.2-1.16.0.0": "Cleaned up the code.\nRemoved the Teleporter replacement patch.\nImplemented particle fixes.\nAdded a configuration option to change the packet size limit.\nImplemented a dismount keybind which is separate from the sneak keybind. It is disabled by default.\nConfiguration options no longer exist on versions of Minecraft they have no effect on.",
 		"1.12.2-1.15.1.0": "The potion glowing effect is now toggleable in-game.\nCustom window icons are now loaded earlier.\nFixed 1.8 compatibility again.",
@@ -454,6 +462,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.8.9": {
+		"1.12.2-1.16.2.0": "Improved the window icon configuration options.\nAttempted a fix for the \"TickNextTick out of synch\" IllegalStateException.",
 		"1.12.2-1.16.1.0": "Minor fixes and improvements.",
 		"1.12.2-1.16.0.0": "Cleaned up the code.\nRemoved the Teleporter replacement patch.\nImplemented particle fixes.\nAdded a configuration option to change the packet size limit.\nImplemented a dismount keybind which is separate from the sneak keybind. It is disabled by default.\nConfiguration options no longer exist on versions of Minecraft they have no effect on.",
 		"1.12.2-1.15.1.0": "The potion glowing effect is now toggleable in-game.\nCustom window icons are now loaded earlier.\nFixed 1.8 compatibility again.",
@@ -498,6 +507,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.8.8": {
+		"1.12.2-1.16.2.0": "Improved the window icon configuration options.\nAttempted a fix for the \"TickNextTick out of synch\" IllegalStateException.",
 		"1.12.2-1.16.1.0": "Minor fixes and improvements.",
 		"1.12.2-1.16.0.0": "Cleaned up the code.\nRemoved the Teleporter replacement patch.\nImplemented particle fixes.\nAdded a configuration option to change the packet size limit.\nImplemented a dismount keybind which is separate from the sneak keybind. It is disabled by default.\nConfiguration options no longer exist on versions of Minecraft they have no effect on.",
 		"1.12.2-1.15.1.0": "The potion glowing effect is now toggleable in-game.\nCustom window icons are now loaded earlier.\nFixed 1.8 compatibility again.",
@@ -542,6 +552,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.8": {
+		"1.12.2-1.16.2.0": "Improved the window icon configuration options.\nAttempted a fix for the \"TickNextTick out of synch\" IllegalStateException.",
 		"1.12.2-1.16.1.0": "Minor fixes and improvements.",
 		"1.12.2-1.16.0.0": "Cleaned up the code.\nRemoved the Teleporter replacement patch.\nImplemented particle fixes.\nAdded a configuration option to change the packet size limit.\nImplemented a dismount keybind which is separate from the sneak keybind. It is disabled by default.\nConfiguration options no longer exist on versions of Minecraft they have no effect on.",
 		"1.12.2-1.15.1.0": "The potion glowing effect is now toggleable in-game.\nCustom window icons are now loaded earlier.\nFixed 1.8 compatibility again.",
