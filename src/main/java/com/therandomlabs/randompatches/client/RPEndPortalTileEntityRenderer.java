@@ -39,8 +39,10 @@ public class RPEndPortalTileEntityRenderer extends EndPortalTileEntityRenderer {
 	}
 
 	@Override
-	public void render(EndPortalTileEntity tileEntity, double x, double y, double z,
-			float partialTicks, int destroyStage) {
+	public void render(
+			EndPortalTileEntity tileEntity, double x, double y, double z, float partialTicks,
+			int destroyStage
+	) {
 		GlStateManager.disableLighting();
 
 		RANDOM.setSeed(31100L);

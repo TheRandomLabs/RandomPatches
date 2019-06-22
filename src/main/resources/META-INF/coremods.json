@@ -1,5 +1,6 @@
 {
 	//Client
+	"RandomPatches BambooBlock Transformer": "patches/client/BambooBlock.js",
 	"RandomPatches IngameMenuScreen$1 Transformer": "patches/client/IngameMenuScreen$1.js",
 	"RandomPatches KeyboardListener Transformer": "patches/client/KeyboardListener.js",
 	"RandomPatches LanguageScreen Transformer": "patches/client/LanguageScreen.js",
