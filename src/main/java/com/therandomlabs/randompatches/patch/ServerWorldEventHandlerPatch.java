@@ -80,9 +80,10 @@ public final class ServerWorldEventHandlerPatch extends Patch {
 		return true;
 	}
 
-	public static void spawnParticle(WorldServer world, int particleID, boolean ignoreRange,
-			double x, double y, double z, double xSpeed, double ySpeed, double zSpeed,
-			int... parameters) {
+	public static void spawnParticle(
+			WorldServer world, int particleID, boolean ignoreRange, double x, double y, double z,
+			double xSpeed, double ySpeed, double zSpeed, int... parameters
+	) {
 		final EnumParticleTypes particleType =
 				Objects.requireNonNull(EnumParticleTypes.getParticleFromId(particleID));
 
