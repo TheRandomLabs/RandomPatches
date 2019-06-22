@@ -106,8 +106,9 @@ public class WindowIconHandler {
 		}
 	}
 
-	private static ByteBuffer readImageToBuffer(InputStream stream, IntBuffer i, IntBuffer j,
-			IntBuffer k) throws IOException {
+	private static ByteBuffer readImageToBuffer(
+			InputStream stream, IntBuffer i, IntBuffer j, IntBuffer k
+	) throws IOException {
 		ByteBuffer buffer1 = null;
 		final ByteBuffer buffer2;
 

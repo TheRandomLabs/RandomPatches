@@ -23,8 +23,9 @@ public final class NBTTagCompoundPatch {
 
 	private NBTTagCompoundPatch() {}
 
-	public static boolean areTagMapsEqual(Map<String, INBTBase> tagMap1,
-			Map<String, INBTBase> tagMap2) {
+	public static boolean areTagMapsEqual(
+			Map<String, INBTBase> tagMap1, Map<String, INBTBase> tagMap2
+	) {
 		if(tagMap1.equals(tagMap2)) {
 			return true;
 		}
