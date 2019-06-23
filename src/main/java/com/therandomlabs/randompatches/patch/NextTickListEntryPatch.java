@@ -18,13 +18,13 @@ public final class NextTickListEntryPatch extends Patch {
 
 		final LabelNode continueLabel = new LabelNode();
 
-		//Get NextTickListEntryPatch (this)
+		//Get NextTickListEntry (this)
 		newInstructions.add(new VarInsnNode(Opcodes.ALOAD, 0));
 
-		//Get other NextTicklistEntryPatch (p_compareTo_1_)
+		//Get other NextTickListEntry (p_compareTo_1_)
 		newInstructions.add(new VarInsnNode(Opcodes.ALOAD, 1));
 
-		//Call NextTickListEntryPatch#equals
+		//Call NextTickListEntry#equals
 		newInstructions.add(new MethodInsnNode(
 				Opcodes.INVOKEVIRTUAL,
 				"net/minecraft/world/NextTickListEntry",
@@ -33,7 +33,7 @@ public final class NextTickListEntryPatch extends Patch {
 				false
 		));
 
-		//If NextTickListEntryPatch#equals returns false, continue
+		//If NextTickListEntry#equals returns false, continue
 		newInstructions.add(new JumpInsnNode(Opcodes.IFEQ, continueLabel));
 
 		//Load 0
