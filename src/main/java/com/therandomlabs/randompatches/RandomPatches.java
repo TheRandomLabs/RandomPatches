@@ -179,6 +179,10 @@ public final class RandomPatches {
 			);
 		}
 
+		if(RPConfig.Misc.fixTickNextTickListOutOfSynch) {
+			register("net.minecraft.world.NextTickListEntry", new NextTickListEntryPatch());
+		}
+
 		if(RPConfig.Misc.mc2025Fix && TRLUtils.MC_VERSION_NUMBER > 9) {
 			register("net.minecraft.entity.Entity", new EntityPatch());
 		}
@@ -197,10 +201,6 @@ public final class RandomPatches {
 
 		if(RPConfig.Misc.patchNetHandlerPlayServer && TRLUtils.MC_VERSION_NUMBER > 8) {
 			register("net.minecraft.network.NetHandlerPlayServer", new NetHandlerPlayServerPatch());
-		}
-
-		if(RPConfig.Misc.patchNextTickListEntry) {
-			register("net.minecraft.world.NextTickListEntry", new NextTickListEntryPatch());
 		}
 
 		if(RPConfig.Misc.patchPacketSizeLimit && !BIGGER_PACKETS_PLEASE_INSTALLED) {
