@@ -22,7 +22,7 @@ public abstract class Patch {
 
 		for(MethodNode method : node.methods) {
 			if(name.equals(method.name) && (desc.isEmpty() || desc.equals(method.desc))) {
-				RandomPatches.LOGGER.debug("Patching method: " + method.name);
+				RandomPatches.LOGGER.debug("Patching method: {} ({})", method.name, name);
 				return method;
 			}
 		}

@@ -13,9 +13,9 @@ import com.therandomlabs.randompatches.patch.ItemBucketPatch;
 import com.therandomlabs.randompatches.patch.NBTTagCompoundPatch;
 import com.therandomlabs.randompatches.patch.NetHandlerLoginServerPatch;
 import com.therandomlabs.randompatches.patch.NetHandlerPlayServerPatch;
-import com.therandomlabs.randompatches.patch.NextTickListEntryPatch;
 import com.therandomlabs.randompatches.patch.ServerRecipeBookHelperPatch;
 import com.therandomlabs.randompatches.patch.ServerWorldEventHandlerPatch;
+import com.therandomlabs.randompatches.patch.WorldServerPatch;
 import com.therandomlabs.randompatches.patch.client.GuiIngameMenuPatch;
 import com.therandomlabs.randompatches.patch.client.GuiLanguageListPatch;
 import com.therandomlabs.randompatches.patch.client.ItemPotionPatch;
@@ -180,7 +180,7 @@ public final class RandomPatches {
 		}
 
 		if(RPConfig.Misc.fixTickNextTickListOutOfSynch) {
-			register("net.minecraft.world.NextTickListEntry", new NextTickListEntryPatch());
+			register("net.minecraft.world.WorldServer", new WorldServerPatch());
 		}
 
 		if(RPConfig.Misc.mc2025Fix && TRLUtils.MC_VERSION_NUMBER > 9) {
