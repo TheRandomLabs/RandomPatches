@@ -101,6 +101,7 @@ public final class RPConfig {
 		)
 		public static boolean endPortalTweaks = true;
 
+		@Config.MCVersion("[1.10,1.13)")
 		@Config.RequiresMCRestart
 		@Config.Property(
 				"Whether to patch NextTickListEntry to prevent a " +

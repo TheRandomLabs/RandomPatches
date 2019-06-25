@@ -18,11 +18,11 @@ public abstract class Patch {
 	}
 
 	public static MethodNode findMethod(ClassNode node, String name, String srgName, String desc) {
-		name = getName(name, srgName);
+		final String methodName = getName(name, srgName);
 
 		for(MethodNode method : node.methods) {
-			if(name.equals(method.name) && (desc.isEmpty() || desc.equals(method.desc))) {
-				RandomPatches.LOGGER.debug("Patching method: {} ({})", method.name, name);
+			if(methodName.equals(method.name) && (desc.isEmpty() || desc.equals(method.desc))) {
+				RandomPatches.LOGGER.debug("Patching method: " + method.name + " (" + name + ")");
 				return method;
 			}
 		}
