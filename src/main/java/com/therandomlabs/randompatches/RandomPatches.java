@@ -203,7 +203,8 @@ public final class RandomPatches {
 			register("net.minecraft.network.NetHandlerPlayServer", new NetHandlerPlayServerPatch());
 		}
 
-		if(RPConfig.Misc.patchPacketSizeLimit && !BIGGER_PACKETS_PLEASE_INSTALLED) {
+		if(RPConfig.Misc.patchPacketSizeLimit && !BIGGER_PACKETS_PLEASE_INSTALLED &&
+				!SPONGEFORGE_INSTALLED) {
 			register(
 					"net.minecraft.network.NettyCompressionDecoder",
 					new NettyCompressionDecoderPatch()
