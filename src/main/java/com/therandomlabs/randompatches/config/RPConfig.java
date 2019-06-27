@@ -104,10 +104,10 @@ public final class RPConfig {
 		@Config.MCVersion("[1.10,1.13)")
 		@Config.RequiresMCRestart
 		@Config.Property(
-				"Whether to patch NextTickListEntry to prevent a " +
-						"\"TickNextTick list out of synch\" IllegalStateException."
+				"Whether to patch WorldServer to prevent a \"TickNextTick list out of synch\" " +
+						"IllegalStateException."
 		)
-		public static boolean fixTickNextTickListOutOfSynch = RandomPatches.IS_DEOBFUSCATED;
+		public static boolean fixTickNextTickListOutOfSynch = true;
 
 		@Config.MCVersion("[1.10,1.13)")
 		@Config.RequiresMCRestart
