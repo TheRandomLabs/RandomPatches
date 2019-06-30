@@ -89,7 +89,10 @@ public class WindowIconHandler {
 		} finally {
 			IOUtils.closeQuietly(stream16);
 			IOUtils.closeQuietly(stream32);
-			IOUtils.closeQuietly(stream256);
+
+			if(osX) {
+				IOUtils.closeQuietly(stream256);
+			}
 		}
 	}
 
