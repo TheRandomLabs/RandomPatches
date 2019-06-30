@@ -21,48 +21,75 @@ import org.apache.commons.io.IOUtils;
 import org.lwjgl.opengl.Display;
 
 public class WindowIconHandler {
+	private static boolean setBefore;
+
 	public static void setWindowIcon() {
-		final Util.EnumOS os = Util.getOSType();
+		final boolean osX = Util.getOSType() == Util.EnumOS.OSX;
 
-		if(os != Util.EnumOS.OSX) {
-			InputStream stream16 = null;
-			InputStream stream32 = null;
+		InputStream stream16 = null;
+		InputStream stream32 = null;
+		InputStream stream256 = null;
 
-			try {
-				if(RPConfig.Window.icon16String.isEmpty()) {
-					final Minecraft mc = Minecraft.getMinecraft();
-
-					stream16 = mc.defaultResourcePack.getInputStreamAssets(
-							new ResourceLocation("icons/icon_16x16.png")
-					);
-
-					stream32 = mc.defaultResourcePack.getInputStreamAssets(
-							new ResourceLocation("icons/icon_32x32.png")
-					);
-				} else {
-					stream16 = new FileInputStream(RPConfig.Window.icon16String);
-					stream32 = new FileInputStream(RPConfig.Window.icon32String);
+		try {
+			if(RPConfig.Window.icon16String.isEmpty()) {
+				if(osX && !setBefore) {
+					return;
 				}
 
-				if(stream16 != null && stream32 != null) {
+				final Minecraft mc = Minecraft.getMinecraft();
+
+				stream16 = mc.defaultResourcePack.getInputStreamAssets(
+						new ResourceLocation("icons/icon_16x16.png")
+				);
+
+				stream32 = mc.defaultResourcePack.getInputStreamAssets(
+						new ResourceLocation("icons/icon_32x32.png")
+				);
+
+				if(osX) {
+					stream256 = mc.defaultResourcePack.getInputStream(
+							new ResourceLocation("icons/icon_256x256.png")
+					);
+				}
+			} else {
+				stream16 = new FileInputStream(RPConfig.Window.icon16String);
+				stream32 = new FileInputStream(RPConfig.Window.icon32String);
+
+				if(osX) {
+					stream256 = new FileInputStream(RPConfig.Window.icon256String);
+				}
+			}
+
+			if(stream16 != null) {
+				if(osX) {
+					Display.setIcon(new ByteBuffer[] {
+							readImageToBuffer(stream16, 16),
+							readImageToBuffer(stream32, 32),
+							readImageToBuffer(stream256, 256)
+					});
+				} else {
 					Display.setIcon(new ByteBuffer[] {
 							readImageToBuffer(stream16, 16),
 							readImageToBuffer(stream32, 32)
 					});
 				}
-			} catch(IOException ex) {
-				if(RandomPatches.IS_DEOBFUSCATED &&
-						ex instanceof FileNotFoundException &&
-						RPConfig.Window.DEFAULT_ICON.equals(RPConfig.Window.icon16) &&
-						RPConfig.Window.DEFAULT_ICON.equals(RPConfig.Window.icon32)) {
-					return;
-				}
 
-				RandomPatches.LOGGER.error("Failed to set icon", ex);
-			} finally {
-				IOUtils.closeQuietly(stream16);
-				IOUtils.closeQuietly(stream32);
+				setBefore = true;
 			}
+		} catch(IOException ex) {
+			if(RandomPatches.IS_DEOBFUSCATED &&
+					ex instanceof FileNotFoundException &&
+					RPConfig.Window.DEFAULT_ICON.equals(RPConfig.Window.icon16) &&
+					RPConfig.Window.DEFAULT_ICON.equals(RPConfig.Window.icon32) &&
+					RPConfig.Window.DEFAULT_ICON.equals(RPConfig.Window.icon256)) {
+				return;
+			}
+
+			RandomPatches.LOGGER.error("Failed to set icon", ex);
+		} finally {
+			IOUtils.closeQuietly(stream16);
+			IOUtils.closeQuietly(stream32);
+			IOUtils.closeQuietly(stream256);
 		}
 	}
 
@@ -108,10 +135,10 @@ public class WindowIconHandler {
 			image = resized;
 		}
 
-		final int[] aint = image.getRGB(0, 0, dimensions, dimensions, null, 0, dimensions);
-		final ByteBuffer buffer = ByteBuffer.allocate(aint.length * 4);
+		final int[] rgb = image.getRGB(0, 0, dimensions, dimensions, null, 0, dimensions);
+		final ByteBuffer buffer = ByteBuffer.allocate(rgb.length * 4);
 
-		for(int i : aint) {
+		for(int i : rgb) {
 			buffer.putInt(i << 8 | i >> 24 & 255);
 		}
 

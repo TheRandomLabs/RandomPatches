@@ -46,6 +46,7 @@ randompatches.config.timeouts.readTimeout=Read timeout
 randompatches.config.client.window=Window
 randompatches.config.client.window.icon16=Window icon (16x16)
 randompatches.config.client.window.icon32=Window icon (32x32)
+randompatches.config.client.window.icon256=Window icon (256x256)
 randompatches.config.client.window.title=Window title
 
 commands.rpreloadclient.usage=/rpreloadclient

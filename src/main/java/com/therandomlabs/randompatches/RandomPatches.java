@@ -61,6 +61,9 @@ public final class RandomPatches {
 	public static final boolean ITLT_INSTALLED =
 			RPUtils.detect("dk.zlepper.itlt.about.mod");
 
+	public static final boolean LITTLETILES_INSTALLED =
+			RPUtils.detect("com.creativemd.littletiles.LittleTilesCore");
+
 	public static final boolean PARTICLE_FIXES_INSTALLED =
 			RPUtils.detect("com.fuzs.particlefixes.ParticleFixes");
 
@@ -209,7 +212,7 @@ public final class RandomPatches {
 		}
 
 		if(RPConfig.Misc.patchPacketSizeLimit && !BIGGER_PACKETS_PLEASE_INSTALLED &&
-				!SPONGEFORGE_INSTALLED) {
+				!LITTLETILES_INSTALLED && !SPONGEFORGE_INSTALLED) {
 			register(
 					"net.minecraft.network.NettyCompressionDecoder",
 					new NettyCompressionDecoderPatch()
