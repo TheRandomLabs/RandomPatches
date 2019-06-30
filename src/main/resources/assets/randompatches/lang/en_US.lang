@@ -13,6 +13,7 @@ randompatches.config.client.patchTitleScreenOnDisconnect=Patch title screen on d
 randompatches.config.client.patchPotionGlint=Patch potion glint
 randompatches.config.client.removePotionGlint=Remove potion glint
 randompatches.config.client.rpreloadclient=/rpreloadclient
+randompatches.config.client.smoothEyeLevelChanges=Smooth eye level changes
 
 randompatches.config.misc=Miscellaneous
 randompatches.config.misc.endPortalTweaks=End portal tweaks

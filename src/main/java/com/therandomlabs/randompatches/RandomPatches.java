@@ -16,6 +16,7 @@ import com.therandomlabs.randompatches.patch.NetHandlerPlayServerPatch;
 import com.therandomlabs.randompatches.patch.ServerRecipeBookHelperPatch;
 import com.therandomlabs.randompatches.patch.ServerWorldEventHandlerPatch;
 import com.therandomlabs.randompatches.patch.WorldServerPatch;
+import com.therandomlabs.randompatches.patch.client.EntityRendererPatch;
 import com.therandomlabs.randompatches.patch.client.GuiIngameMenuPatch;
 import com.therandomlabs.randompatches.patch.client.GuiLanguageListPatch;
 import com.therandomlabs.randompatches.patch.client.ItemPotionPatch;
@@ -165,6 +166,10 @@ public final class RandomPatches {
 
 		if(RPConfig.Client.patchTitleScreenOnDisconnect) {
 			register("net.minecraft.client.gui.GuiIngameMenu", new GuiIngameMenuPatch());
+		}
+
+		if(RPConfig.Client.smoothEyeLevelChanges) {
+			register("net.minecraft.client.renderer.EntityRenderer", new EntityRendererPatch());
 		}
 
 		if(RPConfig.Misc.areEndPortalTweaksEnabled()) {

@@ -81,6 +81,12 @@ public final class RPConfig {
 		@Config.Property("Enables the /rpreloadclient command.")
 		public static boolean rpreloadclient = true;
 
+		@Config.RequiresMCRestart
+		@Config.Property(
+				"Backports the smooth eye level change animations from Minecraft 1.13 and newer."
+		)
+		public static boolean smoothEyeLevelChanges = true;
+
 		public static boolean isDismountKeybindEnabled() {
 			return dismountKeybind && !RandomPatches.UNRIDE_KEYBIND_INSTALLED && TRLUtils.IS_CLIENT;
 		}
