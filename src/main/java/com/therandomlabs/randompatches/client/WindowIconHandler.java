@@ -29,96 +29,137 @@ public class WindowIconHandler {
 	public static void setWindowIcon(long handle) {
 		RPConfig.Window.onReload(false);
 
-		final Util.OS os = Util.getOSType();
+		final boolean osX = Util.getOSType() == Util.EnumOS.OSX;
 
-		if(os != Util.OS.OSX) {
-			InputStream stream16 = null;
-			InputStream stream32 = null;
+		InputStream stream16 = null;
+		InputStream stream32 = null;
+		InputStream stream256 = null;
 
-			try(MemoryStack memoryStack = MemoryStack.stackPush()) {
-				final Minecraft mc = Minecraft.getInstance();
+		try(MemoryStack memoryStack = MemoryStack.stackPush()) {
+			final Minecraft mc = Minecraft.getInstance();
 
-				if(RPConfig.Window.icon16String.isEmpty()) {
-					final VanillaPack vanillaPack = mc.getPackFinder().getVanillaPack();
-
-					stream16 = vanillaPack.getResourceStream(
-							ResourcePackType.CLIENT_RESOURCES,
-							new ResourceLocation("icons/icon_16x16.png")
-					);
-
-					stream32 = vanillaPack.getResourceStream(
-							ResourcePackType.CLIENT_RESOURCES,
-							new ResourceLocation("icons/icon_32x32.png")
-					);
-				} else {
-					stream16 = new FileInputStream(RPConfig.Window.icon16String);
-					stream32 = new FileInputStream(RPConfig.Window.icon32String);
-				}
-
-				if(stream16 != null && stream32 != null) {
-					final IntBuffer i = memoryStack.mallocInt(1);
-					final IntBuffer j = memoryStack.mallocInt(1);
-					final IntBuffer k = memoryStack.mallocInt(1);
-
-					final GLFWImage.Buffer iamgeBuffer = GLFWImage.mallocStack(2, memoryStack);
-
-					final ByteBuffer buffer1 = readImageToBuffer(stream16, i, j, k);
-
-					if(buffer1 == null) {
-						throw new IllegalStateException(
-								"Could not load icon: " + STBImage.stbi_failure_reason()
-						);
-					}
-
-					iamgeBuffer.position(0);
-					iamgeBuffer.width(i.get(0));
-					iamgeBuffer.height(j.get(0));
-					iamgeBuffer.pixels(buffer1);
-
-					final ByteBuffer buffer2 = readImageToBuffer(stream32, i, j, k);
-
-					if(buffer2 == null) {
-						throw new IllegalStateException(
-								"Could not load icon: " + STBImage.stbi_failure_reason()
-						);
-					}
-
-					iamgeBuffer.position(1);
-					iamgeBuffer.width(i.get(0));
-					iamgeBuffer.height(j.get(0));
-					iamgeBuffer.pixels(buffer2);
-					iamgeBuffer.position(0);
-
-					GLFW.glfwSetWindowIcon(handle, iamgeBuffer);
-
-					STBImage.stbi_image_free(buffer1);
-					STBImage.stbi_image_free(buffer2);
-				}
-			} catch(IOException ex) {
-				if(RandomPatches.IS_DEOBFUSCATED &&
-						ex instanceof FileNotFoundException &&
-						RPConfig.Window.DEFAULT_ICON.equals(RPConfig.Window.icon16) &&
-						RPConfig.Window.DEFAULT_ICON.equals(RPConfig.Window.icon32)) {
+			if(RPConfig.Window.icon16String.isEmpty()) {
+				if(osX && !setBefore) {
 					return;
 				}
 
-				RandomPatches.LOGGER.error("Failed to set icon", ex);
-			} finally {
-				IOUtils.closeQuietly(stream16);
-				IOUtils.closeQuietly(stream32);
+				final VanillaPack vanillaPack = mc.getPackFinder().getVanillaPack();
+
+				stream16 = vanillaPack.getResourceStream(
+						ResourcePackType.CLIENT_RESOURCES,
+						new ResourceLocation("icons/icon_16x16.png")
+				);
+
+				stream32 = vanillaPack.getResourceStream(
+						ResourcePackType.CLIENT_RESOURCES,
+						new ResourceLocation("icons/icon_32x32.png")
+				);
+
+				if(osX) {
+					stream256 = vanillaPack.getResourceStream(
+							ResourcePackType.CLIENT_RESOURCES,
+							new ResourceLocation("icons/icon_256x256.png")
+					);
+				}
+			} else {
+				stream16 = new FileInputStream(RPConfig.Window.icon16String);
+				stream32 = new FileInputStream(RPConfig.Window.icon32String);
+
+				if(osX) {
+					stream256 = new FileInputStream(RPConfig.Window.icon256String);
+				}
+			}
+
+			if(stream16 != null) {
+				final IntBuffer x = memoryStack.mallocInt(1);
+				final IntBuffer y = memoryStack.mallocInt(1);
+				final IntBuffer channels = memoryStack.mallocInt(1);
+
+				final GLFWImage.Buffer imageBuffer = GLFWImage.mallocStack(2, memoryStack);
+
+				final ByteBuffer image16Bytes = readImageToBuffer(stream16, x, y, channels);
+
+				if(image16Bytes == null) {
+					throw new IllegalStateException(
+							"Could not load icon: " + STBImage.stbi_failure_reason()
+					);
+				}
+
+				imageBuffer.position(0);
+				imageBuffer.width(x.get(0));
+				imageBuffer.height(y.get(0));
+				imageBuffer.pixels(image16Bytes);
+
+				final ByteBuffer image32Bytes = readImageToBuffer(stream32, x, y, channels);
+
+				if(image32Bytes == null) {
+					throw new IllegalStateException(
+							"Could not load icon: " + STBImage.stbi_failure_reason()
+					);
+				}
+
+				imageBuffer.position(1);
+				imageBuffer.width(x.get(0));
+				imageBuffer.height(y.get(0));
+				imageBuffer.pixels(image32Bytes);
+
+				ByteBuffer image256Bytes = null;
+
+				if(osX) {
+					image256Bytes = readImageToBuffer(stream256, x, y, channels);
+
+					if(image256Bytes == null) {
+						throw new IllegalStateException(
+								"Could not load icon: " + STBImage.stbi_failure_reason()
+						);
+					}
+
+					imageBuffer.position(2);
+					imageBuffer.width(x.get(0));
+					imageBuffer.height(y.get(0));
+					imageBuffer.pixels(image256Bytes);
+					imageBuffer.position(0);
+				}
+
+				imageBuffer.position(0);
+				GLFW.glfwSetWindowIcon(handle, imageBuffer);
+
+				STBImage.stbi_image_free(image16Bytes);
+				STBImage.stbi_image_free(image32Bytes);
+
+				if(osX) {
+					STBImage.stbi_image_free(image256Bytes);
+				}
+			}
+		} catch(IOException ex) {
+			if(RandomPatches.IS_DEOBFUSCATED &&
+					ex instanceof FileNotFoundException &&
+					RPConfig.Window.DEFAULT_ICON.equals(RPConfig.Window.icon16) &&
+					RPConfig.Window.DEFAULT_ICON.equals(RPConfig.Window.icon32)) {
+				return;
+			}
+
+			RandomPatches.LOGGER.error("Failed to set icon", ex);
+		} finally {
+			IOUtils.closeQuietly(stream16);
+			IOUtils.closeQuietly(stream32);
+
+			if(osX) {
+				IOUtils.closeQuietly(stream256);
 			}
 		}
 	}
 
-	private static ByteBuffer readImageToBuffer(InputStream stream, IntBuffer i, IntBuffer j,
-			IntBuffer k) throws IOException {
+	private static ByteBuffer readImageToBuffer(
+			InputStream stream, IntBuffer x, IntBuffer y, IntBuffer channels
+	) throws IOException {
 		ByteBuffer buffer1 = null;
 		final ByteBuffer buffer2;
 
 		try {
 			buffer1 = TextureUtil.readResource(stream);
 			buffer1.rewind();
-			buffer2 = STBImage.stbi_load_from_memory(buffer1, i, j, k, 0);
+			buffer2 = STBImage.stbi_load_from_memory(buffer1, x, y, channels, 0);
 		} finally {
 			if(buffer1 != null) {
 				MemoryUtil.memFree(buffer1);

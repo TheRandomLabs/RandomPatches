@@ -23,7 +23,7 @@ archivesBaseName = "randompatches"
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = "1.8"
 
 minecraft {
-	mappings channel: "snapshot", version: "20190625-1.14.3"
+	mappings channel: "snapshot", version: "20190626-1.14.3"
 
 	accessTransformer = file("src/main/resources/META-INF/accesstransformer.cfg")
 
@@ -57,7 +57,7 @@ minecraft {
 }
 
 dependencies {
-	minecraft "net.minecraftforge:forge:1.14.3-27.0.2"
+	minecraft "net.minecraftforge:forge:1.14.3-27.0.13"
 }
 
 jar {

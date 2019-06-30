@@ -151,12 +151,19 @@ public final class RPConfig {
 		})
 		public static Path icon32 = DEFAULT_ICON;
 
+		@Config.Property({
+				"The path to the 256x256 window icon which is used on Mac OS X.",
+				"Leave this, the 16x16 icon and the 32x32 icon blank to use the default icon."
+		})
+		public static Path icon256 = DEFAULT_ICON;
+
 		@Config.Property("The Minecraft window title.")
 		public static String title = RandomPatches.IS_DEOBFUSCATED ?
 				"RandomPatches" : RandomPatches.DEFAULT_WINDOW_TITLE;
 
 		public static String icon16String;
 		public static String icon32String;
+		public static String icon256String;
 
 		public static boolean setWindowSettings = true;
 
@@ -167,13 +174,36 @@ public final class RPConfig {
 		public static void onReload(boolean applySettings) {
 			icon16String = icon16.toString();
 			icon32String = icon32.toString();
+			icon256String = icon256.toString();
 
-			if(icon16String.isEmpty() && !icon32String.isEmpty()) {
-				icon16 = icon32;
+			if(icon16String.isEmpty()) {
+				if(!icon256String.isEmpty()) {
+					icon16 = icon256;
+					icon16String = icon256String;
+				} else if(!icon32String.isEmpty()) {
+					icon16 = icon32;
+					icon16String = icon32String;
+				}
 			}
 
-			if(icon32String.isEmpty() && !icon16String.isEmpty()) {
-				icon32 = icon16;
+			if(icon32String.isEmpty()) {
+				if(!icon256String.isEmpty()) {
+					icon32 = icon256;
+					icon32String = icon256String;
+				} else if(!icon16String.isEmpty()) {
+					icon32 = icon16;
+					icon32String = icon16String;
+				}
+			}
+
+			if(icon256String.isEmpty()) {
+				if(!icon32String.isEmpty()) {
+					icon256 = icon32;
+					icon256String = icon32String;
+				} else if(!icon16String.isEmpty()) {
+					icon256 = icon16;
+					icon256String = icon16String;
+				}
 			}
 
 			if(RandomPatches.IS_CLIENT && setWindowSettings && applySettings) {
