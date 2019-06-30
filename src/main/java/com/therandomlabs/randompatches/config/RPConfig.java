@@ -76,16 +76,19 @@ public final class RPConfig {
 		@Config.Property("Whether to remove the glowing effect from potions.")
 		public static boolean removePotionGlint = RandomPatches.IS_DEOBFUSCATED;
 
-		@Config.MCVersion("[1.9,1.13)")
-		@Config.RequiresWorldReload
-		@Config.Property("Enables the /rpreloadclient command.")
-		public static boolean rpreloadclient = true;
-
 		@Config.RequiresMCRestart
 		@Config.Property(
 				"Backports the smooth eye level change animations from Minecraft 1.13 and newer."
 		)
+		public static boolean patchSmoothEyeLevelChanges = true;
+
+		@Config.Property("Whether smooth eye level change animations should be enabled.")
 		public static boolean smoothEyeLevelChanges = true;
+
+		@Config.MCVersion("[1.9,1.13)")
+		@Config.RequiresWorldReload
+		@Config.Property("Enables the /rpreloadclient command.")
+		public static boolean rpreloadclient = true;
 
 		public static boolean isDismountKeybindEnabled() {
 			return dismountKeybind && !RandomPatches.UNRIDE_KEYBIND_INSTALLED && TRLUtils.IS_CLIENT;

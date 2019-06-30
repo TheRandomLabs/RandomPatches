@@ -1,5 +1,6 @@
 package com.therandomlabs.randompatches.patch.client;
 
+import com.therandomlabs.randompatches.config.RPConfig;
 import com.therandomlabs.randompatches.core.Patch;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
@@ -25,6 +26,11 @@ public final class EntityRendererPatch extends Patch {
 
 		public static float getEyeHeight(float partialTicks) {
 			final Entity entity = mc.getRenderViewEntity();
+
+			if(!RPConfig.Client.smoothEyeLevelChanges) {
+				return entity.getEyeHeight();
+			}
+
 			final float height = lastEyeHeight + (eyeHeight - lastEyeHeight) * partialTicks;
 
 			if(entity instanceof EntityLivingBase &&

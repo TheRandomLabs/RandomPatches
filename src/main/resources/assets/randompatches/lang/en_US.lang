@@ -12,8 +12,9 @@ randompatches.config.client.patchMinecraftClass=Patch Minecraft class
 randompatches.config.client.patchTitleScreenOnDisconnect=Patch title screen on disconnect
 randompatches.config.client.patchPotionGlint=Patch potion glint
 randompatches.config.client.removePotionGlint=Remove potion glint
-randompatches.config.client.rpreloadclient=/rpreloadclient
+randompatches.config.client.patchSmoothEyeLevelChanges=Patch smooth eye level changes
 randompatches.config.client.smoothEyeLevelChanges=Smooth eye level changes
+randompatches.config.client.rpreloadclient=/rpreloadclient
 
 randompatches.config.misc=Miscellaneous
 randompatches.config.misc.endPortalTweaks=End portal tweaks

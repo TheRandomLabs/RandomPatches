@@ -168,7 +168,7 @@ public final class RandomPatches {
 			register("net.minecraft.client.gui.GuiIngameMenu", new GuiIngameMenuPatch());
 		}
 
-		if(RPConfig.Client.smoothEyeLevelChanges) {
+		if(RPConfig.Client.patchSmoothEyeLevelChanges) {
 			register("net.minecraft.client.renderer.EntityRenderer", new EntityRendererPatch());
 		}
 
