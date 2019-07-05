@@ -5,6 +5,7 @@
 	"RandomPatches ItemPotion Transformer": "patches/client/ItemPotion.js",
 	"RandomPatches KeyboardListener Transformer": "patches/client/KeyboardListener.js",
 	"RandomPatches MainWindow Transformer": "patches/client/MainWindow.js",
+	"RandomPatches RenderPlayer Transformer": "patches/client/RenderPlayer.js",
 	//Dismount
 	"RandomPatches EntityPlayerSP Transformer": "patches/client/dismount/EntityPlayerSP.js",
 	"RandomPatches NetHandlerPlayClient Transformer": "patches/client/dismount/NetHandlerPlayClient.js",

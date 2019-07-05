@@ -16,7 +16,7 @@ buildscript {
 
 apply plugin: "net.minecraftforge.gradle"
 
-version = "1.13.2-1.16.2.1"
+version = "1.13.2-1.17.2.0"
 group = "com.therandomlabs.randompatches"
 archivesBaseName = "randompatches"
 
