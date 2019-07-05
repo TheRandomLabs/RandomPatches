@@ -34,6 +34,13 @@ public final class RPConfig {
 		)
 		public static boolean forceTitleScreenOnDisconnect = RandomPatches.IS_DEOBFUSCATED;
 
+		@Config.RequiresMCRestart
+		@Config.Property(
+				"Whether to fix the player model occasionally disappearing when flying with " +
+						"elytra in a straight line in third-person mode."
+		)
+		public static boolean invisiblePlayerModelFix = true;
+
 		@Config.Property("Whether to remove the glowing effect from potions.")
 		public static boolean removePotionGlint = RandomPatches.IS_DEOBFUSCATED;
 

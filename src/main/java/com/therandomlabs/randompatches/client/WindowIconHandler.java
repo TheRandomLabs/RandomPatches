@@ -22,6 +22,8 @@ import org.lwjgl.system.MemoryStack;
 import org.lwjgl.system.MemoryUtil;
 
 public class WindowIconHandler {
+	private static boolean setBefore;
+
 	public static void setWindowIcon() {
 		setWindowIcon(Minecraft.getInstance().mainWindow.getHandle());
 	}
@@ -29,7 +31,7 @@ public class WindowIconHandler {
 	public static void setWindowIcon(long handle) {
 		RPConfig.Window.onReload(false);
 
-		final boolean osX = Util.getOSType() == Util.EnumOS.OSX;
+		final boolean osX = Util.getOSType() == Util.OS.OSX;
 
 		InputStream stream16 = null;
 		InputStream stream32 = null;
