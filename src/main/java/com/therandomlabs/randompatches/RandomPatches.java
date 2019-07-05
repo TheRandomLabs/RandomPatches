@@ -21,6 +21,7 @@ import com.therandomlabs.randompatches.patch.client.GuiIngameMenuPatch;
 import com.therandomlabs.randompatches.patch.client.GuiLanguageListPatch;
 import com.therandomlabs.randompatches.patch.client.ItemPotionPatch;
 import com.therandomlabs.randompatches.patch.client.MinecraftPatch;
+import com.therandomlabs.randompatches.patch.client.RenderPlayerPatch;
 import com.therandomlabs.randompatches.patch.client.dismount.EntityPlayerSPPatch;
 import com.therandomlabs.randompatches.patch.client.dismount.NetHandlerPlayClientPatch;
 import com.therandomlabs.randompatches.patch.endportal.BlockEndPortalPatch;
@@ -36,7 +37,6 @@ import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
-import net.minecraftforge.fml.relauncher.Side;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import static com.therandomlabs.randompatches.core.RPTransformer.register;
@@ -87,12 +87,11 @@ public final class RandomPatches {
 	@Subscribe
 	public void preInit(FMLPreInitializationEvent event) {
 		if(TRLUtils.IS_CLIENT && RPConfig.Client.rpreloadclient && TRLUtils.MC_VERSION_NUMBER > 8) {
-			ClientCommandHandler.instance.registerCommand(new CommandConfigReload(
+			ClientCommandHandler.instance.registerCommand(CommandConfigReload.client(
 					"rpreloadclient",
 					RPConfig.class,
 					(phase, command, sender) -> RPConfig.Window.setWindowSettings =
-							phase == CommandConfigReload.ReloadPhase.PRE,
-					Side.CLIENT
+							phase == CommandConfigReload.ReloadPhase.POST
 			));
 		}
 	}
@@ -113,13 +112,13 @@ public final class RandomPatches {
 	@Subscribe
 	public void serverStarting(FMLServerStartingEvent event) {
 		if(RPConfig.Misc.rpreload && TRLUtils.MC_VERSION_NUMBER > 8) {
-			event.registerServerCommand(new CommandConfigReload(
+			event.registerServerCommand(CommandConfigReload.server(
 					"rpreload",
+					"rpreloadclient",
 					RPConfig.class,
+					"RandomPatches configuration reloaded!",
 					(phase, command, sender) -> RPConfig.Window.setWindowSettings =
-							phase == CommandConfigReload.ReloadPhase.PRE,
-					Side.SERVER,
-					"RandomPatches configuration reloaded!"
+							phase == CommandConfigReload.ReloadPhase.POST
 			));
 		}
 	}
@@ -157,6 +156,11 @@ public final class RandomPatches {
 
 		if(RPConfig.Client.fastLanguageSwitch && TRLUtils.IS_CLIENT) {
 			register("net.minecraft.client.gui.GuiLanguage$List", new GuiLanguageListPatch());
+		}
+
+		if(RPConfig.Client.invisiblePlayerModelFix && TRLUtils.IS_CLIENT &&
+				TRLUtils.MC_VERSION_NUMBER > 8) {
+			register("net.minecraft.client.renderer.entity.RenderPlayer", new RenderPlayerPatch());
 		}
 
 		if(RPConfig.Client.patchMinecraftClass && TRLUtils.IS_CLIENT) {

@@ -47,6 +47,14 @@ public final class RPConfig {
 		)
 		public static boolean forceTitleScreenOnDisconnect = RandomPatches.IS_DEOBFUSCATED;
 
+		@Config.MCVersion("[1.9,1.13)")
+		@Config.RequiresMCRestart
+		@Config.Property(
+				"Whether to fix the player model occasionally disappearing when flying with " +
+						"elytra in a straight line in third-person mode."
+		)
+		public static boolean invisiblePlayerModelFix = true;
+
 		@Config.MCVersion("[1.12,1.13)")
 		@Config.RequiresMCRestart
 		@Config.Property("Whether to add the Toggle Narrator keybind to the controls.")
@@ -309,6 +317,8 @@ public final class RPConfig {
 		public static String icon32String;
 		public static String icon256String;
 
+		//For some reason the game freezes if the window title or icon is changed while in-game,
+		//but not in the configuration GUI
 		public static boolean setWindowSettings = true;
 
 		public static void onReload() {
@@ -348,7 +358,7 @@ public final class RPConfig {
 		}
 
 		public static void onReloadClient() {
-			if(!Display.isCreated() || RandomPatches.ITLT_INSTALLED) {
+			if(!Display.isCreated() || RandomPatches.ITLT_INSTALLED || !setWindowSettings) {
 				return;
 			}
 
