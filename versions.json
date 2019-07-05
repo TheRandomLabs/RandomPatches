@@ -1,16 +1,19 @@
 {
 	"homepage": "https://minecraft.curseforge.com/projects/randompatches",
 	"1.14.2": {
+		"1.14.2-1.17.2.0": "Implemented an invisible player model fix.",
 		"1.14.2-1.16.2.0": "Optimized bamboo block rendering.",
 		"1.14.2-1.16.1.0": "Initial port to Minecraft 1.14.2."
 	},
 	"1.13.2": {
+		"1.13.2-1.17.2.0": "Implemented an invisible player model fix.",
 		"1.13.2-1.16.2.1": "The \"TickNextTick out of synch\" fix attempt is now disabled",
 		"1.13.2-1.16.2.0": "Attempted a fix for the \"TickNextTick out of synch\" IllegalStateException.",
 		"1.13.2-1.16.0.0": "Cleaned up the code.\nImplemented particle fixes.\nIncreased the packet size limit.\nImplemented a dismount keybind which is separate from the sneak keybind.",
 		"1.13.2-1.15.1.0": "Initial port to Minecraft 1.13.2."
 	},
 	"1.12.2": {
+		"1.12.2-1.17.2.0": "Implemented an invisible player model fix.\nFixed /rpreload and /rpreloadclient.",
 		"1.12.2-1.17.1.0": "The packet size limit patch no longer loads when LittleTiles is installed.\nHopefully fixed the window icons not working on Mac OS X.",
 		"1.12.2-1.17.0.0": "Optimized the \"TickNextTick out of synch\" IllegalStateException fix and made it enabled by default.\nBackported the smooth eye level change animation from Minecraft 1.13 and newer.",
 		"1.12.2-1.16.3.1": "The packet size limit patch no longer loads when SpongeForge is installed.",
@@ -68,6 +71,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.12.1": {
+		"1.12.2-1.17.2.0": "Implemented an invisible player model fix.\nFixed /rpreload and /rpreloadclient.",
 		"1.12.2-1.17.1.0": "The packet size limit patch no longer loads when LittleTiles is installed.\nHopefully fixed the window icons not working on Mac OS X.",
 		"1.12.2-1.17.0.0": "Optimized the \"TickNextTick out of synch\" IllegalStateException fix and made it enabled by default.\nBackported the smooth eye level change animation from Minecraft 1.13 and newer.",
 		"1.12.2-1.16.3.1": "The packet size limit patch no longer loads when SpongeForge is installed.",
@@ -125,6 +129,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.12": {
+		"1.12.2-1.17.2.0": "Implemented an invisible player model fix.\nFixed /rpreload and /rpreloadclient.",
 		"1.12.2-1.17.1.0": "The packet size limit patch no longer loads when LittleTiles is installed.\nHopefully fixed the window icons not working on Mac OS X.",
 		"1.12.2-1.17.0.0": "Optimized the \"TickNextTick out of synch\" IllegalStateException fix and made it enabled by default.\nBackported the smooth eye level change animation from Minecraft 1.13 and newer.",
 		"1.12.2-1.16.3.1": "The packet size limit patch no longer loads when SpongeForge is installed.",
@@ -182,6 +187,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.11.2": {
+		"1.12.2-1.17.2.0": "Implemented an invisible player model fix.\nFixed /rpreload and /rpreloadclient.",
 		"1.12.2-1.17.1.0": "The packet size limit patch no longer loads when LittleTiles is installed.\nHopefully fixed the window icons not working on Mac OS X.",
 		"1.12.2-1.17.0.0": "Optimized the \"TickNextTick out of synch\" IllegalStateException fix and made it enabled by default.\nBackported the smooth eye level change animation from Minecraft 1.13 and newer.",
 		"1.12.2-1.16.3.1": "The packet size limit patch no longer loads when SpongeForge is installed.",
@@ -239,6 +245,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.11": {
+		"1.12.2-1.17.2.0": "Implemented an invisible player model fix.\nFixed /rpreload and /rpreloadclient.",
 		"1.12.2-1.17.1.0": "The packet size limit patch no longer loads when LittleTiles is installed.\nHopefully fixed the window icons not working on Mac OS X.",
 		"1.12.2-1.17.0.0": "Optimized the \"TickNextTick out of synch\" IllegalStateException fix and made it enabled by default.\nBackported the smooth eye level change animation from Minecraft 1.13 and newer.",
 		"1.12.2-1.16.3.1": "The packet size limit patch no longer loads when SpongeForge is installed.",
@@ -296,6 +303,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.10.2": {
+		"1.12.2-1.17.2.0": "Implemented an invisible player model fix.\nFixed /rpreload and /rpreloadclient.",
 		"1.12.2-1.17.1.0": "The packet size limit patch no longer loads when LittleTiles is installed.\nHopefully fixed the window icons not working on Mac OS X.",
 		"1.12.2-1.17.0.0": "Optimized the \"TickNextTick out of synch\" IllegalStateException fix and made it enabled by default.\nBackported the smooth eye level change animation from Minecraft 1.13 and newer.",
 		"1.12.2-1.16.3.1": "The packet size limit patch no longer loads when SpongeForge is installed.",
@@ -353,6 +361,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.10": {
+		"1.12.2-1.17.2.0": "Implemented an invisible player model fix.\nFixed /rpreload and /rpreloadclient.",
 		"1.12.2-1.17.1.0": "The packet size limit patch no longer loads when LittleTiles is installed.\nHopefully fixed the window icons not working on Mac OS X.",
 		"1.12.2-1.17.0.0": "Optimized the \"TickNextTick out of synch\" IllegalStateException fix and made it enabled by default.\nBackported the smooth eye level change animation from Minecraft 1.13 and newer.",
 		"1.12.2-1.16.3.1": "The packet size limit patch no longer loads when SpongeForge is installed.",
@@ -410,6 +419,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.9.4": {
+		"1.12.2-1.17.2.0": "Implemented an invisible player model fix.\nFixed /rpreload and /rpreloadclient.",
 		"1.12.2-1.17.1.0": "The packet size limit patch no longer loads when LittleTiles is installed.\nHopefully fixed the window icons not working on Mac OS X.",
 		"1.12.2-1.17.0.0": "Optimized the \"TickNextTick out of synch\" IllegalStateException fix and made it enabled by default.\nBackported the smooth eye level change animation from Minecraft 1.13 and newer.",
 		"1.12.2-1.16.3.1": "The packet size limit patch no longer loads when SpongeForge is installed.",
@@ -460,6 +470,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.9": {
+		"1.12.2-1.17.2.0": "Implemented an invisible player model fix.\nFixed /rpreload and /rpreloadclient.",
 		"1.12.2-1.17.1.0": "The packet size limit patch no longer loads when LittleTiles is installed.\nHopefully fixed the window icons not working on Mac OS X.",
 		"1.12.2-1.17.0.0": "Optimized the \"TickNextTick out of synch\" IllegalStateException fix and made it enabled by default.\nBackported the smooth eye level change animation from Minecraft 1.13 and newer.",
 		"1.12.2-1.16.3.1": "The packet size limit patch no longer loads when SpongeForge is installed.",
@@ -510,6 +521,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.8.9": {
+		"1.12.2-1.17.2.0": "Implemented an invisible player model fix.\nFixed /rpreload and /rpreloadclient.",
 		"1.12.2-1.17.1.0": "The packet size limit patch no longer loads when LittleTiles is installed.\nHopefully fixed the window icons not working on Mac OS X.",
 		"1.12.2-1.17.0.0": "Optimized the \"TickNextTick out of synch\" IllegalStateException fix and made it enabled by default.\nBackported the smooth eye level change animation from Minecraft 1.13 and newer.",
 		"1.12.2-1.16.3.1": "The packet size limit patch no longer loads when SpongeForge is installed.",
@@ -560,6 +572,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.8.8": {
+		"1.12.2-1.17.2.0": "Implemented an invisible player model fix.\nFixed /rpreload and /rpreloadclient.",
 		"1.12.2-1.17.1.0": "The packet size limit patch no longer loads when LittleTiles is installed.\nHopefully fixed the window icons not working on Mac OS X.",
 		"1.12.2-1.17.0.0": "Optimized the \"TickNextTick out of synch\" IllegalStateException fix and made it enabled by default.\nBackported the smooth eye level change animation from Minecraft 1.13 and newer.",
 		"1.12.2-1.16.3.1": "The packet size limit patch no longer loads when SpongeForge is installed.",
@@ -610,6 +623,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.8": {
+		"1.12.2-1.17.2.0": "Implemented an invisible player model fix.\nFixed /rpreload and /rpreloadclient.",
 		"1.12.2-1.17.1.0": "The packet size limit patch no longer loads when LittleTiles is installed.\nHopefully fixed the window icons not working on Mac OS X.",
 		"1.12.2-1.17.0.0": "Optimized the \"TickNextTick out of synch\" IllegalStateException fix and made it enabled by default.\nBackported the smooth eye level change animation from Minecraft 1.13 and newer.",
 		"1.12.2-1.16.3.1": "The packet size limit patch no longer loads when SpongeForge is installed.",
@@ -664,27 +678,27 @@
 		"1.14.2-recommended": "1.14.2-1.16.2.0",
 		"1.13.2-latest": "1.13.2-1.16.2.1",
 		"1.13.2-recommended": "1.13.2-1.16.2.1",
-		"1.12.2-latest": "1.12.2-1.17.1.0",
-		"1.12.2-recommended": "1.12.2-1.17.1.0",
-		"1.12-latest": "1.12.2-1.17.1.0",
-		"1.12-recommended": "1.12.2-1.17.1.0",
-		"1.11.2-latest": "1.12.2-1.17.1.0",
-		"1.11.2-recommended": "1.12.2-1.17.1.0",
-		"1.11-latest": "1.12.2-1.17.1.0",
-		"1.11-recommended": "1.12.2-1.17.1.0",
-		"1.10.2-latest": "1.12.2-1.17.1.0",
-		"1.10.2-recommended": "1.12.2-1.17.1.0",
-		"1.10-latest": "1.12.2-1.17.1.0",
-		"1.10-recommended": "1.12.2-1.17.1.0",
-		"1.9.4-latest": "1.12.2-1.17.1.0",
-		"1.9.4-recommended": "1.12.2-1.17.1.0",
-		"1.9-latest": "1.12.2-1.17.1.0",
-		"1.9-recommended": "1.12.2-1.17.1.0",
-		"1.8.9-latest": "1.12.2-1.17.1.0",
-		"1.8.9-recommended": "1.12.2-1.17.1.0",
-		"1.8.8-latest": "1.12.2-1.17.1.0",
-		"1.8.8-recommended": "1.12.2-1.17.1.0",
-		"1.8-latest": "1.12.2-1.17.1.0",
-		"1.8-recommended": "1.12.2-1.17.1.0"
+		"1.12.2-latest": "1.12.2-1.17.2.0",
+		"1.12.2-recommended": "1.12.2-1.17.2.0",
+		"1.12-latest": "1.12.2-1.17.2.0",
+		"1.12-recommended": "1.12.2-1.17.2.0",
+		"1.11.2-latest": "1.12.2-1.17.2.0",
+		"1.11.2-recommended": "1.12.2-1.17.2.0",
+		"1.11-latest": "1.12.2-1.17.2.0",
+		"1.11-recommended": "1.12.2-1.17.2.0",
+		"1.10.2-latest": "1.12.2-1.17.2.0",
+		"1.10.2-recommended": "1.12.2-1.17.2.0",
+		"1.10-latest": "1.12.2-1.17.2.0",
+		"1.10-recommended": "1.12.2-1.17.2.0",
+		"1.9.4-latest": "1.12.2-1.17.2.0",
+		"1.9.4-recommended": "1.12.2-1.17.2.0",
+		"1.9-latest": "1.12.2-1.17.2.0",
+		"1.9-recommended": "1.12.2-1.17.2.0",
+		"1.8.9-latest": "1.12.2-1.17.2.0",
+		"1.8.9-recommended": "1.12.2-1.17.2.0",
+		"1.8.8-latest": "1.12.2-1.17.2.0",
+		"1.8.8-recommended": "1.12.2-1.17.2.0",
+		"1.8-latest": "1.12.2-1.17.2.0",
+		"1.8-recommended": "1.12.2-1.17.2.0"
 	}
 }
