@@ -57,5 +57,5 @@ function patchConsumeIngredient(instructions) {
 			"com/therandomlabs/randompatches/patch/ServerRecipePlacerPatch";
 	findSlotMatchingUnusedItem.name = "findSlotMatchingUnusedItem";
 	findSlotMatchingUnusedItem.desc =
-			"(Lnet/minecraft/entity/player/InventoryPlayer;Lnet/minecraft/item/ItemStack;)I";
+			"(Lnet/minecraft/entity/player/PlayerInventory;Lnet/minecraft/item/ItemStack;)I";
 }
