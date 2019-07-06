@@ -148,7 +148,7 @@ public final class RPConfig {
 		@Config.Property(
 				"Fixes MC-10369 (server-side particle spawning not creating particles for " +
 						"clients) and MC-93826 (breeding hearts only showing once instead of all " +
-						"of the time an animal can breed."
+						"of the time an animal can breed)."
 		)
 		public static boolean particleFixes = true;
 
