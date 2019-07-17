@@ -358,7 +358,7 @@ public final class RPConfig {
 		}
 
 		public static void onReloadClient() {
-			if(!Display.isCreated() || RandomPatches.ITLT_INSTALLED || !setWindowSettings) {
+			if(!Display.isCreated() || !setWindowSettings) {
 				return;
 			}
 

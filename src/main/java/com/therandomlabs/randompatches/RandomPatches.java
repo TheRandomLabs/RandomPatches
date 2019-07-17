@@ -58,9 +58,6 @@ public final class RandomPatches {
 	public static final boolean BIGGER_PACKETS_PLEASE_INSTALLED =
 			RPUtils.detect("net.elnounch.mc.biggerpacketsplz.BiggerBacketsPlzCoreMod");
 
-	public static final boolean ITLT_INSTALLED =
-			RPUtils.detect("dk.zlepper.itlt.about.mod");
-
 	public static final boolean LITTLETILES_INSTALLED =
 			RPUtils.detect("com.creativemd.littletiles.LittleTilesCore");
 

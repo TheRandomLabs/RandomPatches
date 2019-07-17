@@ -50,14 +50,12 @@ public final class MinecraftPatch extends Patch {
 
 	@Override
 	public boolean apply(ClassNode node) {
-		if(!RandomPatches.ITLT_INSTALLED) {
-			if(!RandomPatches.DEFAULT_WINDOW_TITLE.equals(RPConfig.Window.title)) {
-				patchCreateDisplay(findInstructions(node, "createDisplay", "func_175609_am"));
-			}
+		if(!RandomPatches.DEFAULT_WINDOW_TITLE.equals(RPConfig.Window.title)) {
+			patchCreateDisplay(findInstructions(node, "createDisplay", "func_175609_am"));
+		}
 
-			if(!RPConfig.Window.icon16String.isEmpty()) {
-				patchSetWindowIcon(findInstructions(node, "setWindowIcon", "func_175594_ao"));
-			}
+		if(!RPConfig.Window.icon16String.isEmpty()) {
+			patchSetWindowIcon(findInstructions(node, "setWindowIcon", "func_175594_ao"));
 		}
 
 		if(RPConfig.Client.isNarratorKeybindEnabled()) {
