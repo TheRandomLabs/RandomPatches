@@ -101,7 +101,7 @@ void update() {
 
 function patchTick(instructions) {
 	var keepAliveInterval;
-	var jumpIfShouldNotDisconnect;
+	var jumpIfKeepAlivePending;
 	var sendPacket;
 
 	for(var i = 0; i < instructions.size(); i++) {
@@ -115,10 +115,10 @@ function patchTick(instructions) {
 			continue;
 		}
 
-		if(jumpIfShouldNotDisconnect == null) {
+		if(jumpIfKeepAlivePending == null) {
 			if(instruction.getOpcode() == Opcodes.IFEQ &&
 					instruction.getPrevious().getOpcode() == Opcodes.GETFIELD) {
-				jumpIfShouldNotDisconnect = instruction;
+				jumpIfKeepAlivePending = instruction;
 			}
 
 			continue;
@@ -175,7 +175,7 @@ function patchTick(instructions) {
 	newInstructions.add(new InsnNode(Opcodes.LCMP));
 	newInstructions.add(new JumpInsnNode(Opcodes.IFLT, label));
 
-	instructions.insert(jumpIfShouldNotDisconnect, newInstructions);
+	instructions.insert(jumpIfKeepAlivePending, newInstructions);
 
 	//Break out of the if(i - keepAliveTime >= 15000L) statement
 	instructions.insert(sendPacket, label);
