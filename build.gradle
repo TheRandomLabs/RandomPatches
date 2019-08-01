@@ -16,14 +16,14 @@ buildscript {
 
 apply plugin: "net.minecraftforge.gradle"
 
-version = "1.14.4-1.17.3.0"
+version = "1.14.4-1.17.3.1"
 group = "com.therandomlabs.randompatches"
 archivesBaseName = "randompatches"
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = "1.8"
 
 minecraft {
-	mappings channel: "snapshot", version: "20190727-1.14.3"
+	mappings channel: "snapshot", version: "20190731-1.14.3"
 
 	accessTransformer = file("src/main/resources/META-INF/accesstransformer.cfg")
 
