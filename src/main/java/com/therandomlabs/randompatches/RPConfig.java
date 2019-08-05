@@ -2,6 +2,7 @@ package com.therandomlabs.randompatches;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import com.therandomlabs.randomlib.TRLUtils;
 import com.therandomlabs.randomlib.config.Config;
 import com.therandomlabs.randompatches.client.WindowIconHandler;
 import net.minecraft.client.MainWindow;
@@ -14,39 +15,27 @@ public final class RPConfig {
 		@Config.Property(
 				"Prevents underwater boat passengers from being ejected after 60 ticks (3 seconds)."
 		)
-		public static boolean preventUnderwaterBoatPassengerEjection =
-				RandomPatches.IS_DEOBFUSCATED;
+		public static boolean preventUnderwaterBoatPassengerEjection = TRLUtils.IS_DEOBFUSCATED;
 
 		@Config.Property({
 				"The buoyancy of boats when they are under flowing water.",
 				"The vanilla default is -0.0007."
 		})
-		public static double underwaterBoatBuoyancy = RandomPatches.IS_DEOBFUSCATED ? 5.0 : 0.023;
+		public static double underwaterBoatBuoyancy = TRLUtils.IS_DEOBFUSCATED ? 5.0 : 0.023;
 	}
 
 	public static final class Client {
-		@Config.Category("Options related to the Minecraft window.")
+		@Config.Category
 		public static final Window window = null;
 
 		@Config.Property(
 				"Forces Minecraft to show the title screen after disconnecting rather than " +
 						"the Multiplayer or Realms menu."
 		)
-		public static boolean forceTitleScreenOnDisconnect = RandomPatches.IS_DEOBFUSCATED;
-
-		@Config.RequiresMCRestart
-		@Config.Property(
-				"Whether to fix the player model occasionally disappearing when flying with " +
-						"elytra in a straight line in third-person mode."
-		)
-		public static boolean invisiblePlayerModelFix = true;
+		public static boolean forceTitleScreenOnDisconnect = TRLUtils.IS_DEOBFUSCATED;
 
 		@Config.Property("Whether to remove the glowing effect from potions.")
-		public static boolean removePotionGlint = RandomPatches.IS_DEOBFUSCATED;
-
-		@Config.RequiresWorldReload
-		@Config.Property("Enables the /rpreloadclient command.")
-		public static boolean rpreloadclient = true;
+		public static boolean removePotionGlint = TRLUtils.IS_DEOBFUSCATED;
 	}
 
 	public static final class Misc {
@@ -108,10 +97,6 @@ public final class RPConfig {
 		@Config.Property("The login timeout.")
 		public static int loginTimeout = 900;
 
-		@Config.RequiresMCRestart
-		@Config.Property("Whether to apply the login timeout.")
-		public static boolean patchLoginTimeout = true;
-
 		@Config.RangeInt(min = 1)
 		@Config.Property({
 				"The read timeout.",
@@ -143,7 +128,7 @@ public final class RPConfig {
 
 	public static final class Window {
 		public static final Path DEFAULT_ICON = Paths.get(
-				RandomPatches.IS_DEOBFUSCATED ? "../src/main/resources/logo.png" : ""
+				TRLUtils.IS_DEOBFUSCATED ? "../src/main/resources/logo.png" : ""
 		);
 
 		@Config.Property({
@@ -165,7 +150,7 @@ public final class RPConfig {
 		public static Path icon256 = DEFAULT_ICON;
 
 		@Config.Property("The Minecraft window title.")
-		public static String title = RandomPatches.IS_DEOBFUSCATED ?
+		public static String title = TRLUtils.IS_DEOBFUSCATED ?
 				"RandomPatches" : RandomPatches.DEFAULT_WINDOW_TITLE;
 
 		public static String icon16String;
@@ -213,7 +198,7 @@ public final class RPConfig {
 				}
 			}
 
-			if(RandomPatches.IS_CLIENT && setWindowSettings && applySettings) {
+			if(TRLUtils.IS_CLIENT && setWindowSettings && applySettings) {
 				Minecraft.getInstance().execute(Window::setWindowSettings);
 			}
 		}
@@ -235,18 +220,18 @@ public final class RPConfig {
 		}
 	}
 
-	@Config.Category("Options related to boats.")
+	@Config.Category
 	public static final Boats boats = null;
 
-	@Config.Category("Options related to client-sided features.")
+	@Config.Category
 	public static final Client client = null;
 
-	@Config.Category("Options that don't fit into any other categories.")
+	@Config.Category
 	public static final Misc misc = null;
 
-	@Config.Category("Options related to the movement speed limits.")
+	@Config.Category
 	public static final SpeedLimits speedLimits = null;
 
-	@Config.Category("Options related to the disconnect timeouts.")
+	@Config.Category
 	public static final Timeouts timeouts = null;
 }

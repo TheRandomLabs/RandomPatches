@@ -16,14 +16,14 @@ buildscript {
 
 apply plugin: "net.minecraftforge.gradle"
 
-version = "1.14.4-1.17.3.1"
+version = "1.14.4-18.0.0.0"
 group = "com.therandomlabs.randompatches"
 archivesBaseName = "randompatches"
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = "1.8"
 
 minecraft {
-	mappings channel: "snapshot", version: "20190731-1.14.3"
+	mappings channel: "snapshot", version: "20190805-1.14.3"
 
 	accessTransformer = file("src/main/resources/META-INF/accesstransformer.cfg")
 
@@ -57,7 +57,7 @@ minecraft {
 }
 
 dependencies {
-	minecraft "net.minecraftforge:forge:1.14.4-28.0.18"
+	minecraft "net.minecraftforge:forge:1.14.4-28.0.41"
 }
 
 jar {
@@ -71,7 +71,7 @@ jar {
 			"Implementation-Version": "${version}",
 			"Implementation-Vendor": "TheRandomLabs",
 			"Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-			"Fingerprint": project.findProperty("signSHA1")
+			"Fingerprint": project.findProperty("signSHA1") ?: ""
 		])
 	}
 }

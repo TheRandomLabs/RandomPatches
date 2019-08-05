@@ -10,10 +10,7 @@ import java.lang.annotation.Target;
 public @interface Config {
 	@Retention(RetentionPolicy.RUNTIME)
 	@Target(ElementType.FIELD)
-	@interface Category {
-		//Comment
-		String[] value();
-	}
+	@interface Category {}
 
 	@Retention(RetentionPolicy.RUNTIME)
 	@Target(ElementType.FIELD)
@@ -61,6 +58,20 @@ public @interface Config {
 	@interface Previous {
 		//Previous name
 		String value();
+	}
+
+	@Retention(RetentionPolicy.RUNTIME)
+	@Target(ElementType.FIELD)
+	@interface MCVersion {
+		//Version range
+		String value();
+	}
+
+	@Retention(RetentionPolicy.RUNTIME)
+	@Target(ElementType.FIELD)
+	@interface MinForgeBuild {
+		//Minimum Forge build
+		int value();
 	}
 
 	//Mod ID

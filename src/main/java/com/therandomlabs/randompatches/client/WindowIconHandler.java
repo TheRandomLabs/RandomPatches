@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 import com.mojang.blaze3d.platform.TextureUtil;
+import com.therandomlabs.randomlib.TRLUtils;
 import com.therandomlabs.randompatches.RPConfig;
 import com.therandomlabs.randompatches.RandomPatches;
 import net.minecraft.client.Minecraft;
@@ -134,7 +135,7 @@ public class WindowIconHandler {
 				}
 			}
 		} catch(IOException ex) {
-			if(RandomPatches.IS_DEOBFUSCATED &&
+			if(TRLUtils.IS_DEOBFUSCATED &&
 					ex instanceof FileNotFoundException &&
 					RPConfig.Window.DEFAULT_ICON.equals(RPConfig.Window.icon16) &&
 					RPConfig.Window.DEFAULT_ICON.equals(RPConfig.Window.icon32)) {

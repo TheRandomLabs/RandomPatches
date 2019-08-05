@@ -1,13 +1,14 @@
 package com.therandomlabs.randompatches;
 
+import com.therandomlabs.randomlib.TRLUtils;
+import com.therandomlabs.randomlib.config.CommandConfigReload;
+import com.therandomlabs.randomlib.config.ConfigManager;
 import com.therandomlabs.randompatches.common.RPReloadCommand;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
-import net.minecraftforge.fml.loading.FMLEnvironment;
-import net.minecraftforge.versions.mcp.MCPVersion;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -16,23 +17,26 @@ public final class RandomPatches {
 	public static final String MOD_ID = "randompatches";
 	public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
 
-	public static final boolean IS_CLIENT = FMLEnvironment.dist.isClient();
-	public static final boolean IS_DEOBFUSCATED = true;
-
-	public static final String DEFAULT_WINDOW_TITLE = "Minecraft " + MCPVersion.getMCVersion();
+	public static final String DEFAULT_WINDOW_TITLE = "Minecraft " + TRLUtils.MC_VERSION;
 
 	public static final CommonProxy PROXY =
 			DistExecutor.runForDist(() -> ClientProxy::new, () -> CommonProxy::new);
 
 	public RandomPatches() {
 		MinecraftForge.EVENT_BUS.addListener(this::serverStarting);
-		RPConfig.Misc.onReload();
-		RPConfig.Timeouts.onReload();
+		ConfigManager.register(RPConfig.class);
+		ConfigManager.writeToDisk(RPConfig.class);
 		PROXY.init();
 	}
 
 	private void serverStarting(FMLServerStartingEvent event) {
 		if(RPConfig.Misc.rpreload) {
+			CommandConfigReload.server(
+					event.getCommandDispatcher(), "rpreload", "rpreloadclient", RPConfig.class,
+					"RandomPatches configuration reloaded!",
+					(phase, source) -> RPConfig.Window.setWindowSettings =
+							phase == CommandConfigReload.ReloadPhase.POST
+			);
 			RPReloadCommand.register(event.getCommandDispatcher(), Dist.DEDICATED_SERVER);
 		}
 	}

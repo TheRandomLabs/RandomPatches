@@ -1,6 +1,6 @@
 package com.therandomlabs.randompatches.patch.client.dismount;
 
-import com.therandomlabs.randompatches.RandomPatches;
+import com.therandomlabs.randomlib.TRLUtils;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import org.lwjgl.glfw.GLFW;
@@ -14,7 +14,7 @@ public final class ClientPlayerEntityPatch {
 		public static void register() {
 			keybind = new KeyBinding(
 					"key.dismount",
-					RandomPatches.IS_DEOBFUSCATED ? GLFW.GLFW_KEY_Z : GLFW.GLFW_KEY_LEFT_SHIFT,
+					TRLUtils.IS_DEOBFUSCATED ? GLFW.GLFW_KEY_Z : GLFW.GLFW_KEY_LEFT_SHIFT,
 					"key.categories.movement"
 			);
 
