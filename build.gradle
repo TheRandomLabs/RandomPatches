@@ -22,17 +22,6 @@ archivesBaseName = "randompatches"
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = "1.8"
 
-sourceSets {
-	libs {
-		compileClasspath += main.compileClasspath
-	}
-
-	main {
-		compileClasspath += libs.output
-		runtimeClasspath += libs.output
-	}
-}
-
 minecraft {
 	mappings channel: "snapshot", version: "20190810-1.14.3"
 
@@ -48,7 +37,6 @@ minecraft {
 			mods {
 				randompatches {
 					source sourceSets.main
-					source sourceSets.libs
 				}
 			}
 		}
@@ -62,7 +50,6 @@ minecraft {
 			mods {
 				randompatches {
 					source sourceSets.main
-					source sourceSets.libs
 				}
 			}
 		}
