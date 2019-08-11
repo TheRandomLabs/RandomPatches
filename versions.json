@@ -1,6 +1,7 @@
 {
 	"homepage": "https://minecraft.curseforge.com/projects/randompatches",
 	"1.14.4": {
+		"1.14.4-1.18.1.0": "Improved the configuration.",
 		"1.14.4-1.18.0.0": "Implemented a makeshift configuration.",
 		"1.14.4-1.17.3.1": "Disabled a testing option.",
 		"1.14.4-1.17.3.0": "Updated to 1.14.4."
@@ -694,8 +695,8 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"promos": {
-		"1.14.4-latest": "1.14.4-1.8.0.0",
-		"1.14.4-recommended": "1.14.4-1.18.0.0",
+		"1.14.4-latest": "1.14.4-1.18.1.0",
+		"1.14.4-recommended": "1.14.4-1.18.1.0",
 		"1.14.3-latest": "1.14.3-1.17.2.1",
 		"1.14.3-recommended": "1.14.3-1.17.2.1",
 		"1.14.2-latest": "1.14.2-1.16.2.0",
