@@ -3,8 +3,6 @@ package com.therandomlabs.randompatches;
 import com.therandomlabs.randomlib.TRLUtils;
 import com.therandomlabs.randomlib.config.CommandConfigReload;
 import com.therandomlabs.randomlib.config.ConfigManager;
-import com.therandomlabs.randompatches.common.RPReloadCommand;
-import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
@@ -25,7 +23,6 @@ public final class RandomPatches {
 	public RandomPatches() {
 		MinecraftForge.EVENT_BUS.addListener(this::serverStarting);
 		ConfigManager.register(RPConfig.class);
-		ConfigManager.writeToDisk(RPConfig.class);
 		PROXY.init();
 	}
 
@@ -37,7 +34,6 @@ public final class RandomPatches {
 					(phase, source) -> RPConfig.Window.setWindowSettings =
 							phase == CommandConfigReload.ReloadPhase.POST
 			);
-			RPReloadCommand.register(event.getCommandDispatcher(), Dist.DEDICATED_SERVER);
 		}
 	}
 }

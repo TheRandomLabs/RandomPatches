@@ -9,7 +9,7 @@ import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.glfw.GLFW;
 
-@Config(RandomPatches.MOD_ID)
+@Config(modid = RandomPatches.MOD_ID, comment = "RandomPatches configuration")
 public final class RPConfig {
 	public static final class Boats {
 		@Config.Property(
@@ -25,7 +25,7 @@ public final class RPConfig {
 	}
 
 	public static final class Client {
-		@Config.Category
+		@Config.Category("Options related to the Minecraft window.")
 		public static final Window window = null;
 
 		@Config.Property(
@@ -220,18 +220,18 @@ public final class RPConfig {
 		}
 	}
 
-	@Config.Category
+	@Config.Category("Options related to boats.")
 	public static final Boats boats = null;
 
-	@Config.Category
+	@Config.Category("Options related to client-sided features.")
 	public static final Client client = null;
 
-	@Config.Category
+	@Config.Category("Options that don't fit into any other categories.")
 	public static final Misc misc = null;
 
-	@Config.Category
+	@Config.Category("Options related to the movement speed limits.")
 	public static final SpeedLimits speedLimits = null;
 
-	@Config.Category
+	@Config.Category("Options related to the disconnect timeouts.")
 	public static final Timeouts timeouts = null;
 }

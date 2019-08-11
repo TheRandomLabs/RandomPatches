@@ -12,5 +12,5 @@ modId = "randompatches"
 version = "${file.jarVersion}"
 displayName = "RandomPatches"
 description = '''
-RandomPatches, a bunch of miscellaneous patches for Minecraft.
+Places chests (or shulker boxes) where players die that contain all of their items.
 '''
