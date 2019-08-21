@@ -40,13 +40,13 @@ public final class NetHandlerPlayServerPatch extends Patch {
 
 	long lastPingTime;
 	long keepAliveID;
-	boolean shouldDisconnect;
+	boolean keepAlivePending;
 
 	void update() {
 		final long currentTimeMillis = currentTimeMillis();
 
 		if(currentTimeMillis - lastPingTime >= KEEP_ALIVE_PACKET_INTERVAL) {
-			if(shouldDisconnect) {
+			if(keepAlivePending) {
 				//Inserting code here
 				if(currentTimeMillis - lastPingTime >= READ_TIMEOUT) {
 					//This line is kept from vanilla
@@ -54,7 +54,7 @@ public final class NetHandlerPlayServerPatch extends Patch {
 				}
 				//End code insertion
 			} else {
-				shouldDisconnect = true;
+				keepAlivePending = true;
 				lastPingTime = currentTimeMillis;
 				keepAliveID = currentTimeMillis;
 				sendPacket(new SPacketKeepAlive(keepAliveID));
@@ -64,7 +64,7 @@ public final class NetHandlerPlayServerPatch extends Patch {
 
 	private static void patchUpdate(InsnList instructions) {
 		LdcInsnNode keepAliveInterval = null;
-		JumpInsnNode jumpIfShouldNotDisconnect = null;
+		JumpInsnNode jumpIfKeepAlivePending = null;
 		MethodInsnNode sendPacket = null;
 
 		for(int i = 0; i < instructions.size(); i++) {
@@ -92,10 +92,10 @@ public final class NetHandlerPlayServerPatch extends Patch {
 				break;
 			}
 
-			if(jumpIfShouldNotDisconnect == null) {
+			if(jumpIfKeepAlivePending == null) {
 				if(instruction.getOpcode() == Opcodes.IFEQ &&
 						instruction.getPrevious().getOpcode() == Opcodes.GETFIELD) {
-					jumpIfShouldNotDisconnect = (JumpInsnNode) instruction;
+					jumpIfKeepAlivePending = (JumpInsnNode) instruction;
 				}
 
 				continue;
@@ -162,7 +162,7 @@ public final class NetHandlerPlayServerPatch extends Patch {
 		newInstructions.add(new InsnNode(Opcodes.LCMP));
 		newInstructions.add(new JumpInsnNode(Opcodes.IFLT, label));
 
-		instructions.insert(jumpIfShouldNotDisconnect, newInstructions);
+		instructions.insert(jumpIfKeepAlivePending, newInstructions);
 
 		//Break out of the if(i - field_194402_f >= 15000L) statement
 		instructions.insert(sendPacket, label);

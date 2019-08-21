@@ -1,13 +1,18 @@
 package com.therandomlabs.randompatches.patch.client;
 
+import java.lang.reflect.Field;
+import com.therandomlabs.randomlib.TRLUtils;
 import com.therandomlabs.randompatches.config.RPConfig;
 import com.therandomlabs.randompatches.core.Patch;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.AbstractInsnNode;
 import org.objectweb.asm.tree.ClassNode;
+import org.objectweb.asm.tree.FieldInsnNode;
+import org.objectweb.asm.tree.FieldNode;
 import org.objectweb.asm.tree.InsnList;
 import org.objectweb.asm.tree.MethodInsnNode;
 import org.objectweb.asm.tree.VarInsnNode;
@@ -15,23 +20,31 @@ import org.objectweb.asm.tree.VarInsnNode;
 public final class EntityRendererPatch extends Patch {
 	public static final class EyeHeightHandler {
 		private static final Minecraft mc = Minecraft.getMinecraft();
+		private static final Field EYE_HEIGHT_HANDLER =
+				TRLUtils.findField(EntityRenderer.class, "eyeHeightHandler");
 
-		private static float lastEyeHeight;
-		private static float eyeHeight;
+		private float lastEyeHeight;
+		private float eyeHeight;
 
-		public static void updateRenderer() {
-			lastEyeHeight = eyeHeight;
-			eyeHeight += (mc.getRenderViewEntity().getEyeHeight() - eyeHeight) * 0.5F;
+		public static void updateRenderer(EntityRenderer renderer, EyeHeightHandler handler) {
+			handler = get(renderer, handler);
+			handler.lastEyeHeight = handler.eyeHeight;
+			handler.eyeHeight +=
+					(mc.getRenderViewEntity().getEyeHeight() - handler.eyeHeight) * 0.5F;
 		}
 
-		public static float getEyeHeight(float partialTicks) {
+		public static float getEyeHeight(
+				float partialTicks, EntityRenderer renderer, EyeHeightHandler handler
+		) {
 			final Entity entity = mc.getRenderViewEntity();
 
 			if(!RPConfig.Client.smoothEyeLevelChanges) {
 				return entity.getEyeHeight();
 			}
 
-			final float height = lastEyeHeight + (eyeHeight - lastEyeHeight) * partialTicks;
+			handler = get(renderer, handler);
+			final float height = handler.lastEyeHeight +
+					(handler.eyeHeight - handler.lastEyeHeight) * partialTicks;
 
 			if(entity instanceof EntityLivingBase &&
 					((EntityLivingBase) entity).isPlayerSleeping()) {
@@ -39,6 +52,20 @@ public final class EntityRendererPatch extends Patch {
 			}
 
 			return height;
+		}
+
+		public static EyeHeightHandler get(EntityRenderer renderer, EyeHeightHandler handler) {
+			if(handler == null) {
+				handler = new EyeHeightHandler();
+
+				try {
+					EYE_HEIGHT_HANDLER.set(renderer, handler);
+				} catch(IllegalAccessException ex) {
+					TRLUtils.crashReport("Failed to set EntityRenderer#eyeHeightHandler", ex);
+				}
+			}
+
+			return handler;
 		}
 	}
 
@@ -50,6 +77,9 @@ public final class EntityRendererPatch extends Patch {
 
 	@Override
 	public boolean apply(ClassNode node) {
+		node.fields.add(new FieldNode(
+				Opcodes.ACC_PUBLIC, "eyeHeightHandler", "L" + EYE_HEIGHT_HANDLER + ";", null, null
+		));
 		patchUpdateRenderer(findInstructions(node, "updateRenderer", "func_78464_a"));
 		patchOrientCamera(findInstructions(node, "orientCamera", "func_78467_g"));
 		return true;
@@ -71,14 +101,32 @@ public final class EntityRendererPatch extends Patch {
 			}
 		}
 
+		final InsnList newInstructions = new InsnList();
+
+		//Get EntityRenderer (this)
+		newInstructions.add(new VarInsnNode(Opcodes.ALOAD, 0));
+
+		//Get EntityRenderer (this)
+		newInstructions.add(new VarInsnNode(Opcodes.ALOAD, 0));
+
+		//Get EntityRenderer#eyeHeightHandler
+		newInstructions.add(new FieldInsnNode(
+				Opcodes.GETFIELD,
+				"net/minecraft/client/renderer/EntityRenderer",
+				"eyeHeightHandler",
+				"L" + EYE_HEIGHT_HANDLER + ";"
+		));
+
 		//Call EntityRendererPatch$EyeHeightHandler#updateRenderer
-		instructions.insert(label, new MethodInsnNode(
+		newInstructions.add(new MethodInsnNode(
 				Opcodes.INVOKESTATIC,
 				EYE_HEIGHT_HANDLER,
 				"updateRenderer",
-				"()V",
+				"(Lnet/minecraft/client/renderer/EntityRenderer;L" + EYE_HEIGHT_HANDLER + ";)V",
 				false
 		));
+
+		instructions.insert(label, newInstructions);
 	}
 
 	private static void patchOrientCamera(InsnList instructions) {
@@ -100,13 +148,31 @@ public final class EntityRendererPatch extends Patch {
 		//Get partialTicks instead
 		getEyeHeight.var = 1;
 
+		final InsnList newInstructions = new InsnList();
+
+		//Get EntityRenderer (this)
+		newInstructions.add(new VarInsnNode(Opcodes.ALOAD, 0));
+
+		//Get EntityRenderer (this)
+		newInstructions.add(new VarInsnNode(Opcodes.ALOAD, 0));
+
+		//Get EntityRenderer#eyeHeightHandler
+		newInstructions.add(new FieldInsnNode(
+				Opcodes.GETFIELD,
+				"net/minecraft/client/renderer/EntityRenderer",
+				"eyeHeightHandler",
+				"L" + EYE_HEIGHT_HANDLER + ";"
+		));
+
 		//Call EntityRendererPatch$EyeHeightHandler#getEyeHeight
-		instructions.insert(getEyeHeight, new MethodInsnNode(
+		newInstructions.add(new MethodInsnNode(
 				Opcodes.INVOKESTATIC,
 				EYE_HEIGHT_HANDLER,
 				"getEyeHeight",
-				"(F)F",
+				"(FLnet/minecraft/client/renderer/EntityRenderer;L" + EYE_HEIGHT_HANDLER + ";)F",
 				false
 		));
+
+		instructions.insert(getEyeHeight, newInstructions);
 	}
 }
