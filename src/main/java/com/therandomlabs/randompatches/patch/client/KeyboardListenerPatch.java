@@ -2,8 +2,11 @@ package com.therandomlabs.randompatches.patch.client;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.AccessibilityScreen;
+import net.minecraft.client.gui.IGuiEventListener;
 import net.minecraft.client.gui.screen.ChatOptionsScreen;
 import net.minecraft.client.gui.screen.ControlsScreen;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.settings.AbstractOption;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.client.util.InputMappings;
@@ -14,43 +17,56 @@ import org.lwjgl.glfw.GLFW;
 
 public final class KeyboardListenerPatch {
 	public static final class ToggleNarratorKeybind {
-		public static final Minecraft mc = Minecraft.getInstance();
-		public static KeyBinding keybind;
+		private static final Minecraft mc = Minecraft.getInstance();
+		private static KeyBinding keybind;
 
 		private ToggleNarratorKeybind() {}
 
 		public static void register() {
 			keybind = new KeyBinding(
-					"key.narrator",
-					new IKeyConflictContext() {
-						@Override
-						public boolean isActive() {
-							return !(mc.currentScreen instanceof ControlsScreen);
-						}
-
-						@Override
-						public boolean conflicts(IKeyConflictContext other) {
-							return true;
-						}
-					},
-					KeyModifier.CONTROL, InputMappings.Type.KEYSYM, GLFW.GLFW_KEY_B,
-					"key.categories.misc"
+					"key.narrator", KeyConflictContext.INSTANCE, KeyModifier.CONTROL,
+					InputMappings.Type.KEYSYM, GLFW.GLFW_KEY_B, "key.categories.misc"
 			);
 
 			ClientRegistry.registerKeyBinding(keybind);
 		}
 	}
 
-	private KeyboardListenerPatch() {}
+	private static class KeyConflictContext implements IKeyConflictContext {
+		public static final KeyConflictContext INSTANCE = new KeyConflictContext();
 
-	public static void handleKeypress(int key) {
-		if(ToggleNarratorKeybind.keybind == null) {
-			return;
+		@Override
+		public boolean isActive() {
+			final Screen screen = ToggleNarratorKeybind.mc.currentScreen;
+
+			if(screen == null) {
+				return true;
+			}
+
+			if(screen instanceof ControlsScreen) {
+				return false;
+			}
+
+			final IGuiEventListener focused = screen.getFocused();
+
+			return !(focused instanceof TextFieldWidget) ||
+					!((TextFieldWidget) focused).func_212955_f();
 		}
 
-		if(!ToggleNarratorKeybind.keybind.isActiveAndMatches(
-				InputMappings.Type.KEYSYM.getOrMakeInput(key)
-		)) {
+		@Override
+		public boolean conflicts(IKeyConflictContext other) {
+			return true;
+		}
+	}
+
+	private KeyboardListenerPatch() {}
+
+	public static void handleKeypress(int key, int scanCode) {
+		final KeyBinding keybind = ToggleNarratorKeybind.keybind;
+
+		if(keybind == null || !keybind.matchesKey(key, scanCode) ||
+				!KeyConflictContext.INSTANCE.isActive() ||
+				!keybind.getKeyModifier().isActive(KeyConflictContext.INSTANCE)) {
 			return;
 		}
 

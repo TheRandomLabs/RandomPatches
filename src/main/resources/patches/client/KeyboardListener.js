@@ -1,6 +1,7 @@
 var ASMAPI = Java.type("net.minecraftforge.coremod.api.ASMAPI");
 var Opcodes = Java.type("org.objectweb.asm.Opcodes");
 
+var InsnList = Java.type("org.objectweb.asm.tree.InsnList");
 var MethodInsnNode = Java.type("org.objectweb.asm.tree.MethodInsnNode");
 var VarInsnNode = Java.type("org.objectweb.asm.tree.VarInsnNode");
 
@@ -57,19 +58,25 @@ function patchOnKeyEvent(instructions) {
 		}
 	}
 
-	//Get key
-	var getKey = new VarInsnNode(Opcodes.ILOAD, 3);
+	isB.operand = KEY_UNUSED;
 
-	instructions.insertBefore(isB.getPrevious(), getKey);
+	var newInstructions = new InsnList();
+
+	//Get key
+	newInstructions.add(new VarInsnNode(Opcodes.ILOAD, 3));
+
+	//Get scanCode
+	newInstructions.add(new VarInsnNode(Opcodes.ILOAD, 4));
 
 	//Call KeyboardListenerPatch#handleKeypress
-	instructions.insert(getKey, new MethodInsnNode(
+	newInstructions.add(new MethodInsnNode(
 			Opcodes.INVOKESTATIC,
 			"com/therandomlabs/randompatches/patch/client/KeyboardListenerPatch",
 			"handleKeypress",
-			"(I)V",
+			"(II)V",
 			false
 	));
 
-	isB.operand = KEY_UNUSED;
+	//Insert before "key == 66"
+	instructions.insertBefore(isB.getPrevious(), newInstructions);
 }

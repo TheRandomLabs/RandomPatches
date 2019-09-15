@@ -28,7 +28,7 @@ function initializeCoreMod() {
 				var func_220080_a = classNode.visitMethod(
 						Opcodes.ACC_PUBLIC, FUNC_220080_A,
 						"(Lnet/minecraft/block/BlockState;Lnet/minecraft/world/IBlockReader;" +
-								"Lnet/minecraft/util/math/BlockPos;)F",
+						"Lnet/minecraft/util/math/BlockPos;)F",
 						null, null
 				);
 

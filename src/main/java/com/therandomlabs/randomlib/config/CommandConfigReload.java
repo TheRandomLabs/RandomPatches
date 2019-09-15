@@ -10,17 +10,54 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 
 public final class CommandConfigReload {
-	public enum ReloadPhase {
-		PRE,
-		POST
-	}
-
 	@FunctionalInterface
 	public interface ConfigReloader {
 		void reload(ReloadPhase phase, CommandSource source);
 	}
 
+	public enum ReloadPhase {
+		PRE,
+		POST
+	}
+
 	private CommandConfigReload() {}
+
+	public static void client(
+			CommandDispatcher<CommandSource> dispatcher, String name, Class<?> configClass
+	) {
+		client(dispatcher, name, configClass, null);
+	}
+
+	public static void client(
+			CommandDispatcher<CommandSource> dispatcher, String name, Class<?> configClass,
+			ConfigReloader reloader
+	) {
+		register(dispatcher, name, name, configClass, reloader, Dist.CLIENT, null);
+	}
+
+	public static void server(
+			CommandDispatcher<CommandSource> dispatcher, String name, String clientName,
+			Class<?> configClass
+	) {
+		server(dispatcher, name, clientName, configClass, null, null);
+	}
+
+	public static void server(
+			CommandDispatcher<CommandSource> dispatcher, String name, String clientName,
+			Class<?> configClass, String successMessage
+	) {
+		server(dispatcher, name, clientName, configClass, successMessage, null);
+	}
+
+	public static void server(
+			CommandDispatcher<CommandSource> dispatcher, String name, String clientName,
+			Class<?> configClass, String successMessage, ConfigReloader reloader
+	) {
+		register(
+				dispatcher, name, clientName, configClass, reloader, Dist.DEDICATED_SERVER,
+				successMessage
+		);
+	}
 
 	private static void register(
 			CommandDispatcher<CommandSource> dispatcher, String name, String clientName,
@@ -61,42 +98,5 @@ public final class CommandConfigReload {
 		}
 
 		return Command.SINGLE_SUCCESS;
-	}
-
-	public static void client(
-			CommandDispatcher<CommandSource> dispatcher, String name, Class<?> configClass
-	) {
-		client(dispatcher, name, configClass, null);
-	}
-
-	public static void client(
-			CommandDispatcher<CommandSource> dispatcher, String name, Class<?> configClass,
-			ConfigReloader reloader
-	) {
-		register(dispatcher, name, name, configClass, reloader, Dist.CLIENT, null);
-	}
-
-	public static void server(
-			CommandDispatcher<CommandSource> dispatcher, String name, String clientName,
-			Class<?> configClass
-	) {
-		server(dispatcher, name, clientName, configClass, null, null);
-	}
-
-	public static void server(
-			CommandDispatcher<CommandSource> dispatcher, String name, String clientName,
-			Class<?> configClass, String successMessage
-	) {
-		server(dispatcher, name, clientName, configClass, successMessage, null);
-	}
-
-	public static void server(
-			CommandDispatcher<CommandSource> dispatcher, String name, String clientName,
-			Class<?> configClass, String successMessage, ConfigReloader reloader
-	) {
-		register(
-				dispatcher, name, clientName, configClass, reloader, Dist.DEDICATED_SERVER,
-				successMessage
-		);
 	}
 }

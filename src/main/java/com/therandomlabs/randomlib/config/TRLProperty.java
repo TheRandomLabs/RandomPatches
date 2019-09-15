@@ -38,20 +38,14 @@ final class TRLProperty {
 	final Enum[] enumConstants;
 	final String[] validValues;
 	final String[] validValuesDisplay;
-
-	Object defaultValue;
-
 	final boolean requiresMCRestart;
 	final boolean requiresWorldReload;
-
 	final boolean nonNull;
-
 	final double min;
 	final double max;
-
 	final String[] blacklist;
-
 	final String comment;
+	Object defaultValue;
 
 	@SuppressWarnings("unchecked")
 	TRLProperty(TRLCategory category, String name, Field field, String comment, String previous) {

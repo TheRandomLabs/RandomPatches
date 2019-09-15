@@ -2,7 +2,6 @@ package com.therandomlabs.randompatches;
 
 import com.therandomlabs.randomlib.TRLUtils;
 import com.therandomlabs.randomlib.config.CommandConfigReload;
-import com.therandomlabs.randomlib.config.ConfigManager;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
@@ -22,7 +21,6 @@ public final class RandomPatches {
 
 	public RandomPatches() {
 		MinecraftForge.EVENT_BUS.addListener(this::serverStarting);
-		ConfigManager.register(RPConfig.class);
 		PROXY.init();
 	}
 
