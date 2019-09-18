@@ -1,6 +1,5 @@
 package com.therandomlabs.randomlib.config.adapter;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.therandomlabs.randomlib.TRLUtils;
