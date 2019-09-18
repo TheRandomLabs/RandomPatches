@@ -1,6 +1,7 @@
 {
-	"homepage": "https://minecraft.curseforge.com/projects/randompatches",
+	"homepage": "https://www.curseforge.com/minecraft/mc-mods/randompatches",
 	"1.14.4": {
+		"1.14.4-1.18.2.1": "Fixed integers not converting to doubles in the configuration.",
 		"1.14.4-1.18.2.0": "Improved the Toggle Narrator keybind.\nThe Dismount keybind no longer displays as conflicting with the Sneak keybind.",
 		"1.14.4-1.18.1.1": "Invalid configurations are now regenerated automatically.",
 		"1.14.4-1.18.1.0": "Improved the configuration.",
