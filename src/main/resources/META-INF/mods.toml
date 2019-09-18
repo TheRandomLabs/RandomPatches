@@ -2,7 +2,7 @@ modLoader = "javafml"
 loaderVersion = "[14,)"
 updateJSONURL = "https://raw.githubusercontent.com/TheRandomLabs/RandomPatches/misc/versions.json"
 issueTrackerURL = "https://github.com/TheRandomLabs/RandomPatches/issues"
-displayURL = "https://minecraft.curseforge.com/projects/randompatches"
+displayURL = "https://www.curseforge.com/minecraft/mc-mods/randompatches"
 logoFile = "logo.png"
 authors = "TheRandomLabs"
 

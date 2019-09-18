@@ -17,7 +17,7 @@ public final class ClientPlayerEntityPatch {
 
 		public static void register() {
 			keybind = new KeyBinding(
-					"key.dismount", KeyConflictContext.IN_GAME, InputMappings.Type.KEYSYM,
+					"key.dismount",
 					TRLUtils.IS_DEOBFUSCATED ? GLFW.GLFW_KEY_Z : GLFW.GLFW_KEY_LEFT_SHIFT,
 					"key.categories.movement"
 			);

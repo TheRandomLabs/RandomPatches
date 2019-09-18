@@ -1,12 +1,11 @@
 package com.therandomlabs.randomlib.config.adapter;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.therandomlabs.randomlib.TRLUtils;
 
 public interface TypeAdapter {
-	TypeAdapter DEFAULT = new TypeAdapter() {};
-
 	default Object getValue(CommentedFileConfig config, String name, Object defaultValue) {
 		return config.get(name);
 	}

@@ -5,6 +5,9 @@ import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.function.Function;
+import java.util.stream.Stream;
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 import org.apache.commons.lang3.ArrayUtils;
@@ -17,256 +20,113 @@ public final class TypeAdapters {
 		final Class[] defaultAdapterClasses = {
 				boolean.class,
 				Boolean.class,
-				Byte.class,
 				char.class,
-				Character.class,
-				double.class,
-				Double.class,
-				Float.class,
-				int.class,
-				Integer.class,
-				long.class,
-				Long.class,
-				Short.class
+				Character.class
 		};
 
 		for(Class clazz : defaultAdapterClasses) {
-			register(clazz, TypeAdapter.DEFAULT);
+			register(clazz, new TypeAdapter() {});
 		}
 
-		register(boolean[].class, new TypeAdapter() {
-			@Override
-			public Object getValue(CommentedFileConfig config, String name, Object defaultValue) {
-				return ArrayUtils.toPrimitive(
-						((List<Boolean>) config.get(name)).toArray(new Boolean[0])
-				);
-			}
+		register(boolean[].class, TypeAdapters.<Boolean>getArrayAdapter(
+				list -> ArrayUtils.toPrimitive(list.toArray(new Boolean[0]))
+		));
 
-			@Override
-			public boolean isArray() {
-				return true;
-			}
-		});
+		register(Boolean[].class, TypeAdapters.<Boolean>getArrayAdapter(
+				list -> list.toArray(new Boolean[0])
+		));
 
-		register(Boolean[].class, new TypeAdapter() {
-			@Override
-			public Object getValue(CommentedFileConfig config, String name, Object defaultValue) {
-				return ((List<Boolean>) config.get(name)).toArray(new Boolean[0]);
-			}
+		register(byte.class, Byte.class, getNumberAdapter(Byte::parseByte));
 
-			@Override
-			public boolean isArray() {
-				return true;
-			}
-		});
+		register(byte[].class, getNumberArrayAdapter(
+				Byte.class,
+				Number::byteValue,
+				stream -> ArrayUtils.toPrimitive(stream.toArray(Byte[]::new))
+		));
 
-		register(byte.class, new TypeAdapter() {
-			@Override
-			public Object getValue(CommentedFileConfig config, String name, Object defaultValue) {
-				final Object value = config.get(name);
-				return value instanceof Byte ? value : (byte) (int) value;
-			}
-		});
+		register(Byte[].class, getNumberArrayAdapter(
+				Byte.class,
+				Number::byteValue,
+				stream -> stream.toArray(Byte[]::new)
+		));
 
-		register(byte[].class, new TypeAdapter() {
-			@Override
-			public Object getValue(CommentedFileConfig config, String name, Object defaultValue) {
-				return ArrayUtils.toPrimitive(
-						((List<Byte>) config.get(name)).toArray(new Byte[0])
-				);
-			}
+		register(char[].class, TypeAdapters.<Character>getArrayAdapter(
+				list -> ArrayUtils.toPrimitive(list.toArray(new Character[0]))
+		));
 
-			@Override
-			public boolean isArray() {
-				return true;
-			}
-		});
+		register(Character[].class, TypeAdapters.<Character>getArrayAdapter(
+				list -> list.toArray(new Character[0])
+		));
 
-		register(Byte[].class, new TypeAdapter() {
-			@Override
-			public Object getValue(CommentedFileConfig config, String name, Object defaultValue) {
-				return ((List<Byte>) config.get(name)).toArray(new Byte[0]);
-			}
+		register(double.class, Double.class, getNumberAdapter(Double::parseDouble));
 
-			@Override
-			public boolean isArray() {
-				return true;
-			}
-		});
+		register(double[].class, getNumberArrayAdapter(
+				Double.class,
+				Number::doubleValue,
+				stream -> ArrayUtils.toPrimitive(stream.toArray(Double[]::new))
+		));
 
-		register(char[].class, new TypeAdapter() {
-			@Override
-			public Object getValue(CommentedFileConfig config, String name, Object defaultValue) {
-				return ArrayUtils.toPrimitive(
-						((List<Character>) config.get(name)).toArray(new Character[0])
-				);
-			}
+		register(Double[].class, getNumberArrayAdapter(
+				Double.class,
+				Number::doubleValue,
+				stream -> stream.toArray(Double[]::new)
+		));
 
-			@Override
-			public boolean isArray() {
-				return true;
-			}
-		});
+		register(float.class, Float.class, getNumberAdapter(Float::parseFloat));
 
-		register(Character[].class, new TypeAdapter() {
-			@Override
-			public Object getValue(CommentedFileConfig config, String name, Object defaultValue) {
-				return ArrayUtils.toPrimitive(
-						((List<Character>) config.get(name)).toArray(new Character[0])
-				);
-			}
+		register(float[].class, getNumberArrayAdapter(
+				Float.class,
+				Number::floatValue,
+				stream -> ArrayUtils.toPrimitive(stream.toArray(Float[]::new))
+		));
 
-			@Override
-			public boolean isArray() {
-				return true;
-			}
-		});
+		register(Float[].class, getNumberArrayAdapter(
+				Float.class,
+				Number::floatValue,
+				stream -> stream.toArray(Float[]::new)
+		));
 
-		register(double[].class, new TypeAdapter() {
-			@Override
-			public Object getValue(CommentedFileConfig config, String name, Object defaultValue) {
-				return ArrayUtils.toPrimitive(
-						((List<Double>) config.get(name)).toArray(new Double[0])
-				);
-			}
+		register(long.class, Long.class, getNumberAdapter(Long::parseLong));
 
-			@Override
-			public boolean isArray() {
-				return true;
-			}
-		});
+		register(long[].class, getNumberArrayAdapter(
+				Long.class,
+				Number::longValue,
+				stream -> ArrayUtils.toPrimitive(stream.toArray(Long[]::new))
+		));
 
-		register(Double[].class, new TypeAdapter() {
-			@Override
-			public Object getValue(CommentedFileConfig config, String name, Object defaultValue) {
-				return ((List<Double>) config.get(name)).toArray(new Double[0]);
-			}
+		register(Long[].class, getNumberArrayAdapter(
+				Long.class,
+				Number::longValue,
+				stream -> stream.toArray(Long[]::new)
+		));
 
-			@Override
-			public boolean isArray() {
-				return true;
-			}
-		});
+		register(int.class, Integer.class, getNumberAdapter(Integer::parseInt));
 
-		register(float.class, new TypeAdapter() {
-			@Override
-			public Object getValue(CommentedFileConfig config, String name, Object defaultValue) {
-				final Object value = config.get(name);
-				return value instanceof Float ? value : (float) (double) value;
-			}
-		});
+		register(int[].class, getNumberArrayAdapter(
+				Integer.class,
+				Number::intValue,
+				stream -> ArrayUtils.toPrimitive(stream.toArray(Integer[]::new))
+		));
 
-		register(float[].class, new TypeAdapter() {
-			@Override
-			public Object getValue(CommentedFileConfig config, String name, Object defaultValue) {
-				return ArrayUtils.toPrimitive(
-						((List<Float>) config.get(name)).toArray(new Float[0])
-				);
-			}
+		register(Integer[].class, getNumberArrayAdapter(
+				Integer.class,
+				Number::intValue,
+				stream -> stream.toArray(Integer[]::new)
+		));
 
-			@Override
-			public boolean isArray() {
-				return true;
-			}
-		});
+		register(short.class, Short.class, getNumberAdapter(Short::parseShort));
 
-		register(Float[].class, new TypeAdapter() {
-			@Override
-			public Object getValue(CommentedFileConfig config, String name, Object defaultValue) {
-				return ((List<Float>) config.get(name)).toArray(new Float[0]);
-			}
+		register(short[].class, getNumberArrayAdapter(
+				Short.class,
+				Number::shortValue,
+				stream -> ArrayUtils.toPrimitive(stream.toArray(Short[]::new))
+		));
 
-			@Override
-			public boolean isArray() {
-				return true;
-			}
-		});
-
-		register(int[].class, new TypeAdapter() {
-			@Override
-			public Object getValue(CommentedFileConfig config, String name, Object defaultValue) {
-				return ArrayUtils.toPrimitive(
-						((List<Integer>) config.get(name)).toArray(new Integer[0])
-				);
-			}
-
-			@Override
-			public boolean isArray() {
-				return true;
-			}
-		});
-
-		register(Integer[].class, new TypeAdapter() {
-			@Override
-			public Object getValue(CommentedFileConfig config, String name, Object defaultValue) {
-				return ((List<Integer>) config.get(name)).toArray(new Integer[0]);
-			}
-
-			@Override
-			public boolean isArray() {
-				return true;
-			}
-		});
-
-		register(long[].class, new TypeAdapter() {
-			@Override
-			public Object getValue(CommentedFileConfig config, String name, Object defaultValue) {
-				return ArrayUtils.toPrimitive(
-						((List<Long>) config.get(name)).toArray(new Long[0])
-				);
-			}
-
-			@Override
-			public boolean isArray() {
-				return true;
-			}
-		});
-
-		register(Long[].class, new TypeAdapter() {
-			@Override
-			public Object getValue(CommentedFileConfig config, String name, Object defaultValue) {
-				return ((List<Long>) config.get(name)).toArray(new Long[0]);
-			}
-
-			@Override
-			public boolean isArray() {
-				return true;
-			}
-		});
-
-		register(short.class, new TypeAdapter() {
-			@Override
-			public Object getValue(CommentedFileConfig config, String name, Object defaultValue) {
-				final Object value = config.get(name);
-				return value instanceof Short ? value : (short) (int) value;
-			}
-		});
-
-		register(short[].class, new TypeAdapter() {
-			@Override
-			public Object getValue(CommentedFileConfig config, String name, Object defaultValue) {
-				return ArrayUtils.toPrimitive(
-						((List<Short>) config.get(name)).toArray(new Short[0])
-				);
-			}
-
-			@Override
-			public boolean isArray() {
-				return true;
-			}
-		});
-
-		register(Short[].class, new TypeAdapter() {
-			@Override
-			public Object getValue(CommentedFileConfig config, String name, Object defaultValue) {
-				return ((List<Short>) config.get(name)).toArray(new Short[0]);
-			}
-
-			@Override
-			public boolean isArray() {
-				return true;
-			}
-		});
+		register(Short[].class, getNumberArrayAdapter(
+				Short.class,
+				Number::shortValue,
+				stream -> stream.toArray(Short[]::new)
+		));
 
 		register(String.class, new TypeAdapter() {
 			@Override
@@ -317,11 +177,66 @@ public final class TypeAdapters {
 		ADAPTERS.put(clazz, adapter);
 	}
 
+	public static void register(Class<?> clazz1, Class<?> clazz2, TypeAdapter adapter) {
+		register(clazz1, adapter);
+		register(clazz2, adapter);
+	}
+
 	public static void register(Class<IForgeRegistryEntry<?>> registryEntryClass) {
 		register(registryEntryClass, new ResourceLocationTypeAdapter(registryEntryClass, false));
 		register(
 				Array.newInstance(registryEntryClass, 0).getClass(),
 				new ResourceLocationTypeAdapter(registryEntryClass, true)
 		);
+	}
+
+	private static <T> TypeAdapter getArrayAdapter(Function<List<T>, Object> toArray) {
+		return new TypeAdapter() {
+			@Override
+			public Object getValue(CommentedFileConfig config, String name, Object defaultValue) {
+				return toArray.apply(config.get(name));
+			}
+
+			@Override
+			public boolean isArray() {
+				return true;
+			}
+		};
+	}
+
+	private static <N extends Number> TypeAdapter getNumberAdapter(Function<String, N> parser) {
+		return new TypeAdapter() {
+			@Override
+			public Object getValue(CommentedFileConfig config, String name, Object defaultValue) {
+				try {
+					return parser.apply(config.get(name).toString());
+				} catch(NumberFormatException ignored) {}
+
+				return null;
+			}
+		};
+	}
+
+	private static <N extends Number> TypeAdapter getNumberArrayAdapter(
+			Class<N> numberClass, Function<Number, N> converter,
+			Function<Stream<N>, Object> toArray
+	) {
+		return new TypeAdapter() {
+			@Override
+			public Object getValue(CommentedFileConfig config, String name, Object defaultValue) {
+				return toArray.apply((((List<Number>) config.get(name)).stream().map(number -> {
+					try {
+						return converter.apply(Double.parseDouble(number.toString()));
+					} catch(NumberFormatException ignored) {}
+
+					return null;
+				}).filter(Objects::nonNull)));
+			}
+
+			@Override
+			public boolean isArray() {
+				return true;
+			}
+		};
 	}
 }
