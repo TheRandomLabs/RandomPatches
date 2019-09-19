@@ -8,7 +8,7 @@ import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
 
 @IFMLLoadingPlugin.SortingIndex(RandomPatches.SORTING_INDEX)
 @IFMLLoadingPlugin.Name(RandomPatches.NAME)
-@IFMLLoadingPlugin.TransformerExclusions("com.therandomlabs.randompatches")
+@IFMLLoadingPlugin.TransformerExclusions("com.therandomlabs.randompatches.core")
 public class RPCore implements IFMLLoadingPlugin {
 	private static File modFile;
 
