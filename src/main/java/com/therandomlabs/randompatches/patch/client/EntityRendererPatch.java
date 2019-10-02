@@ -6,8 +6,8 @@ import com.therandomlabs.randompatches.config.RPConfig;
 import com.therandomlabs.randompatches.core.Patch;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.EntityRenderer;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.AbstractInsnNode;
 import org.objectweb.asm.tree.ClassNode;
@@ -34,24 +34,31 @@ public final class EntityRendererPatch extends Patch {
 		}
 
 		public static float getEyeHeight(
+				Entity entity, float partialTicks, EntityRenderer renderer, EyeHeightHandler handler
+		) {
+			handler = get(renderer, handler);
+			return handler.lastEyeHeight +
+					(handler.eyeHeight - handler.lastEyeHeight) * partialTicks;
+		}
+
+		public static void orientCamera(
 				float partialTicks, EntityRenderer renderer, EyeHeightHandler handler
 		) {
+			if(!RPConfig.Client.smoothEyeLevelChanges) {
+				return;
+			}
+
 			final Entity entity = mc.getRenderViewEntity();
 
-			if(!RPConfig.Client.smoothEyeLevelChanges) {
-				return entity.getEyeHeight();
-			}
-
-			handler = get(renderer, handler);
-			final float height = handler.lastEyeHeight +
-					(handler.eyeHeight - handler.lastEyeHeight) * partialTicks;
-
-			if(entity instanceof EntityLivingBase &&
-					((EntityLivingBase) entity).isPlayerSleeping()) {
-				return height + 1.0F;
-			}
-
-			return height;
+			//EntityRenderer#orientCamera translates y by -Entity#getEyeHeight so we undo that
+			//Then we translate y by -EyeHeightHandler#getEyeHeight
+			//We don't directly replace GlStateManager.translate(0.0F, -f, 0.0F) in
+			//EntityRenderer#orientCamera because the method is overwritten by Valkyrien Skies
+			GlStateManager.translate(
+					0.0F,
+					entity.getEyeHeight() - getEyeHeight(entity, partialTicks, renderer, handler),
+					0.0F
+			);
 		}
 
 		public static EyeHeightHandler get(EntityRenderer renderer, EyeHeightHandler handler) {
@@ -71,7 +78,8 @@ public final class EntityRendererPatch extends Patch {
 
 	public static final String SET_RENDER_VIEW_ENTITY =
 			getName("setRenderViewEntity", "func_175607_a");
-	public static final String TRANSLATE = getName("translate", "func_179109_b");
+	public static final String ORIENT_CAMERA = getName("orientCamera", "func_78467_g");
+
 	public static final String EYE_HEIGHT_HANDLER =
 			getName(EntityRendererPatch.class) + "$EyeHeightHandler";
 
@@ -80,8 +88,13 @@ public final class EntityRendererPatch extends Patch {
 		node.fields.add(new FieldNode(
 				Opcodes.ACC_PUBLIC, "eyeHeightHandler", "L" + EYE_HEIGHT_HANDLER + ";", null, null
 		));
+
 		patchUpdateRenderer(findInstructions(node, "updateRenderer", "func_78464_a"));
-		patchOrientCamera(findInstructions(node, "orientCamera", "func_78467_g"));
+
+		//We don't patch EntityRenderer#orientCamera directly because Valkyrien Skies overwrites
+		//that
+		patchSetupCameraTransform(findInstructions(node, "setupCameraTransform", "func_78479_a"));
+
 		return true;
 	}
 
@@ -129,26 +142,33 @@ public final class EntityRendererPatch extends Patch {
 		instructions.insert(label, newInstructions);
 	}
 
-	private static void patchOrientCamera(InsnList instructions) {
-		VarInsnNode getEyeHeight = null;
+	private static void patchSetupCameraTransform(InsnList instructions) {
+		AbstractInsnNode orientCamera = null;
 
 		for(int i = instructions.size() - 1; i >= 0; i--) {
-			final AbstractInsnNode instruction = instructions.get(i);
+			orientCamera = instructions.get(i);
 
-			if(instruction.getOpcode() == Opcodes.INVOKESTATIC) {
-				final MethodInsnNode method = (MethodInsnNode) instruction;
+			//Valkyrien Skies changes EntityRenderer#orientCamera to be public, which means it is
+			//called using INVOKEVIRTUAL rather than INVOKESPECIAL
+			if(orientCamera.getOpcode() == Opcodes.INVOKESPECIAL ||
+					orientCamera.getOpcode() == Opcodes.INVOKEVIRTUAL) {
+				final MethodInsnNode method = (MethodInsnNode) orientCamera;
 
-				if(TRANSLATE.equals(method.name)) {
-					getEyeHeight = (VarInsnNode) method.getPrevious().getPrevious().getPrevious();
+				if(ORIENT_CAMERA.equals(method.name)) {
 					break;
 				}
 			}
+
+			orientCamera = null;
 		}
 
-		//Get partialTicks instead
-		getEyeHeight.var = 1;
-
 		final InsnList newInstructions = new InsnList();
+
+		//Get EntityRenderer (this)
+		newInstructions.add(new VarInsnNode(Opcodes.ALOAD, 0));
+
+		//Get partialTicks
+		newInstructions.add(new VarInsnNode(Opcodes.FLOAD, 1));
 
 		//Get EntityRenderer (this)
 		newInstructions.add(new VarInsnNode(Opcodes.ALOAD, 0));
@@ -164,15 +184,15 @@ public final class EntityRendererPatch extends Patch {
 				"L" + EYE_HEIGHT_HANDLER + ";"
 		));
 
-		//Call EntityRendererPatch$EyeHeightHandler#getEyeHeight
+		//Call EntityRendererPatch$EyeHeightHandler#orientCamera
 		newInstructions.add(new MethodInsnNode(
 				Opcodes.INVOKESTATIC,
 				EYE_HEIGHT_HANDLER,
-				"getEyeHeight",
-				"(FLnet/minecraft/client/renderer/EntityRenderer;L" + EYE_HEIGHT_HANDLER + ";)F",
+				"orientCamera",
+				"(FLnet/minecraft/client/renderer/EntityRenderer;L" + EYE_HEIGHT_HANDLER + ";)V",
 				false
 		));
 
-		instructions.insert(getEyeHeight, newInstructions);
+		instructions.insert(orientCamera, newInstructions);
 	}
 }
