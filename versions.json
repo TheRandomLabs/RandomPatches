@@ -25,6 +25,7 @@
 		"1.13.2-1.15.1.0": "Initial port to Minecraft 1.13.2."
 	},
 	"1.12.2": {
+		"1.12.2-1.19.0.0": "Added a fix for MC-5694, which causes fast mining to sometimes only destroy blocks client-side only.\nAdded a fix for MC-54026, which causes blocks attached to slime blocks in some circumstances to create ghost blocks if a piston pushes the slime block.",
 		"1.12.2-1.18.2.3": "Fixed Ice and Fire compatibility.",
 		"1.12.2-1.18.2.2": "Fixed compatibility between the smooth eye level change animation and Valkyrien Skies.",
 		"1.12.2-1.18.2.1": "Fixed the transformer exclusion.",
@@ -88,6 +89,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.12.1": {
+		"1.12.2-1.19.0.0": "Added a fix for MC-5694, which causes fast mining to sometimes only destroy blocks client-side only.\nAdded a fix for MC-54026, which causes blocks attached to slime blocks in some circumstances to create ghost blocks if a piston pushes the slime block.",
 		"1.12.2-1.18.2.3": "Fixed Ice and Fire compatibility.",
 		"1.12.2-1.18.2.2": "Fixed compatibility between the smooth eye level change animation and Valkyrien Skies.",
 		"1.12.2-1.18.2.1": "Fixed the transformer exclusion.",
@@ -151,6 +153,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.12": {
+		"1.12.2-1.19.0.0": "Added a fix for MC-5694, which causes fast mining to sometimes only destroy blocks client-side only.\nAdded a fix for MC-54026, which causes blocks attached to slime blocks in some circumstances to create ghost blocks if a piston pushes the slime block.",
 		"1.12.2-1.18.2.3": "Fixed Ice and Fire compatibility.",
 		"1.12.2-1.18.2.2": "Fixed compatibility between the smooth eye level change animation and Valkyrien Skies.",
 		"1.12.2-1.18.2.1": "Fixed the transformer exclusion.",
@@ -214,6 +217,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.11.2": {
+		"1.12.2-1.19.0.0": "Added a fix for MC-5694, which causes fast mining to sometimes only destroy blocks client-side only.\nAdded a fix for MC-54026, which causes blocks attached to slime blocks in some circumstances to create ghost blocks if a piston pushes the slime block.",
 		"1.12.2-1.18.2.3": "Fixed Ice and Fire compatibility.",
 		"1.12.2-1.18.2.2": "Fixed compatibility between the smooth eye level change animation and Valkyrien Skies.",
 		"1.12.2-1.18.2.1": "Fixed the transformer exclusion.",
@@ -277,6 +281,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.11": {
+		"1.12.2-1.19.0.0": "Added a fix for MC-5694, which causes fast mining to sometimes only destroy blocks client-side only.\nAdded a fix for MC-54026, which causes blocks attached to slime blocks in some circumstances to create ghost blocks if a piston pushes the slime block.",
 		"1.12.2-1.18.2.3": "Fixed Ice and Fire compatibility.",
 		"1.12.2-1.18.2.2": "Fixed compatibility between the smooth eye level change animation and Valkyrien Skies.",
 		"1.12.2-1.18.2.1": "Fixed the transformer exclusion.",
@@ -340,6 +345,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.10.2": {
+		"1.12.2-1.19.0.0": "Added a fix for MC-5694, which causes fast mining to sometimes only destroy blocks client-side only.\nAdded a fix for MC-54026, which causes blocks attached to slime blocks in some circumstances to create ghost blocks if a piston pushes the slime block.",
 		"1.12.2-1.18.2.3": "Fixed Ice and Fire compatibility.",
 		"1.12.2-1.18.2.2": "Fixed compatibility between the smooth eye level change animation and Valkyrien Skies.",
 		"1.12.2-1.18.2.1": "Fixed the transformer exclusion.",
@@ -403,6 +409,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.10": {
+		"1.12.2-1.19.0.0": "Added a fix for MC-5694, which causes fast mining to sometimes only destroy blocks client-side only.\nAdded a fix for MC-54026, which causes blocks attached to slime blocks in some circumstances to create ghost blocks if a piston pushes the slime block.",
 		"1.12.2-1.18.2.3": "Fixed Ice and Fire compatibility.",
 		"1.12.2-1.18.2.2": "Fixed compatibility between the smooth eye level change animation and Valkyrien Skies.",
 		"1.12.2-1.18.2.1": "Fixed the transformer exclusion.",
@@ -466,6 +473,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.9.4": {
+		"1.12.2-1.19.0.0": "Added a fix for MC-5694, which causes fast mining to sometimes only destroy blocks client-side only.\nAdded a fix for MC-54026, which causes blocks attached to slime blocks in some circumstances to create ghost blocks if a piston pushes the slime block.",
 		"1.12.2-1.18.2.3": "Fixed Ice and Fire compatibility.",
 		"1.12.2-1.18.2.2": "Fixed compatibility between the smooth eye level change animation and Valkyrien Skies.",
 		"1.12.2-1.18.2.1": "Fixed the transformer exclusion.",
@@ -522,6 +530,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.9": {
+		"1.12.2-1.19.0.0": "Added a fix for MC-5694, which causes fast mining to sometimes only destroy blocks client-side only.\nAdded a fix for MC-54026, which causes blocks attached to slime blocks in some circumstances to create ghost blocks if a piston pushes the slime block.",
 		"1.12.2-1.18.2.3": "Fixed Ice and Fire compatibility.",
 		"1.12.2-1.18.2.2": "Fixed compatibility between the smooth eye level change animation and Valkyrien Skies.",
 		"1.12.2-1.18.2.1": "Fixed the transformer exclusion.",
@@ -578,6 +587,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.8.9": {
+		"1.12.2-1.19.0.0": "Added a fix for MC-5694, which causes fast mining to sometimes only destroy blocks client-side only.\nAdded a fix for MC-54026, which causes blocks attached to slime blocks in some circumstances to create ghost blocks if a piston pushes the slime block.",
 		"1.12.2-1.18.2.3": "Fixed Ice and Fire compatibility.",
 		"1.12.2-1.18.2.2": "Fixed compatibility between the smooth eye level change animation and Valkyrien Skies.",
 		"1.12.2-1.18.2.1": "Fixed the transformer exclusion.",
@@ -634,6 +644,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.8.8": {
+		"1.12.2-1.19.0.0": "Added a fix for MC-5694, which causes fast mining to sometimes only destroy blocks client-side only.\nAdded a fix for MC-54026, which causes blocks attached to slime blocks in some circumstances to create ghost blocks if a piston pushes the slime block.",
 		"1.12.2-1.18.2.3": "Fixed Ice and Fire compatibility.",
 		"1.12.2-1.18.2.2": "Fixed compatibility between the smooth eye level change animation and Valkyrien Skies.",
 		"1.12.2-1.18.2.1": "Fixed the transformer exclusion.",
@@ -690,6 +701,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.8": {
+		"1.12.2-1.19.0.0": "Added a fix for MC-5694, which causes fast mining to sometimes only destroy blocks client-side only.\nAdded a fix for MC-54026, which causes blocks attached to slime blocks in some circumstances to create ghost blocks if a piston pushes the slime block.",
 		"1.12.2-1.18.2.3": "Fixed Ice and Fire compatibility.",
 		"1.12.2-1.18.2.2": "Fixed compatibility between the smooth eye level change animation and Valkyrien Skies.",
 		"1.12.2-1.18.2.1": "Fixed the transformer exclusion.",
@@ -754,27 +766,27 @@
 		"1.14.2-recommended": "1.14.2-1.16.2.0",
 		"1.13.2-latest": "1.13.2-1.7.2.0",
 		"1.13.2-recommended": "1.13.2-1.17.2.0",
-		"1.12.2-latest": "1.12.2-1.18.2.3",
-		"1.12.2-recommended": "1.12.2-1.18.2.3",
-		"1.12-latest": "1.12.2-1.18.2.3",
-		"1.12-recommended": "1.12.2-1.18.2.3",
-		"1.11.2-latest": "1.12.2-1.18.2.3",
-		"1.11.2-recommended": "1.12.2-1.18.2.3",
-		"1.11-latest": "1.12.2-1.18.2.3",
-		"1.11-recommended": "1.12.2-1.18.2.3",
-		"1.10.2-latest": "1.12.2-1.18.2.3",
-		"1.10.2-recommended": "1.12.2-1.18.2.3",
-		"1.10-latest": "1.12.2-1.18.2.3",
-		"1.10-recommended": "1.12.2-1.18.2.3",
-		"1.9.4-latest": "1.12.2-1.18.2.3",
-		"1.9.4-recommended": "1.12.2-1.18.2.3",
-		"1.9-latest": "1.12.2-1.18.2.3",
-		"1.9-recommended": "1.12.2-1.18.2.3",
-		"1.8.9-latest": "1.12.2-1.18.2.3",
-		"1.8.9-recommended": "1.12.2-1.18.2.3",
-		"1.8.8-latest": "1.12.2-1.18.2.3",
-		"1.8.8-recommended": "1.12.2-1.18.2.3",
-		"1.8-latest": "1.12.2-1.18.2.3",
-		"1.8-recommended": "1.12.2-1.18.2.3"
+		"1.12.2-latest": "1.12.2-1.19.0.0",
+		"1.12.2-recommended": "1.12.2-1.19.0.0",
+		"1.12-latest": "1.12.2-1.19.0.0",
+		"1.12-recommended": "1.12.2-1.19.0.0",
+		"1.11.2-latest": "1.12.2-1.19.0.0",
+		"1.11.2-recommended": "1.12.2-1.19.0.0",
+		"1.11-latest": "1.12.2-1.19.0.0",
+		"1.11-recommended": "1.12.2-1.19.0.0",
+		"1.10.2-latest": "1.12.2-1.19.0.0",
+		"1.10.2-recommended": "1.12.2-1.19.0.0",
+		"1.10-latest": "1.12.2-1.19.0.0",
+		"1.10-recommended": "1.12.2-1.19.0.0",
+		"1.9.4-latest": "1.12.2-1.19.0.0",
+		"1.9.4-recommended": "1.12.2-1.19.0.0",
+		"1.9-latest": "1.12.2-1.19.0.0",
+		"1.9-recommended": "1.12.2-1.19.0.0",
+		"1.8.9-latest": "1.12.2-1.19.0.0",
+		"1.8.9-recommended": "1.12.2-1.19.0.0",
+		"1.8.8-latest": "1.12.2-1.19.0.0",
+		"1.8.8-recommended": "1.12.2-1.19.0.0",
+		"1.8-latest": "1.12.2-1.19.0.0",
+		"1.8-recommended": "1.12.2-1.19.0.0"
 	}
 }
