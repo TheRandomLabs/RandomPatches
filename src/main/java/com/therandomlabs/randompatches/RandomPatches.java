@@ -233,7 +233,7 @@ public final class RandomPatches {
 			register("net.minecraft.network.PacketBuffer", new PacketBufferPatch());
 		}
 
-		if(RPConfig.Misc.pistonGhostBlocksFix) {
+		if(RPConfig.Misc.pistonGhostBlocksFix && TRLUtils.MC_VERSION_NUMBER > 8) {
 			register("net.minecraft.tileentity.TileEntityPiston", new TileEntityPistonPatch());
 		}
 

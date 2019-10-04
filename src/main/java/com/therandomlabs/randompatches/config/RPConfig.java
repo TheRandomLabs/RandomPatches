@@ -179,7 +179,7 @@ public final class RPConfig {
 		})
 		public static int packetSizeLimit = 0x1000000;
 
-		//TODO find MCVersion
+		@Config.MCVersion("[1.9,1.13)")
 		@Config.RequiresMCRestart
 		@Config.Property(
 				"Fixes MC-54026, which causes blocks attached to slime blocks in some " +
