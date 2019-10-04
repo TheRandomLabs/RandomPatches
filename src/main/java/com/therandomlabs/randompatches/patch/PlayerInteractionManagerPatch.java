@@ -15,6 +15,7 @@ import org.objectweb.asm.tree.VarInsnNode;
 //Fix taken from
 //https://github.com/gnembon/carpetmod112/blob/staging/patches/net/minecraft/server/management/
 //PlayerInteractionManager.java.patch
+//Thanks, gnembon!
 public final class PlayerInteractionManagerPatch extends Patch {
 	/**
 	 * Expected result:

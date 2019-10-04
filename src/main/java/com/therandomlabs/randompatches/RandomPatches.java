@@ -16,6 +16,7 @@ import com.therandomlabs.randompatches.patch.NetHandlerPlayServerPatch;
 import com.therandomlabs.randompatches.patch.PlayerInteractionManagerPatch;
 import com.therandomlabs.randompatches.patch.ServerRecipeBookHelperPatch;
 import com.therandomlabs.randompatches.patch.ServerWorldEventHandlerPatch;
+import com.therandomlabs.randompatches.patch.TileEntityPistonPatch;
 import com.therandomlabs.randompatches.patch.WorldServerPatch;
 import com.therandomlabs.randompatches.patch.client.EntityRendererPatch;
 import com.therandomlabs.randompatches.patch.client.GuiIngameMenuPatch;
@@ -230,6 +231,10 @@ public final class RandomPatches {
 					new NettyCompressionDecoderPatch()
 			);
 			register("net.minecraft.network.PacketBuffer", new PacketBufferPatch());
+		}
+
+		if(RPConfig.Misc.pistonGhostBlocksFix) {
+			register("net.minecraft.tileentity.TileEntityPiston", new TileEntityPistonPatch());
 		}
 
 		if(RPConfig.Misc.portalBucketReplacementFix && TRLUtils.MC_VERSION_NUMBER > 8) {

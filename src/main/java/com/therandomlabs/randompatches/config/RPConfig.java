@@ -179,6 +179,14 @@ public final class RPConfig {
 		})
 		public static int packetSizeLimit = 0x1000000;
 
+		//TODO find MCVersion
+		@Config.RequiresMCRestart
+		@Config.Property(
+				"Fixes MC-54026, which causes blocks attached to slime blocks in some " +
+						"circumstances to create ghost blocks if a piston pushes the slime block."
+		)
+		public static boolean pistonGhostBlocksFix = true;
+
 		@Config.RequiresMCRestart
 		@Config.Property(
 				"Fixes MC-11944, which allows players to replace End portals, " +

@@ -13,7 +13,7 @@ import org.objectweb.asm.tree.MethodInsnNode;
 //https://github.com/SleepyTrousers/EnderCore/issues/105#issuecomment-475957390 and
 //https://github.com/SleepyTrousers/EnderCore/issues/105#issuecomment-504779582 and
 //https://github.com/SleepyTrousers/EnderCore/issues/105#issuecomment-506215102
-//Thanks malte0811!
+//Thanks, malte0811!
 public final class WorldServerPatch extends Patch {
 	public static final class NextTickListEntryWrapper {
 		Object entry;
