@@ -58,6 +58,9 @@ public final class RandomPatches {
 	public static final boolean BIGGER_PACKETS_PLEASE_INSTALLED =
 			RPUtils.detect("net.elnounch.mc.biggerpacketsplz.BiggerBacketsPlzCoreMod");
 
+	public static final boolean ICE_AND_FIRE_INSTALLED =
+			RPUtils.detect("com.github.alexthe666.iceandfire.asm.IceAndFirePlugin");
+
 	public static final boolean LITTLETILES_INSTALLED =
 			RPUtils.detect("com.creativemd.littletiles.LittleTilesCore");
 
