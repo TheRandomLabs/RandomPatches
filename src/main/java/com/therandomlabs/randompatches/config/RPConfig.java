@@ -143,6 +143,14 @@ public final class RPConfig {
 		)
 		public static boolean minecartAIFix = true;
 
+		@Config.MCVersion("[1.9,1.13)")
+		@Config.RequiresMCRestart
+		@Config.Property(
+				"Fixes MC-5694, which causes fast mining to sometimes only destroy blocks " +
+						"client-side only."
+		)
+		public static boolean miningGhostBlocksFix = true;
+
 		@Config.MCVersion("[1.10,1.13)")
 		@Config.RequiresMCRestart
 		@Config.Property(
