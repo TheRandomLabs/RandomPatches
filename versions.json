@@ -25,6 +25,7 @@
 		"1.13.2-1.15.1.0": "Initial port to Minecraft 1.13.2."
 	},
 	"1.12.2": {
+		"1.12.2-1.18.2.3": "Fixed Ice and Fire compatibility.",
 		"1.12.2-1.18.2.2": "Fixed compatibility between the smooth eye level change animation and Valkyrien Skies.",
 		"1.12.2-1.18.2.1": "Fixed the transformer exclusion.",
 		"1.12.2-1.18.1.1": "Fixed compatibility between BetterPortals and the smooth eye level change animation.",
@@ -87,6 +88,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.12.1": {
+		"1.12.2-1.18.2.3": "Fixed Ice and Fire compatibility.",
 		"1.12.2-1.18.2.2": "Fixed compatibility between the smooth eye level change animation and Valkyrien Skies.",
 		"1.12.2-1.18.2.1": "Fixed the transformer exclusion.",
 		"1.12.2-1.18.1.1": "Fixed compatibility between BetterPortals and the smooth eye level change animation.",
@@ -149,6 +151,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.12": {
+		"1.12.2-1.18.2.3": "Fixed Ice and Fire compatibility.",
 		"1.12.2-1.18.2.2": "Fixed compatibility between the smooth eye level change animation and Valkyrien Skies.",
 		"1.12.2-1.18.2.1": "Fixed the transformer exclusion.",
 		"1.12.2-1.18.1.1": "Fixed compatibility between BetterPortals and the smooth eye level change animation.",
@@ -211,6 +214,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.11.2": {
+		"1.12.2-1.18.2.3": "Fixed Ice and Fire compatibility.",
 		"1.12.2-1.18.2.2": "Fixed compatibility between the smooth eye level change animation and Valkyrien Skies.",
 		"1.12.2-1.18.2.1": "Fixed the transformer exclusion.",
 		"1.12.2-1.18.1.1": "Fixed compatibility between BetterPortals and the smooth eye level change animation.",
@@ -273,6 +277,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.11": {
+		"1.12.2-1.18.2.3": "Fixed Ice and Fire compatibility.",
 		"1.12.2-1.18.2.2": "Fixed compatibility between the smooth eye level change animation and Valkyrien Skies.",
 		"1.12.2-1.18.2.1": "Fixed the transformer exclusion.",
 		"1.12.2-1.18.1.1": "Fixed compatibility between BetterPortals and the smooth eye level change animation.",
@@ -335,6 +340,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.10.2": {
+		"1.12.2-1.18.2.3": "Fixed Ice and Fire compatibility.",
 		"1.12.2-1.18.2.2": "Fixed compatibility between the smooth eye level change animation and Valkyrien Skies.",
 		"1.12.2-1.18.2.1": "Fixed the transformer exclusion.",
 		"1.12.2-1.18.1.1": "Fixed compatibility between BetterPortals and the smooth eye level change animation.",
@@ -397,6 +403,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.10": {
+		"1.12.2-1.18.2.3": "Fixed Ice and Fire compatibility.",
 		"1.12.2-1.18.2.2": "Fixed compatibility between the smooth eye level change animation and Valkyrien Skies.",
 		"1.12.2-1.18.2.1": "Fixed the transformer exclusion.",
 		"1.12.2-1.18.1.1": "Fixed compatibility between BetterPortals and the smooth eye level change animation.",
@@ -459,7 +466,8 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.9.4": {
-		"1.12.2-1.18.2.1": "Fixed the transformer exclusion.",
+		"1.12.2-1.18.2.3": "Fixed Ice and Fire compatibility.",
+		"1.12.2-1.18.2.2": "Fixed compatibility between the smooth eye level change animation and Valkyrien Skies.",
 		"1.12.2-1.18.2.1": "Fixed the transformer exclusion.",
 		"1.12.2-1.18.1.1": "Fixed compatibility between BetterPortals and the smooth eye level change animation.",
 		"1.12.2-1.17.2.1": "The window icon and title configuration options now work alongside It's the little things.",
@@ -514,7 +522,8 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.9": {
-		"1.12.2-1.18.2.1": "Fixed the transformer exclusion.",
+		"1.12.2-1.18.2.3": "Fixed Ice and Fire compatibility.",
+		"1.12.2-1.18.2.2": "Fixed compatibility between the smooth eye level change animation and Valkyrien Skies.",
 		"1.12.2-1.18.2.1": "Fixed the transformer exclusion.",
 		"1.12.2-1.18.1.1": "Fixed compatibility between BetterPortals and the smooth eye level change animation.",
 		"1.12.2-1.17.2.1": "The window icon and title configuration options now work alongside It's the little things.",
@@ -569,7 +578,8 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.8.9": {
-		"1.12.2-1.18.2.1": "Fixed the transformer exclusion.",
+		"1.12.2-1.18.2.3": "Fixed Ice and Fire compatibility.",
+		"1.12.2-1.18.2.2": "Fixed compatibility between the smooth eye level change animation and Valkyrien Skies.",
 		"1.12.2-1.18.2.1": "Fixed the transformer exclusion.",
 		"1.12.2-1.18.1.1": "Fixed compatibility between BetterPortals and the smooth eye level change animation.",
 		"1.12.2-1.17.2.1": "The window icon and title configuration options now work alongside It's the little things.",
@@ -624,7 +634,8 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.8.8": {
-		"1.12.2-1.18.2.1": "Fixed the transformer exclusion.",
+		"1.12.2-1.18.2.3": "Fixed Ice and Fire compatibility.",
+		"1.12.2-1.18.2.2": "Fixed compatibility between the smooth eye level change animation and Valkyrien Skies.",
 		"1.12.2-1.18.2.1": "Fixed the transformer exclusion.",
 		"1.12.2-1.18.1.1": "Fixed compatibility between BetterPortals and the smooth eye level change animation.",
 		"1.12.2-1.17.2.1": "The window icon and title configuration options now work alongside It's the little things.",
@@ -679,7 +690,8 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.8": {
-		"1.12.2-1.18.2.1": "Fixed the transformer exclusion.",
+		"1.12.2-1.18.2.3": "Fixed Ice and Fire compatibility.",
+		"1.12.2-1.18.2.2": "Fixed compatibility between the smooth eye level change animation and Valkyrien Skies.",
 		"1.12.2-1.18.2.1": "Fixed the transformer exclusion.",
 		"1.12.2-1.18.1.1": "Fixed compatibility between BetterPortals and the smooth eye level change animation.",
 		"1.12.2-1.17.2.1": "The window icon and title configuration options now work alongside It's the little things.",
@@ -742,27 +754,27 @@
 		"1.14.2-recommended": "1.14.2-1.16.2.0",
 		"1.13.2-latest": "1.13.2-1.7.2.0",
 		"1.13.2-recommended": "1.13.2-1.17.2.0",
-		"1.12.2-latest": "1.12.2-1.18.2.2",
-		"1.12.2-recommended": "1.12.2-1.18.2.2",
-		"1.12-latest": "1.12.2-1.18.2.2",
-		"1.12-recommended": "1.12.2-1.18.2.2",
-		"1.11.2-latest": "1.12.2-1.18.2.2",
-		"1.11.2-recommended": "1.12.2-1.18.2.2",
-		"1.11-latest": "1.12.2-1.18.2.2",
-		"1.11-recommended": "1.12.2-1.18.2.2",
-		"1.10.2-latest": "1.12.2-1.18.2.2",
-		"1.10.2-recommended": "1.12.2-1.18.2.2",
-		"1.10-latest": "1.12.2-1.18.2.2",
-		"1.10-recommended": "1.12.2-1.18.2.2",
-		"1.9.4-latest": "1.12.2-1.18.2.2",
-		"1.9.4-recommended": "1.12.2-1.18.2.2",
-		"1.9-latest": "1.12.2-1.18.2.2",
-		"1.9-recommended": "1.12.2-1.18.2.2",
-		"1.8.9-latest": "1.12.2-1.18.2.2",
-		"1.8.9-recommended": "1.12.2-1.18.2.2",
-		"1.8.8-latest": "1.12.2-1.18.2.2",
-		"1.8.8-recommended": "1.12.2-1.18.2.2",
-		"1.8-latest": "1.12.2-1.18.2.2",
-		"1.8-recommended": "1.12.2-1.18.2.2"
+		"1.12.2-latest": "1.12.2-1.18.2.3",
+		"1.12.2-recommended": "1.12.2-1.18.2.3",
+		"1.12-latest": "1.12.2-1.18.2.3",
+		"1.12-recommended": "1.12.2-1.18.2.3",
+		"1.11.2-latest": "1.12.2-1.18.2.3",
+		"1.11.2-recommended": "1.12.2-1.18.2.3",
+		"1.11-latest": "1.12.2-1.18.2.3",
+		"1.11-recommended": "1.12.2-1.18.2.3",
+		"1.10.2-latest": "1.12.2-1.18.2.3",
+		"1.10.2-recommended": "1.12.2-1.18.2.3",
+		"1.10-latest": "1.12.2-1.18.2.3",
+		"1.10-recommended": "1.12.2-1.18.2.3",
+		"1.9.4-latest": "1.12.2-1.18.2.3",
+		"1.9.4-recommended": "1.12.2-1.18.2.3",
+		"1.9-latest": "1.12.2-1.18.2.3",
+		"1.9-recommended": "1.12.2-1.18.2.3",
+		"1.8.9-latest": "1.12.2-1.18.2.3",
+		"1.8.9-recommended": "1.12.2-1.18.2.3",
+		"1.8.8-latest": "1.12.2-1.18.2.3",
+		"1.8.8-recommended": "1.12.2-1.18.2.3",
+		"1.8-latest": "1.12.2-1.18.2.3",
+		"1.8-recommended": "1.12.2-1.18.2.3"
 	}
 }
