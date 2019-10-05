@@ -7,9 +7,9 @@ import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 import com.mojang.blaze3d.platform.TextureUtil;
-import com.therandomlabs.randomlib.TRLUtils;
 import com.therandomlabs.randompatches.RPConfig;
 import com.therandomlabs.randompatches.RandomPatches;
+import com.therandomlabs.utils.forge.ForgeUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourcePackType;
 import net.minecraft.resources.VanillaPack;
@@ -135,7 +135,7 @@ public class WindowIconHandler {
 				}
 			}
 		} catch(IOException ex) {
-			if(TRLUtils.IS_DEOBFUSCATED &&
+			if(ForgeUtils.IS_DEOBFUSCATED &&
 					ex instanceof FileNotFoundException &&
 					RPConfig.Window.DEFAULT_ICON.equals(RPConfig.Window.icon16) &&
 					RPConfig.Window.DEFAULT_ICON.equals(RPConfig.Window.icon32)) {

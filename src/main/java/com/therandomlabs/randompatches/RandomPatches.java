@@ -1,7 +1,7 @@
 package com.therandomlabs.randompatches;
 
-import com.therandomlabs.randomlib.TRLUtils;
-import com.therandomlabs.randomlib.config.CommandConfigReload;
+import com.therandomlabs.utils.forge.ForgeUtils;
+import com.therandomlabs.utils.forge.config.CommandConfigReload;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
@@ -14,7 +14,7 @@ public final class RandomPatches {
 	public static final String MOD_ID = "randompatches";
 	public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
 
-	public static final String DEFAULT_WINDOW_TITLE = "Minecraft " + TRLUtils.MC_VERSION;
+	public static final String DEFAULT_WINDOW_TITLE = "Minecraft " + ForgeUtils.MC_VERSION;
 
 	public static final CommonProxy PROXY =
 			DistExecutor.runForDist(() -> ClientProxy::new, () -> CommonProxy::new);

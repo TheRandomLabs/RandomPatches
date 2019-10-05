@@ -2,26 +2,26 @@ package com.therandomlabs.randompatches;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import com.therandomlabs.randomlib.TRLUtils;
-import com.therandomlabs.randomlib.config.Config;
 import com.therandomlabs.randompatches.client.WindowIconHandler;
+import com.therandomlabs.utils.config.Config;
+import com.therandomlabs.utils.forge.ForgeUtils;
 import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.glfw.GLFW;
 
-@Config(modid = RandomPatches.MOD_ID, comment = "RandomPatches configuration")
+@Config(id = RandomPatches.MOD_ID, comment = "RandomPatches configuration")
 public final class RPConfig {
 	public static final class Boats {
 		@Config.Property(
 				"Prevents underwater boat passengers from being ejected after 60 ticks (3 seconds)."
 		)
-		public static boolean preventUnderwaterBoatPassengerEjection = TRLUtils.IS_DEOBFUSCATED;
+		public static boolean preventUnderwaterBoatPassengerEjection = ForgeUtils.IS_DEOBFUSCATED;
 
 		@Config.Property({
 				"The buoyancy of boats when they are under flowing water.",
 				"The vanilla default is -0.0007."
 		})
-		public static double underwaterBoatBuoyancy = TRLUtils.IS_DEOBFUSCATED ? 5.0 : 0.023;
+		public static double underwaterBoatBuoyancy = ForgeUtils.IS_DEOBFUSCATED ? 5.0 : 0.023;
 	}
 
 	public static final class Client {
@@ -32,17 +32,17 @@ public final class RPConfig {
 				"Forces Minecraft to show the title screen after disconnecting rather than " +
 						"the Multiplayer or Realms menu."
 		)
-		public static boolean forceTitleScreenOnDisconnect = TRLUtils.IS_DEOBFUSCATED;
+		public static boolean forceTitleScreenOnDisconnect = ForgeUtils.IS_DEOBFUSCATED;
 
 		@Config.Property("Whether to remove the glowing effect from potions.")
-		public static boolean removePotionGlint = TRLUtils.IS_DEOBFUSCATED;
+		public static boolean removePotionGlint = ForgeUtils.IS_DEOBFUSCATED;
 	}
 
 	public static final class Misc {
 		@Config.Property("Enables the portal bucket replacement fix for Nether portals.")
 		public static boolean portalBucketReplacementFixForNetherPortals;
 
-		@Config.RequiresWorldReload
+		@Config.RequiresReload
 		@Config.Property("Enables the /rpreload command.")
 		public static boolean rpreload = true;
 
@@ -128,7 +128,7 @@ public final class RPConfig {
 
 	public static final class Window {
 		public static final Path DEFAULT_ICON = Paths.get(
-				TRLUtils.IS_DEOBFUSCATED ? "../src/main/resources/logo.png" : ""
+				ForgeUtils.IS_DEOBFUSCATED ? "../src/main/resources/logo.png" : ""
 		);
 
 		@Config.Property({
@@ -150,7 +150,7 @@ public final class RPConfig {
 		public static Path icon256 = DEFAULT_ICON;
 
 		@Config.Property("The Minecraft window title.")
-		public static String title = TRLUtils.IS_DEOBFUSCATED ?
+		public static String title = ForgeUtils.IS_DEOBFUSCATED ?
 				"RandomPatches" : RandomPatches.DEFAULT_WINDOW_TITLE;
 
 		public static String icon16String;
@@ -198,7 +198,7 @@ public final class RPConfig {
 				}
 			}
 
-			if(TRLUtils.IS_CLIENT && setWindowSettings && applySettings) {
+			if(ForgeUtils.IS_CLIENT && setWindowSettings && applySettings) {
 				Minecraft.getInstance().execute(Window::setWindowSettings);
 			}
 		}

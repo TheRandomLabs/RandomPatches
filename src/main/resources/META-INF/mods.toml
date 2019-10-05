@@ -12,5 +12,5 @@ modId = "randompatches"
 version = "${file.jarVersion}"
 displayName = "RandomPatches"
 description = '''
-A bunch of miscellaneous patches for Minecraft.
+RandomPatches, a bunch of miscellaneous patches for Minecraft.
 '''
