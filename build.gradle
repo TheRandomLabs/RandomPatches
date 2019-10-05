@@ -118,6 +118,13 @@ shadowJar {
 	relocate "com.therandomlabs.utils", "com.therandomlabs.randompatches.repackage.com.therandomlabs.utils"
 }
 
+reobf {
+	shadowJar {
+		dependsOn createMcpToSrg
+		mappings = createMcpToSrg.output
+	}
+}
+
 artifacts {
 	archives shadowJar
 }
