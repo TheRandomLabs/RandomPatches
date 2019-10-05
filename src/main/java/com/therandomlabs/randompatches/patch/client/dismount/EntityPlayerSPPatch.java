@@ -1,5 +1,6 @@
 package com.therandomlabs.randompatches.patch.client.dismount;
 
+import com.therandomlabs.randomlib.TRLUtils;
 import com.therandomlabs.randompatches.core.Patch;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
@@ -21,7 +22,9 @@ public final class EntityPlayerSPPatch extends Patch {
 
 		public static void register() {
 			keybind = new KeyBinding(
-					"key.dismount", Keyboard.KEY_LSHIFT, "key.categories.movement"
+					"key.dismount",
+					TRLUtils.MC_VERSION_NUMBER > 8 ? Keyboard.KEY_LSHIFT : Keyboard.KEY_Z,
+					"key.categories.movement"
 			);
 			ClientRegistry.registerKeyBinding(keybind);
 			sneakKeybind = Minecraft.getMinecraft().gameSettings.keyBindSneak;

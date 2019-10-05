@@ -155,7 +155,10 @@ public final class RandomPatches {
 					"net.minecraft.client.network.NetHandlerPlayClient",
 					new NetHandlerPlayClientPatch()
 			);
-			register("net.minecraft.client.settings.KeyBinding", new KeyBindingPatch());
+
+			if(TRLUtils.MC_VERSION_NUMBER > 8) {
+				register("net.minecraft.client.settings.KeyBinding", new KeyBindingPatch());
+			}
 		}
 
 		if(RPConfig.Client.fastLanguageSwitch && TRLUtils.IS_CLIENT) {

@@ -35,7 +35,7 @@ public final class RPConfig {
 
 		@Config.RequiresMCRestart
 		@Config.Property("Adds a separate keybind for dismounting.")
-		public static boolean dismountKeybind = true;
+		public static boolean dismountKeybind = TRLUtils.MC_VERSION_NUMBER > 8;
 
 		@Config.RequiresMCRestart
 		@Config.Property("Speeds up language switching.")
