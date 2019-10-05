@@ -2,7 +2,6 @@
 	//Client
 	"RandomPatches BambooBlock Transformer": "patches/client/BambooBlock.js",
 	"RandomPatches IngameMenuScreen Transformer": "patches/client/IngameMenuScreen.js",
-	"RandomPatches KeyBinding Transformer": "patches/client/KeyBinding.js",
 	"RandomPatches KeyboardListener Transformer": "patches/client/KeyboardListener.js",
 	"RandomPatches LanguageScreen Transformer": "patches/client/LanguageScreen.js",
 	"RandomPatches MainWindow Transformer": "patches/client/MainWindow.js",
@@ -12,6 +11,7 @@
 	//Dismount
 	"RandomPatches ClientPlayerEntity Transformer": "patches/client/dismount/ClientPlayerEntity.js",
 	"RandomPatches ClientPlayNetHandler Transformer": "patches/client/dismount/ClientPlayNetHandler.js",
+	"RandomPatches KeyBinding Transformer": "patches/client/dismount/KeyBinding.js",
 	//Packet size
 	"RandomPatches NettyCompressionDecoder Transformer": "patches/packetsize/NettyCompressionDecoder.js",
 	"RandomPatches PacketBuffer Transformer": "patches/packetsize/PacketBuffer.js",
