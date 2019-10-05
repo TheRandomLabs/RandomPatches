@@ -35,7 +35,7 @@ public final class RPConfig {
 
 		@Config.RequiresMCRestart
 		@Config.Property("Adds a separate keybind for dismounting.")
-		public static boolean dismountKeybind = RandomPatches.IS_DEOBFUSCATED;
+		public static boolean dismountKeybind = true;
 
 		@Config.RequiresMCRestart
 		@Config.Property("Speeds up language switching.")

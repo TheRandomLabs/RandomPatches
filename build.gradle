@@ -19,7 +19,7 @@ apply plugin: "com.github.johnrengelman.shadow"
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 
-version = "1.12.2-1.19.0.0"
+version = "1.12.2-1.19.1.0"
 group = "com.therandomlabs.randompatches"
 archivesBaseName = "randompatches"
 
@@ -30,8 +30,8 @@ repositories {
 }
 
 dependencies {
-	shadow "com.github.TheRandomLabs:RandomLib:1.12-SNAPSHOT"
-	compile "com.github.TheRandomLabs:RandomLib:1.12-SNAPSHOT"
+	shadow group: "com.github.TheRandomLabs", name: "RandomLib", version: "1.12-SNAPSHOT", changing: true
+	compile group: "com.github.TheRandomLabs", name: "RandomLib", version: "1.12-SNAPSHOT", changing: true
 }
 
 shadowJar {

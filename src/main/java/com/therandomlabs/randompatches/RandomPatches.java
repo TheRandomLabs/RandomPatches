@@ -25,6 +25,7 @@ import com.therandomlabs.randompatches.patch.client.ItemPotionPatch;
 import com.therandomlabs.randompatches.patch.client.MinecraftPatch;
 import com.therandomlabs.randompatches.patch.client.RenderPlayerPatch;
 import com.therandomlabs.randompatches.patch.client.dismount.EntityPlayerSPPatch;
+import com.therandomlabs.randompatches.patch.client.dismount.KeyBindingPatch;
 import com.therandomlabs.randompatches.patch.client.dismount.NetHandlerPlayClientPatch;
 import com.therandomlabs.randompatches.patch.endportal.BlockEndPortalPatch;
 import com.therandomlabs.randompatches.patch.endportal.BlockModelShapesPatch;
@@ -154,6 +155,7 @@ public final class RandomPatches {
 					"net.minecraft.client.network.NetHandlerPlayClient",
 					new NetHandlerPlayClientPatch()
 			);
+			register("net.minecraft.client.settings.KeyBinding", new KeyBindingPatch());
 		}
 
 		if(RPConfig.Client.fastLanguageSwitch && TRLUtils.IS_CLIENT) {
