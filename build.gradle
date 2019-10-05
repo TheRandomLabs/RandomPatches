@@ -115,7 +115,7 @@ shadowJar {
 		include(dependency("com.github.TheRandomLabs:TRLUtils-Forge:1.14-SNAPSHOT"))
 	}
 
-	relocate "com.therandomlabs.utils", "com.therandomlabs.randompatches.repackage.trlutilsforge"
+	relocate "com.therandomlabs.utils", "com.therandomlabs.randompatches.repackage.com.therandomlabs.utils"
 }
 
 artifacts {
