@@ -121,8 +121,7 @@ public final class RPConfig {
 			keepAlivePacketIntervalLong = keepAlivePacketInterval;
 			readTimeoutMillis = readTimeout * 1000L;
 
-			System.setProperty("fml.readTimeout", Integer.toString(readTimeout));
-			System.setProperty("fml.loginTimeout", Integer.toString(loginTimeout));
+			System.setProperty("forge.readTimeout", Integer.toString(readTimeout));
 		}
 	}
 
