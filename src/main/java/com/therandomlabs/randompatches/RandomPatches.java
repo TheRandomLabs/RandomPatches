@@ -1,7 +1,7 @@
 package com.therandomlabs.randompatches;
 
 import com.therandomlabs.utils.forge.ForgeUtils;
-import com.therandomlabs.utils.forge.config.CommandConfigReload;
+import com.therandomlabs.utils.forge.config.ConfigReloadCommand;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
@@ -26,11 +26,11 @@ public final class RandomPatches {
 
 	private void serverStarting(FMLServerStartingEvent event) {
 		if(RPConfig.Misc.rpreload) {
-			CommandConfigReload.server(
+			ConfigReloadCommand.server(
 					event.getCommandDispatcher(), "rpreload", "rpreloadclient", RPConfig.class,
 					"RandomPatches configuration reloaded!",
 					(phase, source) -> RPConfig.Window.setWindowSettings =
-							phase == CommandConfigReload.ReloadPhase.POST
+							phase == ConfigReloadCommand.ReloadPhase.POST
 			);
 		}
 	}
