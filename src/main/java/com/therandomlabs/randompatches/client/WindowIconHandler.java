@@ -9,7 +9,9 @@ import java.nio.IntBuffer;
 import com.mojang.blaze3d.platform.TextureUtil;
 import com.therandomlabs.randompatches.RPConfig;
 import com.therandomlabs.randompatches.RandomPatches;
+import com.therandomlabs.utils.config.ConfigManager;
 import com.therandomlabs.utils.forge.ForgeUtils;
+import com.therandomlabs.utils.forge.config.ForgeConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourcePackType;
 import net.minecraft.resources.VanillaPack;
@@ -19,6 +21,7 @@ import org.apache.commons.io.IOUtils;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWImage;
 import org.lwjgl.stb.STBImage;
+import org.lwjgl.stb.STBImageResize;
 import org.lwjgl.system.MemoryStack;
 import org.lwjgl.system.MemoryUtil;
 
@@ -26,6 +29,9 @@ public class WindowIconHandler {
 	private static boolean setBefore;
 
 	public static void setWindowIcon() {
+		//This gets called before the RandomPatches constructor is called
+		ForgeConfig.initialize();
+		ConfigManager.register(RPConfig.class);
 		setWindowIcon(Minecraft.getInstance().mainWindow.getHandle());
 	}
 
@@ -38,7 +44,7 @@ public class WindowIconHandler {
 		InputStream stream32 = null;
 		InputStream stream256 = null;
 
-		try(MemoryStack memoryStack = MemoryStack.stackPush()) {
+		try(MemoryStack stack = MemoryStack.stackPush()) {
 			final Minecraft mc = Minecraft.getInstance();
 
 			if(RPConfig.Window.icon16String.isEmpty()) {
@@ -73,65 +79,84 @@ public class WindowIconHandler {
 				}
 			}
 
-			if(stream16 != null) {
-				final IntBuffer x = memoryStack.mallocInt(1);
-				final IntBuffer y = memoryStack.mallocInt(1);
-				final IntBuffer channels = memoryStack.mallocInt(1);
+			final IntBuffer x = stack.mallocInt(1);
+			final IntBuffer y = stack.mallocInt(1);
+			final IntBuffer channels = stack.mallocInt(1);
 
-				final GLFWImage.Buffer imageBuffer = GLFWImage.mallocStack(2, memoryStack);
+			final GLFWImage.Buffer imageBuffer = GLFWImage.mallocStack(2, stack);
 
-				final ByteBuffer image16Bytes = readImageToBuffer(stream16, x, y, channels);
+			final ByteBuffer image16 = readImageToBuffer(stream16, x, y, channels, stack, 16);
 
-				if(image16Bytes == null) {
+			if(image16 == null) {
+				throw new IllegalStateException(
+						"Could not load icon: " + STBImage.stbi_failure_reason()
+				);
+			}
+
+			boolean image16Resized = x.get(0) != 16 || y.get(0) != 16;
+
+			imageBuffer.position(0);
+			imageBuffer.width(16);
+			imageBuffer.height(16);
+			imageBuffer.pixels(image16);
+
+			final ByteBuffer image32 = readImageToBuffer(stream32, x, y, channels, stack, 32);
+
+			if(image32 == null) {
+				throw new IllegalStateException(
+						"Could not load icon: " + STBImage.stbi_failure_reason()
+				);
+			}
+
+			boolean image32Resized = x.get(0) != 32 || y.get(0) != 32;
+
+			imageBuffer.position(1);
+			imageBuffer.width(32);
+			imageBuffer.height(32);
+			imageBuffer.pixels(image32);
+
+			ByteBuffer image256 = null;
+			boolean image256Resized = false;
+
+			if(osX) {
+				image256 = readImageToBuffer(stream256, x, y, channels, stack, 256);
+
+				if(image256 == null) {
 					throw new IllegalStateException(
 							"Could not load icon: " + STBImage.stbi_failure_reason()
 					);
 				}
 
+				image256Resized = x.get(0) != 256 || y.get(0) != 256;
+
+				imageBuffer.position(2);
+				imageBuffer.width(256);
+				imageBuffer.height(256);
+				imageBuffer.pixels(image256);
 				imageBuffer.position(0);
-				imageBuffer.width(x.get(0));
-				imageBuffer.height(y.get(0));
-				imageBuffer.pixels(image16Bytes);
+			}
 
-				final ByteBuffer image32Bytes = readImageToBuffer(stream32, x, y, channels);
+			imageBuffer.position(0);
+			GLFW.glfwSetWindowIcon(handle, imageBuffer);
 
-				if(image32Bytes == null) {
-					throw new IllegalStateException(
-							"Could not load icon: " + STBImage.stbi_failure_reason()
-					);
-				}
+			//If it was resized, then a buffer would have been allocated with MemoryUtil.memAlloc
+			if(image16Resized) {
+				MemoryUtil.memFree(image16);
+			} else {
+				STBImage.stbi_image_free(image16);
+			}
 
-				imageBuffer.position(1);
-				imageBuffer.width(x.get(0));
-				imageBuffer.height(y.get(0));
-				imageBuffer.pixels(image32Bytes);
+			if(image32Resized) {
+				MemoryUtil.memFree(image32);
+			} else {
+				STBImage.stbi_image_free(image32);
+			}
 
-				ByteBuffer image256Bytes = null;
-
-				if(osX) {
-					image256Bytes = readImageToBuffer(stream256, x, y, channels);
-
-					if(image256Bytes == null) {
-						throw new IllegalStateException(
-								"Could not load icon: " + STBImage.stbi_failure_reason()
-						);
-					}
-
-					imageBuffer.position(2);
-					imageBuffer.width(x.get(0));
-					imageBuffer.height(y.get(0));
-					imageBuffer.pixels(image256Bytes);
-					imageBuffer.position(0);
-				}
-
-				imageBuffer.position(0);
-				GLFW.glfwSetWindowIcon(handle, imageBuffer);
-
-				STBImage.stbi_image_free(image16Bytes);
-				STBImage.stbi_image_free(image32Bytes);
-
-				if(osX) {
-					STBImage.stbi_image_free(image256Bytes);
+			if(osX) {
+				if(image256Resized) {
+					MemoryUtil.memFree(image256);
+				} else {
+					STBImage.stbi_image_free(image256);
 				}
 			}
 		} catch(IOException ex) {
@@ -154,21 +179,39 @@ public class WindowIconHandler {
 	}
 
 	private static ByteBuffer readImageToBuffer(
-			InputStream stream, IntBuffer x, IntBuffer y, IntBuffer channels
+			InputStream stream, IntBuffer x, IntBuffer y, IntBuffer channels, MemoryStack stack,
+			int size
 	) throws IOException {
-		ByteBuffer buffer1 = null;
-		final ByteBuffer buffer2;
+		ByteBuffer resource = null;
 
 		try {
-			buffer1 = TextureUtil.readResource(stream);
-			buffer1.rewind();
-			buffer2 = STBImage.stbi_load_from_memory(buffer1, x, y, channels, 0);
+			resource = TextureUtil.readResource(stream);
+			resource.rewind();
+
+			final ByteBuffer image = STBImage.stbi_load_from_memory(resource, x, y, channels, 0);
+
+			final int width = x.get(0);
+			final int height = y.get(0);
+
+			if(width == size && height == size) {
+				return image;
+			}
+
+			final int comp = channels.get(0);
+
+			final ByteBuffer resized = MemoryUtil.memAlloc(size * size * comp);
+
+			STBImageResize.stbir_resize_uint8(
+					image, width, height, 0, resized, size, size, 0, comp
+			);
+
+			STBImage.stbi_image_free(image);
+
+			return resized;
 		} finally {
-			if(buffer1 != null) {
-				MemoryUtil.memFree(buffer1);
+			if(resource != null) {
+				MemoryUtil.memFree(resource);
 			}
 		}
-
-		return buffer2;
 	}
 }
