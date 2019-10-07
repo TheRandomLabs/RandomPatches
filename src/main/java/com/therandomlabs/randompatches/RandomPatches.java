@@ -1,7 +1,9 @@
 package com.therandomlabs.randompatches;
 
+import com.therandomlabs.utils.config.ConfigManager;
 import com.therandomlabs.utils.forge.ForgeUtils;
 import com.therandomlabs.utils.forge.config.ConfigReloadCommand;
+import com.therandomlabs.utils.forge.config.ForgeConfig;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
@@ -20,6 +22,11 @@ public final class RandomPatches {
 			DistExecutor.runForDist(() -> ClientProxy::new, () -> CommonProxy::new);
 
 	public RandomPatches() {
+		if(!ForgeUtils.IS_CLIENT) {
+			ForgeConfig.initialize();
+			ConfigManager.register(RPConfig.class);
+		}
+
 		MinecraftForge.EVENT_BUS.addListener(this::serverStarting);
 		PROXY.init();
 	}
