@@ -1,5 +1,6 @@
 package com.therandomlabs.randompatches.patch;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.UUID;
 import com.google.common.base.Charsets;
@@ -126,8 +127,9 @@ public final class NBTTagCompoundPatch extends Patch {
 			return null;
 		}
 
-		final String json =
-				new String(Base64.decodeBase64(textureProperty.getValue()), Charsets.UTF_8);
+		final String json = new String(
+				Base64.decodeBase64(textureProperty.getValue()), StandardCharsets.UTF_8
+		);
 		return GSON.fromJson(json, MinecraftTexturesPayload.class);
 	}
 

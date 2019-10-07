@@ -97,6 +97,14 @@ public final class RandomPatches {
 							phase == CommandConfigReload.ReloadPhase.POST
 			));
 		}
+
+		if(RPConfig.Misc.areEndPortalTweaksEnabled()) {
+			final RPTileEntityEndPortalRenderer renderer = new RPTileEntityEndPortalRenderer();
+			renderer.setRendererDispatcher(TileEntityRendererDispatcher.instance);
+			TileEntityRendererDispatcher.instance.renderers.put(
+					TileEntityEndPortal.class, renderer
+			);
+		}
 	}
 
 	@Subscribe
@@ -133,14 +141,6 @@ public final class RandomPatches {
 			} else {
 				LOGGER.error("Invalid fingerprint detected!");
 			}
-		}
-
-		if(RPConfig.Misc.areEndPortalTweaksEnabled()) {
-			final RPTileEntityEndPortalRenderer renderer = new RPTileEntityEndPortalRenderer();
-			renderer.setRendererDispatcher(TileEntityRendererDispatcher.instance);
-			TileEntityRendererDispatcher.instance.renderers.put(
-					TileEntityEndPortal.class, renderer
-			);
 		}
 	}
 
@@ -182,7 +182,7 @@ public final class RandomPatches {
 			register("net.minecraft.client.gui.GuiIngameMenu", new GuiIngameMenuPatch());
 		}
 
-		if(RPConfig.Client.patchSmoothEyeLevelChanges) {
+		if(RPConfig.Client.patchSmoothEyeLevelChanges && TRLUtils.IS_CLIENT) {
 			register("net.minecraft.client.renderer.EntityRenderer", new EntityRendererPatch());
 		}
 
@@ -210,7 +210,9 @@ public final class RandomPatches {
 			register("net.minecraft.entity.item.EntityMinecart", new EntityMinecartPatch());
 		}
 
-		if(RPConfig.Misc.miningGhostBlocksFix && TRLUtils.MC_VERSION_NUMBER > 8) {
+		//TODO fix SpongeForge compatibility
+		if(RPConfig.Misc.miningGhostBlocksFix && TRLUtils.MC_VERSION_NUMBER > 8 &&
+				!SPONGEFORGE_INSTALLED) {
 			register(
 					"net.minecraft.server.management.PlayerInteractionManager",
 					new PlayerInteractionManagerPatch()
@@ -238,7 +240,9 @@ public final class RandomPatches {
 			register("net.minecraft.network.PacketBuffer", new PacketBufferPatch());
 		}
 
-		if(RPConfig.Misc.pistonGhostBlocksFix && TRLUtils.MC_VERSION_NUMBER > 8) {
+		//TODO fix SpongeForge compatibility
+		if(RPConfig.Misc.pistonGhostBlocksFix && TRLUtils.MC_VERSION_NUMBER > 8 &&
+				!SPONGEFORGE_INSTALLED) {
 			register("net.minecraft.tileentity.TileEntityPiston", new TileEntityPistonPatch());
 		}
 
