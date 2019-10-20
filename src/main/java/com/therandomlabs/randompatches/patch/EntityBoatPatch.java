@@ -24,10 +24,10 @@ public final class EntityBoatPatch extends Patch {
 		final InsnList instructions = findInstructions(node, "onUpdate", "func_70071_h_");
 		InsnNode returnVoid = null;
 
-		for(int i = instructions.size() - 1; i >= 0; i--) {
+		for (int i = instructions.size() - 1; i >= 0; i--) {
 			final AbstractInsnNode instruction = instructions.get(i);
 
-			if(instruction.getOpcode() == Opcodes.RETURN) {
+			if (instruction.getOpcode() == Opcodes.RETURN) {
 				returnVoid = (InsnNode) instruction;
 				break;
 			}
@@ -65,11 +65,11 @@ public final class EntityBoatPatch extends Patch {
 	}
 
 	public static void onUpdate(EntityBoat boat, EntityBoat.Status status) {
-		if(status == EntityBoat.Status.UNDER_FLOWING_WATER) {
+		if (status == EntityBoat.Status.UNDER_FLOWING_WATER) {
 			boat.motionY += RPConfig.Boats.underwaterBoatBuoyancy - VANILLA_UNDERWATER_BUOYANCY;
 		}
 
-		if(RPConfig.Boats.preventUnderwaterBoatPassengerEjection) {
+		if (RPConfig.Boats.preventUnderwaterBoatPassengerEjection) {
 			boat.outOfControlTicks = 0.0F;
 		}
 	}

@@ -14,10 +14,10 @@ public final class PacketBufferPatch extends Patch {
 		final InsnList instructions = findInstructions(node, "readCompoundTag", "func_150793_b");
 		LdcInsnNode limit = null;
 
-		for(int i = 0; i < instructions.size(); i++) {
+		for (int i = 0; i < instructions.size(); i++) {
 			final AbstractInsnNode instruction = instructions.get(i);
 
-			if(instruction.getOpcode() == Opcodes.LDC) {
+			if (instruction.getOpcode() == Opcodes.LDC) {
 				limit = (LdcInsnNode) instruction;
 				break;
 			}

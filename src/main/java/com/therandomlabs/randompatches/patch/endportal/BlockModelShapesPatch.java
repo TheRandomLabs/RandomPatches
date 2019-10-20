@@ -16,18 +16,18 @@ public final class BlockModelShapesPatch extends Patch {
 	public boolean apply(ClassNode node) {
 		final InsnList instructions = findInstructions(node, "registerAllBlocks", "func_178119_d");
 
-		for(int i = 0; i < instructions.size(); i++) {
+		for (int i = 0; i < instructions.size(); i++) {
 			final AbstractInsnNode instruction = instructions.get(i);
 
-			if(instruction.getOpcode() == Opcodes.GETSTATIC) {
+			if (instruction.getOpcode() == Opcodes.GETSTATIC) {
 				final FieldInsnNode field = (FieldInsnNode) instruction;
 
-				if(END_PORTAL.equals(field.name)) {
+				if (END_PORTAL.equals(field.name)) {
 					field.name = AIR;
 					continue;
 				}
 
-				if(END_GATEWAY.equals(field.name)) {
+				if (END_GATEWAY.equals(field.name)) {
 					field.name = AIR;
 					return true;
 				}

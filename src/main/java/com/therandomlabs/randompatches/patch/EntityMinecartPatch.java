@@ -12,10 +12,10 @@ public final class EntityMinecartPatch extends Patch {
 	public boolean apply(ClassNode node) {
 		final InsnList instructions = findInstructions(node, "moveAlongTrack", "func_180460_a");
 
-		for(int i = 0; i < instructions.size(); i++) {
+		for (int i = 0; i < instructions.size(); i++) {
 			final AbstractInsnNode instruction = instructions.get(i);
 
-			if(instruction.getOpcode() == Opcodes.INSTANCEOF) {
+			if (instruction.getOpcode() == Opcodes.INSTANCEOF) {
 				((TypeInsnNode) instruction).desc = "net/minecraft/entity/player/EntityPlayer";
 				return true;
 			}

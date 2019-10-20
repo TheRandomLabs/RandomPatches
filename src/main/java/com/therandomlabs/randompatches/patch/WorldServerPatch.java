@@ -72,13 +72,13 @@ public final class WorldServerPatch extends Patch {
 	public boolean apply(ClassNode node) {
 		final InsnList instructions = findInstructions(node, "<init>");
 
-		for(int i = 0; i < instructions.size(); i++) {
+		for (int i = 0; i < instructions.size(); i++) {
 			final AbstractInsnNode instruction = instructions.get(i);
 
-			if(instruction.getOpcode() == Opcodes.INVOKESTATIC) {
+			if (instruction.getOpcode() == Opcodes.INVOKESTATIC) {
 				final MethodInsnNode method = (MethodInsnNode) instruction;
 
-				if("newHashSet".equals(method.name)) {
+				if ("newHashSet".equals(method.name)) {
 					method.owner = getName(WorldServerPatch.class) + "$NextTickListEntryHashSet";
 					return true;
 				}

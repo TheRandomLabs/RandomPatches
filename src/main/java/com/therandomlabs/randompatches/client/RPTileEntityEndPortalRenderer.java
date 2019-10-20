@@ -54,11 +54,11 @@ public class RPTileEntityEndPortalRenderer extends
 		final float offset = getOffset();
 		boolean flag = false;
 
-		for(int j = 0; j < passes; j++) {
+		for (int j = 0; j < passes; j++) {
 			GlStateManager.pushMatrix();
 			float f1 = 2.0F / (18 - j);
 
-			if(j == 0) {
+			if (j == 0) {
 				bindTexture(END_SKY_TEXTURE);
 				f1 = 0.15F;
 				GlStateManager.enableBlend();
@@ -68,13 +68,13 @@ public class RPTileEntityEndPortalRenderer extends
 				);
 			}
 
-			if(j >= 1) {
+			if (j >= 1) {
 				bindTexture(END_PORTAL_TEXTURE);
 				flag = true;
 				mc.entityRenderer.setupFogColor(true);
 			}
 
-			if(j == 1) {
+			if (j == 1) {
 				GlStateManager.enableBlend();
 				GlStateManager.blendFunc(
 						GlStateManager.SourceFactor.ONE,
@@ -130,57 +130,57 @@ public class RPTileEntityEndPortalRenderer extends
 			final float f4 = (RANDOM.nextFloat() * 0.5F + 0.4F) * f1;
 			final float f5 = (RANDOM.nextFloat() * 0.5F + 0.5F) * f1;
 
-			if(upsideDown) {
-				if(tileEntity.shouldRenderFace(EnumFacing.DOWN)) {
+			if (upsideDown) {
+				if (tileEntity.shouldRenderFace(EnumFacing.DOWN)) {
 					builder.pos(x, y + 0.25, z + 1.0).color(f3, f4, f5, 1.0F).endVertex();
 					builder.pos(x + 1.0, y + 0.25, z + 1.0).color(f3, f4, f5, 1.0F).endVertex();
 					builder.pos(x + 1.0, y + 0.25, z).color(f3, f4, f5, 1.0F).endVertex();
 					builder.pos(x, y + 0.25, z).color(f3, f4, f5, 1.0F).endVertex();
 				}
 
-				if(tileEntity.shouldRenderFace(EnumFacing.UP)) {
+				if (tileEntity.shouldRenderFace(EnumFacing.UP)) {
 					builder.pos(x, y + 0.25, z).color(f3, f4, f5, 1.0F).endVertex();
 					builder.pos(x + 1.0, y + 0.25, z).color(f3, f4, f5, 1.0F).endVertex();
 					builder.pos(x + 1.0, y + 0.25, z + 1.0).color(f3, f4, f5, 1.0F).endVertex();
 					builder.pos(x, y + 0.25, z + 1.0).color(f3, f4, f5, 1.0F).endVertex();
 				}
 			} else {
-				if(tileEntity.shouldRenderFace(EnumFacing.SOUTH)) {
+				if (tileEntity.shouldRenderFace(EnumFacing.SOUTH)) {
 					builder.pos(x, y, z + 0.5).color(f3, f4, f5, 1.0F).endVertex();
 					builder.pos(x + 1.0, y, z + 0.5).color(f3, f4, f5, 1.0F).endVertex();
 					builder.pos(x + 1.0, y + 1.0, z + 0.5).color(f3, f4, f5, 1.0F).endVertex();
 					builder.pos(x, y + 1.0, z + 0.5).color(f3, f4, f5, 1.0F).endVertex();
 				}
 
-				if(tileEntity.shouldRenderFace(EnumFacing.NORTH)) {
+				if (tileEntity.shouldRenderFace(EnumFacing.NORTH)) {
 					builder.pos(x, y + 1.0, z + 0.5).color(f3, f4, f5, 1.0F).endVertex();
 					builder.pos(x + 1.0, y + 1.0, z + 0.5).color(f3, f4, f5, 1.0F).endVertex();
 					builder.pos(x + 1.0, y, z + 0.5).color(f3, f4, f5, 1.0F).endVertex();
 					builder.pos(x, y, z + 0.5).color(f3, f4, f5, 1.0F).endVertex();
 				}
 
-				if(tileEntity.shouldRenderFace(EnumFacing.EAST)) {
+				if (tileEntity.shouldRenderFace(EnumFacing.EAST)) {
 					builder.pos(x + 0.5, y + 1.0, z).color(f3, f4, f5, 1.0F).endVertex();
 					builder.pos(x + 0.5, y + 1.0, z + 1.0).color(f3, f4, f5, 1.0F).endVertex();
 					builder.pos(x + 0.5, y, z + 1.0).color(f3, f4, f5, 1.0F).endVertex();
 					builder.pos(x + 0.5, y, z).color(f3, f4, f5, 1.0F).endVertex();
 				}
 
-				if(tileEntity.shouldRenderFace(EnumFacing.WEST)) {
+				if (tileEntity.shouldRenderFace(EnumFacing.WEST)) {
 					builder.pos(x + 0.5, y, z).color(f3, f4, f5, 1.0F).endVertex();
 					builder.pos(x + 0.5, y, z + 1.0).color(f3, f4, f5, 1.0F).endVertex();
 					builder.pos(x + 0.5, y + 1.0, z + 1.0).color(f3, f4, f5, 1.0F).endVertex();
 					builder.pos(x + 0.5, y + 1.0, z).color(f3, f4, f5, 1.0F).endVertex();
 				}
 
-				if(tileEntity.shouldRenderFace(EnumFacing.DOWN)) {
+				if (tileEntity.shouldRenderFace(EnumFacing.DOWN)) {
 					builder.pos(x, y + offset, z + 1.0).color(f3, f4, f5, 1.0F).endVertex();
 					builder.pos(x + 1.0, y + offset, z + 1.0).color(f3, f4, f5, 1.0F).endVertex();
 					builder.pos(x + 1.0, y + offset, z).color(f3, f4, f5, 1.0F).endVertex();
 					builder.pos(x, y + offset, z).color(f3, f4, f5, 1.0F).endVertex();
 				}
 
-				if(tileEntity.shouldRenderFace(EnumFacing.UP)) {
+				if (tileEntity.shouldRenderFace(EnumFacing.UP)) {
 					builder.pos(x, y + offset, z).color(f3, f4, f5, 1.0F).endVertex();
 					builder.pos(x + 1.0, y + offset, z).color(f3, f4, f5, 1.0F).endVertex();
 					builder.pos(x + 1.0, y + offset, z + 1.0).color(f3, f4, f5, 1.0F).endVertex();
@@ -202,42 +202,42 @@ public class RPTileEntityEndPortalRenderer extends
 		GlStateManager.disableTexGenCoord(GlStateManager.TexGen.R);
 		GlStateManager.enableLighting();
 
-		if(flag) {
+		if (flag) {
 			mc.entityRenderer.setupFogColor(false);
 		}
 	}
 
 	//From 1.13+
 	private int getPasses(double d) {
-		if(d > 36864.0) {
+		if (d > 36864.0) {
 			return 1;
 		}
 
-		if(d > 25600.0) {
+		if (d > 25600.0) {
 			return 3;
 		}
 
-		if(d > 16384.0) {
+		if (d > 16384.0) {
 			return 5;
 		}
 
-		if(d > 9216.0) {
+		if (d > 9216.0) {
 			return 7;
 		}
 
-		if(d > 4096.0) {
+		if (d > 4096.0) {
 			return 9;
 		}
 
-		if(d > 1024.0) {
+		if (d > 1024.0) {
 			return 11;
 		}
 
-		if(d > 576.0) {
+		if (d > 576.0) {
 			return 13;
 		}
 
-		if(d > 256.0) {
+		if (d > 256.0) {
 			return 14;
 		}
 		return 15;

@@ -14,13 +14,13 @@ public final class CertificateHelper {
 	public static List<String> getFingerprints(Certificate[] certificates) {
 		int length = 0;
 
-		if(certificates != null) {
+		if (certificates != null) {
 			length = certificates.length;
 		}
 
 		final List<String> fingerprints = new ArrayList<>(length);
 
-		for(int i = 0; i < length; i++) {
+		for (int i = 0; i < length; i++) {
 			fingerprints.add(CertificateHelper.getFingerprint(certificates[i]));
 		}
 
@@ -28,7 +28,7 @@ public final class CertificateHelper {
 	}
 
 	public static String getFingerprint(Certificate certificate) {
-		if(certificate == null) {
+		if (certificate == null) {
 			return "NO VALID CERTIFICATE FOUND";
 		}
 
@@ -40,7 +40,7 @@ public final class CertificateHelper {
 
 			final byte[] checksum = digest.digest();
 			return hexify(checksum);
-		} catch(Exception ex) {
+		} catch (Exception ex) {
 			return "CERTIFICATE FINGERPRINT EXCEPTION";
 		}
 	}
@@ -48,7 +48,7 @@ public final class CertificateHelper {
 	private static String hexify(byte[] checksum) {
 		final StringBuilder hex = new StringBuilder(2 * checksum.length);
 
-		for(byte b : checksum) {
+		for (byte b : checksum) {
 			hex.append(HEXES.charAt((b & 0xF0) >> 4)).append(HEXES.charAt(b & 0x0F));
 		}
 

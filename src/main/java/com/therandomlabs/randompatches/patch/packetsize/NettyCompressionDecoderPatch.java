@@ -20,14 +20,14 @@ public final class NettyCompressionDecoderPatch extends Patch {
 		LdcInsnNode limit1 = null;
 		LdcInsnNode limit2 = null;
 
-		for(int i = 0; i < instructions.size(); i++) {
+		for (int i = 0; i < instructions.size(); i++) {
 			final AbstractInsnNode instruction = instructions.get(i);
 
-			if(instruction.getOpcode() == Opcodes.LDC) {
+			if (instruction.getOpcode() == Opcodes.LDC) {
 				final LdcInsnNode ldc = (LdcInsnNode) instruction;
 
-				if(((Integer) VANILLA_LIMIT).equals(ldc.cst)) {
-					if(limit1 == null) {
+				if (((Integer) VANILLA_LIMIT).equals(ldc.cst)) {
+					if (limit1 == null) {
 						limit1 = ldc;
 					} else {
 						limit2 = ldc;

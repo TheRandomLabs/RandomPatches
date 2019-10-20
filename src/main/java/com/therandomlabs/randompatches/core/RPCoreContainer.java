@@ -44,12 +44,12 @@ public class RPCoreContainer extends DummyModContainer {
 
 	@Override
 	public boolean registerBus(EventBus bus, LoadController controller) {
-		if(TRLUtils.MC_VERSION_NUMBER > 9) {
+		if (TRLUtils.MC_VERSION_NUMBER > 9) {
 			Loader.instance().setActiveModContainer(this);
 		} else {
 			try {
 				ACTIVE_CONTAINER.set(MOD_CONTROLLER.get(Loader.instance()), this);
-			} catch(IllegalAccessException ex) {
+			} catch (IllegalAccessException ex) {
 				TRLUtils.crashReport("Failed to set active mod controller", ex);
 			}
 		}
@@ -82,7 +82,7 @@ public class RPCoreContainer extends DummyModContainer {
 	public URL getUpdateUrl() {
 		try {
 			return new URL(getMetadata().updateJSON);
-		} catch(MalformedURLException ignored) {}
+		} catch (MalformedURLException ignored) {}
 
 		return null;
 	}

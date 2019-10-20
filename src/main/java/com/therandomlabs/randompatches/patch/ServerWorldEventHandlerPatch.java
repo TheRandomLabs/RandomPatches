@@ -94,7 +94,7 @@ public final class ServerWorldEventHandlerPatch extends Patch {
 		//This exception would also occur in vanilla when calling EntityLivingBase#updateItemUse
 		//on the server when there are no subtypes for an item if not for MC-10369, which this
 		//patch fixes.
-		if(parameters.length == particleType.getArgumentCount()) {
+		if (parameters.length == particleType.getArgumentCount()) {
 			//numberOfParticles must be 0 so that the speed parameters are actually used and not
 			//randomized in NetHandlerPlayClient#handleParticles.
 			//The speed parameters are actually RGB values for anything potion related.

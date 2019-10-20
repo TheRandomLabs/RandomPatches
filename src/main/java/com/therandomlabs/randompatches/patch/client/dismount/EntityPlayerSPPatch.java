@@ -44,13 +44,13 @@ public final class EntityPlayerSPPatch extends Patch {
 		final InsnList instructions = findInstructions(node, "onUpdate", "func_70071_h_");
 		FieldInsnNode shouldDismount = null;
 
-		for(int i = 0; i < instructions.size(); i++) {
+		for (int i = 0; i < instructions.size(); i++) {
 			final AbstractInsnNode instruction = instructions.get(i);
 
-			if(instruction.getOpcode() == Opcodes.GETFIELD) {
+			if (instruction.getOpcode() == Opcodes.GETFIELD) {
 				shouldDismount = (FieldInsnNode) instruction;
 
-				if(SNEAK.equals(shouldDismount.name)) {
+				if (SNEAK.equals(shouldDismount.name)) {
 					break;
 				}
 

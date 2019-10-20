@@ -32,7 +32,7 @@ public final class RPUtils {
 	public static boolean detect(String className) {
 		try {
 			Class.forName(className, false, Launch.classLoader);
-		} catch(ClassNotFoundException ex) {
+		} catch (ClassNotFoundException ex) {
 			return false;
 		}
 
@@ -42,7 +42,7 @@ public final class RPUtils {
 	public static File getModFile(Map<String, Object> data, Class<?> clazz, String packageName) {
 		File modFile = (File) data.get("coremodLocation");
 
-		if(modFile != null) {
+		if (modFile != null) {
 			return modFile;
 		}
 
@@ -53,12 +53,12 @@ public final class RPUtils {
 				"/" + StringUtils.replaceChars(clazz.getName(), '.', '/') + ".class"
 		).toString();
 
-		if(uri.startsWith("file:/")) {
+		if (uri.startsWith("file:/")) {
 			//e.g. file:/C:/RandomPatches/out/production/RandomPatches_main/com/therandomlabs/
 			//randompatches/core/RPCore.class
 			//Get rid of everything including and after the "/com"
 			uri = uri.substring(6, uri.indexOf(packageName) - 1);
-		} else if(uri.startsWith("jar:file:/")) {
+		} else if (uri.startsWith("jar:file:/")) {
 			//e.g. jar:file:/C:/RandomPatches/libs/randompatches-version-deobf.jar!/com/
 			//therandomlabs/randompatches/core/RPCore.class
 			//Get rid of everything including and after the '!'
@@ -70,24 +70,25 @@ public final class RPUtils {
 
 		try {
 			return new File(URLDecoder.decode(uri, StandardCharsets.UTF_8.name()));
-		} catch(UnsupportedEncodingException ignored) {}
+		} catch (UnsupportedEncodingException ignored) {}
 
 		return null;
 	}
 
-	public static ModMetadata loadMetadata(File source, String modid, String name, String version) {
+	public static ModMetadata loadMetadata(File source, String modid, String name,
+			String version) {
 		InputStream stream = null;
 		JarFile jar = null;
 
-		if(source != null) {
+		if (source != null) {
 			try {
-				if(source.isDirectory()) {
+				if (source.isDirectory()) {
 					stream = new FileInputStream(new File(source, "mcmod.info"));
 				} else {
 					jar = new JarFile(source);
 					stream = jar.getInputStream(jar.getJarEntry("mcmod.info"));
 				}
-			} catch(IOException ex) {
+			} catch (IOException ex) {
 				RandomPatches.LOGGER.error("Failed to load mcmod.info: " + source, ex);
 
 				IOUtils.closeQuietly(stream);
@@ -112,13 +113,13 @@ public final class RPUtils {
 	public static Class<?> getResourcePackClass(ModContainer container) {
 		final File source = container.getSource();
 
-		if(source == null) {
+		if (source == null) {
 			return null;
 		}
 
 		final String className;
 
-		if(source.isDirectory()) {
+		if (source.isDirectory()) {
 			className = "net.minecraftforge.fml.client.FMLFolderResourcePack";
 		} else {
 			className = "net.minecraftforge.fml.client.FMLFileResourcePack";
@@ -126,7 +127,7 @@ public final class RPUtils {
 
 		try {
 			return Class.forName(className, true, RPCoreContainer.class.getClassLoader());
-		} catch(ClassNotFoundException ignored) {}
+		} catch (ClassNotFoundException ignored) {}
 
 		return null;
 	}
@@ -134,7 +135,7 @@ public final class RPUtils {
 	public static VersionRange createVersionRange(String versionRange) {
 		try {
 			return VersionRange.createFromVersionSpec(versionRange);
-		} catch(InvalidVersionSpecificationException ex) {
+		} catch (InvalidVersionSpecificationException ex) {
 			RandomPatches.LOGGER.error("Failed to create version range", ex);
 		}
 
@@ -146,8 +147,8 @@ public final class RPUtils {
 				clazz.getProtectionDomain().getCodeSource().getCertificates()
 		);
 
-		for(String fingerprint : fingerprints) {
-			if(fingerprintToFind.equals(fingerprint)) {
+		for (String fingerprint : fingerprints) {
+			if (fingerprintToFind.equals(fingerprint)) {
 				return true;
 			}
 		}
@@ -161,7 +162,7 @@ public final class RPUtils {
 		final ArtifactVersion version =
 				new DefaultArtifactVersion(RandomPatches.MOD_ID, RandomPatches.VERSION);
 
-		if(!range.containsVersion(version)) {
+		if (!range.containsVersion(version)) {
 			TRLUtils.crashReport(
 					"RandomPatches " + minimumVersion + " or higher is required",
 					new IllegalStateException()

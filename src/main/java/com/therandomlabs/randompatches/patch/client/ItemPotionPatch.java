@@ -16,7 +16,7 @@ public final class ItemPotionPatch extends Patch {
 	public boolean apply(ClassNode node) {
 		InsnList instructions = findInstructions(node, "hasEffect", "func_77962_s");
 
-		if(instructions == null) {
+		if (instructions == null) {
 			instructions = findInstructions(node, "hasEffect", "func_77636_d");
 		}
 
@@ -41,7 +41,7 @@ public final class ItemPotionPatch extends Patch {
 	}
 
 	public static boolean hasEffect(ItemStack stack) {
-		if(stack.isItemEnchanted()) {
+		if (stack.isItemEnchanted()) {
 			return true;
 		}
 

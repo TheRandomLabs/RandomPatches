@@ -21,13 +21,13 @@ public final class ItemBucketPatch extends Patch {
 				findInstructions(node, "tryPlaceContainedLiquid", "func_180616_a");
 		MethodInsnNode isSolid = null;
 
-		for(int i = 0; i < instructions.size(); i++) {
+		for (int i = 0; i < instructions.size(); i++) {
 			final AbstractInsnNode instruction = instructions.get(i);
 
-			if(instruction.getOpcode() == Opcodes.INVOKEVIRTUAL) {
+			if (instruction.getOpcode() == Opcodes.INVOKEVIRTUAL) {
 				isSolid = (MethodInsnNode) instruction;
 
-				if(IS_SOLID.equals(isSolid.name)) {
+				if (IS_SOLID.equals(isSolid.name)) {
 					break;
 				}
 
@@ -50,11 +50,11 @@ public final class ItemBucketPatch extends Patch {
 	public static boolean isSolid(IBlockState state) {
 		final Material material = state.getMaterial();
 
-		if(material.isSolid()) {
+		if (material.isSolid()) {
 			return true;
 		}
 
-		if(!RPConfig.Misc.portalBucketReplacementFixForNetherPortals &&
+		if (!RPConfig.Misc.portalBucketReplacementFixForNetherPortals &&
 				state.getBlock() == Blocks.PORTAL) {
 			return false;
 		}

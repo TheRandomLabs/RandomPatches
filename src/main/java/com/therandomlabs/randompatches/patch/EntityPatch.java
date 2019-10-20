@@ -45,7 +45,7 @@ public final class EntityPatch extends Patch {
 	}
 
 	public static void readAABBTag(Entity entity, NBTTagCompound compound) {
-		if(!compound.hasKey("RelativeAABB")) {
+		if (!compound.hasKey("RelativeAABB")) {
 			return;
 		}
 
@@ -64,13 +64,13 @@ public final class EntityPatch extends Patch {
 	private static void patchWriteToNBT(InsnList instructions) {
 		MethodInsnNode setTag = null;
 
-		for(int i = 0; i < instructions.size(); i++) {
+		for (int i = 0; i < instructions.size(); i++) {
 			final AbstractInsnNode instruction = instructions.get(i);
 
-			if(instruction.getOpcode() == Opcodes.INVOKEVIRTUAL) {
+			if (instruction.getOpcode() == Opcodes.INVOKEVIRTUAL) {
 				setTag = (MethodInsnNode) instruction;
 
-				if("net/minecraft/nbt/NBTTagCompound".equals(setTag.owner)) {
+				if ("net/minecraft/nbt/NBTTagCompound".equals(setTag.owner)) {
 					break;
 				}
 
@@ -102,14 +102,14 @@ public final class EntityPatch extends Patch {
 		JumpInsnNode jumpIfShouldNotSetPosition = null;
 		MethodInsnNode setPosition = null;
 
-		for(int i = instructions.size() - 1; i >= 0; i--) {
+		for (int i = instructions.size() - 1; i >= 0; i--) {
 			final AbstractInsnNode instruction = instructions.get(i);
 
-			if(setPosition == null) {
-				if(instruction.getOpcode() == Opcodes.INVOKEVIRTUAL) {
+			if (setPosition == null) {
+				if (instruction.getOpcode() == Opcodes.INVOKEVIRTUAL) {
 					setPosition = (MethodInsnNode) instruction;
 
-					if(!SET_POSITION.equals(setPosition.name)) {
+					if (!SET_POSITION.equals(setPosition.name)) {
 						setPosition = null;
 					}
 				}
@@ -117,7 +117,7 @@ public final class EntityPatch extends Patch {
 				continue;
 			}
 
-			if(instruction.getOpcode() == Opcodes.IFEQ) {
+			if (instruction.getOpcode() == Opcodes.IFEQ) {
 				jumpIfShouldNotSetPosition = (JumpInsnNode) instruction;
 				break;
 			}

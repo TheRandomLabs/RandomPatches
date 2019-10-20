@@ -23,10 +23,10 @@ public final class TileEntityPistonPatch extends Patch {
 		final InsnList instructions = findInstructions(node, "update", "func_73660_a");
 		AbstractInsnNode jumpIfNotPistonExtension = null;
 
-		for(int i = 0; i < instructions.size(); i++) {
+		for (int i = 0; i < instructions.size(); i++) {
 			jumpIfNotPistonExtension = instructions.get(i);
 
-			if(jumpIfNotPistonExtension.getOpcode() == Opcodes.IF_ACMPNE) {
+			if (jumpIfNotPistonExtension.getOpcode() == Opcodes.IF_ACMPNE) {
 				break;
 			}
 

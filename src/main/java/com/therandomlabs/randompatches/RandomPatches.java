@@ -89,7 +89,8 @@ public final class RandomPatches {
 
 	@Subscribe
 	public void preInit(FMLPreInitializationEvent event) {
-		if(TRLUtils.IS_CLIENT && RPConfig.Client.rpreloadclient && TRLUtils.MC_VERSION_NUMBER > 8) {
+		if (TRLUtils.IS_CLIENT && RPConfig.Client.rpreloadclient &&
+				TRLUtils.MC_VERSION_NUMBER > 8) {
 			ClientCommandHandler.instance.registerCommand(CommandConfigReload.client(
 					"rpreloadclient",
 					RPConfig.class,
@@ -98,7 +99,7 @@ public final class RandomPatches {
 			));
 		}
 
-		if(RPConfig.Misc.areEndPortalTweaksEnabled()) {
+		if (RPConfig.Misc.areEndPortalTweaksEnabled()) {
 			final RPTileEntityEndPortalRenderer renderer = new RPTileEntityEndPortalRenderer();
 			renderer.setRendererDispatcher(TileEntityRendererDispatcher.instance);
 			TileEntityRendererDispatcher.instance.renderers.put(
@@ -111,18 +112,18 @@ public final class RandomPatches {
 	public void init(FMLInitializationEvent event) {
 		ConfigManager.registerEventHandler();
 
-		if(RPConfig.Client.isDismountKeybindEnabled()) {
+		if (RPConfig.Client.isDismountKeybindEnabled()) {
 			EntityPlayerSPPatch.DismountKeybind.register();
 		}
 
-		if(RPConfig.Client.isNarratorKeybindEnabled()) {
+		if (RPConfig.Client.isNarratorKeybindEnabled()) {
 			MinecraftPatch.ToggleNarratorKeybind.register();
 		}
 	}
 
 	@Subscribe
 	public void serverStarting(FMLServerStartingEvent event) {
-		if(RPConfig.Misc.rpreload && TRLUtils.MC_VERSION_NUMBER > 8) {
+		if (RPConfig.Misc.rpreload && TRLUtils.MC_VERSION_NUMBER > 8) {
 			event.registerServerCommand(CommandConfigReload.server(
 					"rpreload",
 					"rpreloadclient",
@@ -135,8 +136,8 @@ public final class RandomPatches {
 	}
 
 	public static void containerInit() {
-		if(!RPUtils.hasFingerprint(RandomPatches.class, CERTIFICATE_FINGERPRINT)) {
-			if(IS_DEOBFUSCATED) {
+		if (!RPUtils.hasFingerprint(RandomPatches.class, CERTIFICATE_FINGERPRINT)) {
+			if (IS_DEOBFUSCATED) {
 				LOGGER.debug("Invalid fingerprint detected!");
 			} else {
 				LOGGER.error("Invalid fingerprint detected!");
@@ -145,48 +146,48 @@ public final class RandomPatches {
 	}
 
 	public static void registerPatches() {
-		if(RPConfig.Boats.patchEntityBoat && TRLUtils.MC_VERSION_NUMBER > 8) {
+		if (RPConfig.Boats.patchEntityBoat && TRLUtils.MC_VERSION_NUMBER > 8) {
 			register("net.minecraft.entity.item.EntityBoat", new EntityBoatPatch());
 		}
 
-		if(RPConfig.Client.isDismountKeybindEnabled()) {
+		if (RPConfig.Client.isDismountKeybindEnabled()) {
 			register("net.minecraft.client.entity.EntityPlayerSP", new EntityPlayerSPPatch());
 			register(
 					"net.minecraft.client.network.NetHandlerPlayClient",
 					new NetHandlerPlayClientPatch()
 			);
 
-			if(TRLUtils.MC_VERSION_NUMBER > 8) {
+			if (TRLUtils.MC_VERSION_NUMBER > 8) {
 				register("net.minecraft.client.settings.KeyBinding", new KeyBindingPatch());
 			}
 		}
 
-		if(RPConfig.Client.fastLanguageSwitch && TRLUtils.IS_CLIENT) {
+		if (RPConfig.Client.fastLanguageSwitch && TRLUtils.IS_CLIENT) {
 			register("net.minecraft.client.gui.GuiLanguage$List", new GuiLanguageListPatch());
 		}
 
-		if(RPConfig.Client.invisiblePlayerModelFix && TRLUtils.IS_CLIENT &&
+		if (RPConfig.Client.invisiblePlayerModelFix && TRLUtils.IS_CLIENT &&
 				TRLUtils.MC_VERSION_NUMBER > 8) {
 			register("net.minecraft.client.renderer.entity.RenderPlayer", new RenderPlayerPatch());
 		}
 
-		if(RPConfig.Client.patchMinecraftClass && TRLUtils.IS_CLIENT) {
+		if (RPConfig.Client.patchMinecraftClass && TRLUtils.IS_CLIENT) {
 			register("net.minecraft.client.Minecraft", new MinecraftPatch());
 		}
 
-		if(RPConfig.Client.patchPotionGlint && TRLUtils.IS_CLIENT) {
+		if (RPConfig.Client.patchPotionGlint && TRLUtils.IS_CLIENT) {
 			register("net.minecraft.item.ItemPotion", new ItemPotionPatch());
 		}
 
-		if(RPConfig.Client.patchTitleScreenOnDisconnect) {
+		if (RPConfig.Client.patchTitleScreenOnDisconnect) {
 			register("net.minecraft.client.gui.GuiIngameMenu", new GuiIngameMenuPatch());
 		}
 
-		if(RPConfig.Client.patchSmoothEyeLevelChanges && TRLUtils.IS_CLIENT) {
+		if (RPConfig.Client.patchSmoothEyeLevelChanges && TRLUtils.IS_CLIENT) {
 			register("net.minecraft.client.renderer.EntityRenderer", new EntityRendererPatch());
 		}
 
-		if(RPConfig.Misc.areEndPortalTweaksEnabled()) {
+		if (RPConfig.Misc.areEndPortalTweaksEnabled()) {
 			register("net.minecraft.block.BlockEndPortal", new BlockEndPortalPatch());
 			register(
 					"net.minecraft.client.renderer.BlockModelShapes",
@@ -198,20 +199,20 @@ public final class RandomPatches {
 			);
 		}
 
-		if(RPConfig.Misc.fixTickNextTickListOutOfSynch) {
+		if (RPConfig.Misc.fixTickNextTickListOutOfSynch) {
 			register("net.minecraft.world.WorldServer", new WorldServerPatch());
 		}
 
-		if(RPConfig.Misc.mc2025Fix && TRLUtils.MC_VERSION_NUMBER > 9) {
+		if (RPConfig.Misc.mc2025Fix && TRLUtils.MC_VERSION_NUMBER > 9) {
 			register("net.minecraft.entity.Entity", new EntityPatch());
 		}
 
-		if(RPConfig.Misc.minecartAIFix) {
+		if (RPConfig.Misc.minecartAIFix) {
 			register("net.minecraft.entity.item.EntityMinecart", new EntityMinecartPatch());
 		}
 
 		//TODO fix SpongeForge compatibility
-		if(RPConfig.Misc.miningGhostBlocksFix && TRLUtils.MC_VERSION_NUMBER > 8 &&
+		if (RPConfig.Misc.miningGhostBlocksFix && TRLUtils.MC_VERSION_NUMBER > 8 &&
 				!SPONGEFORGE_INSTALLED) {
 			register(
 					"net.minecraft.server.management.PlayerInteractionManager",
@@ -219,7 +220,7 @@ public final class RandomPatches {
 			);
 		}
 
-		if(RPConfig.Misc.particleFixes && TRLUtils.MC_VERSION_NUMBER > 9 &&
+		if (RPConfig.Misc.particleFixes && TRLUtils.MC_VERSION_NUMBER > 9 &&
 				!PARTICLE_FIXES_INSTALLED) {
 			register(
 					"net.minecraft.world.ServerWorldEventHandler",
@@ -227,11 +228,12 @@ public final class RandomPatches {
 			);
 		}
 
-		if(RPConfig.Misc.patchNetHandlerPlayServer && TRLUtils.MC_VERSION_NUMBER > 8) {
-			register("net.minecraft.network.NetHandlerPlayServer", new NetHandlerPlayServerPatch());
+		if (RPConfig.Misc.patchNetHandlerPlayServer && TRLUtils.MC_VERSION_NUMBER > 8) {
+			register("net.minecraft.network.NetHandlerPlayServer",
+					new NetHandlerPlayServerPatch());
 		}
 
-		if(RPConfig.Misc.patchPacketSizeLimit && !BIGGER_PACKETS_PLEASE_INSTALLED &&
+		if (RPConfig.Misc.patchPacketSizeLimit && !BIGGER_PACKETS_PLEASE_INSTALLED &&
 				!LITTLETILES_INSTALLED && !SPONGEFORGE_INSTALLED) {
 			register(
 					"net.minecraft.network.NettyCompressionDecoder",
@@ -241,27 +243,27 @@ public final class RandomPatches {
 		}
 
 		//TODO fix SpongeForge compatibility
-		if(RPConfig.Misc.pistonGhostBlocksFix && TRLUtils.MC_VERSION_NUMBER > 8 &&
+		if (RPConfig.Misc.pistonGhostBlocksFix && TRLUtils.MC_VERSION_NUMBER > 8 &&
 				!SPONGEFORGE_INSTALLED) {
 			register("net.minecraft.tileentity.TileEntityPiston", new TileEntityPistonPatch());
 		}
 
-		if(RPConfig.Misc.portalBucketReplacementFix && TRLUtils.MC_VERSION_NUMBER > 8) {
+		if (RPConfig.Misc.portalBucketReplacementFix && TRLUtils.MC_VERSION_NUMBER > 8) {
 			register("net.minecraft.item.ItemBucket", new ItemBucketPatch());
 		}
 
-		if(RPConfig.Misc.isRecipeBookNBTFixEnabled()) {
+		if (RPConfig.Misc.isRecipeBookNBTFixEnabled()) {
 			register(
 					"net.minecraft.util.ServerRecipeBookHelper",
 					new ServerRecipeBookHelperPatch()
 			);
 		}
 
-		if(RPConfig.Misc.skullStackingFix) {
+		if (RPConfig.Misc.skullStackingFix) {
 			register("net.minecraft.nbt.NBTTagCompound", new NBTTagCompoundPatch());
 		}
 
-		if(RPConfig.Timeouts.patchLoginTimeout) {
+		if (RPConfig.Timeouts.patchLoginTimeout) {
 			register(
 					"net.minecraft.network.NetHandlerLoginServer",
 					new NetHandlerLoginServerPatch()

@@ -50,30 +50,31 @@ public final class MinecraftPatch extends Patch {
 
 	@Override
 	public boolean apply(ClassNode node) {
-		if(!RandomPatches.DEFAULT_WINDOW_TITLE.equals(RPConfig.Window.title)) {
+		if (!RandomPatches.DEFAULT_WINDOW_TITLE.equals(RPConfig.Window.title)) {
 			patchCreateDisplay(findInstructions(node, "createDisplay", "func_175609_am"));
 		}
 
-		if(!RPConfig.Window.icon16String.isEmpty()) {
+		if (!RPConfig.Window.icon16String.isEmpty()) {
 			patchSetWindowIcon(findInstructions(node, "setWindowIcon", "func_175594_ao"));
 		}
 
-		if(RPConfig.Client.isNarratorKeybindEnabled()) {
-			patchDispatchKeypresses(findInstructions(node, "dispatchKeypresses", "func_152348_aa"));
+		if (RPConfig.Client.isNarratorKeybindEnabled()) {
+			patchDispatchKeypresses(findInstructions(node, "dispatchKeypresses", "func_152348_aa"
+			));
 		}
 
 		return true;
 	}
 
 	public static void handleKeypress() {
-		if(ToggleNarratorKeybind.keybind == null) {
+		if (ToggleNarratorKeybind.keybind == null) {
 			return;
 		}
 
 		final int eventKey = Keyboard.getEventKey();
 		final int key = eventKey == 0 ? Keyboard.getEventCharacter() + 256 : eventKey;
 
-		if(!ToggleNarratorKeybind.keybind.isActiveAndMatches(key)) {
+		if (!ToggleNarratorKeybind.keybind.isActiveAndMatches(key)) {
 			return;
 		}
 
@@ -81,19 +82,19 @@ public final class MinecraftPatch extends Patch {
 
 		mc.gameSettings.setOptionValue(GameSettings.Options.NARRATOR, 1);
 
-		if(mc.currentScreen instanceof ScreenChatOptions) {
+		if (mc.currentScreen instanceof ScreenChatOptions) {
 			((ScreenChatOptions) mc.currentScreen).updateNarratorButton();
 		}
 	}
 
 	private static void patchCreateDisplay(InsnList instructions) {
-		for(int i = 0; i < instructions.size(); i++) {
+		for (int i = 0; i < instructions.size(); i++) {
 			final AbstractInsnNode instruction = instructions.get(i);
 
-			if(instruction.getOpcode() == Opcodes.INVOKESTATIC) {
+			if (instruction.getOpcode() == Opcodes.INVOKESTATIC) {
 				final MethodInsnNode setTitle = (MethodInsnNode) instruction;
 
-				if("setTitle".equals(setTitle.name)) {
+				if ("setTitle".equals(setTitle.name)) {
 					((LdcInsnNode) setTitle.getPrevious()).cst = RPConfig.Window.title;
 					return;
 				}
@@ -122,13 +123,13 @@ public final class MinecraftPatch extends Patch {
 	private static void patchDispatchKeypresses(InsnList instructions) {
 		IntInsnNode isB = null;
 
-		for(int i = 0; i < instructions.size(); i++) {
+		for (int i = 0; i < instructions.size(); i++) {
 			final AbstractInsnNode instruction = instructions.get(i);
 
-			if(instruction.getOpcode() == Opcodes.BIPUSH) {
+			if (instruction.getOpcode() == Opcodes.BIPUSH) {
 				isB = (IntInsnNode) instruction;
 
-				if(isB.operand == Keyboard.KEY_B) {
+				if (isB.operand == Keyboard.KEY_B) {
 					break;
 				}
 

@@ -16,28 +16,28 @@ public class RPClassWriter extends ClassWriter {
 		try {
 			c = Class.forName(type1.replace('/', '.'), false, Launch.classLoader);
 			d = Class.forName(type2.replace('/', '.'), false, Launch.classLoader);
-		} catch(Exception ex) {
+		} catch (Exception ex) {
 			throw new IllegalArgumentException(
 					"Could not get common superclass of " + type1 + " and " + type2,
 					ex
 			);
 		}
 
-		if(c.isAssignableFrom(d)) {
+		if (c.isAssignableFrom(d)) {
 			return type1;
 		}
 
-		if(d.isAssignableFrom(c)) {
+		if (d.isAssignableFrom(c)) {
 			return type2;
 		}
 
-		if(c.isInterface() || d.isInterface()) {
+		if (c.isInterface() || d.isInterface()) {
 			return "java/lang/Object";
 		}
 
 		do {
 			c = c.getSuperclass();
-		} while(!c.isAssignableFrom(d));
+		} while (!c.isAssignableFrom(d));
 
 		return c.getName().replace('.', '/');
 	}

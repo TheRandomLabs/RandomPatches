@@ -20,13 +20,13 @@ public final class NetHandlerPlayClientPatch extends Patch {
 
 		FieldInsnNode getSneakKeybind = null;
 
-		for(int i = 0; i < instructions.size(); i++) {
+		for (int i = 0; i < instructions.size(); i++) {
 			final AbstractInsnNode instruction = instructions.get(i);
 
-			if(instruction.getOpcode() == Opcodes.GETFIELD) {
+			if (instruction.getOpcode() == Opcodes.GETFIELD) {
 				getSneakKeybind = (FieldInsnNode) instruction;
 
-				if(KEY_BIND_SNEAK.equals(getSneakKeybind.name)) {
+				if (KEY_BIND_SNEAK.equals(getSneakKeybind.name)) {
 					break;
 				}
 
@@ -46,7 +46,7 @@ public final class NetHandlerPlayClientPatch extends Patch {
 
 		final AbstractInsnNode getGameSettings = getSneakKeybind.getPrevious();
 
-		if(TRLUtils.MC_VERSION_NUMBER > 8) {
+		if (TRLUtils.MC_VERSION_NUMBER > 8) {
 			final AbstractInsnNode getMinecraft = getGameSettings.getPrevious();
 
 			instructions.remove(getMinecraft.getPrevious());

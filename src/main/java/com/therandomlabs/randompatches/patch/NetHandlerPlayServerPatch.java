@@ -25,10 +25,10 @@ public final class NetHandlerPlayServerPatch extends Patch {
 	public boolean apply(ClassNode node) {
 		patchUpdate(findInstructions(node, "update", "func_73660_a"));
 
-		if(!RandomPatches.SPONGEFORGE_INSTALLED) {
+		if (!RandomPatches.SPONGEFORGE_INSTALLED) {
 			patchProcessPlayer(findInstructions(node, "processPlayer", "func_147347_a"));
 
-			if(!RandomPatches.ICE_AND_FIRE_INSTALLED) {
+			if (!RandomPatches.ICE_AND_FIRE_INSTALLED) {
 				patchProcessVehicleMove(findInstructions(
 						node, "processVehicleMove", "func_184338_a"
 				));
@@ -72,19 +72,19 @@ public final class NetHandlerPlayServerPatch extends Patch {
 		JumpInsnNode jumpIfKeepAlivePending = null;
 		MethodInsnNode sendPacket = null;
 
-		for(int i = 0; i < instructions.size(); i++) {
+		for (int i = 0; i < instructions.size(); i++) {
 			final AbstractInsnNode instruction = instructions.get(i);
 
-			if(keepAliveInterval == null) {
-				if(instruction.getOpcode() == Opcodes.LDC) {
+			if (keepAliveInterval == null) {
+				if (instruction.getOpcode() == Opcodes.LDC) {
 					keepAliveInterval = (LdcInsnNode) instruction;
 
-					if(TRLUtils.MC_VERSION_NUMBER > 11) {
-						if(!((Long) 15000L).equals(keepAliveInterval.cst)) {
+					if (TRLUtils.MC_VERSION_NUMBER > 11) {
+						if (!((Long) 15000L).equals(keepAliveInterval.cst)) {
 							keepAliveInterval = null;
 						}
 					} else {
-						if(!((Long) 40L).equals(keepAliveInterval.cst)) {
+						if (!((Long) 40L).equals(keepAliveInterval.cst)) {
 							keepAliveInterval = null;
 						}
 					}
@@ -93,12 +93,12 @@ public final class NetHandlerPlayServerPatch extends Patch {
 				continue;
 			}
 
-			if(TRLUtils.MC_VERSION_NUMBER < 12) {
+			if (TRLUtils.MC_VERSION_NUMBER < 12) {
 				break;
 			}
 
-			if(jumpIfKeepAlivePending == null) {
-				if(instruction.getOpcode() == Opcodes.IFEQ &&
+			if (jumpIfKeepAlivePending == null) {
+				if (instruction.getOpcode() == Opcodes.IFEQ &&
 						instruction.getPrevious().getOpcode() == Opcodes.GETFIELD) {
 					jumpIfKeepAlivePending = (JumpInsnNode) instruction;
 				}
@@ -106,10 +106,10 @@ public final class NetHandlerPlayServerPatch extends Patch {
 				continue;
 			}
 
-			if(instruction.getOpcode() == Opcodes.INVOKEVIRTUAL) {
+			if (instruction.getOpcode() == Opcodes.INVOKEVIRTUAL) {
 				sendPacket = (MethodInsnNode) instruction;
 
-				if(SEND_PACKET.equals(sendPacket.name)) {
+				if (SEND_PACKET.equals(sendPacket.name)) {
 					break;
 				}
 
@@ -128,7 +128,7 @@ public final class NetHandlerPlayServerPatch extends Patch {
 
 		instructions.remove(keepAliveInterval);
 
-		if(TRLUtils.MC_VERSION_NUMBER < 12) {
+		if (TRLUtils.MC_VERSION_NUMBER < 12) {
 			return;
 		}
 
@@ -177,24 +177,24 @@ public final class NetHandlerPlayServerPatch extends Patch {
 		LdcInsnNode elytra = null;
 		LdcInsnNode normal = null;
 
-		for(int i = 0; i < instructions.size(); i++) {
+		for (int i = 0; i < instructions.size(); i++) {
 			final AbstractInsnNode instruction = instructions.get(i);
 
-			if(instruction.getOpcode() != Opcodes.LDC) {
+			if (instruction.getOpcode() != Opcodes.LDC) {
 				continue;
 			}
 
 			final LdcInsnNode ldc = (LdcInsnNode) instruction;
 
-			if(elytra == null) {
-				if(((Float) 300.0F).equals(ldc.cst)) {
+			if (elytra == null) {
+				if (((Float) 300.0F).equals(ldc.cst)) {
 					elytra = ldc;
 				}
 
 				continue;
 			}
 
-			if(((Float) 100.0F).equals(ldc.cst)) {
+			if (((Float) 100.0F).equals(ldc.cst)) {
 				normal = ldc;
 				break;
 			}
@@ -224,13 +224,13 @@ public final class NetHandlerPlayServerPatch extends Patch {
 	private static void patchProcessVehicleMove(InsnList instructions) {
 		LdcInsnNode speed = null;
 
-		for(int i = 0; i < instructions.size(); i++) {
+		for (int i = 0; i < instructions.size(); i++) {
 			final AbstractInsnNode instruction = instructions.get(i);
 
-			if(instruction.getOpcode() == Opcodes.LDC) {
+			if (instruction.getOpcode() == Opcodes.LDC) {
 				final LdcInsnNode ldc = (LdcInsnNode) instruction;
 
-				if(((Double) 100.0).equals(ldc.cst)) {
+				if (((Double) 100.0).equals(ldc.cst)) {
 					speed = ldc;
 					break;
 				}

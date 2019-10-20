@@ -28,10 +28,10 @@ public final class PlayerInteractionManagerPatch extends Patch {
 		final InsnList instructions = findInstructions(node, "onBlockClicked", "func_180784_a");
 		AbstractInsnNode storeProgress = null;
 
-		for(int i = instructions.size() - 1; i >= 0; i--) {
+		for (int i = instructions.size() - 1; i >= 0; i--) {
 			storeProgress = instructions.get(i);
 
-			if(storeProgress.getOpcode() == Opcodes.ISTORE) {
+			if (storeProgress.getOpcode() == Opcodes.ISTORE) {
 				break;
 			}
 

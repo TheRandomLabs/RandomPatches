@@ -23,7 +23,7 @@ public class RPTransformer implements IClassTransformer {
 	public byte[] transform(String name, String transformedName, byte[] basicClass) {
 		final Patch patch = PATCHES.get(transformedName);
 
-		if(patch == null) {
+		if (patch == null) {
 			return basicClass;
 		}
 
@@ -34,14 +34,14 @@ public class RPTransformer implements IClassTransformer {
 		reader.accept(node, 0);
 
 		try {
-			if(!patch.apply(node)) {
+			if (!patch.apply(node)) {
 				RandomPatches.LOGGER.info("Didn't transform class: " + transformedName);
 				return basicClass;
 			}
 
 			final int flags;
 
-			if(RandomPatches.SPONGEFORGE_INSTALLED &&
+			if (RandomPatches.SPONGEFORGE_INSTALLED &&
 					patch.getClass() == NetHandlerPlayServerPatch.class) {
 				flags = ClassWriter.COMPUTE_MAXS;
 			} else {
@@ -51,7 +51,7 @@ public class RPTransformer implements IClassTransformer {
 			final ClassWriter writer = new RPClassWriter(flags);
 			node.accept(writer);
 			return writer.toByteArray();
-		} catch(Exception ex) {
+		} catch (Exception ex) {
 			RandomPatches.LOGGER.error("Failed to transform class: " + transformedName, ex);
 		}
 

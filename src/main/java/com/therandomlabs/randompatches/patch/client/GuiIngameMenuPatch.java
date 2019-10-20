@@ -18,10 +18,10 @@ public final class GuiIngameMenuPatch extends Patch {
 		final InsnList instructions = findInstructions(node, "actionPerformed", "func_146284_a");
 		AbstractInsnNode storeIsIntegratedServerRunning = null;
 
-		for(int i = 0; i < instructions.size(); i++) {
+		for (int i = 0; i < instructions.size(); i++) {
 			final AbstractInsnNode instruction = instructions.get(i);
 
-			if(instruction.getOpcode() == Opcodes.ISTORE) {
+			if (instruction.getOpcode() == Opcodes.ISTORE) {
 				storeIsIntegratedServerRunning = instruction;
 				break;
 			}

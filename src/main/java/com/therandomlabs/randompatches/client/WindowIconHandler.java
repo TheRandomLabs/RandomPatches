@@ -31,8 +31,8 @@ public class WindowIconHandler {
 		InputStream stream256 = null;
 
 		try {
-			if(RPConfig.Window.icon16String.isEmpty()) {
-				if(osX && !setBefore) {
+			if (RPConfig.Window.icon16String.isEmpty()) {
+				if (osX && !setBefore) {
 					return;
 				}
 
@@ -46,7 +46,7 @@ public class WindowIconHandler {
 						new ResourceLocation("icons/icon_32x32.png")
 				);
 
-				if(osX) {
+				if (osX) {
 					stream256 = mc.defaultResourcePack.getInputStream(
 							new ResourceLocation("icons/icon_256x256.png")
 					);
@@ -55,13 +55,13 @@ public class WindowIconHandler {
 				stream16 = new FileInputStream(RPConfig.Window.icon16String);
 				stream32 = new FileInputStream(RPConfig.Window.icon32String);
 
-				if(osX) {
+				if (osX) {
 					stream256 = new FileInputStream(RPConfig.Window.icon256String);
 				}
 			}
 
-			if(stream16 != null) {
-				if(osX) {
+			if (stream16 != null) {
+				if (osX) {
 					Display.setIcon(new ByteBuffer[] {
 							readImageToBuffer(stream16, 16),
 							readImageToBuffer(stream32, 32),
@@ -76,8 +76,8 @@ public class WindowIconHandler {
 
 				setBefore = true;
 			}
-		} catch(IOException ex) {
-			if(RandomPatches.IS_DEOBFUSCATED &&
+		} catch (IOException ex) {
+			if (RandomPatches.IS_DEOBFUSCATED &&
 					ex instanceof FileNotFoundException &&
 					RPConfig.Window.DEFAULT_ICON.equals(RPConfig.Window.icon16) &&
 					RPConfig.Window.DEFAULT_ICON.equals(RPConfig.Window.icon32) &&
@@ -90,7 +90,7 @@ public class WindowIconHandler {
 			IOUtils.closeQuietly(stream16);
 			IOUtils.closeQuietly(stream32);
 
-			if(osX) {
+			if (osX) {
 				IOUtils.closeQuietly(stream256);
 			}
 		}
@@ -100,7 +100,7 @@ public class WindowIconHandler {
 			throws IOException {
 		BufferedImage image = ImageIO.read(stream);
 
-		if(image.getWidth() != dimensions || image.getHeight() != dimensions) {
+		if (image.getWidth() != dimensions || image.getHeight() != dimensions) {
 			final GraphicsEnvironment environment =
 					GraphicsEnvironment.getLocalGraphicsEnvironment();
 
@@ -141,7 +141,7 @@ public class WindowIconHandler {
 		final int[] rgb = image.getRGB(0, 0, dimensions, dimensions, null, 0, dimensions);
 		final ByteBuffer buffer = ByteBuffer.allocate(rgb.length * 4);
 
-		for(int i : rgb) {
+		for (int i : rgb) {
 			buffer.putInt(i << 8 | i >> 24 & 255);
 		}
 

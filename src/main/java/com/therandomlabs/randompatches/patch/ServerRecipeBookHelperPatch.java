@@ -16,10 +16,10 @@ public final class ServerRecipeBookHelperPatch extends Patch {
 
 		MethodInsnNode findSlotMatchingUnusedItem = null;
 
-		for(int i = 0; i < instructions.size(); i++) {
+		for (int i = 0; i < instructions.size(); i++) {
 			final AbstractInsnNode instruction = instructions.get(i);
 
-			if(instruction.getOpcode() == Opcodes.INVOKEVIRTUAL) {
+			if (instruction.getOpcode() == Opcodes.INVOKEVIRTUAL) {
 				findSlotMatchingUnusedItem = (MethodInsnNode) instruction;
 				break;
 			}
@@ -36,10 +36,10 @@ public final class ServerRecipeBookHelperPatch extends Patch {
 	}
 
 	public static int findSlotMatchingUnusedItem(InventoryPlayer inventory, ItemStack toMatch) {
-		for(int i = 0; i < inventory.mainInventory.size(); i++) {
+		for (int i = 0; i < inventory.mainInventory.size(); i++) {
 			final ItemStack stack = inventory.mainInventory.get(i);
 
-			if(!stack.isEmpty() && stackEqualExact(toMatch, stack) && !stack.isItemDamaged() &&
+			if (!stack.isEmpty() && stackEqualExact(toMatch, stack) && !stack.isItemDamaged() &&
 					!stack.isItemEnchanted() && !stack.hasDisplayName()) {
 				return i;
 			}

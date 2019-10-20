@@ -34,7 +34,8 @@ public final class EntityRendererPatch extends Patch {
 		}
 
 		public static float getEyeHeight(
-				Entity entity, float partialTicks, EntityRenderer renderer, EyeHeightHandler handler
+				Entity entity, float partialTicks, EntityRenderer renderer,
+				EyeHeightHandler handler
 		) {
 			handler = get(renderer, handler);
 			return handler.lastEyeHeight +
@@ -44,7 +45,7 @@ public final class EntityRendererPatch extends Patch {
 		public static void orientCamera(
 				float partialTicks, EntityRenderer renderer, EyeHeightHandler handler
 		) {
-			if(!RPConfig.Client.smoothEyeLevelChanges) {
+			if (!RPConfig.Client.smoothEyeLevelChanges) {
 				return;
 			}
 
@@ -62,12 +63,12 @@ public final class EntityRendererPatch extends Patch {
 		}
 
 		public static EyeHeightHandler get(EntityRenderer renderer, EyeHeightHandler handler) {
-			if(handler == null) {
+			if (handler == null) {
 				handler = new EyeHeightHandler();
 
 				try {
 					EYE_HEIGHT_HANDLER.set(renderer, handler);
-				} catch(IllegalAccessException ex) {
+				} catch (IllegalAccessException ex) {
 					TRLUtils.crashReport("Failed to set EntityRenderer#eyeHeightHandler", ex);
 				}
 			}
@@ -101,13 +102,13 @@ public final class EntityRendererPatch extends Patch {
 	private static void patchUpdateRenderer(InsnList instructions) {
 		AbstractInsnNode label = null;
 
-		for(int i = 0; i < instructions.size(); i++) {
+		for (int i = 0; i < instructions.size(); i++) {
 			final AbstractInsnNode instruction = instructions.get(i);
 
-			if(instruction.getOpcode() == Opcodes.INVOKEVIRTUAL) {
+			if (instruction.getOpcode() == Opcodes.INVOKEVIRTUAL) {
 				final MethodInsnNode method = (MethodInsnNode) instruction;
 
-				if(SET_RENDER_VIEW_ENTITY.equals(method.name)) {
+				if (SET_RENDER_VIEW_ENTITY.equals(method.name)) {
 					label = method.getNext();
 					break;
 				}
@@ -145,16 +146,16 @@ public final class EntityRendererPatch extends Patch {
 	private static void patchSetupCameraTransform(InsnList instructions) {
 		AbstractInsnNode orientCamera = null;
 
-		for(int i = instructions.size() - 1; i >= 0; i--) {
+		for (int i = instructions.size() - 1; i >= 0; i--) {
 			orientCamera = instructions.get(i);
 
 			//Valkyrien Skies changes EntityRenderer#orientCamera to be public, which means it is
 			//called using INVOKEVIRTUAL rather than INVOKESPECIAL
-			if(orientCamera.getOpcode() == Opcodes.INVOKESPECIAL ||
+			if (orientCamera.getOpcode() == Opcodes.INVOKESPECIAL ||
 					orientCamera.getOpcode() == Opcodes.INVOKEVIRTUAL) {
 				final MethodInsnNode method = (MethodInsnNode) orientCamera;
 
-				if(ORIENT_CAMERA.equals(method.name)) {
+				if (ORIENT_CAMERA.equals(method.name)) {
 					break;
 				}
 			}

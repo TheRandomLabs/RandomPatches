@@ -14,13 +14,13 @@ public final class NetHandlerLoginServerPatch extends Patch {
 		final InsnList instructions = findInstructions(node, "update", "func_73660_a");
 		LdcInsnNode loginTimeout = null;
 
-		for(int i = 0; i < instructions.size(); i++) {
+		for (int i = 0; i < instructions.size(); i++) {
 			final AbstractInsnNode instruction = instructions.get(i);
 
-			if(instruction.getOpcode() == Opcodes.LDC) {
+			if (instruction.getOpcode() == Opcodes.LDC) {
 				loginTimeout = (LdcInsnNode) instruction;
 
-				if(((Integer) 600).equals(loginTimeout.cst)) {
+				if (((Integer) 600).equals(loginTimeout.cst)) {
 					break;
 				}
 

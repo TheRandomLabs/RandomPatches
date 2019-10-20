@@ -13,13 +13,13 @@ public final class RenderPlayerPatch extends Patch {
 	public boolean apply(ClassNode node) {
 		final InsnList instructions = findInstructions(node, "applyRotations", "func_77043_a");
 
-		for(int i = instructions.size() - 1; i >= 0; i--) {
+		for (int i = instructions.size() - 1; i >= 0; i--) {
 			final AbstractInsnNode instruction = instructions.get(i);
 
-			if(instruction.getOpcode() == Opcodes.INVOKESTATIC) {
+			if (instruction.getOpcode() == Opcodes.INVOKESTATIC) {
 				final MethodInsnNode method = (MethodInsnNode) instruction;
 
-				if("acos".equals(method.name)) {
+				if ("acos".equals(method.name)) {
 					method.owner = getName(RenderPlayerPatch.class);
 					return true;
 				}
