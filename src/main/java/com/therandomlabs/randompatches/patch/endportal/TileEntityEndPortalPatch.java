@@ -18,16 +18,16 @@ public final class TileEntityEndPortalPatch extends Patch {
 		//Get face
 		instructions.add(new VarInsnNode(Opcodes.ALOAD, 1));
 
-		//Call BlockEndPortalPatch#shouldSideBeRendered
+		//Call BlockEndPortalHook#shouldSideBeRendered
 		instructions.add(new MethodInsnNode(
 				Opcodes.INVOKESTATIC,
-				getName(BlockEndPortalPatch.class),
+				BlockEndPortalPatch.INSTANCE.hookClass,
 				"shouldSideBeRendered",
 				"(Lnet/minecraft/util/EnumFacing;)Z",
 				false
 		));
 
-		//Return BlockEndPortalPatch#shouldSideBeRendered
+		//Return BlockEndPortalHook#shouldSideBeRendered
 		instructions.add(new InsnNode(Opcodes.IRETURN));
 
 		return true;

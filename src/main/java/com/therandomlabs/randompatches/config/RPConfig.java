@@ -132,8 +132,7 @@ public final class RPConfig {
 		@Config.Property({
 				"Fixes MC-2025.",
 				"More information can be found here: " +
-						"https://www.reddit.com/r/Mojira/comments/8pgd4q" +
-						"/final_and_proper_fix_to_" +
+						"https://www.reddit.com/r/Mojira/comments/8pgd4q/final_and_proper_fix_to_" +
 						"mc2025_simple_reliable/"
 		})
 		public static boolean mc2025Fix = true;
@@ -157,8 +156,7 @@ public final class RPConfig {
 		@Config.RequiresMCRestart
 		@Config.Property(
 				"Fixes MC-10369 (server-side particle spawning not creating particles for " +
-						"clients) and MC-93826 (breeding hearts only showing once instead of all" +
-						" " +
+						"clients) and MC-93826 (breeding hearts only showing once instead of all " +
 						"of the time an animal can breed)."
 		)
 		public static boolean particleFixes = true;

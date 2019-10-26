@@ -1,10 +1,6 @@
 package com.therandomlabs.randompatches.patch;
 
 import com.therandomlabs.randompatches.core.Patch;
-import net.minecraft.block.BlockDirectional;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.AbstractInsnNode;
 import org.objectweb.asm.tree.ClassNode;
@@ -57,10 +53,10 @@ public final class TileEntityPistonPatch extends Patch {
 				"Lnet/minecraft/util/math/BlockPos;"
 		));
 
-		//Call TileEntityPistonPatch#updatePistonExtension
+		//Call TileEntityPistonHook#updatePistonExtension
 		newInstructions.add(new MethodInsnNode(
 				Opcodes.INVOKESTATIC,
-				getName(TileEntityPistonPatch.class),
+				hookClass,
 				"updatePistonExtension",
 				"(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;)V",
 				false
@@ -69,12 +65,5 @@ public final class TileEntityPistonPatch extends Patch {
 		instructions.insert(jumpIfNotPistonExtension, newInstructions);
 
 		return true;
-	}
-
-	public static void updatePistonExtension(World world, BlockPos pos) {
-		final IBlockState state = world.getBlockState(pos);
-		world.notifyBlockUpdate(
-				pos.offset(state.getValue(BlockDirectional.FACING).getOpposite()), state, state, 0
-		);
 	}
 }

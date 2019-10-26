@@ -1,7 +1,6 @@
 package com.therandomlabs.randompatches.patch.endportal;
 
 import com.therandomlabs.randompatches.core.Patch;
-import net.minecraft.util.EnumFacing;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.InsnList;
@@ -10,6 +9,11 @@ import org.objectweb.asm.tree.MethodInsnNode;
 import org.objectweb.asm.tree.VarInsnNode;
 
 public final class BlockEndPortalPatch extends Patch {
+	//So that TileEntityEndPortalPatch can easily get the name of BlockEndPortalHook
+	public static final BlockEndPortalPatch INSTANCE = new BlockEndPortalPatch();
+
+	private BlockEndPortalPatch() {}
+
 	@Override
 	public boolean apply(ClassNode node) {
 		final InsnList instructions =
@@ -20,22 +24,18 @@ public final class BlockEndPortalPatch extends Patch {
 		//Get side
 		instructions.add(new VarInsnNode(Opcodes.ALOAD, 4));
 
-		//Call BlockEndPortalPatch#shouldSideBeRendered
+		//Call BlockEndPortalHook#shouldSideBeRendered
 		instructions.add(new MethodInsnNode(
 				Opcodes.INVOKESTATIC,
-				getName(BlockEndPortalPatch.class),
+				hookClass,
 				"shouldSideBeRendered",
 				"(Lnet/minecraft/util/EnumFacing;)Z",
 				false
 		));
 
-		//Return BlockEndPortalPatch#shouldSideBeRendered
+		//Return BlockEndPortalHook#shouldSideBeRendered
 		instructions.add(new InsnNode(Opcodes.IRETURN));
 
 		return true;
-	}
-
-	public static boolean shouldSideBeRendered(EnumFacing side) {
-		return side == EnumFacing.UP || side == EnumFacing.DOWN;
 	}
 }

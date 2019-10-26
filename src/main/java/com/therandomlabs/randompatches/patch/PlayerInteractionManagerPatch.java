@@ -1,9 +1,6 @@
 package com.therandomlabs.randompatches.patch;
 
 import com.therandomlabs.randompatches.core.Patch;
-import net.minecraft.network.play.server.SPacketBlockChange;
-import net.minecraft.server.management.PlayerInteractionManager;
-import net.minecraft.util.math.BlockPos;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.AbstractInsnNode;
 import org.objectweb.asm.tree.ClassNode;
@@ -54,10 +51,10 @@ public final class PlayerInteractionManagerPatch extends Patch {
 				"Lnet/minecraft/util/math/BlockPos;"
 		));
 
-		//Call PlayerInteractionManagerPatch#sendBlockChangePacket
+		//Call PlayerInteractionManagerHook#sendBlockChangePacket
 		newInstructions.add(new MethodInsnNode(
 				Opcodes.INVOKESTATIC,
-				getName(PlayerInteractionManagerPatch.class),
+				hookClass,
 				"sendBlockChangePacket",
 				"(L" + node.name + ";Lnet/minecraft/util/math/BlockPos;)V",
 				false
@@ -66,11 +63,5 @@ public final class PlayerInteractionManagerPatch extends Patch {
 		instructions.insert(storeProgress, newInstructions);
 
 		return true;
-	}
-
-	public static void sendBlockChangePacket(
-			PlayerInteractionManager manager, BlockPos destroyPos
-	) {
-		manager.player.connection.sendPacket(new SPacketBlockChange(manager.world, destroyPos));
 	}
 }

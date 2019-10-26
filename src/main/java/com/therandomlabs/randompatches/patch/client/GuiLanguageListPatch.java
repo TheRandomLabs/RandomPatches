@@ -1,7 +1,6 @@
 package com.therandomlabs.randompatches.patch.client;
 
 import com.therandomlabs.randompatches.core.Patch;
-import net.minecraft.client.Minecraft;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.AbstractInsnNode;
 import org.objectweb.asm.tree.ClassNode;
@@ -30,10 +29,10 @@ public final class GuiLanguageListPatch extends Patch {
 			}
 		}
 
-		//Call GuiLanguageListPatch#reloadLanguage
+		//Call GuiLanguageListHook#reloadLanguage
 		instructions.insert(refreshResources, new MethodInsnNode(
 				Opcodes.INVOKESTATIC,
-				getName(GuiLanguageListPatch.class),
+				hookClass,
 				"reloadLanguage",
 				"()V",
 				false
@@ -41,16 +40,10 @@ public final class GuiLanguageListPatch extends Patch {
 
 		final AbstractInsnNode previous = refreshResources.getPrevious();
 
-		//It works, don't question
 		instructions.remove(previous.getPrevious());
 		instructions.remove(previous);
 		instructions.remove(refreshResources);
 
 		return true;
-	}
-
-	public static void reloadLanguage() {
-		final Minecraft mc = Minecraft.getMinecraft();
-		mc.getLanguageManager().onResourceManagerReload(mc.getResourceManager());
 	}
 }

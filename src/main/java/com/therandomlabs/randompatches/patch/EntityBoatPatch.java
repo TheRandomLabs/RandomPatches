@@ -1,8 +1,6 @@
 package com.therandomlabs.randompatches.patch;
 
-import com.therandomlabs.randompatches.config.RPConfig;
 import com.therandomlabs.randompatches.core.Patch;
-import net.minecraft.entity.item.EntityBoat;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.AbstractInsnNode;
 import org.objectweb.asm.tree.ClassNode;
@@ -16,8 +14,6 @@ public final class EntityBoatPatch extends Patch {
 	public static final String STATUS = getName("status", "field_184469_aF");
 	public static final String OUT_OF_CONTROL_TICKS =
 			getName("outOfControlTicks", "field_184474_h");
-
-	public static final double VANILLA_UNDERWATER_BUOYANCY = -0.0007;
 
 	@Override
 	public boolean apply(ClassNode node) {
@@ -49,10 +45,10 @@ public final class EntityBoatPatch extends Patch {
 				"Lnet/minecraft/entity/item/EntityBoat$Status;"
 		));
 
-		//Call EntityBoatPatch#onUpdate
+		//Call EntityBoatHook#onUpdate
 		newInstructions.add(new MethodInsnNode(
 				Opcodes.INVOKESTATIC,
-				getName(EntityBoatPatch.class),
+				hookClass,
 				"onUpdate",
 				"(Lnet/minecraft/entity/item/EntityBoat;" +
 						"Lnet/minecraft/entity/item/EntityBoat$Status;)V",
@@ -62,15 +58,5 @@ public final class EntityBoatPatch extends Patch {
 		instructions.insertBefore(returnVoid, newInstructions);
 
 		return true;
-	}
-
-	public static void onUpdate(EntityBoat boat, EntityBoat.Status status) {
-		if (status == EntityBoat.Status.UNDER_FLOWING_WATER) {
-			boat.motionY += RPConfig.Boats.underwaterBoatBuoyancy - VANILLA_UNDERWATER_BUOYANCY;
-		}
-
-		if (RPConfig.Boats.preventUnderwaterBoatPassengerEjection) {
-			boat.outOfControlTicks = 0.0F;
-		}
 	}
 }

@@ -34,12 +34,12 @@ public final class NetHandlerPlayClientPatch extends Patch {
 			}
 		}
 
-		//Get EntityPlayerSPPatch.DismountKeybind#keybind
+		//Get EntityPlayerSPHook.DismountKeybind#keybind
 		//We do this so the dismount key is shown instead of the sneak key in
 		//"Press <key> to dismount"
 		instructions.insert(getSneakKeybind, new FieldInsnNode(
 				Opcodes.GETSTATIC,
-				getName(EntityPlayerSPPatch.class) + "$DismountKeybind",
+				EntityPlayerSPPatch.INSTANCE.getHookInnerClass("DismountKeybind"),
 				"keybind",
 				"Lnet/minecraft/client/settings/KeyBinding;"
 		));

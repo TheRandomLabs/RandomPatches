@@ -25,11 +25,10 @@ public final class KeyBindingPatch extends Patch {
 		//Get binding (other KeyBinding)
 		newInstructions.add(new VarInsnNode(Opcodes.ALOAD, 1));
 
-		//Call ClientPlayerEntityPatch$DismountKeybind#isDismountAndSneak
+		//Call EntityPlayerSPHook.DismountKeybind#isDismountAndSneak
 		newInstructions.add(new MethodInsnNode(
 				Opcodes.INVOKESTATIC,
-				"com/therandomlabs/randompatches/patch/client/dismount/EntityPlayerSPPatch$" +
-						"DismountKeybind",
+				EntityPlayerSPPatch.INSTANCE.getHookInnerClass("DismountKeybind"),
 				"isDismountAndSneak",
 				"(Lnet/minecraft/client/settings/KeyBinding;" +
 						"Lnet/minecraft/client/settings/KeyBinding;)Z",

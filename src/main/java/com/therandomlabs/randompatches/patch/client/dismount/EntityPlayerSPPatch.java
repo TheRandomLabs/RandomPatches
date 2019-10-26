@@ -1,11 +1,6 @@
 package com.therandomlabs.randompatches.patch.client.dismount;
 
-import com.therandomlabs.randomlib.TRLUtils;
 import com.therandomlabs.randompatches.core.Patch;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.settings.KeyBinding;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
-import org.lwjgl.input.Keyboard;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.AbstractInsnNode;
 import org.objectweb.asm.tree.ClassNode;
@@ -14,30 +9,12 @@ import org.objectweb.asm.tree.InsnList;
 import org.objectweb.asm.tree.MethodInsnNode;
 
 public final class EntityPlayerSPPatch extends Patch {
-	public static final class DismountKeybind {
-		public static KeyBinding keybind;
-		private static KeyBinding sneakKeybind;
-
-		private DismountKeybind() {}
-
-		public static void register() {
-			keybind = new KeyBinding(
-					"key.dismount",
-					TRLUtils.MC_VERSION_NUMBER > 8 ? Keyboard.KEY_LSHIFT : Keyboard.KEY_Z,
-					"key.categories.movement"
-			);
-			ClientRegistry.registerKeyBinding(keybind);
-			sneakKeybind = Minecraft.getMinecraft().gameSettings.keyBindSneak;
-		}
-
-		//So the dismount and sneak key bindings don't show as conflicting in the Controls screen
-		public static boolean isDismountAndSneak(KeyBinding binding1, KeyBinding binding2) {
-			return (binding1 == keybind && binding2 == sneakKeybind) ||
-					(binding1 == sneakKeybind && binding2 == keybind);
-		}
-	}
-
+	//So that KeyBindingPatch and NetHandlerPlayClientPatch can easily get the name of
+	//EntityPlayerSP$DismountKeybind
+	public static final EntityPlayerSPPatch INSTANCE = new EntityPlayerSPPatch();
 	public static final String SNEAK = getName("sneak", "field_78899_d");
+
+	private EntityPlayerSPPatch() {}
 
 	@Override
 	public boolean apply(ClassNode node) {
@@ -58,10 +35,10 @@ public final class EntityPlayerSPPatch extends Patch {
 			}
 		}
 
-		//Call EntityPlayerSPPPatch#shouldDismount
+		//Call EntityPlayerSPHook#shouldDismount
 		instructions.insert(shouldDismount, new MethodInsnNode(
 				Opcodes.INVOKESTATIC,
-				getName(EntityPlayerSPPatch.class),
+				hookClass,
 				"shouldDismount",
 				"()Z",
 				false
@@ -74,9 +51,5 @@ public final class EntityPlayerSPPatch extends Patch {
 		instructions.remove(shouldDismount);
 
 		return true;
-	}
-
-	public static boolean shouldDismount() {
-		return DismountKeybind.keybind.isKeyDown();
 	}
 }

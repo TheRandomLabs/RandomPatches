@@ -6,6 +6,8 @@ import com.therandomlabs.randomlib.config.CommandConfigReload;
 import com.therandomlabs.randomlib.config.ConfigManager;
 import com.therandomlabs.randompatches.client.RPTileEntityEndPortalRenderer;
 import com.therandomlabs.randompatches.config.RPConfig;
+import com.therandomlabs.randompatches.hook.client.MinecraftHook;
+import com.therandomlabs.randompatches.hook.client.dismount.EntityPlayerSPHook;
 import com.therandomlabs.randompatches.patch.EntityBoatPatch;
 import com.therandomlabs.randompatches.patch.EntityMinecartPatch;
 import com.therandomlabs.randompatches.patch.EntityPatch;
@@ -113,11 +115,11 @@ public final class RandomPatches {
 		ConfigManager.registerEventHandler();
 
 		if (RPConfig.Client.isDismountKeybindEnabled()) {
-			EntityPlayerSPPatch.DismountKeybind.register();
+			EntityPlayerSPHook.DismountKeybind.register();
 		}
 
 		if (RPConfig.Client.isNarratorKeybindEnabled()) {
-			MinecraftPatch.ToggleNarratorKeybind.register();
+			MinecraftHook.ToggleNarratorKeybind.register();
 		}
 	}
 
@@ -151,7 +153,7 @@ public final class RandomPatches {
 		}
 
 		if (RPConfig.Client.isDismountKeybindEnabled()) {
-			register("net.minecraft.client.entity.EntityPlayerSP", new EntityPlayerSPPatch());
+			register("net.minecraft.client.entity.EntityPlayerSP", EntityPlayerSPPatch.INSTANCE);
 			register(
 					"net.minecraft.client.network.NetHandlerPlayClient",
 					new NetHandlerPlayClientPatch()
@@ -188,7 +190,7 @@ public final class RandomPatches {
 		}
 
 		if (RPConfig.Misc.areEndPortalTweaksEnabled()) {
-			register("net.minecraft.block.BlockEndPortal", new BlockEndPortalPatch());
+			register("net.minecraft.block.BlockEndPortal", BlockEndPortalPatch.INSTANCE);
 			register(
 					"net.minecraft.client.renderer.BlockModelShapes",
 					new BlockModelShapesPatch()
@@ -229,8 +231,7 @@ public final class RandomPatches {
 		}
 
 		if (RPConfig.Misc.patchNetHandlerPlayServer && TRLUtils.MC_VERSION_NUMBER > 8) {
-			register("net.minecraft.network.NetHandlerPlayServer",
-					new NetHandlerPlayServerPatch());
+			register("net.minecraft.network.NetHandlerPlayServer", new NetHandlerPlayServerPatch());
 		}
 
 		if (RPConfig.Misc.patchPacketSizeLimit && !BIGGER_PACKETS_PLEASE_INSTALLED &&

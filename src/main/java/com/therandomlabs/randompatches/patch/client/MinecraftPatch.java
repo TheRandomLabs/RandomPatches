@@ -4,14 +4,6 @@ import com.therandomlabs.randompatches.RandomPatches;
 import com.therandomlabs.randompatches.client.WindowIconHandler;
 import com.therandomlabs.randompatches.config.RPConfig;
 import com.therandomlabs.randompatches.core.Patch;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiControls;
-import net.minecraft.client.gui.ScreenChatOptions;
-import net.minecraft.client.settings.GameSettings;
-import net.minecraft.client.settings.KeyBinding;
-import net.minecraftforge.client.settings.IKeyConflictContext;
-import net.minecraftforge.client.settings.KeyModifier;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
 import org.lwjgl.input.Keyboard;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.AbstractInsnNode;
@@ -23,33 +15,14 @@ import org.objectweb.asm.tree.LdcInsnNode;
 import org.objectweb.asm.tree.MethodInsnNode;
 
 public final class MinecraftPatch extends Patch {
-	public static final class ToggleNarratorKeybind {
-		public static final Minecraft mc = Minecraft.getMinecraft();
-		public static KeyBinding keybind;
-
-		private ToggleNarratorKeybind() {}
-
-		public static void register() {
-			keybind = new KeyBinding("key.narrator", new IKeyConflictContext() {
-				@Override
-				public boolean isActive() {
-					return !(mc.currentScreen instanceof GuiControls);
-				}
-
-				@Override
-				public boolean conflicts(IKeyConflictContext other) {
-					return true;
-				}
-			}, KeyModifier.CONTROL, Keyboard.KEY_B, "key.categories.misc");
-
-			ClientRegistry.registerKeyBinding(keybind);
-		}
-	}
-
 	public static final int KEY_UNUSED = 0x54;
 
 	@Override
 	public boolean apply(ClassNode node) {
+		if (RPConfig.Client.isNarratorKeybindEnabled()) {
+			patchDispatchKeypresses(findInstructions(node, "dispatchKeypresses", "func_152348_aa"));
+		}
+
 		if (!RandomPatches.DEFAULT_WINDOW_TITLE.equals(RPConfig.Window.title)) {
 			patchCreateDisplay(findInstructions(node, "createDisplay", "func_175609_am"));
 		}
@@ -58,33 +31,36 @@ public final class MinecraftPatch extends Patch {
 			patchSetWindowIcon(findInstructions(node, "setWindowIcon", "func_175594_ao"));
 		}
 
-		if (RPConfig.Client.isNarratorKeybindEnabled()) {
-			patchDispatchKeypresses(findInstructions(node, "dispatchKeypresses", "func_152348_aa"
-			));
-		}
-
 		return true;
 	}
 
-	public static void handleKeypress() {
-		if (ToggleNarratorKeybind.keybind == null) {
-			return;
+	private void patchDispatchKeypresses(InsnList instructions) {
+		IntInsnNode isB = null;
+
+		for (int i = 0; i < instructions.size(); i++) {
+			final AbstractInsnNode instruction = instructions.get(i);
+
+			if (instruction.getOpcode() == Opcodes.BIPUSH) {
+				isB = (IntInsnNode) instruction;
+
+				if (isB.operand == Keyboard.KEY_B) {
+					break;
+				}
+
+				isB = null;
+			}
 		}
 
-		final int eventKey = Keyboard.getEventKey();
-		final int key = eventKey == 0 ? Keyboard.getEventCharacter() + 256 : eventKey;
+		//Call MinecraftHook#handleKeypress
+		instructions.insertBefore(isB.getPrevious(), new MethodInsnNode(
+				Opcodes.INVOKESTATIC,
+				hookClass,
+				"handleKeypress",
+				"()V",
+				false
+		));
 
-		if (!ToggleNarratorKeybind.keybind.isActiveAndMatches(key)) {
-			return;
-		}
-
-		final Minecraft mc = ToggleNarratorKeybind.mc;
-
-		mc.gameSettings.setOptionValue(GameSettings.Options.NARRATOR, 1);
-
-		if (mc.currentScreen instanceof ScreenChatOptions) {
-			((ScreenChatOptions) mc.currentScreen).updateNarratorButton();
-		}
+		isB.operand = KEY_UNUSED;
 	}
 
 	private static void patchCreateDisplay(InsnList instructions) {
@@ -118,34 +94,5 @@ public final class MinecraftPatch extends Patch {
 		newInstructions.add(new InsnNode(Opcodes.RETURN));
 
 		instructions.insertBefore(instructions.getFirst(), newInstructions);
-	}
-
-	private static void patchDispatchKeypresses(InsnList instructions) {
-		IntInsnNode isB = null;
-
-		for (int i = 0; i < instructions.size(); i++) {
-			final AbstractInsnNode instruction = instructions.get(i);
-
-			if (instruction.getOpcode() == Opcodes.BIPUSH) {
-				isB = (IntInsnNode) instruction;
-
-				if (isB.operand == Keyboard.KEY_B) {
-					break;
-				}
-
-				isB = null;
-			}
-		}
-
-		//Call MinecraftPatch#handleKeypress
-		instructions.insertBefore(isB.getPrevious(), new MethodInsnNode(
-				Opcodes.INVOKESTATIC,
-				getName(MinecraftPatch.class),
-				"handleKeypress",
-				"()V",
-				false
-		));
-
-		isB.operand = KEY_UNUSED;
 	}
 }

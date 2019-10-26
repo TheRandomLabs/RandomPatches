@@ -75,8 +75,7 @@ public final class RPUtils {
 		return null;
 	}
 
-	public static ModMetadata loadMetadata(File source, String modid, String name,
-			String version) {
+	public static ModMetadata loadMetadata(File source, String modid, String name, String version) {
 		InputStream stream = null;
 		JarFile jar = null;
 

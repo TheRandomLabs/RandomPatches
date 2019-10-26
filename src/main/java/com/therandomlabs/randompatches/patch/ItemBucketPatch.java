@@ -1,10 +1,6 @@
 package com.therandomlabs.randompatches.patch;
 
-import com.therandomlabs.randompatches.config.RPConfig;
 import com.therandomlabs.randompatches.core.Patch;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.AbstractInsnNode;
 import org.objectweb.asm.tree.ClassNode;
@@ -38,27 +34,12 @@ public final class ItemBucketPatch extends Patch {
 		//Get IBlockState
 		((VarInsnNode) isSolid.getPrevious()).var = 4;
 
-		//Call ItemBucketPatch#isSolid
+		//Call ItemBucketHook#isSolid
 		isSolid.setOpcode(Opcodes.INVOKESTATIC);
-		isSolid.owner = getName(ItemBucketPatch.class);
+		isSolid.owner = hookClass;
 		isSolid.name = "isSolid";
 		isSolid.desc = "(Lnet/minecraft/block/state/IBlockState;)Z";
 
 		return true;
-	}
-
-	public static boolean isSolid(IBlockState state) {
-		final Material material = state.getMaterial();
-
-		if (material.isSolid()) {
-			return true;
-		}
-
-		if (!RPConfig.Misc.portalBucketReplacementFixForNetherPortals &&
-				state.getBlock() == Blocks.PORTAL) {
-			return false;
-		}
-
-		return material == Material.PORTAL;
 	}
 }

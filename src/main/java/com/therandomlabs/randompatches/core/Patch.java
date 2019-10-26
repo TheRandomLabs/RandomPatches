@@ -7,7 +7,14 @@ import org.objectweb.asm.tree.InsnList;
 import org.objectweb.asm.tree.MethodNode;
 
 public abstract class Patch {
+	public final String hookClass =
+			getName(getClass()).replaceAll("patch/(.+)Patch", "hook/$1Hook");
+
 	public abstract boolean apply(ClassNode node);
+
+	public final String getHookInnerClass(String name) {
+		return hookClass + "$" + name;
+	}
 
 	public static MethodNode findMethod(ClassNode node, String name) {
 		return findMethod(node, name, name);
