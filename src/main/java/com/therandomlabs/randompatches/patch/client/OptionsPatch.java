@@ -18,22 +18,13 @@ public final class OptionsPatch extends Patch {
 		for (int i = 0; i < instructions.size(); i++) {
 			framerateLimit = instructions.get(i);
 
-			if(framerateLimit.getOpcode() == Opcodes.LDC &&
+			if (framerateLimit.getOpcode() == Opcodes.LDC &&
 					"options.framerateLimit".equals(((LdcInsnNode) framerateLimit).cst)) {
 				break;
 			}
 
 			framerateLimit = null;
 		}
-
-		/*
-		LDC "options.framerateLimit"
-		ICONST_1
-		ICONST_0
-		LDC 10.0
-		LDC 260.0
-		LDC 10.0
-		*/
 
 		final AbstractInsnNode stepSize =
 				framerateLimit.getNext().getNext().getNext().getNext().getNext();
