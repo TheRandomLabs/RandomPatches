@@ -7,6 +7,7 @@ randompatches.config.client=Client-sided
 randompatches.config.client.dismountKeybind=Dismount keybind
 randompatches.config.client.fastLanguageSwitch=Fast language switch
 randompatches.config.client.forceTitleScreenOnDisconnect=Force title screen on disconnect
+randompatches.config.client.framerateLimitSliderStepSize=Framerate limit slider step size
 randompatches.config.client.invisiblePlayerModelFix=Invisible player model fix
 randompatches.config.client.narratorKeybind=Toggle Narrator keybind
 randompatches.config.client.patchMinecraftClass=Patch Minecraft class

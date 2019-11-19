@@ -48,6 +48,13 @@ public final class RPConfig {
 		)
 		public static boolean forceTitleScreenOnDisconnect = RandomPatches.IS_DEOBFUSCATED;
 
+		@Config.RangeDouble(min = Double.MIN_VALUE, max = 260.0)
+		@Config.Property({
+				"The framerate limit slider step size.",
+				"If this is set to 10.0, vanilla behavior is not changed."
+		})
+		public static float framerateLimitSliderStepSize = 1.0F;
+
 		@Config.MCVersion("[1.9,1.13)")
 		@Config.RequiresMCRestart
 		@Config.Property(

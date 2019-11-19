@@ -25,6 +25,7 @@ import com.therandomlabs.randompatches.patch.client.GuiIngameMenuPatch;
 import com.therandomlabs.randompatches.patch.client.GuiLanguageListPatch;
 import com.therandomlabs.randompatches.patch.client.ItemPotionPatch;
 import com.therandomlabs.randompatches.patch.client.MinecraftPatch;
+import com.therandomlabs.randompatches.patch.client.OptionsPatch;
 import com.therandomlabs.randompatches.patch.client.RenderPlayerPatch;
 import com.therandomlabs.randompatches.patch.client.dismount.EntityPlayerSPPatch;
 import com.therandomlabs.randompatches.patch.client.dismount.KeyBindingPatch;
@@ -166,6 +167,10 @@ public final class RandomPatches {
 
 		if (RPConfig.Client.fastLanguageSwitch && TRLUtils.IS_CLIENT) {
 			register("net.minecraft.client.gui.GuiLanguage$List", new GuiLanguageListPatch());
+		}
+
+		if (RPConfig.Client.framerateLimitSliderStepSize != 10.0F && TRLUtils.IS_CLIENT) {
+			register("net.minecraft.client.settings.GameSettings$Options", new OptionsPatch());
 		}
 
 		if (RPConfig.Client.invisiblePlayerModelFix && TRLUtils.IS_CLIENT &&
