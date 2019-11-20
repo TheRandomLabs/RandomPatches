@@ -17,8 +17,8 @@ public final class RPConfig {
 		public static boolean patchEntityBoat = true;
 
 		@Config.Property(
-				"Prevents underwater boat passengers from being ejected after 60 ticks (3 " +
-						"seconds)."
+				"Prevents underwater boat passengers from being ejected after 60 ticks " +
+						"(3 seconds)."
 		)
 		public static boolean preventUnderwaterBoatPassengerEjection =
 				RandomPatches.IS_DEOBFUSCATED;
