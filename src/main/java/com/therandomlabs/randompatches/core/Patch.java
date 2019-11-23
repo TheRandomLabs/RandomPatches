@@ -12,6 +12,10 @@ public abstract class Patch {
 
 	public abstract boolean apply(ClassNode node);
 
+	public boolean computeFrames() {
+		return false;
+	}
+
 	public final String getHookInnerClass(String name) {
 		return hookClass + "$" + name;
 	}

@@ -39,16 +39,9 @@ public class RPTransformer implements IClassTransformer {
 				return basicClass;
 			}
 
-			final int flags;
-
-			if (RandomPatches.SPONGEFORGE_INSTALLED &&
-					patch.getClass() == NetHandlerPlayServerPatch.class) {
-				flags = ClassWriter.COMPUTE_MAXS;
-			} else {
-				flags = ClassWriter.COMPUTE_FRAMES;
-			}
-
-			final ClassWriter writer = new RPClassWriter(flags);
+			final ClassWriter writer = new RPClassWriter(
+					patch.computeFrames() ? ClassWriter.COMPUTE_FRAMES : ClassWriter.COMPUTE_MAXS
+			);
 			node.accept(writer);
 			return writer.toByteArray();
 		} catch (Exception ex) {

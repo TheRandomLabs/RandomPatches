@@ -46,4 +46,9 @@ public final class GuiLanguageListPatch extends Patch {
 
 		return true;
 	}
+
+	@Override
+	public boolean computeFrames() {
+		return true;
+	}
 }

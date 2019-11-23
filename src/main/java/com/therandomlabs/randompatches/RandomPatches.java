@@ -218,9 +218,7 @@ public final class RandomPatches {
 			register("net.minecraft.entity.item.EntityMinecart", new EntityMinecartPatch());
 		}
 
-		//TODO fix SpongeForge compatibility
-		if (RPConfig.Misc.miningGhostBlocksFix && TRLUtils.MC_VERSION_NUMBER > 8 &&
-				!SPONGEFORGE_INSTALLED) {
+		if (RPConfig.Misc.miningGhostBlocksFix && TRLUtils.MC_VERSION_NUMBER > 8) {
 			register(
 					"net.minecraft.server.management.PlayerInteractionManager",
 					new PlayerInteractionManagerPatch()
@@ -248,9 +246,7 @@ public final class RandomPatches {
 			register("net.minecraft.network.PacketBuffer", new PacketBufferPatch());
 		}
 
-		//TODO fix SpongeForge compatibility
-		if (RPConfig.Misc.pistonGhostBlocksFix && TRLUtils.MC_VERSION_NUMBER > 8 &&
-				!SPONGEFORGE_INSTALLED) {
+		if (RPConfig.Misc.pistonGhostBlocksFix && TRLUtils.MC_VERSION_NUMBER > 8) {
 			register("net.minecraft.tileentity.TileEntityPiston", new TileEntityPistonPatch());
 		}
 

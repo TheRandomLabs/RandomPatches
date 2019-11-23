@@ -54,4 +54,9 @@ public final class GuiIngameMenuPatch extends Patch {
 
 		return true;
 	}
+
+	@Override
+	public boolean computeFrames() {
+		return true;
+	}
 }

@@ -50,4 +50,9 @@ public final class KeyBindingPatch extends Patch {
 
 		return true;
 	}
+
+	@Override
+	public boolean computeFrames() {
+		return true;
+	}
 }

@@ -21,6 +21,11 @@ public final class EntityPatch extends Patch {
 		return true;
 	}
 
+	@Override
+	public boolean computeFrames() {
+		return true;
+	}
+
 	private void patchWriteToNBT(InsnList instructions) {
 		MethodInsnNode setTag = null;
 
