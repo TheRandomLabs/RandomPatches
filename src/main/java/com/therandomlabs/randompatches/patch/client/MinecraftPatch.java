@@ -34,11 +34,6 @@ public final class MinecraftPatch extends Patch {
 		return true;
 	}
 
-	@Override
-	public boolean computeFrames() {
-		return true;
-	}
-
 	private void patchDispatchKeypresses(InsnList instructions) {
 		IntInsnNode isB = null;
 

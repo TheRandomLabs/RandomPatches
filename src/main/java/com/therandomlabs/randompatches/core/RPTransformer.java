@@ -2,10 +2,10 @@ package com.therandomlabs.randompatches.core;
 
 import java.util.HashMap;
 import java.util.Map;
+
 import com.therandomlabs.randomlib.config.ConfigManager;
 import com.therandomlabs.randompatches.RandomPatches;
 import com.therandomlabs.randompatches.config.RPConfig;
-import com.therandomlabs.randompatches.patch.NetHandlerPlayServerPatch;
 import net.minecraft.launchwrapper.IClassTransformer;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;

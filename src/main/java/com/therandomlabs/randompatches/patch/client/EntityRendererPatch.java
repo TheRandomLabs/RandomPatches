@@ -30,11 +30,6 @@ public final class EntityRendererPatch extends Patch {
 		return true;
 	}
 
-	@Override
-	public boolean computeFrames() {
-		return true;
-	}
-
 	private void patchUpdateRenderer(InsnList instructions) {
 		AbstractInsnNode label = null;
 
