@@ -76,6 +76,9 @@ public final class RandomPatches {
 	public static final boolean REBIND_INSTALLED =
 			RPUtils.detect("austeretony.rebind.common.core.ReBindCorePlugin");
 
+	public static final boolean REPLAY_MOD_INSTALLED =
+			RPUtils.detect("com.replaymod.core.ReplayMod");
+
 	public static final boolean REBIND_NARRATOR_INSTALLED =
 			RPUtils.detect("quaternary.rebindnarrator.RebindNarrator");
 

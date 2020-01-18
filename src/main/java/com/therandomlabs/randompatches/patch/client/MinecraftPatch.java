@@ -34,6 +34,11 @@ public final class MinecraftPatch extends Patch {
 		return true;
 	}
 
+	@Override
+	public boolean computeFrames() {
+		return !RandomPatches.REPLAY_MOD_INSTALLED;
+	}
+
 	private void patchDispatchKeypresses(InsnList instructions) {
 		IntInsnNode isB = null;
 
