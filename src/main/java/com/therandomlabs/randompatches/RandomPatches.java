@@ -202,7 +202,8 @@ public final class RandomPatches {
 			register("net.minecraft.client.renderer.EntityRenderer", new EntityRendererPatch());
 		}
 
-		if (RPConfig.Misc.disableObserverSignalOnPlace && TRLUtils.MC_VERSION_NUMBER > 11) {
+		if (RPConfig.Misc.disableObserverSignalOnPlace && TRLUtils.MC_VERSION_NUMBER > 11
+				&& !EIGENCRAFT_INSTALLED) {
 			register("net.minecraft.block.BlockObserver", new BlockObserverPatch());
 		}
 
