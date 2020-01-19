@@ -1,5 +1,7 @@
 package com.therandomlabs.randompatches;
 
+import static com.therandomlabs.randompatches.core.RPTransformer.register;
+
 import com.google.common.eventbus.Subscribe;
 import com.therandomlabs.randomlib.TRLUtils;
 import com.therandomlabs.randomlib.config.CommandConfigReload;
@@ -8,6 +10,7 @@ import com.therandomlabs.randompatches.client.RPTileEntityEndPortalRenderer;
 import com.therandomlabs.randompatches.config.RPConfig;
 import com.therandomlabs.randompatches.hook.client.MinecraftHook;
 import com.therandomlabs.randompatches.hook.client.dismount.EntityPlayerSPHook;
+import com.therandomlabs.randompatches.patch.BlockObserverPatch;
 import com.therandomlabs.randompatches.patch.EntityBoatPatch;
 import com.therandomlabs.randompatches.patch.EntityMinecartPatch;
 import com.therandomlabs.randompatches.patch.EntityPatch;
@@ -45,7 +48,6 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import static com.therandomlabs.randompatches.core.RPTransformer.register;
 
 public final class RandomPatches {
 	public static final String MOD_ID = "randompatches";
@@ -63,6 +65,9 @@ public final class RandomPatches {
 
 	public static final boolean BIGGER_PACKETS_PLEASE_INSTALLED =
 			RPUtils.detect("net.elnounch.mc.biggerpacketsplz.BiggerBacketsPlzCoreMod");
+
+	public static final boolean EIGENCRAFT_INSTALLED =
+			RPUtils.detect("org.gr1m.mc.mup.core.MupCore");
 
 	public static final boolean ICE_AND_FIRE_INSTALLED =
 			RPUtils.detect("com.github.alexthe666.iceandfire.asm.IceAndFirePlugin");
@@ -197,6 +202,10 @@ public final class RandomPatches {
 			register("net.minecraft.client.renderer.EntityRenderer", new EntityRendererPatch());
 		}
 
+		if (RPConfig.Misc.disableObserverSignalOnPlace && TRLUtils.MC_VERSION_NUMBER > 11) {
+			register("net.minecraft.block.BlockObserver", new BlockObserverPatch());
+		}
+
 		if (RPConfig.Misc.areEndPortalTweaksEnabled()) {
 			register("net.minecraft.block.BlockEndPortal", BlockEndPortalPatch.INSTANCE);
 			register(
@@ -213,11 +222,11 @@ public final class RandomPatches {
 			register("net.minecraft.world.WorldServer", new WorldServerPatch());
 		}
 
-		if (RPConfig.Misc.mc2025Fix && TRLUtils.MC_VERSION_NUMBER > 9) {
+		if (RPConfig.Misc.mc2025Fix && TRLUtils.MC_VERSION_NUMBER > 9 && !EIGENCRAFT_INSTALLED) {
 			register("net.minecraft.entity.Entity", new EntityPatch());
 		}
 
-		if (RPConfig.Misc.minecartAIFix) {
+		if (RPConfig.Misc.minecartAIFix && !EIGENCRAFT_INSTALLED) {
 			register("net.minecraft.entity.item.EntityMinecart", new EntityMinecartPatch());
 		}
 

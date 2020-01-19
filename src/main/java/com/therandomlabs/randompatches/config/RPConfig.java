@@ -119,6 +119,14 @@ public final class RPConfig {
 	}
 
 	public static final class Misc {
+		@Config.MCVersion("[1.12,1.13)")
+		@Config.RequiresMCRestart
+		@Config.Property({
+				"Whether to prevent the observer from emitting a signal when it is placed.",
+				"This fixes MC-109832."
+		})
+		public static boolean disableObserverSignalOnPlace = true;
+
 		@Config.MCVersion("[1.11,1.13)")
 		@Config.RequiresMCRestart
 		@Config.Property(

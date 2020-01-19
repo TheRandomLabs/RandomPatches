@@ -15,7 +15,7 @@ public final class ServerWorldEventHandlerPatch extends Patch {
 	@Override
 	public boolean apply(ClassNode node) {
 		//No need to patch the other spawnParticle method since it is only called by
-		//World#spawnAlwaysVisibleParticle which is only used by the area effect cloud particles,
+		//World#spawnAlwaysVisibleParticle, which is only used by the area effect cloud particles,
 		//which are called client-side.
 		final MethodNode method =
 				findMethod(node, "spawnParticle", "func_180442_a", "(IZDDDDDD[I)V");
