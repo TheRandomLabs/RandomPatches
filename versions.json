@@ -28,6 +28,7 @@
 		"1.13.2-1.15.1.0": "Initial port to Minecraft 1.13.2."
 	},
 	"1.12.2": {
+		"1.12.2-1.21.0.0": "Observers no longer send a signal when they are placed by default.\nFixed EigenCraft Unofficial Patch and Replay Mod compatibility.\nThe particle fixes are now compatible with CleanView and Dynamic Surroundings.",
 		"1.12.2-1.20.1.0": "Fixed SpongeForge compatibility.",
 		"1.12.2-1.20.0.1": "Hotfix.",
 		"1.12.2-1.20.0.0": "Refactor.\nAdded a configuration option to change the framerate limit step size.",
@@ -97,6 +98,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.12.1": {
+		"1.12.2-1.21.0.0": "Observers no longer send a signal when they are placed by default.\nFixed EigenCraft Unofficial Patch and Replay Mod compatibility.\nThe particle fixes are now compatible with CleanView and Dynamic Surroundings.",
 		"1.12.2-1.20.1.0": "Fixed SpongeForge compatibility.",
 		"1.12.2-1.20.0.1": "Hotfix.",
 		"1.12.2-1.20.0.0": "Refactor.\nAdded a configuration option to change the framerate limit step size.",
@@ -166,6 +168,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.12": {
+		"1.12.2-1.21.0.0": "Observers no longer send a signal when they are placed by default.\nFixed EigenCraft Unofficial Patch and Replay Mod compatibility.\nThe particle fixes are now compatible with CleanView and Dynamic Surroundings.",
 		"1.12.2-1.20.1.0": "Fixed SpongeForge compatibility.",
 		"1.12.2-1.20.0.1": "Hotfix.",
 		"1.12.2-1.20.0.0": "Refactor.\nAdded a configuration option to change the framerate limit step size.",
@@ -235,6 +238,8 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.11.2": {
+		"1.12.2-1.21.0.0": "Observers no longer send a signal when they are placed by default.\nFixed EigenCraft Unofficial Patch and Replay Mod compatibility.\nThe particle fixes are now compatible with CleanView and Dynamic Surroundings.",
+		"1.12.2-1.21.0.0": "Observers no longer send a signal when they are placed by default.\nFixed EigenCraft Unofficial Patch and Replay Mod compatibility.\nThe particle fixes are now compatible with CleanView and Dynamic Surroundings.",
 		"1.12.2-1.20.1.0": "Fixed SpongeForge compatibility.",
 		"1.12.2-1.20.0.1": "Hotfix.",
 		"1.12.2-1.20.0.0": "Refactor.\nAdded a configuration option to change the framerate limit step size.",
@@ -304,6 +309,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.11": {
+		"1.12.2-1.21.0.0": "Observers no longer send a signal when they are placed by default.\nFixed EigenCraft Unofficial Patch and Replay Mod compatibility.\nThe particle fixes are now compatible with CleanView and Dynamic Surroundings.",
 		"1.12.2-1.20.1.0": "Fixed SpongeForge compatibility.",
 		"1.12.2-1.20.0.1": "Hotfix.",
 		"1.12.2-1.20.0.0": "Refactor.\nAdded a configuration option to change the framerate limit step size.",
@@ -373,6 +379,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.10.2": {
+		"1.12.2-1.21.0.0": "Observers no longer send a signal when they are placed by default.\nFixed EigenCraft Unofficial Patch and Replay Mod compatibility.\nThe particle fixes are now compatible with CleanView and Dynamic Surroundings.",
 		"1.12.2-1.20.1.0": "Fixed SpongeForge compatibility.",
 		"1.12.2-1.20.0.1": "Hotfix.",
 		"1.12.2-1.20.0.0": "Refactor.\nAdded a configuration option to change the framerate limit step size.",
@@ -442,6 +449,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.10": {
+		"1.12.2-1.21.0.0": "Observers no longer send a signal when they are placed by default.\nFixed EigenCraft Unofficial Patch and Replay Mod compatibility.\nThe particle fixes are now compatible with CleanView and Dynamic Surroundings.",
 		"1.12.2-1.20.1.0": "Fixed SpongeForge compatibility.",
 		"1.12.2-1.20.0.1": "Hotfix.",
 		"1.12.2-1.20.0.0": "Refactor.\nAdded a configuration option to change the framerate limit step size.",
@@ -511,6 +519,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.9.4": {
+		"1.12.2-1.21.0.0": "Observers no longer send a signal when they are placed by default.\nFixed EigenCraft Unofficial Patch and Replay Mod compatibility.\nThe particle fixes are now compatible with CleanView and Dynamic Surroundings.",
 		"1.12.2-1.20.1.0": "Fixed SpongeForge compatibility.",
 		"1.12.2-1.20.0.1": "Hotfix.",
 		"1.12.2-1.20.0.0": "Refactor.\nAdded a configuration option to change the framerate limit step size.",
@@ -573,6 +582,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.9": {
+		"1.12.2-1.21.0.0": "Observers no longer send a signal when they are placed by default.\nFixed EigenCraft Unofficial Patch and Replay Mod compatibility.\nThe particle fixes are now compatible with CleanView and Dynamic Surroundings.",
 		"1.12.2-1.20.1.0": "Fixed SpongeForge compatibility.",
 		"1.12.2-1.20.0.1": "Hotfix.",
 		"1.12.2-1.20.0.0": "Refactor.\nAdded a configuration option to change the framerate limit step size.",
@@ -635,6 +645,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.8.9": {
+		"1.12.2-1.21.0.0": "Observers no longer send a signal when they are placed by default.\nFixed EigenCraft Unofficial Patch and Replay Mod compatibility.\nThe particle fixes are now compatible with CleanView and Dynamic Surroundings.",
 		"1.12.2-1.20.1.0": "Fixed SpongeForge compatibility.",
 		"1.12.2-1.20.0.1": "Hotfix.",
 		"1.12.2-1.20.0.0": "Refactor.\nAdded a configuration option to change the framerate limit step size.",
@@ -697,6 +708,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.8.8": {
+		"1.12.2-1.21.0.0": "Observers no longer send a signal when they are placed by default.\nFixed EigenCraft Unofficial Patch and Replay Mod compatibility.\nThe particle fixes are now compatible with CleanView and Dynamic Surroundings.",
 		"1.12.2-1.20.1.0": "Fixed SpongeForge compatibility.",
 		"1.12.2-1.20.0.1": "Hotfix.",
 		"1.12.2-1.20.0.0": "Refactor.\nAdded a configuration option to change the framerate limit step size.",
@@ -759,6 +771,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.8": {
+		"1.12.2-1.21.0.0": "Observers no longer send a signal when they are placed by default.\nFixed EigenCraft Unofficial Patch and Replay Mod compatibility.\nThe particle fixes are now compatible with CleanView and Dynamic Surroundings.",
 		"1.12.2-1.20.1.0": "Fixed SpongeForge compatibility.",
 		"1.12.2-1.20.0.1": "Hotfix.",
 		"1.12.2-1.20.0.0": "Refactor.\nAdded a configuration option to change the framerate limit step size.",
@@ -829,27 +842,27 @@
 		"1.14.2-recommended": "1.14.2-1.16.2.0",
 		"1.13.2-latest": "1.13.2-1.7.2.0",
 		"1.13.2-recommended": "1.13.2-1.17.2.0",
-		"1.12.2-latest": "1.12.2-1.20.1.0",
-		"1.12.2-recommended": "1.12.2-1.20.1.0",
-		"1.12-latest": "1.12.2-1.20.1.0",
-		"1.12-recommended": "1.12.2-1.20.1.0",
-		"1.11.2-latest": "1.12.2-1.20.1.0",
-		"1.11.2-recommended": "1.12.2-1.20.1.0",
-		"1.11-latest": "1.12.2-1.20.1.0",
-		"1.11-recommended": "1.12.2-1.20.1.0",
-		"1.10.2-latest": "1.12.2-1.20.1.0",
-		"1.10.2-recommended": "1.12.2-1.20.1.0",
-		"1.10-latest": "1.12.2-1.20.1.0",
-		"1.10-recommended": "1.12.2-1.20.1.0",
-		"1.9.4-latest": "1.12.2-1.20.1.0",
-		"1.9.4-recommended": "1.12.2-1.20.1.0",
-		"1.9-latest": "1.12.2-1.20.1.0",
-		"1.9-recommended": "1.12.2-1.20.1.0",
-		"1.8.9-latest": "1.12.2-1.20.1.0",
-		"1.8.9-recommended": "1.12.2-1.20.1.0",
-		"1.8.8-latest": "1.12.2-1.20.1.0",
-		"1.8.8-recommended": "1.12.2-1.20.1.0",
-		"1.8-latest": "1.12.2-1.20.1.0",
-		"1.8-recommended": "1.12.2-1.20.1.0"
+		"1.12.2-latest": "1.12.2-1.21.0.0",
+		"1.12.2-recommended": "1.12.2-1.21.0.0",
+		"1.12-latest": "1.12.2-1.21.0.0",
+		"1.12-recommended": "1.12.2-1.21.0.0",
+		"1.11.2-latest": "1.12.2-1.21.0.0",
+		"1.11.2-recommended": "1.12.2-1.21.0.0",
+		"1.11-latest": "1.12.2-1.21.0.0",
+		"1.11-recommended": "1.12.2-1.21.0.0",
+		"1.10.2-latest": "1.12.2-1.21.0.0",
+		"1.10.2-recommended": "1.12.2-1.21.0.0",
+		"1.10-latest": "1.12.2-1.21.0.0",
+		"1.10-recommended": "1.12.2-1.21.0.0",
+		"1.9.4-latest": "1.12.2-1.21.0.0",
+		"1.9.4-recommended": "1.12.2-1.21.0.0",
+		"1.9-latest": "1.12.2-1.21.0.0",
+		"1.9-recommended": "1.12.2-1.21.0.0",
+		"1.8.9-latest": "1.12.2-1.21.0.0",
+		"1.8.9-recommended": "1.12.2-1.21.0.0",
+		"1.8.8-latest": "1.12.2-1.21.0.0",
+		"1.8.8-recommended": "1.12.2-1.21.0.0",
+		"1.8-latest": "1.12.2-1.21.0.0",
+		"1.8-recommended": "1.12.2-1.21.0.0"
 	}
 }
