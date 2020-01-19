@@ -119,7 +119,7 @@ public final class RPConfig {
 	}
 
 	public static final class Misc {
-		@Config.MCVersion("[1.12,1.13)")
+		@Config.MCVersion("[1.11,1.13)")
 		@Config.RequiresMCRestart
 		@Config.Property({
 				"Whether to prevent the observer from emitting a signal when it is placed.",
