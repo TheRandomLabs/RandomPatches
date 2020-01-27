@@ -92,8 +92,8 @@ repositories {
 dependencies {
 	minecraft "net.minecraftforge:forge:1.15.2-31.0.1"
 
-	compile group: "com.github.TheRandomLabs", name: "TRLUtils-Forge", version: "1.14-SNAPSHOT", changing: true
-	nonModDep group: "com.github.TheRandomLabs", name: "TRLUtils-Forge", version: "1.14-SNAPSHOT", changing: true
+	compile group: "com.github.TheRandomLabs", name: "TRLUtils-Forge", version: "1.15-SNAPSHOT", changing: true
+	nonModDep group: "com.github.TheRandomLabs", name: "TRLUtils-Forge", version: "1.15-SNAPSHOT", changing: true
 }
 
 task extractNonMod(type: Copy) {
