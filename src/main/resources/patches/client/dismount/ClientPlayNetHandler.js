@@ -4,7 +4,7 @@ var Opcodes = Java.type("org.objectweb.asm.Opcodes");
 var FieldInsnNode = Java.type("org.objectweb.asm.tree.FieldInsnNode");
 
 var HANDLE_SET_PASSENGERS = ASMAPI.mapMethod("func_184328_a");
-var KEY_BIND_SNEAK = ASMAPI.mapField("field_74311_E");
+var KEY_BIND_SNEAK = ASMAPI.mapField("field_228046_af_");
 
 function log(message) {
 	print("[RandomPatches ClientPlayNetHandler Transformer]: " + message);
@@ -62,7 +62,7 @@ function patchHandleSetPassengers(instructions) {
 	instructions.insert(getSneakKeybind, new FieldInsnNode(
 		Opcodes.GETSTATIC,
 		"com/therandomlabs/randompatches/hook/client/dismount/" +
-		"ClientPlayerEntityPatch$DismountKeybind",
+		"ClientPlayerEntityHook$DismountKeybind",
 		"keybind",
 		"Lnet/minecraft/client/settings/KeyBinding;"
 	));

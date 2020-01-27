@@ -1,5 +1,7 @@
 package com.therandomlabs.randompatches;
 
+import java.lang.reflect.Method;
+
 import com.therandomlabs.utils.config.ConfigManager;
 import com.therandomlabs.utils.forge.ForgeUtils;
 import com.therandomlabs.utils.forge.config.ConfigReloadCommand;
@@ -22,6 +24,12 @@ public final class RandomPatches {
 			DistExecutor.runForDist(() -> ClientProxy::new, () -> CommonProxy::new);
 
 	public RandomPatches() {
+		try {
+			final Method method = ClassLoader.class.getDeclaredMethod("initLibraryPaths");
+			method.setAccessible(true);
+			method.invoke(null);
+		} catch (Exception ignored) {}
+
 		if (!ForgeUtils.IS_CLIENT) {
 			ForgeConfig.initialize();
 			ConfigManager.register(RPConfig.class);

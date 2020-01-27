@@ -16,12 +16,12 @@ public final class EntityHook {
 
 		//Store relative bounding box rather than absolute to retain compatibility with
 		//EU2 Golden Lasso and similar items
-		list.add(new DoubleNBT(aabb.minX - entity.posX));
-		list.add(new DoubleNBT(aabb.minY - entity.posY));
-		list.add(new DoubleNBT(aabb.minZ - entity.posZ));
-		list.add(new DoubleNBT(aabb.maxX - entity.posX));
-		list.add(new DoubleNBT(aabb.maxY - entity.posY));
-		list.add(new DoubleNBT(aabb.maxZ - entity.posZ));
+		list.add(DoubleNBT.valueOf(aabb.minX - entity.getPosX()));
+		list.add(DoubleNBT.valueOf(aabb.minY - entity.getPosY()));
+		list.add(DoubleNBT.valueOf(aabb.minZ - entity.getPosZ()));
+		list.add(DoubleNBT.valueOf(aabb.maxX - entity.getPosX()));
+		list.add(DoubleNBT.valueOf(aabb.maxY - entity.getPosY()));
+		list.add(DoubleNBT.valueOf(aabb.maxZ - entity.getPosZ()));
 
 		compound.put("RelativeAABB", list);
 	}
@@ -34,12 +34,12 @@ public final class EntityHook {
 		final ListNBT aabb = compound.getList("RelativeAABB", Constants.NBT.TAG_DOUBLE);
 
 		entity.setBoundingBox(new AxisAlignedBB(
-				entity.posX + aabb.getDouble(0),
-				entity.posY + aabb.getDouble(1),
-				entity.posZ + aabb.getDouble(2),
-				entity.posX + aabb.getDouble(3),
-				entity.posY + aabb.getDouble(4),
-				entity.posZ + aabb.getDouble(5)
+				entity.getPosX() + aabb.getDouble(0),
+				entity.getPosY() + aabb.getDouble(1),
+				entity.getPosZ() + aabb.getDouble(2),
+				entity.getPosX() + aabb.getDouble(3),
+				entity.getPosY() + aabb.getDouble(4),
+				entity.getPosZ() + aabb.getDouble(5)
 		));
 	}
 }

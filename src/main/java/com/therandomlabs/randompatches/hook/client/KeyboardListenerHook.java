@@ -50,7 +50,7 @@ public final class KeyboardListenerHook {
 			final IGuiEventListener focused = screen.getFocused();
 
 			return !(focused instanceof TextFieldWidget) ||
-					!((TextFieldWidget) focused).func_212955_f();
+					!((TextFieldWidget) focused).canWrite();
 		}
 
 		@Override
@@ -72,7 +72,7 @@ public final class KeyboardListenerHook {
 
 		final Minecraft mc = ToggleNarratorKeybind.mc;
 
-		AbstractOption.NARRATOR.func_216722_a(mc.gameSettings, 1);
+		AbstractOption.NARRATOR.setValueIndex(mc.gameSettings, 1);
 
 		if (mc.currentScreen instanceof ChatOptionsScreen) {
 			((ChatOptionsScreen) mc.currentScreen).updateNarratorButton();

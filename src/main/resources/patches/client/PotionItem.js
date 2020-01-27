@@ -52,7 +52,7 @@ function patchHasEffect(instructions) {
 	//Call PotionItemHook#hasEffect
 	instructions.add(new MethodInsnNode(
 		Opcodes.INVOKESTATIC,
-		"com/therandomlabs/randompatches/hook/client/PotionItemPatch",
+		"com/therandomlabs/randompatches/hook/client/PotionItemHook",
 		"hasEffect",
 		"(Lnet/minecraft/item/ItemStack;)Z",
 		false

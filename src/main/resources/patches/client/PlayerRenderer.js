@@ -44,7 +44,7 @@ function patchApplyRotations(instructions) {
 		var instruction = instructions.get(i);
 
 		if (instruction.getOpcode() == Opcodes.INVOKESTATIC && instruction.name == "acos") {
-			instruction.owner = "com/therandomlabs/randompatches/hook/client/PlayerRendererPatch";
+			instruction.owner = "com/therandomlabs/randompatches/hook/client/PlayerRendererHook";
 			return;
 		}
 	}

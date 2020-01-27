@@ -4,7 +4,7 @@ var Opcodes = Java.type("org.objectweb.asm.Opcodes");
 var MethodInsnNode = Java.type("org.objectweb.asm.tree.MethodInsnNode");
 
 var TICK = ASMAPI.mapMethod("func_70071_h_");
-var SNEAK = ASMAPI.mapField("field_78899_d");
+var SNEAK = ASMAPI.mapField("field_228350_h_");
 
 function log(message) {
 	print("[RandomPatches ClientPlayerEntity Transformer]: " + message);
@@ -58,7 +58,7 @@ function patchTick(instructions) {
 		}
 	}
 
-	//Call ClientPlayerEntityPHook#shouldDismount
+	//Call ClientPlayerEntityHook#shouldDismount
 	instructions.insert(shouldSneak, new MethodInsnNode(
 		Opcodes.INVOKESTATIC,
 		"com/therandomlabs/randompatches/hook/client/dismount/ClientPlayerEntityHook",

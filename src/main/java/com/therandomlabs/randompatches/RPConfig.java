@@ -212,7 +212,7 @@ public final class RPConfig {
 		}
 
 		private static void setWindowSettings() {
-			final MainWindow mainWindow = Minecraft.getInstance().mainWindow;
+			final MainWindow mainWindow = Minecraft.getInstance().getMainWindow();
 
 			if (mainWindow == null) {
 				return;

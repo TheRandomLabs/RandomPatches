@@ -6,13 +6,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
-import com.mojang.blaze3d.platform.TextureUtil;
-import com.therandomlabs.randompatches.RPConfig;
+
 import com.therandomlabs.randompatches.RandomPatches;
+import com.therandomlabs.randompatches.RPConfig;
 import com.therandomlabs.utils.config.ConfigManager;
 import com.therandomlabs.utils.forge.ForgeUtils;
 import com.therandomlabs.utils.forge.config.ForgeConfig;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.texture.TextureUtil;
 import net.minecraft.resources.ResourcePackType;
 import net.minecraft.resources.VanillaPack;
 import net.minecraft.util.ResourceLocation;
@@ -32,7 +33,7 @@ public class WindowIconHandler {
 		//This gets called before the RandomPatches constructor is called
 		ForgeConfig.initialize();
 		ConfigManager.register(RPConfig.class);
-		setWindowIcon(Minecraft.getInstance().mainWindow.getHandle());
+		setWindowIcon(Minecraft.getInstance().getMainWindow().getHandle());
 	}
 
 	public static void setWindowIcon(long handle) {
@@ -185,7 +186,7 @@ public class WindowIconHandler {
 		ByteBuffer resource = null;
 
 		try {
-			resource = TextureUtil.readResource(stream);
+			resource = TextureUtil.readToBuffer(stream);
 			resource.rewind();
 
 			final ByteBuffer image = STBImage.stbi_load_from_memory(resource, x, y, channels, 0);

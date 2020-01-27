@@ -23,7 +23,7 @@ targetCompatibility = JavaVersion.VERSION_1_8
 compileJava.sourceCompatibility = JavaVersion.VERSION_1_8
 compileJava.targetCompatibility = JavaVersion.VERSION_1_8
 
-version = "1.14.4-1.21.0.0"
+version = "1.15.2-1.21.0.0"
 group = "com.therandomlabs.randompatches"
 archivesBaseName = "randompatches"
 
@@ -36,7 +36,7 @@ configurations {
 }
 
 minecraft {
-	mappings channel: "snapshot", version: "20191005-1.14.3"
+	mappings channel: "snapshot", version: "20200126-1.15.1"
 
 	accessTransformer = file("src/main/resources/META-INF/accesstransformer.cfg")
 
@@ -90,7 +90,7 @@ repositories {
 }
 
 dependencies {
-	minecraft "net.minecraftforge:forge:1.14.4-28.1.39"
+	minecraft "net.minecraftforge:forge:1.15.2-31.0.1"
 
 	compile group: "com.github.TheRandomLabs", name: "TRLUtils-Forge", version: "1.14-SNAPSHOT", changing: true
 	nonModDep group: "com.github.TheRandomLabs", name: "TRLUtils-Forge", version: "1.14-SNAPSHOT", changing: true
