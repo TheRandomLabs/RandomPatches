@@ -62,7 +62,7 @@ function patchHandleSetPassengers(instructions) {
 	instructions.insert(getSneakKeybind, new FieldInsnNode(
 		Opcodes.GETSTATIC,
 		"com/therandomlabs/randompatches/hook/client/dismount/" +
-		"ClientPlayerEntityPatch$DismountKeybind",
+		"ClientPlayerEntityHook$DismountKeybind",
 		"keybind",
 		"Lnet/minecraft/client/settings/KeyBinding;"
 	));
