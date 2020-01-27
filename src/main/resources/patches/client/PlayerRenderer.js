@@ -8,7 +8,7 @@ function log(message) {
 }
 
 function patch(method, name, patchFunction) {
-	if(method.name != name) {
+	if (method.name != name) {
 		return false;
 	}
 
@@ -27,8 +27,8 @@ function initializeCoreMod() {
 			"transformer": function(classNode) {
 				var methods = classNode.methods;
 
-				for(var i in methods) {
-					if(patch(methods[i], APPLY_ROTATIONS, patchApplyRotations)) {
+				for (var i in methods) {
+					if (patch(methods[i], APPLY_ROTATIONS, patchApplyRotations)) {
 						break;
 					}
 				}
@@ -40,11 +40,11 @@ function initializeCoreMod() {
 }
 
 function patchApplyRotations(instructions) {
-	for(var i = 0; i < instructions.size(); i++) {
+	for (var i = 0; i < instructions.size(); i++) {
 		var instruction = instructions.get(i);
 
-		if(instruction.getOpcode() == Opcodes.INVOKESTATIC && instruction.name == "acos") {
-			instruction.owner = "com/therandomlabs/randompatches/patch/client/PlayerRendererPatch";
+		if (instruction.getOpcode() == Opcodes.INVOKESTATIC && instruction.name == "acos") {
+			instruction.owner = "com/therandomlabs/randompatches/hook/client/PlayerRendererPatch";
 			return;
 		}
 	}

@@ -13,7 +13,7 @@ function log(message) {
 }
 
 function patch(method, name, patchFunction) {
-	if(method.name != name) {
+	if (method.name != name) {
 		return false;
 	}
 
@@ -32,8 +32,8 @@ function initializeCoreMod() {
 			"transformer": function(classNode) {
 				var methods = classNode.methods;
 
-				for(var i in methods) {
-					if(patch(methods[i], SHOULD_RENDER_FACE, patchShouldRenderFace)) {
+				for (var i in methods) {
+					if (patch(methods[i], SHOULD_RENDER_FACE, patchShouldRenderFace)) {
 						break;
 					}
 				}
@@ -50,16 +50,16 @@ function patchShouldRenderFace(instructions) {
 	//Get face
 	newInstructions.add(new VarInsnNode(Opcodes.ALOAD, 1));
 
-	//Call EndPortalTileEntityPatch#shouldRenderFace
+	//Call EndPortalTileEntityHook#shouldRenderFace
 	newInstructions.add(new MethodInsnNode(
-			Opcodes.INVOKESTATIC,
-			"com/therandomlabs/randompatches/patch/EndPortalTileEntityPatch",
-			"shouldRenderFace",
-			"(Lnet/minecraft/util/Direction;)Z",
-			false
+		Opcodes.INVOKESTATIC,
+		"com/therandomlabs/randompatches/hook/EndPortalTileEntityHook",
+		"shouldRenderFace",
+		"(Lnet/minecraft/util/Direction;)Z",
+		false
 	));
 
-	//Return EndPortalTileEntityPatch#shouldRenderFace
+	//Return EndPortalTileEntityHook#shouldRenderFace
 	newInstructions.add(new InsnNode(Opcodes.IRETURN));
 
 	instructions.insertBefore(instructions.getFirst(), newInstructions);

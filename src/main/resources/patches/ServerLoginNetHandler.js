@@ -10,7 +10,7 @@ function log(message) {
 }
 
 function patch(method, name, patchFunction) {
-	if(method.name != name) {
+	if (method.name != name) {
 		return false;
 	}
 
@@ -29,8 +29,8 @@ function initializeCoreMod() {
 			"transformer": function(classNode) {
 				var methods = classNode.methods;
 
-				for(var i in methods) {
-					if(patch(methods[i], TICK, patchTick)) {
+				for (var i in methods) {
+					if (patch(methods[i], TICK, patchTick)) {
 						break;
 					}
 				}
@@ -44,10 +44,10 @@ function initializeCoreMod() {
 function patchTick(instructions) {
 	var loginTimeout;
 
-	for(var i = 0; i < instructions.size(); i++) {
+	for (var i = 0; i < instructions.size(); i++) {
 		var instruction = instructions.get(i);
 
-		if(instruction.getOpcode() == Opcodes.SIPUSH && instruction.operand == 600) {
+		if (instruction.getOpcode() == Opcodes.SIPUSH && instruction.operand == 600) {
 			loginTimeout = instruction;
 			break;
 		}
@@ -55,10 +55,10 @@ function patchTick(instructions) {
 
 	//Get RPConfig.Timeouts#loginTimeout
 	instructions.insert(loginTimeout, new FieldInsnNode(
-			Opcodes.GETSTATIC,
-			"com/therandomlabs/randompatches/RPConfig$Timeouts",
-			"loginTimeout",
-			"I"
+		Opcodes.GETSTATIC,
+		"com/therandomlabs/randompatches/RPConfig$Timeouts",
+		"loginTimeout",
+		"I"
 	));
 
 	instructions.remove(loginTimeout);

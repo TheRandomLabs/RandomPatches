@@ -8,7 +8,7 @@ function log(message) {
 }
 
 function patch(method, name, patchFunction) {
-	if(method.name != name) {
+	if (method.name != name) {
 		return false;
 	}
 
@@ -26,10 +26,10 @@ function initializeCoreMod() {
 			},
 			"transformer": function(classNode) {
 				var func_220080_a = classNode.visitMethod(
-						Opcodes.ACC_PUBLIC, FUNC_220080_A,
-						"(Lnet/minecraft/block/BlockState;Lnet/minecraft/world/IBlockReader;" +
-						"Lnet/minecraft/util/math/BlockPos;)F",
-						null, null
+					Opcodes.ACC_PUBLIC, FUNC_220080_A,
+					"(Lnet/minecraft/block/BlockState;Lnet/minecraft/world/IBlockReader;" +
+					"Lnet/minecraft/util/math/BlockPos;)F",
+					null, null
 				);
 
 				func_220080_a.visitCode();

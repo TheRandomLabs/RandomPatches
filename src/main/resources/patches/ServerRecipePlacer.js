@@ -8,7 +8,7 @@ function log(message) {
 }
 
 function patch(method, name, patchFunction) {
-	if(method.name != name) {
+	if (method.name != name) {
 		return false;
 	}
 
@@ -27,8 +27,8 @@ function initializeCoreMod() {
 			"transformer": function(classNode) {
 				var methods = classNode.methods;
 
-				for(var i in methods) {
-					if(patch(methods[i], CONSUME_INGREDIENT, patchConsumeIngredient)) {
+				for (var i in methods) {
+					if (patch(methods[i], CONSUME_INGREDIENT, patchConsumeIngredient)) {
 						break;
 					}
 				}
@@ -42,10 +42,10 @@ function initializeCoreMod() {
 function patchConsumeIngredient(instructions) {
 	var findSlotMatchingUnusedItem;
 
-	for(var i = 0; i < instructions.size(); i++) {
+	for (var i = 0; i < instructions.size(); i++) {
 		var instruction = instructions.get(i);
 
-		if(instruction.getOpcode() == Opcodes.INVOKEVIRTUAL) {
+		if (instruction.getOpcode() == Opcodes.INVOKEVIRTUAL) {
 			findSlotMatchingUnusedItem = instruction;
 			break;
 		}
@@ -54,8 +54,8 @@ function patchConsumeIngredient(instructions) {
 	//Call ServerRecipeBookHelper#findSlotMatchingUnusedItem
 	findSlotMatchingUnusedItem.setOpcode(Opcodes.INVOKESTATIC);
 	findSlotMatchingUnusedItem.owner =
-			"com/therandomlabs/randompatches/patch/ServerRecipePlacerPatch";
+		"com/therandomlabs/randompatches/hook/ServerRecipePlacerHook";
 	findSlotMatchingUnusedItem.name = "findSlotMatchingUnusedItem";
 	findSlotMatchingUnusedItem.desc =
-			"(Lnet/minecraft/entity/player/PlayerInventory;Lnet/minecraft/item/ItemStack;)I";
+		"(Lnet/minecraft/entity/player/PlayerInventory;Lnet/minecraft/item/ItemStack;)I";
 }

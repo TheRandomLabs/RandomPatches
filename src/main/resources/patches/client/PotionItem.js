@@ -12,7 +12,7 @@ function log(message) {
 }
 
 function patch(method, name, patchFunction) {
-	if(method.name != name) {
+	if (method.name != name) {
 		return false;
 	}
 
@@ -31,8 +31,8 @@ function initializeCoreMod() {
 			"transformer": function(classNode) {
 				var methods = classNode.methods;
 
-				for(var i in methods) {
-					if(patch(methods[i], HAS_EFFECT, patchHasEffect)) {
+				for (var i in methods) {
+					if (patch(methods[i], HAS_EFFECT, patchHasEffect)) {
 						break;
 					}
 				}
@@ -49,15 +49,15 @@ function patchHasEffect(instructions) {
 	//Get ItemStack
 	instructions.add(new VarInsnNode(Opcodes.ALOAD, 1));
 
-	//Call PotionItemPatch#hasEffect
+	//Call PotionItemHook#hasEffect
 	instructions.add(new MethodInsnNode(
-			Opcodes.INVOKESTATIC,
-			"com/therandomlabs/randompatches/patch/client/PotionItemPatch",
-			"hasEffect",
-			"(Lnet/minecraft/item/ItemStack;)Z",
-			false
+		Opcodes.INVOKESTATIC,
+		"com/therandomlabs/randompatches/hook/client/PotionItemPatch",
+		"hasEffect",
+		"(Lnet/minecraft/item/ItemStack;)Z",
+		false
 	));
 
-	//Return PotionItemPatch#hasEffect
+	//Return PotionItemHook#hasEffect
 	instructions.add(new InsnNode(Opcodes.IRETURN));
 }

@@ -1,4 +1,4 @@
-package com.therandomlabs.randompatches.patch.client;
+package com.therandomlabs.randompatches.hook.client;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.AccessibilityScreen;
@@ -15,7 +15,7 @@ import net.minecraftforge.client.settings.KeyModifier;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import org.lwjgl.glfw.GLFW;
 
-public final class KeyboardListenerPatch {
+public final class KeyboardListenerHook {
 	public static final class ToggleNarratorKeybind {
 		private static final Minecraft mc = Minecraft.getInstance();
 		private static KeyBinding keybind;
@@ -39,11 +39,11 @@ public final class KeyboardListenerPatch {
 		public boolean isActive() {
 			final Screen screen = ToggleNarratorKeybind.mc.currentScreen;
 
-			if(screen == null) {
+			if (screen == null) {
 				return true;
 			}
 
-			if(screen instanceof ControlsScreen) {
+			if (screen instanceof ControlsScreen) {
 				return false;
 			}
 
@@ -59,12 +59,12 @@ public final class KeyboardListenerPatch {
 		}
 	}
 
-	private KeyboardListenerPatch() {}
+	private KeyboardListenerHook() {}
 
 	public static void handleKeypress(int key, int scanCode) {
 		final KeyBinding keybind = ToggleNarratorKeybind.keybind;
 
-		if(keybind == null || !keybind.matchesKey(key, scanCode) ||
+		if (keybind == null || !keybind.matchesKey(key, scanCode) ||
 				!KeyConflictContext.INSTANCE.isActive() ||
 				!keybind.getKeyModifier().isActive(KeyConflictContext.INSTANCE)) {
 			return;
@@ -74,9 +74,9 @@ public final class KeyboardListenerPatch {
 
 		AbstractOption.NARRATOR.func_216722_a(mc.gameSettings, 1);
 
-		if(mc.currentScreen instanceof ChatOptionsScreen) {
+		if (mc.currentScreen instanceof ChatOptionsScreen) {
 			((ChatOptionsScreen) mc.currentScreen).updateNarratorButton();
-		} else if(mc.currentScreen instanceof AccessibilityScreen) {
+		} else if (mc.currentScreen instanceof AccessibilityScreen) {
 			((AccessibilityScreen) mc.currentScreen).func_212985_a();
 		}
 	}

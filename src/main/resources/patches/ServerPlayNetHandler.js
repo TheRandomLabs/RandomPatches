@@ -23,7 +23,7 @@ function log(message) {
 }
 
 function patch(method, name, patchFunction) {
-	if(method.name != name) {
+	if (method.name != name) {
 		return false;
 	}
 
@@ -42,24 +42,24 @@ function initializeCoreMod() {
 			"transformer": function(classNode) {
 				var methods = classNode.methods;
 
-				for(var i in methods) {
+				for (var i in methods) {
 					var method = methods[i];
 
-					if(tickPatched && processPlayerPatched && processVehicleMovePatched) {
+					if (tickPatched && processPlayerPatched && processVehicleMovePatched) {
 						break;
 					}
 
-					if(patch(method, TICK, patchTick)) {
+					if (patch(method, TICK, patchTick)) {
 						tickPatched = true;
 						continue;
 					}
 
-					if(patch(method, PROCESS_PLAYER, patchProcessPlayer)) {
+					if (patch(method, PROCESS_PLAYER, patchProcessPlayer)) {
 						processPlayerPatched = true;
 						continue;
 					}
 
-					if(patch(method, PROCESS_VEHICLE_MOVE, patchProcessVehicleMove)) {
+					if (patch(method, PROCESS_VEHICLE_MOVE, patchProcessVehicleMove)) {
 						processVehicleMovePatched = true;
 					}
 				}
@@ -104,27 +104,27 @@ function patchTick(instructions) {
 	var jumpIfKeepAlivePending;
 	var sendPacket;
 
-	for(var i = 0; i < instructions.size(); i++) {
+	for (var i = 0; i < instructions.size(); i++) {
 		var instruction = instructions.get(i);
 
-		if(keepAliveInterval == null) {
-			if(instruction.getOpcode() == Opcodes.LDC && instruction.cst == 15000) {
+		if (keepAliveInterval == null) {
+			if (instruction.getOpcode() == Opcodes.LDC && instruction.cst == 15000) {
 				keepAliveInterval = instruction;
 			}
 
 			continue;
 		}
 
-		if(jumpIfKeepAlivePending == null) {
-			if(instruction.getOpcode() == Opcodes.IFEQ &&
-					instruction.getPrevious().getOpcode() == Opcodes.GETFIELD) {
+		if (jumpIfKeepAlivePending == null) {
+			if (instruction.getOpcode() == Opcodes.IFEQ &&
+				instruction.getPrevious().getOpcode() == Opcodes.GETFIELD) {
 				jumpIfKeepAlivePending = instruction;
 			}
 
 			continue;
 		}
 
-		if(instruction.getOpcode() == Opcodes.INVOKEVIRTUAL && instruction.name == SEND_PACKET) {
+		if (instruction.getOpcode() == Opcodes.INVOKEVIRTUAL && instruction.name == SEND_PACKET) {
 			sendPacket = instruction;
 			break;
 		}
@@ -132,10 +132,10 @@ function patchTick(instructions) {
 
 	//Get RPConfig.Timeouts#keepAlivePacketIntervalMillis
 	instructions.insert(keepAliveInterval, new FieldInsnNode(
-			Opcodes.GETSTATIC,
-			"com/therandomlabs/randompatches/RPConfig$Timeouts",
-			"keepAlivePacketIntervalMillis",
-			"J"
+		Opcodes.GETSTATIC,
+		"com/therandomlabs/randompatches/RPConfig$Timeouts",
+		"keepAlivePacketIntervalMillis",
+		"J"
 	));
 
 	instructions.remove(keepAliveInterval);
@@ -152,10 +152,10 @@ function patchTick(instructions) {
 
 	//Get ServerPlayNetHandler#keepAliveTime
 	newInstructions.add(new FieldInsnNode(
-			Opcodes.GETFIELD,
-			"net/minecraft/network/play/ServerPlayNetHandler",
-			KEEP_ALIVE_TIME,
-			"J"
+		Opcodes.GETFIELD,
+		"net/minecraft/network/play/ServerPlayNetHandler",
+		KEEP_ALIVE_TIME,
+		"J"
 	));
 
 	//Substract field_199402_f (keepAliveTime) from i (currentTimeMillis):
@@ -164,10 +164,10 @@ function patchTick(instructions) {
 
 	//Get RPConfig.Timeouts#readTimeoutMillis
 	newInstructions.add(new FieldInsnNode(
-			Opcodes.GETSTATIC,
-			"com/therandomlabs/randompatches/RPConfig$Timeouts",
-			"readTimeoutMillis",
-			"J"
+		Opcodes.GETSTATIC,
+		"com/therandomlabs/randompatches/RPConfig$Timeouts",
+		"readTimeoutMillis",
+		"J"
 	));
 
 	//Compare the subtraction result to readTimeoutMillis and jump if it is not larger:
@@ -185,22 +185,22 @@ function patchProcessPlayer(instructions) {
 	var elytra;
 	var normal;
 
-	for(var i = 0; i < instructions.size(); i++) {
+	for (var i = 0; i < instructions.size(); i++) {
 		var instruction = instructions.get(i);
 
-		if(instruction.getOpcode() != Opcodes.LDC) {
+		if (instruction.getOpcode() != Opcodes.LDC) {
 			continue;
 		}
 
-		if(elytra == null) {
-			if(instruction.cst == 300.0) {
+		if (elytra == null) {
+			if (instruction.cst == 300.0) {
 				elytra = instruction;
 			}
 
 			continue;
 		}
 
-		if(instruction.cst == 100.0) {
+		if (instruction.cst == 100.0) {
 			normal = instruction;
 			break;
 		}
@@ -208,20 +208,20 @@ function patchProcessPlayer(instructions) {
 
 	//Get RPConfig.SpeedLimits#maxPlayerElytraSpeed
 	instructions.insert(elytra, new FieldInsnNode(
-			Opcodes.GETSTATIC,
-			"com/therandomlabs/randompatches/RPConfig$SpeedLimits",
-			"maxPlayerElytraSpeed",
-			"F"
+		Opcodes.GETSTATIC,
+		"com/therandomlabs/randompatches/RPConfig$SpeedLimits",
+		"maxPlayerElytraSpeed",
+		"F"
 	));
 
 	instructions.remove(elytra);
 
 	//Get RPConfig.SpeedLimits#maxPlayerSpeed
 	instructions.insert(normal, new FieldInsnNode(
-			Opcodes.GETSTATIC,
-			"com/therandomlabs/randompatches/RPConfig$SpeedLimits",
-			"maxPlayerSpeed",
-			"F"
+		Opcodes.GETSTATIC,
+		"com/therandomlabs/randompatches/RPConfig$SpeedLimits",
+		"maxPlayerSpeed",
+		"F"
 	));
 
 	instructions.remove(normal);
@@ -230,10 +230,10 @@ function patchProcessPlayer(instructions) {
 function patchProcessVehicleMove(instructions) {
 	var speed;
 
-	for(var i = 0; i < instructions.size(); i++) {
+	for (var i = 0; i < instructions.size(); i++) {
 		var instruction = instructions.get(i);
 
-		if(instruction.getOpcode() == Opcodes.LDC && instruction.cst == 100.0) {
+		if (instruction.getOpcode() == Opcodes.LDC && instruction.cst == 100.0) {
 			speed = instruction;
 			break;
 		}
@@ -241,10 +241,10 @@ function patchProcessVehicleMove(instructions) {
 
 	//Get RPConfig.SpeedLimits#maxPlayerVehicleSpeed
 	instructions.insert(speed, new FieldInsnNode(
-			Opcodes.GETSTATIC,
-			"com/therandomlabs/randompatches/RPConfig$SpeedLimits",
-			"maxPlayerVehicleSpeed",
-			"D"
+		Opcodes.GETSTATIC,
+		"com/therandomlabs/randompatches/RPConfig$SpeedLimits",
+		"maxPlayerVehicleSpeed",
+		"D"
 	));
 
 	instructions.remove(speed);

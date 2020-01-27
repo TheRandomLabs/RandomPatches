@@ -1,4 +1,4 @@
-package com.therandomlabs.randompatches.patch;
+package com.therandomlabs.randompatches.hook;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.CompoundNBT;
@@ -7,8 +7,8 @@ import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.common.util.Constants;
 
-public final class EntityPatch {
-	private EntityPatch() {}
+public final class EntityHook {
+	private EntityHook() {}
 
 	public static void writeAABBTag(Entity entity, CompoundNBT compound) {
 		final AxisAlignedBB aabb = entity.getBoundingBox();
@@ -27,7 +27,7 @@ public final class EntityPatch {
 	}
 
 	public static void readAABBTag(Entity entity, CompoundNBT compound) {
-		if(!compound.contains("RelativeAABB")) {
+		if (!compound.contains("RelativeAABB")) {
 			return;
 		}
 

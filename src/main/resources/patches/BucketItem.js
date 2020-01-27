@@ -9,7 +9,7 @@ function log(message) {
 }
 
 function patch(method, name, patchFunction) {
-	if(method.name != name) {
+	if (method.name != name) {
 		return false;
 	}
 
@@ -28,9 +28,9 @@ function initializeCoreMod() {
 			"transformer": function(classNode) {
 				var methods = classNode.methods;
 
-				for(var i in methods) {
-					if(patch(
-							methods[i], TRY_PLACE_CONTAINED_LIQUID, patchTryPlaceContainedLiquid
+				for (var i in methods) {
+					if (patch(
+						methods[i], TRY_PLACE_CONTAINED_LIQUID, patchTryPlaceContainedLiquid
 					)) {
 						break;
 					}
@@ -45,10 +45,10 @@ function initializeCoreMod() {
 function patchTryPlaceContainedLiquid(instructions) {
 	var isSolid;
 
-	for(var i = 0; i < instructions.size(); i++) {
+	for (var i = 0; i < instructions.size(); i++) {
 		var instruction = instructions.get(i);
 
-		if(instruction.getOpcode() == Opcodes.INVOKEVIRTUAL && instruction.name == IS_SOLID) {
+		if (instruction.getOpcode() == Opcodes.INVOKEVIRTUAL && instruction.name == IS_SOLID) {
 			isSolid = instruction;
 			break;
 		}
@@ -57,9 +57,9 @@ function patchTryPlaceContainedLiquid(instructions) {
 	//Get BlockState
 	isSolid.getPrevious().var = 5;
 
-	//Call BucketItemPatch#isSolid
+	//Call BucketItemHook#isSolid
 	isSolid.setOpcode(Opcodes.INVOKESTATIC);
-	isSolid.owner = "com/therandomlabs/randompatches/patch/BucketItemPatch";
+	isSolid.owner = "com/therandomlabs/randompatches/hook/BucketItemHook";
 	isSolid.name = "isSolid";
 	isSolid.desc = "(Lnet/minecraft/block/BlockState;)Z";
 }

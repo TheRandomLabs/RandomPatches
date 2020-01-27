@@ -15,7 +15,7 @@ function log(message) {
 }
 
 function patch(method, name, patchFunction) {
-	if(method.name != name) {
+	if (method.name != name) {
 		return false;
 	}
 
@@ -34,8 +34,8 @@ function initializeCoreMod() {
 			"transformer": function(classNode) {
 				var methods = classNode.methods;
 
-				for(var i in methods) {
-					if(patch(methods[i], ON_KEY_EVENT, patchOnKeyEvent)) {
+				for (var i in methods) {
+					if (patch(methods[i], ON_KEY_EVENT, patchOnKeyEvent)) {
 						break;
 					}
 				}
@@ -49,10 +49,10 @@ function initializeCoreMod() {
 function patchOnKeyEvent(instructions) {
 	var isB;
 
-	for(var i = 0; i < instructions.size(); i++) {
+	for (var i = 0; i < instructions.size(); i++) {
 		var instruction = instructions.get(i);
 
-		if(instruction.getOpcode() == Opcodes.BIPUSH && instruction.operand == KEY_B) {
+		if (instruction.getOpcode() == Opcodes.BIPUSH && instruction.operand == KEY_B) {
 			isB = instruction;
 			break;
 		}
@@ -68,13 +68,13 @@ function patchOnKeyEvent(instructions) {
 	//Get scanCode
 	newInstructions.add(new VarInsnNode(Opcodes.ILOAD, 4));
 
-	//Call KeyboardListenerPatch#handleKeypress
+	//Call KeyboardListenerHook#handleKeypress
 	newInstructions.add(new MethodInsnNode(
-			Opcodes.INVOKESTATIC,
-			"com/therandomlabs/randompatches/patch/client/KeyboardListenerPatch",
-			"handleKeypress",
-			"(II)V",
-			false
+		Opcodes.INVOKESTATIC,
+		"com/therandomlabs/randompatches/hook/client/KeyboardListenerHook",
+		"handleKeypress",
+		"(II)V",
+		false
 	));
 
 	//Insert before "key == 66"

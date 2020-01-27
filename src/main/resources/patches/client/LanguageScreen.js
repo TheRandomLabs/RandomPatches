@@ -5,7 +5,7 @@ function log(message) {
 }
 
 function patch(method, name, patchFunction) {
-	if(method.name != name) {
+	if (method.name != name) {
 		return false;
 	}
 
@@ -24,8 +24,8 @@ function initializeCoreMod() {
 			"transformer": function(classNode) {
 				var methods = classNode.methods;
 
-				for(var i in methods) {
-					if(patch(methods[i], "lambda$init$1", init)) {
+				for (var i in methods) {
+					if (patch(methods[i], "lambda$init$1", init)) {
 						break;
 					}
 				}
@@ -37,13 +37,13 @@ function initializeCoreMod() {
 }
 
 function init(instructions) {
-	for(var i = 0; i < instructions.size(); i++) {
+	for (var i = 0; i < instructions.size(); i++) {
 		var instruction = instructions.get(i);
 
-		if(instruction.getOpcode() == Opcodes.INVOKESTATIC &&
-				instruction.name == "refreshResources") {
+		if (instruction.getOpcode() == Opcodes.INVOKESTATIC &&
+			instruction.name == "refreshResources") {
 			instruction.owner =
-					"com/therandomlabs/randompatches/patch/client/LanguageScreenListPatch";
+				"com/therandomlabs/randompatches/hook/client/LanguageScreenListPatch";
 			instruction.name = "reloadLanguage";
 			return;
 		}

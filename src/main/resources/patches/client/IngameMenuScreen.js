@@ -15,7 +15,7 @@ function log(message) {
 }
 
 function patch(method, name, patchFunction) {
-	if(method.name != name) {
+	if (method.name != name) {
 		return false;
 	}
 
@@ -34,8 +34,8 @@ function initializeCoreMod() {
 			"transformer": function(classNode) {
 				var methods = classNode.methods;
 
-				for(var i in methods) {
-					if(patch(methods[i], ON_CLICK, patchOnClick)) {
+				for (var i in methods) {
+					if (patch(methods[i], ON_CLICK, patchOnClick)) {
 						break;
 					}
 				}
@@ -49,10 +49,10 @@ function initializeCoreMod() {
 function patchOnClick(instructions) {
 	var storeIsIntegratedServerRunning = null;
 
-	for(var i = 0; i < instructions.size(); i++) {
+	for (var i = 0; i < instructions.size(); i++) {
 		var instruction = instructions.get(i);
 
-		if(instruction.getOpcode() == Opcodes.ISTORE) {
+		if (instruction.getOpcode() == Opcodes.ISTORE) {
 			storeIsIntegratedServerRunning = instruction;
 			break;
 		}
@@ -64,10 +64,10 @@ function patchOnClick(instructions) {
 
 	//Get RPConfig.Client#forceTitleScreenOnDisconnect
 	newInstructions.add(new FieldInsnNode(
-			Opcodes.GETSTATIC,
-			"com/therandomlabs/randompatches/RPConfig$Client",
-			"forceTitleScreenOnDisconnect",
-			"Z"
+		Opcodes.GETSTATIC,
+		"com/therandomlabs/randompatches/RPConfig$Client",
+		"forceTitleScreenOnDisconnect",
+		"Z"
 	));
 
 	//Jump if not enabled

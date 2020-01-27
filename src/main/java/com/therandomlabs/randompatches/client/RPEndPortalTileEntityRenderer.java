@@ -54,11 +54,11 @@ public class RPEndPortalTileEntityRenderer extends EndPortalTileEntityRenderer {
 		final float offset = getOffset();
 		boolean flag = false;
 
-		for(int j = 0; j < passes; j++) {
+		for (int j = 0; j < passes; j++) {
 			GlStateManager.pushMatrix();
 			float f1 = 2.0F / (18 - j);
 
-			if(j == 0) {
+			if (j == 0) {
 				bindTexture(END_SKY_TEXTURE);
 				f1 = 0.15F;
 				GlStateManager.enableBlend();
@@ -68,13 +68,13 @@ public class RPEndPortalTileEntityRenderer extends EndPortalTileEntityRenderer {
 				);
 			}
 
-			if(j >= 1) {
+			if (j >= 1) {
 				bindTexture(END_PORTAL_TEXTURE);
 				flag = true;
 				mc.gameRenderer.setupFogColor(true);
 			}
 
-			if(j == 1) {
+			if (j == 1) {
 				GlStateManager.enableBlend();
 				GlStateManager.blendFunc(
 						GlStateManager.SourceFactor.ONE,
@@ -130,57 +130,57 @@ public class RPEndPortalTileEntityRenderer extends EndPortalTileEntityRenderer {
 			final float f4 = (RANDOM.nextFloat() * 0.5F + 0.4F) * f1;
 			final float f5 = (RANDOM.nextFloat() * 0.5F + 0.5F) * f1;
 
-			if(upsideDown) {
-				if(tileEntity.shouldRenderFace(Direction.DOWN)) {
+			if (upsideDown) {
+				if (tileEntity.shouldRenderFace(Direction.DOWN)) {
 					builder.pos(x, y + 0.25, z + 1.0).color(f3, f4, f5, 1.0F).endVertex();
 					builder.pos(x + 1.0, y + 0.25, z + 1.0).color(f3, f4, f5, 1.0F).endVertex();
 					builder.pos(x + 1.0, y + 0.25, z).color(f3, f4, f5, 1.0F).endVertex();
 					builder.pos(x, y + 0.25, z).color(f3, f4, f5, 1.0F).endVertex();
 				}
 
-				if(tileEntity.shouldRenderFace(Direction.UP)) {
+				if (tileEntity.shouldRenderFace(Direction.UP)) {
 					builder.pos(x, y + 0.25, z).color(f3, f4, f5, 1.0F).endVertex();
 					builder.pos(x + 1.0, y + 0.25, z).color(f3, f4, f5, 1.0F).endVertex();
 					builder.pos(x + 1.0, y + 0.25, z + 1.0).color(f3, f4, f5, 1.0F).endVertex();
 					builder.pos(x, y + 0.25, z + 1.0).color(f3, f4, f5, 1.0F).endVertex();
 				}
 			} else {
-				if(tileEntity.shouldRenderFace(Direction.SOUTH)) {
+				if (tileEntity.shouldRenderFace(Direction.SOUTH)) {
 					builder.pos(x, y, z + 0.5).color(f3, f4, f5, 1.0F).endVertex();
 					builder.pos(x + 1.0, y, z + 0.5).color(f3, f4, f5, 1.0F).endVertex();
 					builder.pos(x + 1.0, y + 1.0, z + 0.5).color(f3, f4, f5, 1.0F).endVertex();
 					builder.pos(x, y + 1.0, z + 0.5).color(f3, f4, f5, 1.0F).endVertex();
 				}
 
-				if(tileEntity.shouldRenderFace(Direction.NORTH)) {
+				if (tileEntity.shouldRenderFace(Direction.NORTH)) {
 					builder.pos(x, y + 1.0, z + 0.5).color(f3, f4, f5, 1.0F).endVertex();
 					builder.pos(x + 1.0, y + 1.0, z + 0.5).color(f3, f4, f5, 1.0F).endVertex();
 					builder.pos(x + 1.0, y, z + 0.5).color(f3, f4, f5, 1.0F).endVertex();
 					builder.pos(x, y, z + 0.5).color(f3, f4, f5, 1.0F).endVertex();
 				}
 
-				if(tileEntity.shouldRenderFace(Direction.EAST)) {
+				if (tileEntity.shouldRenderFace(Direction.EAST)) {
 					builder.pos(x + 0.5, y + 1.0, z).color(f3, f4, f5, 1.0F).endVertex();
 					builder.pos(x + 0.5, y + 1.0, z + 1.0).color(f3, f4, f5, 1.0F).endVertex();
 					builder.pos(x + 0.5, y, z + 1.0).color(f3, f4, f5, 1.0F).endVertex();
 					builder.pos(x + 0.5, y, z).color(f3, f4, f5, 1.0F).endVertex();
 				}
 
-				if(tileEntity.shouldRenderFace(Direction.WEST)) {
+				if (tileEntity.shouldRenderFace(Direction.WEST)) {
 					builder.pos(x + 0.5, y, z).color(f3, f4, f5, 1.0F).endVertex();
 					builder.pos(x + 0.5, y, z + 1.0).color(f3, f4, f5, 1.0F).endVertex();
 					builder.pos(x + 0.5, y + 1.0, z + 1.0).color(f3, f4, f5, 1.0F).endVertex();
 					builder.pos(x + 0.5, y + 1.0, z).color(f3, f4, f5, 1.0F).endVertex();
 				}
 
-				if(tileEntity.shouldRenderFace(Direction.DOWN)) {
+				if (tileEntity.shouldRenderFace(Direction.DOWN)) {
 					builder.pos(x, y + offset, z + 1.0).color(f3, f4, f5, 1.0F).endVertex();
 					builder.pos(x + 1.0, y + offset, z + 1.0).color(f3, f4, f5, 1.0F).endVertex();
 					builder.pos(x + 1.0, y + offset, z).color(f3, f4, f5, 1.0F).endVertex();
 					builder.pos(x, y + offset, z).color(f3, f4, f5, 1.0F).endVertex();
 				}
 
-				if(tileEntity.shouldRenderFace(Direction.UP)) {
+				if (tileEntity.shouldRenderFace(Direction.UP)) {
 					builder.pos(x, y + offset, z).color(f3, f4, f5, 1.0F).endVertex();
 					builder.pos(x + 1.0, y + offset, z).color(f3, f4, f5, 1.0F).endVertex();
 					builder.pos(x + 1.0, y + offset, z + 1.0).color(f3, f4, f5, 1.0F).endVertex();
@@ -202,7 +202,7 @@ public class RPEndPortalTileEntityRenderer extends EndPortalTileEntityRenderer {
 		GlStateManager.disableTexGen(GlStateManager.TexGen.R);
 		GlStateManager.enableLighting();
 
-		if(flag) {
+		if (flag) {
 			mc.gameRenderer.setupFogColor(false);
 		}
 	}

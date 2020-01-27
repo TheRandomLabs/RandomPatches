@@ -11,7 +11,7 @@ function log(message) {
 }
 
 function patch(method, name, patchFunction) {
-	if(method.name != name) {
+	if (method.name != name) {
 		return false;
 	}
 
@@ -32,8 +32,8 @@ function initializeCoreMod() {
 
 				var methods = classNode.methods;
 
-				for(var i in methods) {
-					if(patch(methods[i], HANDLE_SET_PASSENGERS, patchHandleSetPassengers)) {
+				for (var i in methods) {
+					if (patch(methods[i], HANDLE_SET_PASSENGERS, patchHandleSetPassengers)) {
 						break;
 					}
 				}
@@ -47,24 +47,24 @@ function initializeCoreMod() {
 function patchHandleSetPassengers(instructions) {
 	var getSneakKeybind = null;
 
-	for(var i = 0; i < instructions.size(); i++) {
+	for (var i = 0; i < instructions.size(); i++) {
 		var instruction = instructions.get(i);
 
-		if(instruction.getOpcode() == Opcodes.GETFIELD && instruction.name == KEY_BIND_SNEAK) {
+		if (instruction.getOpcode() == Opcodes.GETFIELD && instruction.name == KEY_BIND_SNEAK) {
 			getSneakKeybind = instruction;
 			break;
 		}
 	}
 
-	//Get ClientPlayerEntityPatch.DismountKeybind#keybind
+	//Get ClientPlayerEntityHook.DismountKeybind#keybind
 	//We do this so the dismount key is shown instead of the sneak key in
 	//"Press <key> to dismount"
 	instructions.insert(getSneakKeybind, new FieldInsnNode(
-			Opcodes.GETSTATIC,
-			"com/therandomlabs/randompatches/patch/client/dismount/" +
-			"ClientPlayerEntityPatch$DismountKeybind",
-			"keybind",
-			"Lnet/minecraft/client/settings/KeyBinding;"
+		Opcodes.GETSTATIC,
+		"com/therandomlabs/randompatches/hook/client/dismount/" +
+		"ClientPlayerEntityPatch$DismountKeybind",
+		"keybind",
+		"Lnet/minecraft/client/settings/KeyBinding;"
 	));
 
 	var getGameSettings = getSneakKeybind.getPrevious();

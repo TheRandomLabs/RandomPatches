@@ -18,7 +18,7 @@ function log(message) {
 }
 
 function patch(method, name, patchFunction) {
-	if(method.name != name) {
+	if (method.name != name) {
 		return false;
 	}
 
@@ -37,19 +37,19 @@ function initializeCoreMod() {
 			"transformer": function(classNode) {
 				var methods = classNode.methods;
 
-				for(var i in methods) {
+				for (var i in methods) {
 					var method = methods[i];
 
-					if(writeWithoutTypeIdPatched && readPatched) {
+					if (writeWithoutTypeIdPatched && readPatched) {
 						break;
 					}
 
-					if(patch(method, WRITE_WITHOUT_TYPE_ID, patchWriteWithoutTypeId)) {
+					if (patch(method, WRITE_WITHOUT_TYPE_ID, patchWriteWithoutTypeId)) {
 						writeWithoutTypeIdPatched = true;
 						continue;
 					}
 
-					if(patch(method, READ, patchRead)) {
+					if (patch(method, READ, patchRead)) {
 						readPatched = true;
 					}
 				}
@@ -63,11 +63,11 @@ function initializeCoreMod() {
 function patchWriteWithoutTypeId(instructions) {
 	var setTag;
 
-	for(var i = 0; i < instructions.size(); i++) {
+	for (var i = 0; i < instructions.size(); i++) {
 		var instruction = instructions.get(i);
 
-		if(instruction.getOpcode() == Opcodes.INVOKEVIRTUAL &&
-				instruction.owner == "net/minecraft/nbt/CompoundNBT") {
+		if (instruction.getOpcode() == Opcodes.INVOKEVIRTUAL &&
+			instruction.owner == "net/minecraft/nbt/CompoundNBT") {
 			setTag = instruction;
 			break;
 		}
@@ -81,13 +81,13 @@ function patchWriteWithoutTypeId(instructions) {
 	//Get CompoundNBT
 	newInstructions.add(new VarInsnNode(Opcodes.ALOAD, 1));
 
-	//Call EntityPatch#writeAABBTag
+	//Call EntityHook#writeAABBTag
 	newInstructions.add(new MethodInsnNode(
-			Opcodes.INVOKESTATIC,
-			"com/therandomlabs/randompatches/patch/EntityPatch",
-			"writeAABBTag",
-			"(Lnet/minecraft/entity/Entity;Lnet/minecraft/nbt/CompoundNBT;)V",
-			false
+		Opcodes.INVOKESTATIC,
+		"com/therandomlabs/randompatches/hook/EntityHook",
+		"writeAABBTag",
+		"(Lnet/minecraft/entity/Entity;Lnet/minecraft/nbt/CompoundNBT;)V",
+		false
 	));
 
 	instructions.insert(setTag, newInstructions);
@@ -97,19 +97,19 @@ function patchRead(instructions) {
 	var jumpIfShouldNotSetPosition;
 	var setPosition;
 
-	for(var i = instructions.size() - 1; i >= 0; i--) {
+	for (var i = instructions.size() - 1; i >= 0; i--) {
 		var instruction = instructions.get(i);
 
-		if(setPosition == null) {
-			if(instruction.getOpcode() == Opcodes.INVOKEVIRTUAL &&
-					instruction.name == SET_POSITION) {
+		if (setPosition == null) {
+			if (instruction.getOpcode() == Opcodes.INVOKEVIRTUAL &&
+				instruction.name == SET_POSITION) {
 				setPosition = instruction;
 			}
 
 			continue;
 		}
 
-		if(instruction.getOpcode() == Opcodes.IFEQ) {
+		if (instruction.getOpcode() == Opcodes.IFEQ) {
 			jumpIfShouldNotSetPosition = instruction;
 			break;
 		}
@@ -129,13 +129,13 @@ function patchRead(instructions) {
 	//Get CompoundNBT
 	newInstructions.add(new VarInsnNode(Opcodes.ALOAD, 1));
 
-	//Call EntityPatch#readAABBTag
+	//Call EntityHook#readAABBTag
 	newInstructions.add(new MethodInsnNode(
-			Opcodes.INVOKESTATIC,
-			"com/therandomlabs/randompatches/patch/EntityPatch",
-			"readAABBTag",
-			"(Lnet/minecraft/entity/Entity;Lnet/minecraft/nbt/CompoundNBT;)V",
-			false
+		Opcodes.INVOKESTATIC,
+		"com/therandomlabs/randompatches/hook/EntityHook",
+		"readAABBTag",
+		"(Lnet/minecraft/entity/Entity;Lnet/minecraft/nbt/CompoundNBT;)V",
+		false
 	));
 
 	instructions.insert(setPosition, newInstructions);

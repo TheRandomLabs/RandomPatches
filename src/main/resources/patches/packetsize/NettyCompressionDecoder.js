@@ -9,7 +9,7 @@ function log(message) {
 }
 
 function patch(method, name, patchFunction) {
-	if(method.name != name) {
+	if (method.name != name) {
 		return false;
 	}
 
@@ -30,8 +30,8 @@ function initializeCoreMod() {
 
 				var methods = classNode.methods;
 
-				for(var i in methods) {
-					if(patch(methods[i], "decode", patchDecode)) {
+				for (var i in methods) {
+					if (patch(methods[i], "decode", patchDecode)) {
 						break;
 					}
 				}
@@ -46,12 +46,12 @@ function patchDecode(instructions) {
 	var limit1;
 	var limit2;
 
-	for(var i = 0; i < instructions.size(); i++) {
+	for (var i = 0; i < instructions.size(); i++) {
 		var instruction = instructions.get(i);
 
-		if(instruction.getOpcode() == Opcodes.LDC) {
-			if(instruction.cst == VANILLA_LIMIT) {
-				if(limit1 == null) {
+		if (instruction.getOpcode() == Opcodes.LDC) {
+			if (instruction.cst == VANILLA_LIMIT) {
+				if (limit1 == null) {
 					limit1 = instruction;
 				} else {
 					limit2 = instruction;
@@ -63,20 +63,20 @@ function patchDecode(instructions) {
 
 	//Get RPConfig.Misc#packetSizeLimit
 	instructions.insert(limit1, new FieldInsnNode(
-			Opcodes.GETSTATIC,
-			"com/therandomlabs/randompatches/RPConfig$Misc",
-			"packetSizeLimit",
-			"I"
+		Opcodes.GETSTATIC,
+		"com/therandomlabs/randompatches/RPConfig$Misc",
+		"packetSizeLimit",
+		"I"
 	));
 
 	instructions.remove(limit1);
 
 	//Get RPConfig.Misc#packetSizeLimit
 	instructions.insert(limit2, new FieldInsnNode(
-			Opcodes.GETSTATIC,
-			"com/therandomlabs/randompatches/RPConfig$Misc",
-			"packetSizeLimit",
-			"I"
+		Opcodes.GETSTATIC,
+		"com/therandomlabs/randompatches/RPConfig$Misc",
+		"packetSizeLimit",
+		"I"
 	));
 
 	instructions.remove(limit2);

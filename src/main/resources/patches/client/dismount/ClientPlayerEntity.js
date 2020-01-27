@@ -11,7 +11,7 @@ function log(message) {
 }
 
 function patch(method, name, patchFunction) {
-	if(method.name != name) {
+	if (method.name != name) {
 		return false;
 	}
 
@@ -32,8 +32,8 @@ function initializeCoreMod() {
 
 				var methods = classNode.methods;
 
-				for(var i in methods) {
-					if(patch(methods[i], TICK, patchTick)) {
+				for (var i in methods) {
+					if (patch(methods[i], TICK, patchTick)) {
 						break;
 					}
 				}
@@ -47,24 +47,24 @@ function initializeCoreMod() {
 function patchTick(instructions) {
 	var shouldSneak = null;
 
-	for(var i = 0; i < instructions.size(); i++) {
+	for (var i = 0; i < instructions.size(); i++) {
 		var instruction = instructions.get(i);
 
-		if(instruction.getOpcode() == Opcodes.GETFIELD) {
-			if(instruction.name == SNEAK) {
+		if (instruction.getOpcode() == Opcodes.GETFIELD) {
+			if (instruction.name == SNEAK) {
 				shouldSneak = instruction;
 				break;
 			}
 		}
 	}
 
-	//Call ClientPlayerEntityPPatch#shouldDismount
+	//Call ClientPlayerEntityPHook#shouldDismount
 	instructions.insert(shouldSneak, new MethodInsnNode(
-			Opcodes.INVOKESTATIC,
-			"com/therandomlabs/randompatches/patch/client/dismount/ClientPlayerEntityPatch",
-			"shouldDismount",
-			"()Z",
-			false
+		Opcodes.INVOKESTATIC,
+		"com/therandomlabs/randompatches/hook/client/dismount/ClientPlayerEntityHook",
+		"shouldDismount",
+		"()Z",
+		false
 	));
 
 	var getMovementInput = shouldSneak.getPrevious();

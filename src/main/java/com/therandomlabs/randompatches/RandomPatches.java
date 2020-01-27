@@ -22,7 +22,7 @@ public final class RandomPatches {
 			DistExecutor.runForDist(() -> ClientProxy::new, () -> CommonProxy::new);
 
 	public RandomPatches() {
-		if(!ForgeUtils.IS_CLIENT) {
+		if (!ForgeUtils.IS_CLIENT) {
 			ForgeConfig.initialize();
 			ConfigManager.register(RPConfig.class);
 		}
@@ -32,7 +32,7 @@ public final class RandomPatches {
 	}
 
 	private void serverStarting(FMLServerStartingEvent event) {
-		if(RPConfig.Misc.rpreload) {
+		if (RPConfig.Misc.rpreload) {
 			ConfigReloadCommand.server(
 					event.getCommandDispatcher(), "rpreload", "rpreloadclient", RPConfig.class,
 					"RandomPatches configuration reloaded!",

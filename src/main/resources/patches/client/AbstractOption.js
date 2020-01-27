@@ -1,12 +1,9 @@
-var ASMAPI = Java.type("net.minecraftforge.coremod.api.ASMAPI");
 var Opcodes = Java.type("org.objectweb.asm.Opcodes");
 
 var FieldInsnNode = Java.type("org.objectweb.asm.tree.FieldInsnNode");
 
-var READ_COMPOUND_TAG = ASMAPI.mapMethod("func_150793_b");
-
 function log(message) {
-	print("[RandomPatches PacketBuffer Transformer]: " + message);
+	print("[RandomPatches AbstractOption Transformer]: " + message);
 }
 
 function patch(method, name, patchFunction) {
@@ -21,18 +18,16 @@ function patch(method, name, patchFunction) {
 
 function initializeCoreMod() {
 	return {
-		"RandomPatches PacketBuffer Transformer": {
+		"RandomPatches AbstractOption Transformer": {
 			"target": {
 				"type": "CLASS",
-				"name": "net.minecraft.network.PacketBuffer"
+				"name": "net.minecraft.client.settings.AbstractOption"
 			},
 			"transformer": function(classNode) {
-				log("Transforming class: " + classNode.name);
-
 				var methods = classNode.methods;
 
 				for (var i in methods) {
-					if (patch(methods[i], READ_COMPOUND_TAG, patchReadCompoundTag)) {
+					if (patch(methods[i], "<clinit>", patchClinit)) {
 						break;
 					}
 				}
@@ -43,25 +38,24 @@ function initializeCoreMod() {
 	};
 }
 
-function patchReadCompoundTag(instructions) {
-	var limit = null;
+function patchClinit(instructions) {
+	var stepSize;
 
 	for (var i = 0; i < instructions.size(); i++) {
 		var instruction = instructions.get(i);
 
-		if (instruction.getOpcode() == Opcodes.LDC) {
-			limit = instruction;
+		if (instruction.getOpcode() == Opcodes.LDC && instruction.cst == "options.framerateLimit") {
+			stepSize = instructions.get(i + 3);
 			break;
 		}
 	}
 
-	//Get RPConfig.Misc#packetSizeLimit
-	instructions.insert(limit, new FieldInsnNode(
+	//Get RPConfig.Client#framerateLimitSliderStepSize
+	instructions.insert(stepSize, new FieldInsnNode(
 		Opcodes.GETSTATIC,
-		"com/therandomlabs/randompatches/RPConfig$Misc",
-		"packetSizeLimitLong",
-		"J"
+		"com/therandomlabs/randompatches/RPConfig$Client",
+		"framerateLimitSliderStepSize",
+		"F"
 	));
-
-	instructions.remove(limit);
+	instructions.remove(stepSize);
 }

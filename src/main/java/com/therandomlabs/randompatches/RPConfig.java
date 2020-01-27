@@ -2,6 +2,7 @@ package com.therandomlabs.randompatches;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+
 import com.therandomlabs.randompatches.client.WindowIconHandler;
 import com.therandomlabs.utils.config.Config;
 import com.therandomlabs.utils.forge.ForgeUtils;
@@ -33,6 +34,14 @@ public final class RPConfig {
 						"the Multiplayer or Realms menu."
 		)
 		public static boolean forceTitleScreenOnDisconnect = ForgeUtils.IS_DEOBFUSCATED;
+
+		@Config.RequiresRestart
+		@Config.RangeDouble(min = Double.MIN_VALUE, max = 260.0)
+		@Config.Property({
+				"The framerate limit slider step size.",
+				"If this is set to 10.0, vanilla behavior is not changed."
+		})
+		public static float framerateLimitSliderStepSize = 1.0F;
 
 		@Config.Property("Whether to remove the glowing effect from potions.")
 		public static boolean removePotionGlint = ForgeUtils.IS_DEOBFUSCATED;
@@ -111,9 +120,9 @@ public final class RPConfig {
 		public static long readTimeoutMillis;
 
 		public static void onReload() {
-			if(readTimeout < keepAlivePacketInterval) {
+			if (readTimeout < keepAlivePacketInterval) {
 				readTimeout = keepAlivePacketInterval * 2;
-			} else if(readTimeout % keepAlivePacketInterval != 0) {
+			} else if (readTimeout % keepAlivePacketInterval != 0) {
 				readTimeout = keepAlivePacketInterval * (readTimeout / keepAlivePacketInterval + 1);
 			}
 
@@ -167,37 +176,37 @@ public final class RPConfig {
 			icon32String = icon32.toString();
 			icon256String = icon256.toString();
 
-			if(icon16String.isEmpty()) {
-				if(!icon256String.isEmpty()) {
+			if (icon16String.isEmpty()) {
+				if (!icon256String.isEmpty()) {
 					icon16 = icon256;
 					icon16String = icon256String;
-				} else if(!icon32String.isEmpty()) {
+				} else if (!icon32String.isEmpty()) {
 					icon16 = icon32;
 					icon16String = icon32String;
 				}
 			}
 
-			if(icon32String.isEmpty()) {
-				if(!icon256String.isEmpty()) {
+			if (icon32String.isEmpty()) {
+				if (!icon256String.isEmpty()) {
 					icon32 = icon256;
 					icon32String = icon256String;
-				} else if(!icon16String.isEmpty()) {
+				} else if (!icon16String.isEmpty()) {
 					icon32 = icon16;
 					icon32String = icon16String;
 				}
 			}
 
-			if(icon256String.isEmpty()) {
-				if(!icon32String.isEmpty()) {
+			if (icon256String.isEmpty()) {
+				if (!icon32String.isEmpty()) {
 					icon256 = icon32;
 					icon256String = icon32String;
-				} else if(!icon16String.isEmpty()) {
+				} else if (!icon16String.isEmpty()) {
 					icon256 = icon16;
 					icon256String = icon16String;
 				}
 			}
 
-			if(ForgeUtils.IS_CLIENT && setWindowSettings && applySettings) {
+			if (ForgeUtils.IS_CLIENT && setWindowSettings && applySettings) {
 				Minecraft.getInstance().execute(Window::setWindowSettings);
 			}
 		}
@@ -205,13 +214,13 @@ public final class RPConfig {
 		private static void setWindowSettings() {
 			final MainWindow mainWindow = Minecraft.getInstance().mainWindow;
 
-			if(mainWindow == null) {
+			if (mainWindow == null) {
 				return;
 			}
 
 			final long handle = mainWindow.getHandle();
 
-			if(!icon16String.isEmpty()) {
+			if (!icon16String.isEmpty()) {
 				WindowIconHandler.setWindowIcon(handle);
 			}
 

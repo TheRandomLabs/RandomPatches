@@ -1,4 +1,4 @@
-package com.therandomlabs.randompatches.patch.client.dismount;
+package com.therandomlabs.randompatches.hook.client.dismount;
 
 import com.therandomlabs.utils.forge.ForgeUtils;
 import net.minecraft.client.Minecraft;
@@ -6,7 +6,7 @@ import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import org.lwjgl.glfw.GLFW;
 
-public final class ClientPlayerEntityPatch {
+public final class ClientPlayerEntityHook {
 	public static final class DismountKeybind {
 		public static KeyBinding keybind;
 		private static KeyBinding sneakKeybind;
@@ -32,7 +32,7 @@ public final class ClientPlayerEntityPatch {
 		}
 	}
 
-	private ClientPlayerEntityPatch() {}
+	private ClientPlayerEntityHook() {}
 
 	public static boolean shouldDismount() {
 		return DismountKeybind.keybind.isKeyDown();

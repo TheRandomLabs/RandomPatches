@@ -15,7 +15,7 @@ function log(message) {
 }
 
 function patch(method, name, patchFunction) {
-	if(method.name != name) {
+	if (method.name != name) {
 		return false;
 	}
 
@@ -34,8 +34,8 @@ function initializeCoreMod() {
 			"transformer": function(classNode) {
 				var methods = classNode.methods;
 
-				for(var i in methods) {
-					if(patch(methods[i], CONFLICTS, patchConflicts)) {
+				for (var i in methods) {
+					if (patch(methods[i], CONFLICTS, patchConflicts)) {
 						break;
 					}
 				}
@@ -57,15 +57,15 @@ function patchConflicts(instructions) {
 	//Get binding (other KeyBinding)
 	newInstructions.add(new VarInsnNode(Opcodes.ALOAD, 1));
 
-	//Call ClientPlayerEntityPatch$DismountKeybind#isDismountAndSneak
+	//Call ClientPlayerEntityHook$DismountKeybind#isDismountAndSneak
 	newInstructions.add(new MethodInsnNode(
-			Opcodes.INVOKESTATIC,
-			"com/therandomlabs/randompatches/patch/client/dismount/ClientPlayerEntityPatch$" +
-			"DismountKeybind",
-			"isDismountAndSneak",
-			"(Lnet/minecraft/client/settings/KeyBinding;" +
-			"Lnet/minecraft/client/settings/KeyBinding;)Z",
-			false
+		Opcodes.INVOKESTATIC,
+		"com/therandomlabs/randompatches/hook/client/dismount/ClientPlayerEntityPatch$" +
+		"DismountKeybind",
+		"isDismountAndSneak",
+		"(Lnet/minecraft/client/settings/KeyBinding;" +
+		"Lnet/minecraft/client/settings/KeyBinding;)Z",
+		false
 	));
 
 	//If false, continue

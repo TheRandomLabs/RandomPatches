@@ -9,7 +9,7 @@ function log(message) {
 }
 
 function patch(method, name, patchFunction) {
-	if(method.name != name) {
+	if (method.name != name) {
 		return false;
 	}
 
@@ -28,8 +28,8 @@ function initializeCoreMod() {
 			"transformer": function(classNode) {
 				var methods = classNode.methods;
 
-				for(var i in methods) {
-					if(patch(methods[i], INIT, patchInit)) {
+				for (var i in methods) {
+					if (patch(methods[i], INIT, patchInit)) {
 						break;
 					}
 				}
@@ -43,10 +43,10 @@ function initializeCoreMod() {
 function patchInit(instructions) {
 	var loadIcon;
 
-	for(var i = 0; i < instructions.size(); i++) {
+	for (var i = 0; i < instructions.size(); i++) {
 		var instruction = instructions.get(i);
 
-		if(instruction.getOpcode() == Opcodes.INVOKEVIRTUAL && instruction.name == LOAD_ICON) {
+		if (instruction.getOpcode() == Opcodes.INVOKEVIRTUAL && instruction.name == LOAD_ICON) {
 			loadIcon = instruction;
 			break;
 		}
@@ -66,5 +66,5 @@ function patchInit(instructions) {
 	loadIcon.opcode = Opcodes.INVOKESTATIC;
 	loadIcon.owner = "com/therandomlabs/randompatches/client/WindowIconHandler";
 	loadIcon.name = "setWindowIcon";
-	loadIcon.desc = "()V"
+	loadIcon.desc = "()V";
 }

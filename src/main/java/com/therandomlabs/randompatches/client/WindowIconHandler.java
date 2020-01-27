@@ -44,11 +44,11 @@ public class WindowIconHandler {
 		InputStream stream32 = null;
 		InputStream stream256 = null;
 
-		try(MemoryStack stack = MemoryStack.stackPush()) {
+		try (MemoryStack stack = MemoryStack.stackPush()) {
 			final Minecraft mc = Minecraft.getInstance();
 
-			if(RPConfig.Window.icon16String.isEmpty()) {
-				if(osX && !setBefore) {
+			if (RPConfig.Window.icon16String.isEmpty()) {
+				if (osX && !setBefore) {
 					return;
 				}
 
@@ -64,7 +64,7 @@ public class WindowIconHandler {
 						new ResourceLocation("icons/icon_32x32.png")
 				);
 
-				if(osX) {
+				if (osX) {
 					stream256 = vanillaPack.getResourceStream(
 							ResourcePackType.CLIENT_RESOURCES,
 							new ResourceLocation("icons/icon_256x256.png")
@@ -74,7 +74,7 @@ public class WindowIconHandler {
 				stream16 = new FileInputStream(RPConfig.Window.icon16String);
 				stream32 = new FileInputStream(RPConfig.Window.icon32String);
 
-				if(osX) {
+				if (osX) {
 					stream256 = new FileInputStream(RPConfig.Window.icon256String);
 				}
 			}
@@ -87,7 +87,7 @@ public class WindowIconHandler {
 
 			final ByteBuffer image16 = readImageToBuffer(stream16, x, y, channels, stack, 16);
 
-			if(image16 == null) {
+			if (image16 == null) {
 				throw new IllegalStateException(
 						"Could not load icon: " + STBImage.stbi_failure_reason()
 				);
@@ -102,7 +102,7 @@ public class WindowIconHandler {
 
 			final ByteBuffer image32 = readImageToBuffer(stream32, x, y, channels, stack, 32);
 
-			if(image32 == null) {
+			if (image32 == null) {
 				throw new IllegalStateException(
 						"Could not load icon: " + STBImage.stbi_failure_reason()
 				);
@@ -118,10 +118,10 @@ public class WindowIconHandler {
 			ByteBuffer image256 = null;
 			boolean image256Resized = false;
 
-			if(osX) {
+			if (osX) {
 				image256 = readImageToBuffer(stream256, x, y, channels, stack, 256);
 
-				if(image256 == null) {
+				if (image256 == null) {
 					throw new IllegalStateException(
 							"Could not load icon: " + STBImage.stbi_failure_reason()
 					);
@@ -140,27 +140,27 @@ public class WindowIconHandler {
 			GLFW.glfwSetWindowIcon(handle, imageBuffer);
 
 			//If it was resized, then a buffer would have been allocated with MemoryUtil.memAlloc
-			if(image16Resized) {
+			if (image16Resized) {
 				MemoryUtil.memFree(image16);
 			} else {
 				STBImage.stbi_image_free(image16);
 			}
 
-			if(image32Resized) {
+			if (image32Resized) {
 				MemoryUtil.memFree(image32);
 			} else {
 				STBImage.stbi_image_free(image32);
 			}
 
-			if(osX) {
-				if(image256Resized) {
+			if (osX) {
+				if (image256Resized) {
 					MemoryUtil.memFree(image256);
 				} else {
 					STBImage.stbi_image_free(image256);
 				}
 			}
-		} catch(IOException ex) {
-			if(ForgeUtils.IS_DEOBFUSCATED &&
+		} catch (IOException ex) {
+			if (ForgeUtils.IS_DEOBFUSCATED &&
 					ex instanceof FileNotFoundException &&
 					RPConfig.Window.DEFAULT_ICON.equals(RPConfig.Window.icon16) &&
 					RPConfig.Window.DEFAULT_ICON.equals(RPConfig.Window.icon32)) {
@@ -172,7 +172,7 @@ public class WindowIconHandler {
 			IOUtils.closeQuietly(stream16);
 			IOUtils.closeQuietly(stream32);
 
-			if(osX) {
+			if (osX) {
 				IOUtils.closeQuietly(stream256);
 			}
 		}
@@ -193,7 +193,7 @@ public class WindowIconHandler {
 			final int width = x.get(0);
 			final int height = y.get(0);
 
-			if(width == size && height == size) {
+			if (width == size && height == size) {
 				return image;
 			}
 
@@ -209,7 +209,7 @@ public class WindowIconHandler {
 
 			return resized;
 		} finally {
-			if(resource != null) {
+			if (resource != null) {
 				MemoryUtil.memFree(resource);
 			}
 		}

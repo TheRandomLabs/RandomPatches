@@ -1,5 +1,6 @@
 {
 	//Client
+	"RandomPatches AbstractOption Transformer": "patches/client/AbstractOption.js",
 	"RandomPatches BambooBlock Transformer": "patches/client/BambooBlock.js",
 	"RandomPatches IngameMenuScreen Transformer": "patches/client/IngameMenuScreen.js",
 	"RandomPatches KeyboardListener Transformer": "patches/client/KeyboardListener.js",

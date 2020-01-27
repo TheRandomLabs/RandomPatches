@@ -1,8 +1,8 @@
-package com.therandomlabs.randompatches.patch.client;
+package com.therandomlabs.randompatches.hook.client;
 
 //Thanks Fuzs_!
-public final class PlayerRendererPatch {
-	private PlayerRendererPatch() {}
+public final class PlayerRendererHook {
+	private PlayerRendererHook() {}
 
 	//In RenderPlayer#applyRotations, Math#acos is sometimes called with a value larger than 1.0,
 	//making the rotation angle NaN and causing the player model to disappear

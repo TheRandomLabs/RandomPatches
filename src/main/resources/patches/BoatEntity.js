@@ -14,7 +14,7 @@ function log(message) {
 }
 
 function patch(method, name, patchFunction) {
-	if(method.name != name) {
+	if (method.name != name) {
 		return false;
 	}
 
@@ -33,8 +33,8 @@ function initializeCoreMod() {
 			"transformer": function(classNode) {
 				var methods = classNode.methods;
 
-				for(var i in methods) {
-					if(patch(methods[i], TICK, patchTick)) {
+				for (var i in methods) {
+					if (patch(methods[i], TICK, patchTick)) {
 						break;
 					}
 				}
@@ -48,10 +48,10 @@ function initializeCoreMod() {
 function patchTick(instructions) {
 	var returnVoid;
 
-	for(var i = instructions.size() - 1; i >= 0; i--) {
+	for (var i = instructions.size() - 1; i >= 0; i--) {
 		var instruction = instructions.get(i);
 
-		if(instruction.getOpcode() == Opcodes.RETURN) {
+		if (instruction.getOpcode() == Opcodes.RETURN) {
 			returnVoid = instruction;
 			break;
 		}
@@ -67,20 +67,20 @@ function patchTick(instructions) {
 
 	//Get BoatEntity#status
 	newInstructions.add(new FieldInsnNode(
-			Opcodes.GETFIELD,
-			"net/minecraft/entity/item/BoatEntity",
-			STATUS,
-			"Lnet/minecraft/entity/item/BoatEntity$Status;"
+		Opcodes.GETFIELD,
+		"net/minecraft/entity/item/BoatEntity",
+		STATUS,
+		"Lnet/minecraft/entity/item/BoatEntity$Status;"
 	));
 
-	//Call BoatEntityPatch#tick
+	//Call BoatEntityHook#tick
 	newInstructions.add(new MethodInsnNode(
-			Opcodes.INVOKESTATIC,
-			"com/therandomlabs/randompatches/patch/BoatEntityPatch",
-			"tick",
-			"(Lnet/minecraft/entity/item/BoatEntity;" +
-			"Lnet/minecraft/entity/item/BoatEntity$Status;)V",
-			false
+		Opcodes.INVOKESTATIC,
+		"com/therandomlabs/randompatches/hook/BoatEntityHook",
+		"tick",
+		"(Lnet/minecraft/entity/item/BoatEntity;" +
+		"Lnet/minecraft/entity/item/BoatEntity$Status;)V",
+		false
 	));
 
 	instructions.insertBefore(returnVoid, newInstructions);

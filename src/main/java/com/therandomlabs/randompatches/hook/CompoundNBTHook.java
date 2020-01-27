@@ -1,8 +1,8 @@
-package com.therandomlabs.randompatches.patch;
+package com.therandomlabs.randompatches.hook;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.UUID;
-import com.google.common.base.Charsets;
 import com.google.common.collect.Iterables;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -17,37 +17,37 @@ import net.minecraft.nbt.INBT;
 import net.minecraft.nbt.NBTUtil;
 import org.apache.commons.codec.binary.Base64;
 
-public final class CompoundNBTPatch {
+public final class CompoundNBTHook {
 	public static final Gson GSON =
 			new GsonBuilder().registerTypeAdapter(UUID.class, new UUIDTypeAdapter()).create();
 
-	private CompoundNBTPatch() {}
+	private CompoundNBTHook() {}
 
 	public static boolean areTagMapsEqual(Map<String, INBT> tagMap1, Map<String, INBT> tagMap2) {
-		if(tagMap1.equals(tagMap2)) {
+		if (tagMap1.equals(tagMap2)) {
 			return true;
 		}
 
 		final INBT skullOwner1 = tagMap1.get("SkullOwner");
 
-		if(!(skullOwner1 instanceof CompoundNBT)) {
+		if (!(skullOwner1 instanceof CompoundNBT)) {
 			return false;
 		}
 
 		final INBT skullOwner2 = tagMap2.get("SkullOwner");
 
-		if(!(skullOwner2 instanceof CompoundNBT)) {
+		if (!(skullOwner2 instanceof CompoundNBT)) {
 			return false;
 		}
 
 		final GameProfile profile1 = NBTUtil.readGameProfile((CompoundNBT) skullOwner1);
 		final GameProfile profile2 = NBTUtil.readGameProfile((CompoundNBT) skullOwner2);
 
-		if(!profile1.equals(profile2)) {
+		if (!profile1.equals(profile2)) {
 			return false;
 		}
 
-		if(!RPConfig.Misc.skullStackingRequiresSameTextures) {
+		if (!RPConfig.Misc.skullStackingRequiresSameTextures) {
 			return true;
 		}
 
@@ -61,12 +61,13 @@ public final class CompoundNBTPatch {
 		final Property textureProperty =
 				Iterables.getFirst(profile.getProperties().get("textures"), null);
 
-		if(textureProperty == null) {
+		if (textureProperty == null) {
 			return null;
 		}
 
-		final String json =
-				new String(Base64.decodeBase64(textureProperty.getValue()), Charsets.UTF_8);
+		final String json = new String(
+				Base64.decodeBase64(textureProperty.getValue()), StandardCharsets.UTF_8
+		);
 		return GSON.fromJson(json, MinecraftTexturesPayload.class);
 	}
 

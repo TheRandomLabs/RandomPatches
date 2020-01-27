@@ -7,7 +7,7 @@ function log(message) {
 }
 
 function patch(method, name, patchFunction) {
-	if(method.name != name) {
+	if (method.name != name) {
 		return false;
 	}
 
@@ -26,8 +26,8 @@ function initializeCoreMod() {
 			"transformer": function(classNode) {
 				var methods = classNode.methods;
 
-				for(var i in methods) {
-					if(patch(methods[i], "<init>", patchInit)) {
+				for (var i in methods) {
+					if (patch(methods[i], "<init>", patchInit)) {
 						break;
 					}
 				}
@@ -41,10 +41,10 @@ function initializeCoreMod() {
 function patchInit(instructions) {
 	var title;
 
-	for(var i = 0; i < instructions.size(); i++) {
+	for (var i = 0; i < instructions.size(); i++) {
 		var instruction = instructions.get(i);
 
-		if(instruction.getOpcode() == Opcodes.ALOAD && instruction.var == 5) {
+		if (instruction.getOpcode() == Opcodes.ALOAD && instruction.var == 5) {
 			title = instruction;
 			break;
 		}
@@ -52,10 +52,10 @@ function patchInit(instructions) {
 
 	//Get RPConfig.Window#title
 	instructions.insert(title, new FieldInsnNode(
-			Opcodes.GETSTATIC,
-			"com/therandomlabs/randompatches/RPConfig$Window",
-			"title",
-			"Ljava/lang/String;"
+		Opcodes.GETSTATIC,
+		"com/therandomlabs/randompatches/RPConfig$Window",
+		"title",
+		"Ljava/lang/String;"
 	));
 
 	instructions.remove(title);

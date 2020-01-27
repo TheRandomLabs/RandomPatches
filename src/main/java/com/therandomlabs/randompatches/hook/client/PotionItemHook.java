@@ -1,14 +1,14 @@
-package com.therandomlabs.randompatches.patch.client;
+package com.therandomlabs.randompatches.hook.client;
 
 import com.therandomlabs.randompatches.RPConfig;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionUtils;
 
-public final class PotionItemPatch {
-	private PotionItemPatch() {}
+public final class PotionItemHook {
+	private PotionItemHook() {}
 
 	public static boolean hasEffect(ItemStack stack) {
-		if(stack.isEnchanted()) {
+		if (stack.isEnchanted()) {
 			return true;
 		}
 
