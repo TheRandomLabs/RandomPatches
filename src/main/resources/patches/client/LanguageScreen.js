@@ -43,7 +43,7 @@ function init(instructions) {
 		if (instruction.getOpcode() == Opcodes.INVOKESTATIC &&
 			instruction.name == "refreshResources") {
 			instruction.owner =
-				"com/therandomlabs/randompatches/hook/client/LanguageScreenListPatch";
+				"com/therandomlabs/randompatches/hook/client/LanguageScreenListHook";
 			instruction.name = "reloadLanguage";
 			return;
 		}

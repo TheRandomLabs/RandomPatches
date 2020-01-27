@@ -60,7 +60,7 @@ function patchConflicts(instructions) {
 	//Call ClientPlayerEntityHook$DismountKeybind#isDismountAndSneak
 	newInstructions.add(new MethodInsnNode(
 		Opcodes.INVOKESTATIC,
-		"com/therandomlabs/randompatches/hook/client/dismount/ClientPlayerEntityPatch$" +
+		"com/therandomlabs/randompatches/hook/client/dismount/ClientPlayerEntityHook$" +
 		"DismountKeybind",
 		"isDismountAndSneak",
 		"(Lnet/minecraft/client/settings/KeyBinding;" +
