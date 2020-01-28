@@ -1,4 +1,4 @@
-version = "1.15.2-0.0.0.1-fabric"
+version = "1.15.2-0.0.0.2-fabric"
 group = "com.therandomlabs.randompatches"
 
 apply from: "https://raw.githubusercontent.com/TheRandomLabs/Common-Gradle/master/fabric/1.15.gradle"

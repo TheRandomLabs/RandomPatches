@@ -25,8 +25,8 @@ package com.therandomlabs.randompatches;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.therandomlabs.utils.config.ConfigManager;
+import com.therandomlabs.utils.fabric.FabricUtils;
 import com.therandomlabs.utils.fabric.config.ConfigReloadCommand;
-import com.therandomlabs.utils.fabric.config.FabricConfig;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.registry.CommandRegistry;
 import org.apache.logging.log4j.LogManager;
@@ -54,7 +54,8 @@ public final class RandomPatches implements ModInitializer {
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	@Override
 	public void onInitialize() {
-		FabricConfig.initialize();
+		//FabricConfig.initialize();
+		ConfigManager.setClient(FabricUtils.IS_CLIENT);
 		ConfigManager.register(RPConfig.class);
 
 		if (RPConfig.Misc.rpreload) {
