@@ -23,7 +23,7 @@ targetCompatibility = JavaVersion.VERSION_1_8
 compileJava.sourceCompatibility = JavaVersion.VERSION_1_8
 compileJava.targetCompatibility = JavaVersion.VERSION_1_8
 
-version = "1.15.2-1.21.0.0"
+version = "1.15.2-1.21.0.1"
 group = "com.therandomlabs.randompatches"
 archivesBaseName = "randompatches"
 
@@ -112,7 +112,7 @@ shadowJar {
 
 	dependencies {
 		include(dependency("com.github.TheRandomLabs:TRLUtils-Config:master-SNAPSHOT"))
-		include(dependency("com.github.TheRandomLabs:TRLUtils-Forge:1.14-SNAPSHOT"))
+		include(dependency("com.github.TheRandomLabs:TRLUtils-Forge:1.15-SNAPSHOT"))
 	}
 
 	relocate "com.therandomlabs.utils", "com.therandomlabs.randompatches.repackage.com.therandomlabs.utils"
