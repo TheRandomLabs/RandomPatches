@@ -1,0 +1,29 @@
+{
+	"schemaVersion": 1,
+	"id": "randompatches",
+	"version": "${version}",
+	"name": "RandomPatches",
+	"description": "A bunch of miscellaneous patches for Minecraft.",
+	"authors": [
+		"TheRandomLabs"
+	],
+	"contact": {
+		"homepage": "https://www.curseforge.com/minecraft/mc-mods/randompatches",
+		"sources": "https://github.com/TheRandomLabs/RandomPatches"
+	},
+	"license": "MIT",
+	"icon": "assets/randompatches/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.therandomlabs.randompatches.RandomPatches"
+		]
+	},
+	"mixins": [
+		"randompatches.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.4.0",
+		"fabric": "*"
+	}
+}

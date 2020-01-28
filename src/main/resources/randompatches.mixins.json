@@ -1,0 +1,13 @@
+{
+	"required": true,
+	"package": "com.therandomlabs.randompatches.mixin",
+	"compatibilityLevel": "JAVA_8",
+	"mixins": [
+		"MixinServerLoginNetworkHandler",
+		"MixinServerPlayNetworkHandler"
+	],
+	"client": [],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}
