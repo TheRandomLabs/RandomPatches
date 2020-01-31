@@ -1,8 +1,17 @@
 var ASMAPI = Java.type("net.minecraftforge.coremod.api.ASMAPI");
 var Opcodes = Java.type("org.objectweb.asm.Opcodes");
 
+var InsnNode = Java.type("org.objectweb.asm.tree.InsnNode");
+var MethodInsnNode = Java.type("org.objectweb.asm.tree.MethodInsnNode");
+var VarInsnNode = Java.type("org.objectweb.asm.tree.VarInsnNode");
+
 var INIT = ASMAPI.mapMethod("func_71384_a");
 var LOAD_ICON = ASMAPI.mapMethod("func_216529_a");
+
+var GET_TITLE = ASMAPI.mapMethod("func_230149_ax_");
+
+var initPatched;
+var getTitlePatched;
 
 function log(message) {
 	print("[RandomPatches Minecraft Transformer]: " + message);
@@ -29,8 +38,18 @@ function initializeCoreMod() {
 				var methods = classNode.methods;
 
 				for (var i in methods) {
-					if (patch(methods[i], INIT, patchInit)) {
+					if (initPatched && getTitlePatched) {
 						break;
+					}
+
+					if (patch(methods[i], INIT, patchInit)) {
+						initPatched = true;
+						continue;
+					}
+
+					if (patch(methods[i], GET_TITLE, patchGetTitle)) {
+						getTitlePatched = true;
+						continue;
 					}
 				}
 
@@ -67,4 +86,23 @@ function patchInit(instructions) {
 	loadIcon.owner = "com/therandomlabs/randompatches/client/WindowIconHandler";
 	loadIcon.name = "setWindowIcon";
 	loadIcon.desc = "()V";
+}
+
+function patchGetTitle(instructions) {
+	instructions.clear();
+
+	//Load Minecraft (this)
+	instructions.add(new VarInsnNode(Opcodes.ALOAD, 0));
+
+	//Call MinecraftHook#getTitle(Minecraft)
+	instructions.add(new MethodInsnNode(
+		Opcodes.INVOKESTATIC,
+		"com/therandomlabs/randompatches/hook/client/MinecraftHook",
+		"getTitle",
+		"(Lnet/minecraft/client/Minecraft;)Ljava/lang/String;",
+		false
+	));
+
+	//Return MinecraftHook#getTitle(Minecraft)
+	instructions.add(new InsnNode(Opcodes.ARETURN));
 }

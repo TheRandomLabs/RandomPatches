@@ -4,7 +4,6 @@
 	"RandomPatches BambooBlock Transformer": "patches/client/BambooBlock.js",
 	"RandomPatches IngameMenuScreen Transformer": "patches/client/IngameMenuScreen.js",
 	"RandomPatches KeyboardListener Transformer": "patches/client/KeyboardListener.js",
-	"RandomPatches MainWindow Transformer": "patches/client/MainWindow.js",
 	"RandomPatches Minecraft Transformer": "patches/client/Minecraft.js",
 	"RandomPatches PlayerRenderer Transformer": "patches/client/PlayerRenderer.js",
 	"RandomPatches PotionItem Transformer": "patches/client/PotionItem.js",

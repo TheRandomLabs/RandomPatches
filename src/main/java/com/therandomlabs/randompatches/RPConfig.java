@@ -157,9 +157,19 @@ public final class RPConfig {
 		})
 		public static Path icon256 = DEFAULT_ICON;
 
-		@Config.Property("The Minecraft window title.")
-		public static String title = ForgeUtils.IS_DEOBFUSCATED ?
-				"RandomPatches" : RandomPatches.DEFAULT_WINDOW_TITLE;
+		@Config.Property({
+				"The Minecraft window title.",
+				"The Minecraft version is provided as an argument."
+		})
+		public static String title = ForgeUtils.IS_DEOBFUSCATED ? "RandomPatches" : "Minecraft* %s";
+
+		@Config.Property({
+				"The Minecraft window title.",
+				"The Minecraft version and current activity are provided as arguments.",
+				"For example: \"RandomPatches - %2$s\""
+		})
+		public static String titleWithActivity =
+				ForgeUtils.IS_DEOBFUSCATED ? "RandomPatches - %2$s" : "Minecraft* %s - %s";
 
 		public static String icon16String;
 		public static String icon32String;

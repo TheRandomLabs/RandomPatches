@@ -28,6 +28,7 @@
 	"randompatches.config.client.window.icon16": "Window icon (16x16)",
 	"randompatches.config.client.window.icon32": "Window icon (32x32)",
 	"randompatches.config.client.window.title": "Window title",
+	"randompatches.config.client.window.titleWithActivity": "Window title with activity",
 	"commands.rpreloadclient.usage": "/rpreloadclient",
 	"commands.rpreloadclient.success": "RandomPatches client-sided configuration reloaded!",
 	"key.dismount": "Dismount",
