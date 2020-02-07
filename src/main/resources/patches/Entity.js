@@ -8,7 +8,7 @@ var VarInsnNode = Java.type("org.objectweb.asm.tree.VarInsnNode");
 
 var WRITE_WITHOUT_TYPE_ID = ASMAPI.mapMethod("func_189511_e");
 var READ = ASMAPI.mapMethod("func_70020_e");
-var SET_POSITION = ASMAPI.mapMethod("func_70107_b");
+var RECENTER_BOUNDING_BOX = ASMAPI.mapMethod("func_226264_Z_");
 
 var writeWithoutTypeIdPatched;
 var readPatched;
@@ -95,15 +95,15 @@ function patchWriteWithoutTypeId(instructions) {
 
 function patchRead(instructions) {
 	var jumpIfShouldNotSetPosition;
-	var setPosition;
+	var recenterBoundingBox;
 
 	for (var i = instructions.size() - 1; i >= 0; i--) {
 		var instruction = instructions.get(i);
 
-		if (setPosition == null) {
+		if (recenterBoundingBox == null) {
 			if (instruction.getOpcode() == Opcodes.INVOKEVIRTUAL &&
-				instruction.name == SET_POSITION) {
-				setPosition = instruction;
+				instruction.name == RECENTER_BOUNDING_BOX) {
+				recenterBoundingBox = instruction;
 			}
 
 			continue;
@@ -138,5 +138,5 @@ function patchRead(instructions) {
 		false
 	));
 
-	instructions.insert(setPosition, newInstructions);
+	instructions.insert(recenterBoundingBox, newInstructions);
 }
