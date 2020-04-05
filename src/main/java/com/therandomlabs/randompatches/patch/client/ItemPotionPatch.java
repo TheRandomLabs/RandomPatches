@@ -2,11 +2,10 @@ package com.therandomlabs.randompatches.patch.client;
 
 import com.therandomlabs.randompatches.core.Patch;
 import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.tree.AbstractInsnNode;
 import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.InsnList;
-import org.objectweb.asm.tree.InsnNode;
 import org.objectweb.asm.tree.MethodInsnNode;
-import org.objectweb.asm.tree.VarInsnNode;
 
 public final class ItemPotionPatch extends Patch {
 	@Override
@@ -17,23 +16,21 @@ public final class ItemPotionPatch extends Patch {
 			instructions = findInstructions(node, "hasEffect", "func_77636_d");
 		}
 
-		instructions.clear();
+		for (int i = 0; i < instructions.size(); i++) {
+			final AbstractInsnNode instruction = instructions.get(i);
 
-		//Get ItemStack
-		instructions.add(new VarInsnNode(Opcodes.ALOAD, 1));
+			if (instruction.getOpcode() == Opcodes.INVOKEINTERFACE) {
+				final MethodInsnNode isEmpty = (MethodInsnNode) instruction;
 
-		//Call ItemPotionHook#hasEffect
-		instructions.add(new MethodInsnNode(
-				Opcodes.INVOKESTATIC,
-				hookClass,
-				"hasEffect",
-				"(Lnet/minecraft/item/ItemStack;)Z",
-				false
-		));
+				isEmpty.setOpcode(Opcodes.INVOKESTATIC);
+				isEmpty.owner = hookClass;
+				isEmpty.desc = "(Ljava/util/List;)Z";
+				isEmpty.itf = false;
 
-		//Return ItemPotionHook#hasEffect
-		instructions.add(new InsnNode(Opcodes.IRETURN));
+				return true;
+			}
+		}
 
-		return true;
+		return false;
 	}
 }
