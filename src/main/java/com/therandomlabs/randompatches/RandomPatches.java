@@ -72,6 +72,9 @@ public final class RandomPatches {
 	public static final boolean ICE_AND_FIRE_INSTALLED =
 			RPUtils.detect("com.github.alexthe666.iceandfire.asm.IceAndFirePlugin");
 
+	public static final boolean LITELOADER_INSTALLED =
+			RPUtils.detect("com.mumfrey.liteloader.core.LiteLoader");
+
 	public static final boolean LITTLETILES_INSTALLED =
 			RPUtils.detect("com.creativemd.littletiles.LittleTilesCore");
 
@@ -186,7 +189,7 @@ public final class RandomPatches {
 			register("net.minecraft.client.renderer.entity.RenderPlayer", new RenderPlayerPatch());
 		}
 
-		if (RPConfig.Client.patchMinecraftClass && TRLUtils.IS_CLIENT) {
+		if (RPConfig.Client.patchMinecraftClass && TRLUtils.IS_CLIENT && !LITELOADER_INSTALLED) {
 			register("net.minecraft.client.Minecraft", new MinecraftPatch());
 		}
 
