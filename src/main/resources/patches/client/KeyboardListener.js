@@ -7,8 +7,8 @@ var VarInsnNode = Java.type("org.objectweb.asm.tree.VarInsnNode");
 
 var ON_KEY_EVENT = ASMAPI.mapMethod("func_197961_a");
 
-var KEY_B = 0x42;
-var KEY_UNUSED = 0x54;
+var KEY_B = 66;
+var KEY_UNUSED = 94;
 
 function log(message) {
 	print("[RandomPatches KeyboardListener Transformer]: " + message);
