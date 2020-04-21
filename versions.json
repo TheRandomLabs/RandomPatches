@@ -1,12 +1,14 @@
 {
 	"homepage": "https://www.curseforge.com/minecraft/mc-mods/randompatches",
 	"1.15.2": {
+		"1.15.2-1.21.1.2": "Fixed the Toggle Narrator keybind.",
 		"1.15.2-1.21.1.1": "Fixed the MC-2025 fix.",
 		"1.15.2-1.21.1.0": "Added support for 1.15's activity-specific window titles.",
 		"1.15.2-1.21.0.1": "Actually works now.",
 		"1.15.2-1.21.0.0": "Initial 1.15.2 port."
 	},
 	"1.14.4": {
+		"1.14.4-1.21.1.2": "Fixed the Toggle Narrator keybind.",
 		"1.14.4-1.21.0.0": "Added a configuration option to change the framerate limit step size.",
 		"1.14.4-1.19.1.1": "Fixed the configuration not loading on the server.",
 		"1.14.4-1.19.1.0": "The window icon is now correctly resized.\nFixed some issues regarding configuration reloading.",
@@ -864,10 +866,10 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"promos": {
-		"1.15.2-latest": "1.15.2-1.21.1.1",
-		"1.15.2-recommended": "1.15.2-1.21.1.1",
-		"1.14.4-latest": "1.14.4-1.21.0.0",
-		"1.14.4-recommended": "1.14.4-1.21.0.0",
+		"1.15.2-latest": "1.15.2-1.21.1.2",
+		"1.15.2-recommended": "1.15.2-1.21.1.2",
+		"1.14.4-latest": "1.14.4-1.21.1.2",
+		"1.14.4-recommended": "1.14.4-1.21.1.2",
 		"1.14.3-latest": "1.14.3-1.17.2.1",
 		"1.14.3-recommended": "1.14.3-1.17.2.1",
 		"1.14.2-latest": "1.14.2-1.16.2.0",
