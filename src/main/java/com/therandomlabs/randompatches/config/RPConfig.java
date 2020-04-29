@@ -285,6 +285,7 @@ public final class RPConfig {
 		@Config.Property("The login timeout.")
 		public static int loginTimeout = 900;
 
+		@Config.MCVersion("[1.9,1.13)")
 		@Config.RequiresMCRestart
 		@Config.Property("Whether to apply the login timeout.")
 		public static boolean patchLoginTimeout = true;

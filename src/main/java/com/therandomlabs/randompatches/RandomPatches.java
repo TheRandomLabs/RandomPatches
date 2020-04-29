@@ -281,9 +281,9 @@ public final class RandomPatches {
 			register("net.minecraft.nbt.NBTTagCompound", new NBTTagCompoundPatch());
 		}
 
-		if (RPConfig.Timeouts.patchLoginTimeout) {
+		if (RPConfig.Timeouts.patchLoginTimeout && TRLUtils.MC_VERSION_NUMBER > 8) {
 			register(
-					"net.minecraft.network.NetHandlerLoginServer",
+					"net.minecraft.server.network.NetHandlerLoginServer",
 					new NetHandlerLoginServerPatch()
 			);
 		}
