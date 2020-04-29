@@ -37,6 +37,7 @@
 		"1.13.2-1.15.1.0": "Initial port to Minecraft 1.13.2."
 	},
 	"1.12.2": {
+		"1.12.2-1.21.0.3": "Fixed the login timeout patch.",
 		"1.12.2-1.21.0.2": "Fixed LiteLoader not working.",
 		"1.12.2-1.21.0.1": "Fixed a crash that occurs on older versions of Minecraft when the potion glint patch is disabled.",
 		"1.12.2-1.21.0.0": "Observers no longer send a signal when they are placed by default.\nFixed EigenCraft Unofficial Patch and Replay Mod compatibility.\nThe particle fixes are now compatible with CleanView and Dynamic Surroundings.",
@@ -109,6 +110,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.12.1": {
+		"1.12.2-1.21.0.3": "Fixed the login timeout patch.",
 		"1.12.2-1.21.0.2": "Fixed LiteLoader not working.",
 		"1.12.2-1.21.0.1": "Fixed a crash that occurs on older versions of Minecraft when the potion glint patch is disabled.",
 		"1.12.2-1.21.0.0": "Observers no longer send a signal when they are placed by default.\nFixed EigenCraft Unofficial Patch and Replay Mod compatibility.\nThe particle fixes are now compatible with CleanView and Dynamic Surroundings.",
@@ -181,6 +183,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.12": {
+		"1.12.2-1.21.0.3": "Fixed the login timeout patch.",
 		"1.12.2-1.21.0.2": "Fixed LiteLoader not working.",
 		"1.12.2-1.21.0.1": "Fixed a crash that occurs on older versions of Minecraft when the potion glint patch is disabled.",
 		"1.12.2-1.21.0.0": "Observers no longer send a signal when they are placed by default.\nFixed EigenCraft Unofficial Patch and Replay Mod compatibility.\nThe particle fixes are now compatible with CleanView and Dynamic Surroundings.",
@@ -253,6 +256,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.11.2": {
+		"1.12.2-1.21.0.3": "Fixed the login timeout patch.",
 		"1.12.2-1.21.0.2": "Fixed LiteLoader not working.",
 		"1.12.2-1.21.0.1": "Fixed a crash that occurs on older versions of Minecraft when the potion glint patch is disabled.",
 		"1.12.2-1.21.0.0": "Observers no longer send a signal when they are placed by default.\nFixed EigenCraft Unofficial Patch and Replay Mod compatibility.\nThe particle fixes are now compatible with CleanView and Dynamic Surroundings.",
@@ -325,6 +329,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.11": {
+		"1.12.2-1.21.0.3": "Fixed the login timeout patch.",
 		"1.12.2-1.21.0.2": "Fixed LiteLoader not working.",
 		"1.12.2-1.21.0.1": "Fixed a crash that occurs on older versions of Minecraft when the potion glint patch is disabled.",
 		"1.12.2-1.21.0.0": "Observers no longer send a signal when they are placed by default.\nFixed EigenCraft Unofficial Patch and Replay Mod compatibility.\nThe particle fixes are now compatible with CleanView and Dynamic Surroundings.",
@@ -397,6 +402,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.10.2": {
+		"1.12.2-1.21.0.3": "Fixed the login timeout patch.",
 		"1.12.2-1.21.0.2": "Fixed LiteLoader not working.",
 		"1.12.2-1.21.0.1": "Fixed a crash that occurs on older versions of Minecraft when the potion glint patch is disabled.",
 		"1.12.2-1.21.0.0": "Observers no longer send a signal when they are placed by default.\nFixed EigenCraft Unofficial Patch and Replay Mod compatibility.\nThe particle fixes are now compatible with CleanView and Dynamic Surroundings.",
@@ -469,6 +475,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.10": {
+		"1.12.2-1.21.0.3": "Fixed the login timeout patch.",
 		"1.12.2-1.21.0.2": "Fixed LiteLoader not working.",
 		"1.12.2-1.21.0.1": "Fixed a crash that occurs on older versions of Minecraft when the potion glint patch is disabled.",
 		"1.12.2-1.21.0.0": "Observers no longer send a signal when they are placed by default.\nFixed EigenCraft Unofficial Patch and Replay Mod compatibility.\nThe particle fixes are now compatible with CleanView and Dynamic Surroundings.",
@@ -541,6 +548,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.9.4": {
+		"1.12.2-1.21.0.3": "Fixed the login timeout patch.",
 		"1.12.2-1.21.0.2": "Fixed LiteLoader not working.",
 		"1.12.2-1.21.0.1": "Fixed a crash that occurs on older versions of Minecraft when the potion glint patch is disabled.",
 		"1.12.2-1.21.0.0": "Observers no longer send a signal when they are placed by default.\nFixed EigenCraft Unofficial Patch and Replay Mod compatibility.\nThe particle fixes are now compatible with CleanView and Dynamic Surroundings.",
@@ -606,6 +614,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.9": {
+		"1.12.2-1.21.0.3": "Fixed the login timeout patch.",
 		"1.12.2-1.21.0.2": "Fixed LiteLoader not working.",
 		"1.12.2-1.21.0.1": "Fixed a crash that occurs on older versions of Minecraft when the potion glint patch is disabled.",
 		"1.12.2-1.21.0.0": "Observers no longer send a signal when they are placed by default.\nFixed EigenCraft Unofficial Patch and Replay Mod compatibility.\nThe particle fixes are now compatible with CleanView and Dynamic Surroundings.",
@@ -671,6 +680,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.8.9": {
+		"1.12.2-1.21.0.3": "Fixed the login timeout patch.",
 		"1.12.2-1.21.0.2": "Fixed LiteLoader not working.",
 		"1.12.2-1.21.0.1": "Fixed a crash that occurs on older versions of Minecraft when the potion glint patch is disabled.",
 		"1.12.2-1.21.0.0": "Observers no longer send a signal when they are placed by default.\nFixed EigenCraft Unofficial Patch and Replay Mod compatibility.\nThe particle fixes are now compatible with CleanView and Dynamic Surroundings.",
@@ -736,6 +746,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.8.8": {
+		"1.12.2-1.21.0.3": "Fixed the login timeout patch.",
 		"1.12.2-1.21.0.2": "Fixed LiteLoader not working.",
 		"1.12.2-1.21.0.1": "Fixed a crash that occurs on older versions of Minecraft when the potion glint patch is disabled.",
 		"1.12.2-1.21.0.0": "Observers no longer send a signal when they are placed by default.\nFixed EigenCraft Unofficial Patch and Replay Mod compatibility.\nThe particle fixes are now compatible with CleanView and Dynamic Surroundings.",
@@ -801,6 +812,7 @@
 		"1.12.2-1.0.0.0": "Initial release."
 	},
 	"1.8": {
+		"1.12.2-1.21.0.3": "Fixed the login timeout patch.",
 		"1.12.2-1.21.0.2": "Fixed LiteLoader not working.",
 		"1.12.2-1.21.0.1": "Fixed a crash that occurs on older versions of Minecraft when the potion glint patch is disabled.",
 		"1.12.2-1.21.0.0": "Observers no longer send a signal when they are placed by default.\nFixed EigenCraft Unofficial Patch and Replay Mod compatibility.\nThe particle fixes are now compatible with CleanView and Dynamic Surroundings.",
@@ -876,27 +888,27 @@
 		"1.14.2-recommended": "1.14.2-1.16.2.0",
 		"1.13.2-latest": "1.13.2-1.7.2.0",
 		"1.13.2-recommended": "1.13.2-1.17.2.0",
-		"1.12.2-latest": "1.12.2-1.21.0.2",
-		"1.12.2-recommended": "1.12.2-1.21.0.2",
-		"1.12-latest": "1.12.2-1.21.0.2",
-		"1.12-recommended": "1.12.2-1.21.0.2",
-		"1.11.2-latest": "1.12.2-1.21.0.2",
-		"1.11.2-recommended": "1.12.2-1.21.0.2",
-		"1.11-latest": "1.12.2-1.21.0.2",
-		"1.11-recommended": "1.12.2-1.21.0.2",
-		"1.10.2-latest": "1.12.2-1.21.0.2",
-		"1.10.2-recommended": "1.12.2-1.21.0.2",
-		"1.10-latest": "1.12.2-1.21.0.2",
-		"1.10-recommended": "1.12.2-1.21.0.2",
-		"1.9.4-latest": "1.12.2-1.21.0.2",
-		"1.9.4-recommended": "1.12.2-1.21.0.2",
-		"1.9-latest": "1.12.2-1.21.0.2",
-		"1.9-recommended": "1.12.2-1.21.0.2",
-		"1.8.9-latest": "1.12.2-1.21.0.2",
-		"1.8.9-recommended": "1.12.2-1.21.0.2",
-		"1.8.8-latest": "1.12.2-1.21.0.2",
-		"1.8.8-recommended": "1.12.2-1.21.0.2",
-		"1.8-latest": "1.12.2-1.21.0.2",
-		"1.8-recommended": "1.12.2-1.21.0.2"
+		"1.12.2-latest": "1.12.2-1.21.0.3",
+		"1.12.2-recommended": "1.12.2-1.21.0.3",
+		"1.12-latest": "1.12.2-1.21.0.3",
+		"1.12-recommended": "1.12.2-1.21.0.3",
+		"1.11.2-latest": "1.12.2-1.21.0.3",
+		"1.11.2-recommended": "1.12.2-1.21.0.3",
+		"1.11-latest": "1.12.2-1.21.0.3",
+		"1.11-recommended": "1.12.2-1.21.0.3",
+		"1.10.2-latest": "1.12.2-1.21.0.3",
+		"1.10.2-recommended": "1.12.2-1.21.0.3",
+		"1.10-latest": "1.12.2-1.21.0.3",
+		"1.10-recommended": "1.12.2-1.21.0.3",
+		"1.9.4-latest": "1.12.2-1.21.0.3",
+		"1.9.4-recommended": "1.12.2-1.21.0.3",
+		"1.9-latest": "1.12.2-1.21.0.3",
+		"1.9-recommended": "1.12.2-1.21.0.3",
+		"1.8.9-latest": "1.12.2-1.21.0.3",
+		"1.8.9-recommended": "1.12.2-1.21.0.3",
+		"1.8.8-latest": "1.12.2-1.21.0.3",
+		"1.8.8-recommended": "1.12.2-1.21.0.3",
+		"1.8-latest": "1.12.2-1.21.0.3",
+		"1.8-recommended": "1.12.2-1.21.0.3"
 	}
 }
