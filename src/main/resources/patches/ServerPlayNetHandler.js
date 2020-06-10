@@ -9,12 +9,10 @@ var LabelNode = Java.type("org.objectweb.asm.tree.LabelNode");
 var VarInsnNode = Java.type("org.objectweb.asm.tree.VarInsnNode");
 
 var tickPatched;
-var processKeepAlivePatched;
 var processPlayerPatched;
 var processVehicleMovePatched;
 
 var TICK = ASMAPI.mapMethod("func_73660_a");
-var PROCESS_KEEPALIVE = ASMAPI.mapMethod("func_147353_a");
 var PROCESS_PLAYER = ASMAPI.mapMethod("func_147347_a");
 var PROCESS_VEHICLE_MOVE = ASMAPI.mapMethod("func_184338_a");
 var SEND_PACKET = ASMAPI.mapMethod("func_147359_a");
@@ -47,18 +45,12 @@ function initializeCoreMod() {
 				for (var i in methods) {
 					var method = methods[i];
 
-					if (tickPatched && processKeepAlivePatched && processPlayerPatched &&
-							processVehicleMovePatched) {
+					if (tickPatched && processPlayerPatched && processVehicleMovePatched) {
 						break;
 					}
 
 					if (patch(method, TICK, patchTick)) {
 						tickPatched = true;
-						continue;
-					}
-
-					if (patch(method, PROCESS_KEEPALIVE, patchProcessKeepAlive)) {
-						processKeepAlivePatched = true;
 						continue;
 					}
 
@@ -187,28 +179,6 @@ function patchTick(instructions) {
 
 	//Break out of the if(i - keepAliveTime >= 15000L) statement
 	instructions.insert(sendPacket, label);
-}
-
-function patchProcessKeepAlive(instructions) {
-	var aloadFound;
-	var aload;
-
-	for (var i = instructions.size() - 1; i >= 0; i--) {
-		var instruction = instructions.get(i);
-
-		if (instruction.getOpcode() != Opcodes.ALOAD) {
-			continue;
-		}
-
-		if (!aloadFound) {
-			aloadFound = true;
-			continue;
-		}
-
-		//Return before SeerverPlayNetHandler#disconnect(ITextComponent) can be called.
-		instructions.insertBefore(instruction, new InsnNode(Opcodes.RETURN));
-		return;
-	}
 }
 
 function patchProcessPlayer(instructions) {
