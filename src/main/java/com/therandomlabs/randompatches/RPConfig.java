@@ -103,12 +103,12 @@ public final class RPConfig {
 		public static int keepAlivePacketInterval = 15;
 
 		@Config.RangeInt(min = 1)
-		@Config.Property("The login timeout.")
+		@Config.Property("The login timeout in seconds.")
 		public static int loginTimeout = 900;
 
 		@Config.RangeInt(min = 1)
 		@Config.Property({
-				"The read timeout.",
+				"The read timeout in seconds.",
 				"This is the time it takes for a player to be disconnected after not " +
 						"responding to a KeepAlive packet.",
 				"This value is automatically rounded up to a product of keepAlivePacketInterval."

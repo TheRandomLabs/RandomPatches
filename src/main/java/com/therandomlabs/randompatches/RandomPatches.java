@@ -16,7 +16,7 @@ public final class RandomPatches {
 	public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
 
 	public static final CommonProxy PROXY =
-			DistExecutor.runForDist(() -> ClientProxy::new, () -> CommonProxy::new);
+			DistExecutor.safeRunForDist(() -> ClientProxy::new, () -> CommonProxy::new);
 
 	public RandomPatches() {
 		ForgeConfig.initialize();

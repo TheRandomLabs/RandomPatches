@@ -19,7 +19,7 @@ apply plugin: "net.minecraftforge.gradle"
 apply plugin: 'eclipse'
 apply plugin: "com.github.johnrengelman.shadow"
 
-version = "1.15.2-1.21.1.5"
+version = "1.15.2-1.21.1.6"
 group = "com.therandomlabs.randompatches"
 archivesBaseName = "randompatches"
 
