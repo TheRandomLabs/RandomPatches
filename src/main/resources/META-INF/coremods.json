@@ -16,13 +16,15 @@
 	//Packet size
 	"RandomPatches NettyCompressionDecoder Transformer": "patches/packetsize/NettyCompressionDecoder.js",
 	"RandomPatches PacketBuffer Transformer": "patches/packetsize/PacketBuffer.js",
+	//Timeouts
+	"RandomPatches NetworkManager$1 Transformer": "patches/client/NetworkManager$1.js",
+	"RandomPatches ServerLoginNetHandler Transformer": "patches/ServerLoginNetHandler.js",
+	"RandomPatches ServerPlayNetHandler Transformer": "patches/ServerPlayNetHandler.js",
 	//Misc
 	"RandomPatches BoatEntity Transformer": "patches/BoatEntity.js",
 	"RandomPatches BucketItem Transformer": "patches/BucketItem.js",
 	"RandomPatches CompoundNBT Transformer": "patches/CompoundNBT.js",
 	"RandomPatches EndPortalTileEntity Transformer": "patches/EndPortalTileEntity.js",
 	"RandomPatches Entity Transformer": "patches/Entity.js",
-	"RandomPatches ServerLoginNetHandler Transformer": "patches/ServerLoginNetHandler.js",
-	"RandomPatches ServerPlayNetHandler Transformer": "patches/ServerPlayNetHandler.js",
 	"RandomPatches ServerRecipePlacer Transformer": "patches/ServerRecipePlacer.js"
 }
