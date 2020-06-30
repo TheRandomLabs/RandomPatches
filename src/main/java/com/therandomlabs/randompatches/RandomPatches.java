@@ -28,6 +28,7 @@ import com.therandomlabs.randompatches.patch.client.GuiIngameMenuPatch;
 import com.therandomlabs.randompatches.patch.client.GuiLanguageListPatch;
 import com.therandomlabs.randompatches.patch.client.ItemPotionPatch;
 import com.therandomlabs.randompatches.patch.client.MinecraftPatch;
+import com.therandomlabs.randompatches.patch.client.NetworkManagerPatch;
 import com.therandomlabs.randompatches.patch.client.OptionsPatch;
 import com.therandomlabs.randompatches.patch.client.RenderPlayerPatch;
 import com.therandomlabs.randompatches.patch.client.dismount.EntityPlayerSPPatch;
@@ -286,6 +287,10 @@ public final class RandomPatches {
 					"net.minecraft.server.network.NetHandlerLoginServer",
 					new NetHandlerLoginServerPatch()
 			);
+		}
+
+		if (RPConfig.Timeouts.patchNetworkManager && TRLUtils.IS_CLIENT) {
+			register("net.minecraft.network.NetworkManager$5", new NetworkManagerPatch());
 		}
 	}
 }

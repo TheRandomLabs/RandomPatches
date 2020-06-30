@@ -300,6 +300,10 @@ public final class RPConfig {
 		})
 		public static int readTimeout = 90;
 
+		@Config.RequiresMCRestart
+		@Config.Property("Whether to patch NetworkManager to apply the client-sided read timeout.")
+		public static boolean patchNetworkManager = true;
+
 		public static long keepAlivePacketIntervalMillis;
 		public static long keepAlivePacketIntervalLong;
 		public static long readTimeoutMillis;

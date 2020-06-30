@@ -53,6 +53,7 @@ randompatches.config.timeouts.keepAlivePacketInterval=KeepAlive packet interval
 randompatches.config.timeouts.loginTimeout=Login timeout
 randompatches.config.timeouts.patchLoginTimeout=Patch login timeout
 randompatches.config.timeouts.readTimeout=Read timeout
+randompatches.config.timeouts.patchNetworkManager=Patch NetworkManager
 
 commands.rpreloadclient.usage=/rpreloadclient
 commands.rpreloadclient.success=RandomPatches client-sided configuration reloaded!
