@@ -1,5 +1,7 @@
 package com.therandomlabs.randompatches.patch;
 
+import com.therandomlabs.randomlib.TRLUtils;
+import com.therandomlabs.randompatches.config.RPConfig;
 import com.therandomlabs.randompatches.core.Patch;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.AbstractInsnNode;
@@ -9,14 +11,35 @@ import org.objectweb.asm.tree.InsnList;
 import org.objectweb.asm.tree.MethodInsnNode;
 import org.objectweb.asm.tree.VarInsnNode;
 
-//Fix taken from
+//Ghost block fix taken from
 //https://github.com/gnembon/carpetmod112/blob/staging/patches/net/minecraft/tileentity/
 //TileEntityPiston.java.patch
 //Thanks, gnembon!
 public final class TileEntityPistonPatch extends Patch {
 	@Override
 	public boolean apply(ClassNode node) {
-		final InsnList instructions = findInstructions(node, "update", "func_73660_a");
+		final InsnList update = findInstructions(node, "update", "func_73660_a");
+
+		if (RPConfig.Misc.pistonGhostBlocksFix && TRLUtils.MC_VERSION_NUMBER > 8) {
+			patchUpdateGhostBlockFix(update);
+		}
+
+		if (RPConfig.Misc.isObserverSignalFixEnabled()) {
+			patchUpdateSignalFix(update);
+			patchClearPistonTileEntity(
+					findInstructions(node, "clearPistonTileEntity", "func_145866_f")
+			);
+		}
+
+		return true;
+	}
+
+	@Override
+	public boolean computeFrames() {
+		return RPConfig.Misc.isObserverSignalFixEnabled();
+	}
+
+	private void patchUpdateGhostBlockFix(InsnList instructions) {
 		AbstractInsnNode jumpIfNotPistonExtension = null;
 
 		for (int i = 0; i < instructions.size(); i++) {
@@ -63,7 +86,38 @@ public final class TileEntityPistonPatch extends Patch {
 		));
 
 		instructions.insert(jumpIfNotPistonExtension, newInstructions);
+	}
 
-		return true;
+	private void patchUpdateSignalFix(InsnList instructions) {
+		AbstractInsnNode popAfterSetBlockState = null;
+
+		for (int i = 0; i < instructions.size(); i++) {
+			popAfterSetBlockState = instructions.get(i);
+
+			if (popAfterSetBlockState.getOpcode() == Opcodes.POP &&
+					popAfterSetBlockState.getPrevious().getOpcode() == Opcodes.INVOKEVIRTUAL) {
+				break;
+			}
+
+			popAfterSetBlockState = null;
+		}
+
+		final InsnList newInstructions = new InsnList();
+
+		newInstructions.add(new VarInsnNode(Opcodes.ALOAD, 0));
+		newInstructions.add(new MethodInsnNode(
+				Opcodes.INVOKESTATIC,
+				hookClass,
+				"onPistonMoveBlock",
+				"(Lnet/minecraft/tileentity/TileEntityPiston;)V",
+				false
+		));
+
+		instructions.insert(popAfterSetBlockState, newInstructions);
+	}
+
+	private void patchClearPistonTileEntity(InsnList instructions) {
+		//Exact same patch is applied.
+		patchUpdateSignalFix(instructions);
 	}
 }

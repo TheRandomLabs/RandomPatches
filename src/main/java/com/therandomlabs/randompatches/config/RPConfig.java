@@ -248,6 +248,11 @@ public final class RPConfig {
 					!RandomPatches.VANILLAFIX_INSTALLED;
 		}
 
+		public static boolean isObserverSignalFixEnabled() {
+			return disableObserverSignalOnPlace && TRLUtils.MC_VERSION_NUMBER > 10 &&
+					!RandomPatches.EIGENCRAFT_INSTALLED;
+		}
+
 		public static void onReload() {
 			packetSizeLimitLong = packetSizeLimit;
 		}

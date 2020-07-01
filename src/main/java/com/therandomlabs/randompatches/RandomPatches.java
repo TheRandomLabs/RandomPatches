@@ -206,8 +206,7 @@ public final class RandomPatches {
 			register("net.minecraft.client.renderer.EntityRenderer", new EntityRendererPatch());
 		}
 
-		if (RPConfig.Misc.disableObserverSignalOnPlace && TRLUtils.MC_VERSION_NUMBER > 10
-				&& !EIGENCRAFT_INSTALLED) {
+		if (RPConfig.Misc.isObserverSignalFixEnabled()) {
 			register("net.minecraft.block.BlockObserver", new BlockObserverPatch());
 		}
 
@@ -263,9 +262,7 @@ public final class RandomPatches {
 			register("net.minecraft.network.PacketBuffer", new PacketBufferPatch());
 		}
 
-		if (RPConfig.Misc.pistonGhostBlocksFix && TRLUtils.MC_VERSION_NUMBER > 8) {
-			register("net.minecraft.tileentity.TileEntityPiston", new TileEntityPistonPatch());
-		}
+		register("net.minecraft.tileentity.TileEntityPiston", new TileEntityPistonPatch());
 
 		if (RPConfig.Misc.portalBucketReplacementFix && TRLUtils.MC_VERSION_NUMBER > 8) {
 			register("net.minecraft.item.ItemBucket", new ItemBucketPatch());
