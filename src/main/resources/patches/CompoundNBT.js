@@ -54,5 +54,4 @@ function patchEquals(instructions) {
 	equals.owner = "com/therandomlabs/randompatches/hook/CompoundNBTHook";
 	equals.name = "areTagMapsEqual";
 	equals.desc = "(Ljava/util/Map;Ljava/util/Map;)Z";
-	equals.itf = false;
 }

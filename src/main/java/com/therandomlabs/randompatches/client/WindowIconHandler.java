@@ -188,7 +188,7 @@ public class WindowIconHandler {
 			resource = TextureUtil.readResource(stream);
 			resource.rewind();
 
-			final ByteBuffer image = STBImage.stbi_load_from_memory(resource, x, y, channels, 0);
+			final ByteBuffer image = STBImage.stbi_load_from_memory(resource, x, y, channels, 4);
 
 			final int width = x.get(0);
 			final int height = y.get(0);
@@ -197,12 +197,10 @@ public class WindowIconHandler {
 				return image;
 			}
 
-			final int comp = channels.get(0);
-
-			final ByteBuffer resized = MemoryUtil.memAlloc(size * size * comp);
+			final ByteBuffer resized = MemoryUtil.memAlloc(size * size * 4);
 
 			STBImageResize.stbir_resize_uint8(
-					image, width, height, 0, resized, size, size, 0, comp
+					image, width, height, 0, resized, size, size, 0, 4
 			);
 
 			STBImage.stbi_image_free(image);
