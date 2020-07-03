@@ -1,5 +1,5 @@
 modLoader = "javafml"
-loaderVersion = "[14,)"
+loaderVersion = "[15,)"
 updateJSONURL = "https://raw.githubusercontent.com/TheRandomLabs/RandomPatches/misc/versions.json"
 issueTrackerURL = "https://github.com/TheRandomLabs/RandomPatches/issues"
 displayURL = "https://www.curseforge.com/minecraft/mc-mods/randompatches"
