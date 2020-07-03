@@ -1,9 +1,11 @@
 {
     "homepage": "https://www.curseforge.com/minecraft/mc-mods/randompatches",
     "1.16.1": {
+        "1.16.1-1.21.2.0": "Fixed some window icons not loading properly.",
         "1.16.1-1.21.1.6": "Initial 1.16.1 port."
     },
     "1.15.2": {
+        "1.15.2-1.21.2.0": "Fixed some window icons not loading properly.",
         "1.15.2-1.21.1.6": "Configuration errors are now logged.",
         "1.15.2-1.21.1.5": "Attempted to fix an issue with the previous beta.",
         "1.15.2-1.21.1.4": "Another read timeout fix attempt.",
@@ -15,6 +17,7 @@
         "1.15.2-1.21.0.0": "Initial 1.15.2 port."
     },
     "1.14.4": {
+        "1.14.4-1.21.2.0": "Fixed some window icons not loading properly.",
         "1.14.4-1.21.1.6": "Attempted a read timeout fix.",
         "1.14.4-1.21.1.2": "Fixed the Toggle Narrator keybind.",
         "1.14.4-1.21.0.0": "Added a configuration option to change the framerate limit step size.",
@@ -910,12 +913,12 @@
         "1.12.2-1.0.0.0": "Initial release."
     },
     "promos": {
-        "1.16.1-latest": "1.16.1-1.21.1.6",
-        "1.16.1-recommended": "1.16.1-1.21.1.6",
-        "1.15.2-latest": "1.15.2-1.21.1.6",
-        "1.15.2-recommended": "1.15.2-1.21.1.6",
-        "1.14.4-latest": "1.14.4-1.21.1.2",
-        "1.14.4-recommended": "1.14.4-1.21.1.2",
+        "1.16.1-latest": "1.16.1-1.21.2.0",
+        "1.16.1-recommended": "1.16.1-1.21.2.0",
+        "1.15.2-latest": "1.15.2-1.21.2.0",
+        "1.15.2-recommended": "1.15.2-1.21.2.0",
+        "1.14.4-latest": "1.14.4-1.21.2.0",
+        "1.14.4-recommended": "1.14.4-1.21.2.0",
         "1.14.3-latest": "1.14.3-1.17.2.1",
         "1.14.3-recommended": "1.14.3-1.17.2.1",
         "1.14.2-latest": "1.14.2-1.16.2.0",
