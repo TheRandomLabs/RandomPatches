@@ -21,7 +21,7 @@ function initializeCoreMod() {
 		"RandomPatches AbstractOption Transformer": {
 			"target": {
 				"type": "CLASS",
-				"name": "net.minecraft.client.settings.AbstractOption"
+				"name": "net.minecraft.client.AbstractOption"
 			},
 			"transformer": function(classNode) {
 				var methods = classNode.methods;

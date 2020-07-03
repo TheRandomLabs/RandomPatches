@@ -11,6 +11,7 @@
 	"RandomPatches ClientPlayerEntity Transformer": "patches/client/dismount/ClientPlayerEntity.js",
 	"RandomPatches ClientPlayNetHandler Transformer": "patches/client/dismount/ClientPlayNetHandler.js",
 	"RandomPatches KeyBinding Transformer": "patches/client/dismount/KeyBinding.js",
+	"RandomPatches PlayerEntity Transformer": "patches/client/dismount/PlayerEntity.js",
 	//Packet size
 	"RandomPatches NettyCompressionDecoder Transformer": "patches/packetsize/NettyCompressionDecoder.js",
 	"RandomPatches PacketBuffer Transformer": "patches/packetsize/PacketBuffer.js",

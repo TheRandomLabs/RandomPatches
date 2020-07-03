@@ -1,5 +1,6 @@
 package com.therandomlabs.randompatches.hook.client;
 
+import net.minecraft.client.AbstractOption;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.AccessibilityScreen;
 import net.minecraft.client.gui.IGuiEventListener;
@@ -7,7 +8,6 @@ import net.minecraft.client.gui.screen.ChatOptionsScreen;
 import net.minecraft.client.gui.screen.ControlsScreen;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.TextFieldWidget;
-import net.minecraft.client.settings.AbstractOption;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.client.util.InputMappings;
 import net.minecraftforge.client.settings.IKeyConflictContext;
@@ -47,7 +47,7 @@ public final class KeyboardListenerHook {
 				return false;
 			}
 
-			final IGuiEventListener focused = screen.getFocused();
+			final IGuiEventListener focused = screen.func_241217_q_();
 
 			return !(focused instanceof TextFieldWidget) ||
 					!((TextFieldWidget) focused).canWrite();
