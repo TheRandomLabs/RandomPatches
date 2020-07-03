@@ -23,7 +23,7 @@ targetCompatibility = JavaVersion.VERSION_1_8
 compileJava.sourceCompatibility = JavaVersion.VERSION_1_8
 compileJava.targetCompatibility = JavaVersion.VERSION_1_8
 
-version = "1.14.4-1.21.1.6"
+version = "1.14.4-1.21.2.0"
 group = "com.therandomlabs.randompatches"
 archivesBaseName = "randompatches"
 
