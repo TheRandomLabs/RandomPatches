@@ -101,8 +101,8 @@ public final class EntityLivingBaseHook {
 		final BlockPos pos = minecart.getPosition();
 		final BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
 
-		for (int[] offset : offsets) {
-			for (int i = -1; i < 2; i++) {
+		for (int i = -1; i < 2; i++) {
+			for (int[] offset : offsets) {
 				mutable.setPos(pos.getX() + offset[0], pos.getY() + i, pos.getZ() + offset[1]);
 
 				final double yDisplacement = getYDisplacement(minecart.world, mutable, state -> {
