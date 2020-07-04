@@ -12,6 +12,7 @@ import com.therandomlabs.randompatches.hook.client.MinecraftHook;
 import com.therandomlabs.randompatches.hook.client.dismount.EntityPlayerSPHook;
 import com.therandomlabs.randompatches.patch.BlockObserverPatch;
 import com.therandomlabs.randompatches.patch.EntityBoatPatch;
+import com.therandomlabs.randompatches.patch.EntityLivingBasePatch;
 import com.therandomlabs.randompatches.patch.EntityMinecartPatch;
 import com.therandomlabs.randompatches.patch.EntityPatch;
 import com.therandomlabs.randompatches.patch.ItemBucketPatch;
@@ -208,6 +209,10 @@ public final class RandomPatches {
 
 		if (RPConfig.Misc.isObserverSignalFixEnabled()) {
 			register("net.minecraft.block.BlockObserver", new BlockObserverPatch());
+		}
+
+		if (RPConfig.Misc.dismountPositionFix) {
+			register("net.minecraft.entity.EntityLivingBase", new EntityLivingBasePatch());
 		}
 
 		if (RPConfig.Misc.areEndPortalTweaksEnabled()) {

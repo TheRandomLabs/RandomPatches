@@ -127,6 +127,14 @@ public final class RPConfig {
 		})
 		public static boolean disableObserverSignalOnPlace = true;
 
+		@Config.MCVersion("[1.8,1.13)")
+		@Config.RequiresMCRestart
+		@Config.Property({
+				"Whether to fix dismount positions being too high.",
+				"This fixes MC-3328 and MC-111726."
+		})
+		public static boolean dismountPositionFix = true;
+
 		@Config.MCVersion("[1.11,1.13)")
 		@Config.RequiresMCRestart
 		@Config.Property(

@@ -26,6 +26,7 @@ randompatches.config.client.window.title=Window title
 
 randompatches.config.misc=Miscellaneous
 randompatches.config.misc.disableObserverSignalOnPlace=Disable observer signal on place
+randompatches.config.misc.dismountPositionFix=Dismount position fix
 randompatches.config.misc.endPortalTweaks=End portal tweaks
 randompatches.config.misc.fixTickNextTickListOutOfSynch=Attempt to fix "TickNextTick list out of synch" IllegalStateException
 randompatches.config.misc.mc2025Fix=MC-2025 fix
