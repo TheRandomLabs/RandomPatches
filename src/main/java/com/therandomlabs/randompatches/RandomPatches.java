@@ -211,7 +211,7 @@ public final class RandomPatches {
 			register("net.minecraft.block.BlockObserver", new BlockObserverPatch());
 		}
 
-		if (RPConfig.Misc.dismountPositionFix) {
+		if (RPConfig.Misc.dismountPositionFix && TRLUtils.MC_VERSION_NUMBER > 10) {
 			register("net.minecraft.entity.EntityLivingBase", new EntityLivingBasePatch());
 		}
 
