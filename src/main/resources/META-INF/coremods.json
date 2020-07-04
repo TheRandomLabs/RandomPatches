@@ -26,5 +26,6 @@
 	"RandomPatches CompoundNBT Transformer": "patches/CompoundNBT.js",
 	"RandomPatches EndPortalTileEntity Transformer": "patches/EndPortalTileEntity.js",
 	"RandomPatches Entity Transformer": "patches/Entity.js",
+	"RandomPatches LivingEntity Transformer": "patches/LivingEntity.js",
 	"RandomPatches ServerRecipePlacer Transformer": "patches/ServerRecipePlacer.js"
 }
