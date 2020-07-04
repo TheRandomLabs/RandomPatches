@@ -19,7 +19,7 @@ apply plugin: "net.minecraftforge.gradle"
 apply plugin: 'eclipse'
 apply plugin: "com.github.johnrengelman.shadow"
 
-version = "1.15.2-1.21.2.0"
+version = "1.15.2-1.21.2.1"
 group = "com.therandomlabs.randompatches"
 archivesBaseName = "randompatches"
 
@@ -37,7 +37,7 @@ configurations {
 }
 
 minecraft {
-	mappings channel: "snapshot", version: "20200608-1.15.1"
+	mappings channel: "snapshot", version: "20200703-1.15.1"
 
 	accessTransformer = file("src/main/resources/META-INF/accesstransformer.cfg")
 
@@ -115,7 +115,7 @@ repositories {
 }
 
 dependencies {
-	minecraft "net.minecraftforge:forge:1.15.2-31.2.9"
+	minecraft "net.minecraftforge:forge:1.15.2-31.2.30"
 
 	compile group: "com.github.TheRandomLabs", name: "TRLUtils-Forge", version: "1.15-SNAPSHOT", changing: true
 	nonModDep group: "com.github.TheRandomLabs", name: "TRLUtils-Forge", version: "1.15-SNAPSHOT", changing: true
