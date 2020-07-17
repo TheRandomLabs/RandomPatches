@@ -115,7 +115,7 @@ repositories {
 }
 
 dependencies {
-	minecraft "net.minecraftforge:forge:1.16.1-32.0.40"
+	minecraft "net.minecraftforge:forge:1.16.1-32.0.68"
 
 	compile group: "com.github.TheRandomLabs", name: "TRLUtils-Forge", version: "1.16-SNAPSHOT", changing: true
 	nonModDep group: "com.github.TheRandomLabs", name: "TRLUtils-Forge", version: "1.16-SNAPSHOT", changing: true
