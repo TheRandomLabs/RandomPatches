@@ -41,8 +41,6 @@ public final class MixinServerLoginNetworkHandler {
 
 	@Inject(method = "tick", at = @At("TAIL"))
 	public void tick(CallbackInfo info) {
-		//If the login timeout is below 600 ticks, we have to check again at the end of
-		//the tick method.
 		if (loginTicks >= RPConfig.Timeouts.loginTimeout) {
 			((ServerLoginNetworkHandler) (Object) this).disconnect(
 					new TranslatableText("multiplayer.disconnect.slow_login")
@@ -56,8 +54,6 @@ public final class MixinServerLoginNetworkHandler {
 					"(Lnet/minecraft/text/Text;)V"
 	))
 	public void disconnect(ServerLoginNetworkHandler handler, Text reason) {
-		if (loginTicks >= RPConfig.Timeouts.loginTimeout) {
-			handler.disconnect(reason);
-		}
+		//No-op.
 	}
 }

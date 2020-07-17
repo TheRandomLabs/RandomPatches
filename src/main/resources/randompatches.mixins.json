@@ -6,7 +6,9 @@
 		"MixinServerLoginNetworkHandler",
 		"MixinServerPlayNetworkHandler"
 	],
-	"client": [],
+	"client": [
+		"MixinReadTimeoutHandler"
+	],
 	"injectors": {
 		"defaultRequire": 1
 	}
