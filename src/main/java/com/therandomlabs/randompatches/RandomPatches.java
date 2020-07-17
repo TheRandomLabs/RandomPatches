@@ -25,10 +25,10 @@ package com.therandomlabs.randompatches;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.therandomlabs.utils.config.ConfigManager;
-import com.therandomlabs.utils.fabric.FabricUtils;
 import com.therandomlabs.utils.fabric.config.ConfigReloadCommand;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.registry.CommandRegistry;
+import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
+import net.minecraft.server.command.ServerCommandSource;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -36,7 +36,7 @@ import org.apache.logging.log4j.Logger;
  * The main RandomPatches class.
  */
 @SuppressWarnings("NullAway")
-public final class RandomPatches implements ModInitializer {
+public final class RandomPatches implements ModInitializer, CommandRegistrationCallback {
 	/**
 	 * The RandomPatches mod ID.
 	 */
@@ -51,19 +51,18 @@ public final class RandomPatches implements ModInitializer {
 			"rpreload", "rpreloadclient", RPConfig.class
 	).serverSuccessMessage("RandomPatches configuration reloaded!");
 
-	@SuppressWarnings({"unchecked", "rawtypes"})
 	@Override
 	public void onInitialize() {
 		//FabricConfig.initialize();
-		ConfigManager.setClient(FabricUtils.IS_CLIENT);
 		ConfigManager.register(RPConfig.class);
 
+		CommandRegistrationCallback.EVENT.register(this);
+	}
+
+	@Override
+	public void register(CommandDispatcher<ServerCommandSource> dispatcher, boolean dedicated) {
 		if (RPConfig.Misc.rpreload) {
-			CommandRegistry.INSTANCE.register(
-					false,
-					dispatcher ->
-							configReloadCommand.registerServer((CommandDispatcher) dispatcher)
-			);
+			configReloadCommand.registerServer((CommandDispatcher) dispatcher);
 		}
 	}
 }

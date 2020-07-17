@@ -40,7 +40,8 @@ public final class MixinServerPlayNetworkHandler {
 	@Redirect(method = "tick", at = @At(
 			value = "INVOKE",
 			target = "net/minecraft/server/network/ServerPlayNetworkHandler.disconnect" +
-					"(Lnet/minecraft/text/Text;)V"
+					"(Lnet/minecraft/text/Text;)V",
+			ordinal = 2
 	))
 	public void disconnect(ServerPlayNetworkHandler handler, Text reason) {
 		if (Util.getMeasuringTimeMs() - lastKeepAliveTime >= RPConfig.Timeouts.readTimeoutMillis) {
