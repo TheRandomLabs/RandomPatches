@@ -57,6 +57,8 @@ public final class RPConfig {
 				"The vanilla default is 100.0."
 		})
 		public static double maxPlayerVehicleSpeed = 1000000.0;
+
+		private SpeedLimits() {}
 	}
 
 	public static final class Timeouts {
