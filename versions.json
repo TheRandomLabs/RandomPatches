@@ -1,12 +1,14 @@
 {
     "homepage": "https://www.curseforge.com/minecraft/mc-mods/randompatches",
     "1.16.1": {
+        "1.16.1-1.22.1.0": "Reimplemented the TickNextTick list out of synch fix.",
         "1.16.1-1.22.0.0": "Now compatible with and requires Forge 1.16.1-32.0.67 or higher.",
         "1.16.1-1.21.2.1": "Fixed a crash caused by the use of a Java 14 compiler.",
         "1.16.1-1.21.2.0": "Fixed some window icons not loading properly.",
         "1.16.1-1.21.1.6": "Initial 1.16.1 port."
     },
     "1.15.2": {
+        "1.15.2-1.22.1.0": "Reimplemented the TickNextTick list out of synch fix.",
         "1.15.2-1.22.0.0": "Implemented a fix for dismount positions.",
         "1.15.2-1.21.2.1": "Fixed a crash caused by the use of a Java 14 compiler.",
         "1.15.2-1.21.2.0": "Fixed some window icons not loading properly.",
@@ -21,6 +23,7 @@
         "1.15.2-1.21.0.0": "Initial 1.15.2 port."
     },
     "1.14.4": {
+        "1.14.4-1.22.1.0": "Reimplemented the TickNextTick list out of synch fix.",
         "1.14.4-1.22.0.0": "Implemented a fix for dismount positions.",
         "1.14.4-1.21.2.1": "Fixed a crash caused by the use of a Java 14 compiler.",
         "1.14.4-1.21.2.0": "Fixed some window icons not loading properly.",
@@ -931,12 +934,12 @@
         "1.12.2-1.0.0.0": "Initial release."
     },
     "promos": {
-        "1.16.1-latest": "1.16.1-1.22.0.0",
-        "1.16.1-recommended": "1.16.1-1.22.0.0",
-        "1.15.2-latest": "1.15.2-1.22.0.0",
-        "1.15.2-recommended": "1.15.2-1.22.0.0",
-        "1.14.4-latest": "1.14.4-1.22.0.0",
-        "1.14.4-recommended": "1.14.4-1.22.0.0",
+        "1.16.1-latest": "1.16.1-1.22.1.0",
+        "1.16.1-recommended": "1.16.1-1.22.1.0",
+        "1.15.2-latest": "1.15.2-1.22.1.0",
+        "1.15.2-recommended": "1.15.2-1.22.1.0",
+        "1.14.4-latest": "1.14.4-1.22.1.0",
+        "1.14.4-recommended": "1.14.4-1.22.1.0",
         "1.14.3-latest": "1.14.3-1.17.2.1",
         "1.14.3-recommended": "1.14.3-1.17.2.1",
         "1.14.2-latest": "1.14.2-1.16.2.0",
