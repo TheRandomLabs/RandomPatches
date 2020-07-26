@@ -36,9 +36,34 @@ public final class RPConfig {
 		private Misc() {}
 	}
 
+	public static final class SpeedLimits {
+		@Config.RangeDouble(min = 1.0)
+		@Config.Property({
+				"The maximum player speed.",
+				"The vanilla default is 100.0."
+		})
+		public static float maxPlayerSpeed = 1000000.0F;
+
+		@Config.RangeDouble(min = 1.0)
+		@Config.Property({
+				"The maximum player elytra speed.",
+				"The vanilla default is 300.0."
+		})
+		public static float maxPlayerElytraSpeed = 1000000.0F;
+
+		@Config.RangeDouble(min = 1.0)
+		@Config.Property({
+				"The maximum player vehicle speed.",
+				"The vanilla default is 100.0."
+		})
+		public static double maxPlayerVehicleSpeed = 1000000.0;
+
+		private SpeedLimits() {}
+	}
+
 	public static final class Timeouts {
-		//@Config.RangeInt(min = 1)
-		//@Config.Property("The interval at which the server sends the KeepAlive packet.")
+		@Config.RangeInt(min = 1)
+		@Config.Property("The interval at which the server sends the KeepAlive packet.")
 		public static int keepAlivePacketInterval = 15;
 
 		@Config.RangeInt(min = 1)
@@ -71,6 +96,9 @@ public final class RPConfig {
 
 	@Config.Category("Options that don't fit into any other categories.")
 	public static final Misc misc = null;
+
+	@Config.Category("Options related to the movement speed limits.")
+	public static final SpeedLimits speedLimits = null;
 
 	@Config.Category("Options related to the disconnect timeouts.")
 	public static final Timeouts timeouts = null;
