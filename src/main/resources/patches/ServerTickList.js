@@ -22,7 +22,7 @@ function initializeCoreMod() {
 		"RandomPatches ServerTickList Transformer": {
 			"target": {
 				"type": "CLASS",
-				"name": "net.minecraft.world.server.ServerTickList"
+				"name": "net.minecraft.world.ServerTickList"
 			},
 			"transformer": function(classNode) {
 				var methods = classNode.methods;
