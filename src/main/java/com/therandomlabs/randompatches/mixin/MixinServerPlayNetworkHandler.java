@@ -50,6 +50,11 @@ public final class MixinServerPlayNetworkHandler {
 		}
 	}
 
+	@ModifyConstant(method = "tick", constant = @Constant(longValue = 15000L))
+	public long getKeepAlivePacketInterval(long interval) {
+		return RPConfig.Timeouts.keepAlivePacketInterval * 1000L;
+	}
+
 	@ModifyConstant(method = "onPlayerMove", constant = @Constant(floatValue = 100.0F))
 	public float getMaxPlayerSpeed(float speed) {
 		return RPConfig.SpeedLimits.maxPlayerSpeed;

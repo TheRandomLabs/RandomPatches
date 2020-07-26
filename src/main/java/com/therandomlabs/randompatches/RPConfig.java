@@ -60,8 +60,8 @@ public final class RPConfig {
 	}
 
 	public static final class Timeouts {
-		//@Config.RangeInt(min = 1)
-		//@Config.Property("The interval at which the server sends the KeepAlive packet.")
+		@Config.RangeInt(min = 1)
+		@Config.Property("The interval at which the server sends the KeepAlive packet.")
 		public static int keepAlivePacketInterval = 15;
 
 		@Config.RangeInt(min = 1)
