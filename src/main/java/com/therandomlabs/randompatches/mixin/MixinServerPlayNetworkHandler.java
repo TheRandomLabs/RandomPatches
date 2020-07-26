@@ -30,6 +30,8 @@ import net.minecraft.util.Util;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Constant;
+import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(ServerPlayNetworkHandler.class)
@@ -46,5 +48,20 @@ public final class MixinServerPlayNetworkHandler {
 		if (Util.getMeasuringTimeMs() - lastKeepAliveTime >= RPConfig.Timeouts.readTimeoutMillis) {
 			handler.disconnect(reason);
 		}
+	}
+
+	@ModifyConstant(method = "onPlayerMove", constant = @Constant(floatValue = 100.0F))
+	public float getMaxPlayerSpeed(float speed) {
+		return RPConfig.SpeedLimits.maxPlayerSpeed;
+	}
+
+	@ModifyConstant(method = "onPlayerMove", constant = @Constant(floatValue = 300.0F))
+	public float getMaxPlayerElytraSpeed(float speed) {
+		return RPConfig.SpeedLimits.maxPlayerElytraSpeed;
+	}
+
+	@ModifyConstant(method = "onVehicleMove", constant = @Constant(doubleValue = 100.0))
+	public double getMaxPlayerVehicleSpeed(double speed) {
+		return RPConfig.SpeedLimits.maxPlayerVehicleSpeed;
 	}
 }
