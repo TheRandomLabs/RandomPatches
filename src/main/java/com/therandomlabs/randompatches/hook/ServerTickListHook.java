@@ -1,5 +1,6 @@
 package com.therandomlabs.randompatches.hook;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -52,6 +53,16 @@ public final class ServerTickListHook {
 		public boolean remove(Object entry) {
 			wrapper.entry = entry;
 			return backingSet.remove(wrapper);
+		}
+
+		@Override
+		public boolean removeAll(Collection<?> entries) {
+			for (Object entry : entries) {
+				remove(entry);
+			}
+
+			//Return value doesn't matter
+			return true;
 		}
 
 		@SuppressWarnings("rawtypes")
