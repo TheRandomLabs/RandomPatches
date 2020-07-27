@@ -23,12 +23,31 @@
 
 package com.therandomlabs.randompatches;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import com.therandomlabs.randompatches.client.WindowIconHandler;
 import com.therandomlabs.utils.config.Config;
+import com.therandomlabs.utils.fabric.FabricUtils;
+import net.minecraft.client.MinecraftClient;
+import org.lwjgl.glfw.GLFW;
 
 @SuppressWarnings("NullAway")
 @Config(id = RandomPatches.MOD_ID, comment = "RandomPatches configuration")
 public final class RPConfig {
+	public static final class Client {
+		@Config.Category("Options related to the Minecraft window.")
+		public static final Window window = null;
+	}
+
 	public static final class Misc {
+		@Config.RequiresRestart
+		@Config.Property(
+				"Whether to patch WorldServer to prevent a \"TickNextTick list out of synch\" " +
+						"IllegalStateException."
+		)
+		public static boolean fixTickNextTickListOutOfSynch = true;
+
 		@Config.RequiresRestart
 		@Config.Property("Enables the /rpreload command.")
 		public static boolean rpreload = true;
@@ -93,6 +112,115 @@ public final class RPConfig {
 			readTimeoutMillis = readTimeout * 1000L;
 		}
 	}
+
+	public static final class Window {
+		public static final Path DEFAULT_ICON = Paths.get(
+				FabricUtils.IS_DEVELOPMENT_ENVIRONMENT ? "../src/main/resources/logo.png" : ""
+		);
+
+		@Config.Property({
+				"The path to the 16x16 Minecraft window icon.",
+				"Leave this and the 32x32 icon blank to use the default icon."
+		})
+		public static Path icon16 = DEFAULT_ICON;
+
+		@Config.Property({
+				"The path to the 32x32 Minecraft window icon.",
+				"Leave this and the 16x16 icon blank to use the default icon."
+		})
+		public static Path icon32 = DEFAULT_ICON;
+
+		@Config.Property({
+				"The path to the 256x256 window icon which is used on Mac OS X.",
+				"Leave this, the 16x16 icon and the 32x32 icon blank to use the default icon."
+		})
+		public static Path icon256 = DEFAULT_ICON;
+
+		@Config.Property({
+				"The Minecraft window title.",
+				"The Minecraft version is provided as an argument."
+		})
+		public static String title =
+				FabricUtils.IS_DEVELOPMENT_ENVIRONMENT ? "RandomPatches" : "Minecraft* %s";
+
+		@Config.Property({
+				"The Minecraft window title.",
+				"The Minecraft version and current activity are provided as arguments.",
+				"For example: \"RandomPatches - %2$s\""
+		})
+		public static String titleWithActivity = FabricUtils.IS_DEVELOPMENT_ENVIRONMENT ?
+				"RandomPatches - %2$s" : "Minecraft* %s - %s";
+
+		public static String icon16String;
+		public static String icon32String;
+		public static String icon256String;
+
+		public static boolean setWindowSettings = true;
+
+		public static void onReload() {
+			onReload(true);
+		}
+
+		public static void onReload(boolean applySettings) {
+			icon16String = icon16.toString();
+			icon32String = icon32.toString();
+			icon256String = icon256.toString();
+
+			if (icon16String.isEmpty()) {
+				if (!icon256String.isEmpty()) {
+					icon16 = icon256;
+					icon16String = icon256String;
+				} else if (!icon32String.isEmpty()) {
+					icon16 = icon32;
+					icon16String = icon32String;
+				}
+			}
+
+			if (icon32String.isEmpty()) {
+				if (!icon256String.isEmpty()) {
+					icon32 = icon256;
+					icon32String = icon256String;
+				} else if (!icon16String.isEmpty()) {
+					icon32 = icon16;
+					icon32String = icon16String;
+				}
+			}
+
+			if (icon256String.isEmpty()) {
+				if (!icon32String.isEmpty()) {
+					icon256 = icon32;
+					icon256String = icon32String;
+				} else if (!icon16String.isEmpty()) {
+					icon256 = icon16;
+					icon256String = icon16String;
+				}
+			}
+
+			if (FabricUtils.IS_CLIENT && setWindowSettings && applySettings) {
+				MinecraftClient.getInstance().execute(RPConfig.Window::setWindowSettings);
+			}
+		}
+
+		private static void setWindowSettings() {
+			final net.minecraft.client.util.Window mainWindow =
+					MinecraftClient.getInstance().getWindow();
+
+			if (mainWindow == null) {
+				return;
+			}
+
+			final long handle = mainWindow.getHandle();
+
+			if (!icon16String.isEmpty()) {
+				WindowIconHandler.setWindowIcon(handle);
+			}
+
+			GLFW.glfwSetWindowTitle(handle, title);
+		}
+	}
+
+	@Config.Category("Options related to client-sided features.")
+	public static final Client client = null;
 
 	@Config.Category("Options that don't fit into any other categories.")
 	public static final Misc misc = null;

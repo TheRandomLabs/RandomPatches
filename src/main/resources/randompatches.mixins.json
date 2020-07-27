@@ -4,7 +4,8 @@
 	"compatibilityLevel": "JAVA_8",
 	"mixins": [
 		"MixinServerLoginNetworkHandler",
-		"MixinServerPlayNetworkHandler"
+		"MixinServerPlayNetworkHandler",
+		"MixinServerTickScheduler"
 	],
 	"client": [
 		"MixinReadTimeoutHandler"
