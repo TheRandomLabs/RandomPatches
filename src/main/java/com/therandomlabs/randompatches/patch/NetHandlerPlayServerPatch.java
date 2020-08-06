@@ -25,14 +25,9 @@ public final class NetHandlerPlayServerPatch extends Patch {
 	public boolean apply(ClassNode node) {
 		patchUpdate(findInstructions(node, "update", "func_73660_a"));
 
-		if (!RandomPatches.SPONGEFORGE_INSTALLED) {
+		if (!RandomPatches.SPONGEFORGE_INSTALLED && !RandomPatches.ICE_AND_FIRE_INSTALLED) {
 			patchProcessPlayer(findInstructions(node, "processPlayer", "func_147347_a"));
-
-			if (!RandomPatches.ICE_AND_FIRE_INSTALLED) {
-				patchProcessVehicleMove(findInstructions(
-						node, "processVehicleMove", "func_184338_a"
-				));
-			}
+			patchProcessVehicleMove(findInstructions(node, "processVehicleMove", "func_184338_a"));
 		}
 
 		return true;

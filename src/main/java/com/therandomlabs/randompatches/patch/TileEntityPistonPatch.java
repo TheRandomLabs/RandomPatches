@@ -16,6 +16,8 @@ import org.objectweb.asm.tree.VarInsnNode;
 //TileEntityPiston.java.patch
 //Thanks, gnembon!
 public final class TileEntityPistonPatch extends Patch {
+	public static final String SET_BLOCK_STATE = getName("setBlockState", "func_175811_a");
+
 	@Override
 	public boolean apply(ClassNode node) {
 		final InsnList update = findInstructions(node, "update", "func_73660_a");
@@ -89,17 +91,20 @@ public final class TileEntityPistonPatch extends Patch {
 	}
 
 	private void patchUpdateSignalFix(InsnList instructions) {
-		AbstractInsnNode popAfterSetBlockState = null;
+		AbstractInsnNode setBlockState = null;
 
 		for (int i = 0; i < instructions.size(); i++) {
-			popAfterSetBlockState = instructions.get(i);
+			setBlockState = instructions.get(i);
 
-			if (popAfterSetBlockState.getOpcode() == Opcodes.POP &&
-					popAfterSetBlockState.getPrevious().getOpcode() == Opcodes.INVOKEVIRTUAL) {
-				break;
+			if (setBlockState.getOpcode() == Opcodes.INVOKEVIRTUAL) {
+				final MethodInsnNode method = (MethodInsnNode) setBlockState;
+
+				if (SET_BLOCK_STATE.equals(method.name)) {
+					break;
+				}
 			}
 
-			popAfterSetBlockState = null;
+			setBlockState = null;
 		}
 
 		final InsnList newInstructions = new InsnList();
@@ -113,7 +118,7 @@ public final class TileEntityPistonPatch extends Patch {
 				false
 		));
 
-		instructions.insert(popAfterSetBlockState, newInstructions);
+		instructions.insert(setBlockState, newInstructions);
 	}
 
 	private void patchClearPistonTileEntity(InsnList instructions) {
