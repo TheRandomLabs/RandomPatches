@@ -16,7 +16,7 @@ import org.objectweb.asm.tree.VarInsnNode;
 //TileEntityPiston.java.patch
 //Thanks, gnembon!
 public final class TileEntityPistonPatch extends Patch {
-	public static final String SET_BLOCK_STATE = getName("setBlockState", "func_175811_a");
+	public static final String SET_BLOCK_STATE = getName("setBlockState", "func_180501_a");
 
 	@Override
 	public boolean apply(ClassNode node) {
