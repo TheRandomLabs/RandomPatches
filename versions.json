@@ -1,5 +1,8 @@
 {
     "homepage": "https://www.curseforge.com/minecraft/mc-mods/randompatches",
+    "1.16.2": {
+        "1.16.2-1.22.1.2": "Added a license to mods.toml."
+    },
     "1.16.1": {
         "1.16.1-1.22.1.1": "Fixed the TickNextTick list out of synch fix.",
         "1.16.1-1.22.1.0": "Reimplemented the TickNextTick list out of synch fix.",
@@ -961,6 +964,8 @@
         "1.12.2-1.0.0.0": "Initial release."
     },
     "promos": {
+        "1.16.2-latest": "1.16.2-1.22.1.2",
+        "1.16.2-recommended": "1.16.2-1.22.1.2",
         "1.16.1-latest": "1.16.1-1.22.1.1",
         "1.16.1-recommended": "1.16.1-1.22.1.1",
         "1.15.2-latest": "1.15.2-1.22.1.1",
