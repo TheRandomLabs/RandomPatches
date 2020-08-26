@@ -1,16 +1,17 @@
 modLoader = "javafml"
 loaderVersion = "[16,)"
-updateJSONURL = "https://raw.githubusercontent.com/TheRandomLabs/RandomPatches/misc/versions.json"
+license = "MIT"
 issueTrackerURL = "https://github.com/TheRandomLabs/RandomPatches/issues"
-displayURL = "https://www.curseforge.com/minecraft/mc-mods/randompatches"
-logoFile = "logo.png"
-authors = "TheRandomLabs"
 
 [[mods]]
 
 modId = "randompatches"
 version = "${file.jarVersion}"
 displayName = "RandomPatches"
+updateJSONURL = "https://raw.githubusercontent.com/TheRandomLabs/RandomPatches/misc/versions.json"
+displayURL = "https://www.curseforge.com/minecraft/mc-mods/randompatches"
+logoFile = "logo.png"
+authors = "TheRandomLabs"
 description = '''
 RandomPatches, a bunch of miscellaneous patches for Minecraft.
 '''
