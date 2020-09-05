@@ -96,10 +96,12 @@ public final class TileEntityPistonPatch extends Patch {
 		for (int i = 0; i < instructions.size(); i++) {
 			setBlockState = instructions.get(i);
 
-			if (setBlockState.getOpcode() == Opcodes.INVOKEVIRTUAL) {
+			if (setBlockState.getOpcode() == Opcodes.INVOKEVIRTUAL ||
+					setBlockState.getOpcode() == Opcodes.INVOKESTATIC) {
 				final MethodInsnNode method = (MethodInsnNode) setBlockState;
 
-				if (SET_BLOCK_STATE.equals(method.name)) {
+				//Quark replaces setBlockState with setPistonBlock.
+				if (SET_BLOCK_STATE.equals(method.name) || "setPistonBlock".equals(method.name)) {
 					break;
 				}
 			}

@@ -19,7 +19,7 @@ apply plugin: "com.github.johnrengelman.shadow"
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 
-version = "1.12.2-1.22.1.2"
+version = "1.12.2-1.22.1.3"
 group = "com.therandomlabs.randompatches"
 archivesBaseName = "randompatches"
 
