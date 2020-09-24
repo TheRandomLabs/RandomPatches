@@ -16,7 +16,7 @@ public final class NetHandlerLoginServerPatch extends Patch {
 		for (int i = instructions.size() - 1; i >= 0; i--) {
 			final AbstractInsnNode instruction = instructions.get(i);
 
-			if (instruction.getOpcode() == Opcodes.SIPUSH) {
+			if (instruction.getType() == AbstractInsnNode.INT_INSN) {
 				loginTimeout = instruction;
 				break;
 			}

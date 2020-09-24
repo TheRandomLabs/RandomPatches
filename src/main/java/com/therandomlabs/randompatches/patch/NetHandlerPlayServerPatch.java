@@ -75,7 +75,11 @@ public final class NetHandlerPlayServerPatch extends Patch {
 					keepAliveInterval = (LdcInsnNode) instruction;
 
 					if (TRLUtils.MC_VERSION_NUMBER > 11) {
-						if (!((Long) 15000L).equals(keepAliveInterval.cst)) {
+						//https://github.com/magmafoundation/Magma/blob/3a65e28deae3a4882135a63c8335
+						//f341aead2988/patches/net/minecraft/network/NetHandlerPlayServer.java.patch
+						//#L168
+						if (!((Long) 15000L).equals(keepAliveInterval.cst) &&
+								!((Long) 25000L).equals(keepAliveInterval.cst)) {
 							keepAliveInterval = null;
 						}
 					} else {
