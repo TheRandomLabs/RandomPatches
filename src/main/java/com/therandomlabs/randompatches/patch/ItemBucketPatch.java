@@ -13,8 +13,15 @@ public final class ItemBucketPatch extends Patch {
 
 	@Override
 	public boolean apply(ClassNode node) {
-		final InsnList instructions =
-				findInstructions(node, "tryPlaceContainedLiquid", "func_180616_a");
+		//Look for the deobfuscated name first because CatServer adds a new method:
+		//https://github.com/Luohuayu/CatServer/blob/9489fbb82247a08a0b4c1b62c59e3c50302f43e2/
+		//patches/net/minecraft/item/ItemBucket.java.patch#L99
+		InsnList instructions = findInstructions(node, "tryPlaceContainedLiquid");
+
+		if (instructions == null) {
+			instructions = findInstructions(node, "func_180616_a");
+		}
+
 		MethodInsnNode isSolid = null;
 
 		for (int i = 0; i < instructions.size(); i++) {
