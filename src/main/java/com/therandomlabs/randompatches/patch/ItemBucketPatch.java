@@ -17,9 +17,12 @@ public final class ItemBucketPatch extends Patch {
 		//https://github.com/Luohuayu/CatServer/blob/9489fbb82247a08a0b4c1b62c59e3c50302f43e2/
 		//patches/net/minecraft/item/ItemBucket.java.patch#L99
 		InsnList instructions = findInstructions(node, "tryPlaceContainedLiquid");
+		//CatServer adds three method parameters.
+		int blockState = 7;
 
 		if (instructions == null) {
 			instructions = findInstructions(node, "func_180616_a");
+			blockState = 4;
 		}
 
 		MethodInsnNode isSolid = null;
@@ -39,7 +42,7 @@ public final class ItemBucketPatch extends Patch {
 		}
 
 		//Get IBlockState
-		((VarInsnNode) isSolid.getPrevious()).var = 4;
+		((VarInsnNode) isSolid.getPrevious()).var = blockState;
 
 		//Call ItemBucketHook#isSolid
 		isSolid.setOpcode(Opcodes.INVOKESTATIC);
