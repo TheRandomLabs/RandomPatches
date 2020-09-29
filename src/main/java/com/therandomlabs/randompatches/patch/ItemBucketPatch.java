@@ -6,6 +6,7 @@ import org.objectweb.asm.tree.AbstractInsnNode;
 import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.InsnList;
 import org.objectweb.asm.tree.MethodInsnNode;
+import org.objectweb.asm.tree.MethodNode;
 import org.objectweb.asm.tree.VarInsnNode;
 
 public final class ItemBucketPatch extends Patch {
@@ -16,14 +17,13 @@ public final class ItemBucketPatch extends Patch {
 		//Look for the deobfuscated name first because CatServer adds a new method:
 		//https://github.com/Luohuayu/CatServer/blob/9489fbb82247a08a0b4c1b62c59e3c50302f43e2/
 		//patches/net/minecraft/item/ItemBucket.java.patch#L99
-		InsnList instructions = findInstructions(node, "tryPlaceContainedLiquid");
-		//CatServer adds three method parameters.
-		int blockState = 7;
+		MethodNode method = findMethod(node, "tryPlaceContainedLiquid");
 
-		if (instructions == null) {
-			instructions = findInstructions(node, "func_180616_a");
-			blockState = 4;
+		if (method == null) {
+			method = findMethod(node, "func_180616_a");
 		}
+
+		final InsnList instructions = method.instructions;
 
 		MethodInsnNode isSolid = null;
 
@@ -42,7 +42,7 @@ public final class ItemBucketPatch extends Patch {
 		}
 
 		//Get IBlockState
-		((VarInsnNode) isSolid.getPrevious()).var = blockState;
+		((VarInsnNode) isSolid.getPrevious()).var = method.parameters.size() + 1;
 
 		//Call ItemBucketHook#isSolid
 		isSolid.setOpcode(Opcodes.INVOKESTATIC);
