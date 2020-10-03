@@ -1,6 +1,7 @@
 package com.therandomlabs.randompatches.patch;
 
 import com.therandomlabs.randompatches.core.Patch;
+import org.apache.commons.lang3.StringUtils;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.AbstractInsnNode;
 import org.objectweb.asm.tree.ClassNode;
@@ -42,7 +43,7 @@ public final class ItemBucketPatch extends Patch {
 		}
 
 		//Get IBlockState
-		((VarInsnNode) isSolid.getPrevious()).var = method.parameters.size() + 1;
+		((VarInsnNode) isSolid.getPrevious()).var = StringUtils.countMatches(method.desc, ';') + 1;
 
 		//Call ItemBucketHook#isSolid
 		isSolid.setOpcode(Opcodes.INVOKESTATIC);
