@@ -66,6 +66,7 @@
         "1.13.2-1.15.1.0": "Initial port to Minecraft 1.13.2."
     },
     "1.12.2": {
+        "1.12.2-1.22.1.7": "Fixed the ItemBucket patch.",
         "1.12.2-1.22.1.6": "Fixed CatServer compatibility with the ItemBucket patch again.",
         "1.12.2-1.22.1.5": "Fixed CatServer compatibility with the ItemBucket patch.",
         "1.12.2-1.22.1.4": "Fixed Magma compatibility.",
@@ -148,6 +149,7 @@
         "1.12.2-1.0.0.0": "Initial release."
     },
     "1.12.1": {
+        "1.12.2-1.22.1.7": "Fixed the ItemBucket patch.",
         "1.12.2-1.22.1.6": "Fixed CatServer compatibility with the ItemBucket patch again.",
         "1.12.2-1.22.1.5": "Fixed CatServer compatibility with the ItemBucket patch.",
         "1.12.2-1.22.1.4": "Fixed Magma compatibility.",
@@ -230,6 +232,7 @@
         "1.12.2-1.0.0.0": "Initial release."
     },
     "1.12": {
+        "1.12.2-1.22.1.7": "Fixed the ItemBucket patch.",
         "1.12.2-1.22.1.6": "Fixed CatServer compatibility with the ItemBucket patch again.",
         "1.12.2-1.22.1.5": "Fixed CatServer compatibility with the ItemBucket patch.",
         "1.12.2-1.22.1.4": "Fixed Magma compatibility.",
@@ -312,6 +315,7 @@
         "1.12.2-1.0.0.0": "Initial release."
     },
     "1.11.2": {
+        "1.12.2-1.22.1.7": "Fixed the ItemBucket patch.",
         "1.12.2-1.22.1.6": "Fixed CatServer compatibility with the ItemBucket patch again.",
         "1.12.2-1.22.1.5": "Fixed CatServer compatibility with the ItemBucket patch.",
         "1.12.2-1.22.1.4": "Fixed Magma compatibility.",
@@ -394,6 +398,7 @@
         "1.12.2-1.0.0.0": "Initial release."
     },
     "1.11": {
+        "1.12.2-1.22.1.7": "Fixed the ItemBucket patch.",
         "1.12.2-1.22.1.6": "Fixed CatServer compatibility with the ItemBucket patch again.",
         "1.12.2-1.22.1.5": "Fixed CatServer compatibility with the ItemBucket patch.",
         "1.12.2-1.22.1.4": "Fixed Magma compatibility.",
@@ -476,6 +481,7 @@
         "1.12.2-1.0.0.0": "Initial release."
     },
     "1.10.2": {
+        "1.12.2-1.22.1.7": "Fixed the ItemBucket patch.",
         "1.12.2-1.22.1.6": "Fixed CatServer compatibility with the ItemBucket patch again.",
         "1.12.2-1.22.1.5": "Fixed CatServer compatibility with the ItemBucket patch.",
         "1.12.2-1.22.1.4": "Fixed Magma compatibility.",
@@ -558,6 +564,7 @@
         "1.12.2-1.0.0.0": "Initial release."
     },
     "1.10": {
+        "1.12.2-1.22.1.7": "Fixed the ItemBucket patch.",
         "1.12.2-1.22.1.6": "Fixed CatServer compatibility with the ItemBucket patch again.",
         "1.12.2-1.22.1.5": "Fixed CatServer compatibility with the ItemBucket patch.",
         "1.12.2-1.22.1.4": "Fixed Magma compatibility.",
@@ -640,6 +647,7 @@
         "1.12.2-1.0.0.0": "Initial release."
     },
     "1.9.4": {
+        "1.12.2-1.22.1.7": "Fixed the ItemBucket patch.",
         "1.12.2-1.22.1.6": "Fixed CatServer compatibility with the ItemBucket patch again.",
         "1.12.2-1.22.1.5": "Fixed CatServer compatibility with the ItemBucket patch.",
         "1.12.2-1.22.1.4": "Fixed Magma compatibility.",
@@ -715,6 +723,7 @@
         "1.12.2-1.0.0.0": "Initial release."
     },
     "1.9": {
+        "1.12.2-1.22.1.7": "Fixed the ItemBucket patch.",
         "1.12.2-1.22.1.6": "Fixed CatServer compatibility with the ItemBucket patch again.",
         "1.12.2-1.22.1.5": "Fixed CatServer compatibility with the ItemBucket patch.",
         "1.12.2-1.22.1.4": "Fixed Magma compatibility.",
@@ -790,6 +799,7 @@
         "1.12.2-1.0.0.0": "Initial release."
     },
     "1.8.9": {
+        "1.12.2-1.22.1.7": "Fixed the ItemBucket patch.",
         "1.12.2-1.22.1.6": "Fixed CatServer compatibility with the ItemBucket patch again.",
         "1.12.2-1.22.1.5": "Fixed CatServer compatibility with the ItemBucket patch.",
         "1.12.2-1.22.1.4": "Fixed Magma compatibility.",
@@ -865,6 +875,7 @@
         "1.12.2-1.0.0.0": "Initial release."
     },
     "1.8.8": {
+        "1.12.2-1.22.1.7": "Fixed the ItemBucket patch.",
         "1.12.2-1.22.1.6": "Fixed CatServer compatibility with the ItemBucket patch again.",
         "1.12.2-1.22.1.5": "Fixed CatServer compatibility with the ItemBucket patch.",
         "1.12.2-1.22.1.4": "Fixed Magma compatibility.",
@@ -940,6 +951,7 @@
         "1.12.2-1.0.0.0": "Initial release."
     },
     "1.8": {
+        "1.12.2-1.22.1.7": "Fixed the ItemBucket patch.",
         "1.12.2-1.22.1.6": "Fixed CatServer compatibility with the ItemBucket patch again.",
         "1.12.2-1.22.1.5": "Fixed CatServer compatibility with the ItemBucket patch.",
         "1.12.2-1.22.1.4": "Fixed Magma compatibility.",
@@ -1031,27 +1043,27 @@
         "1.14.2-recommended": "1.14.2-1.16.2.0",
         "1.13.2-latest": "1.13.2-1.7.2.0",
         "1.13.2-recommended": "1.13.2-1.17.2.0",
-        "1.12.2-latest": "1.12.2-1.22.1.6",
-        "1.12.2-recommended": "1.12.2-1.22.1.6",
-        "1.12-latest": "1.12.2-1.22.1.6",
-        "1.12-recommended": "1.12.2-1.22.1.6",
-        "1.11.2-latest": "1.12.2-1.22.1.6",
-        "1.11.2-recommended": "1.12.2-1.22.1.6",
-        "1.11-latest": "1.12.2-1.22.1.6",
-        "1.11-recommended": "1.12.2-1.22.1.6",
-        "1.10.2-latest": "1.12.2-1.22.1.6",
-        "1.10.2-recommended": "1.12.2-1.22.1.6",
-        "1.10-latest": "1.12.2-1.22.1.6",
-        "1.10-recommended": "1.12.2-1.22.1.6",
-        "1.9.4-latest": "1.12.2-1.22.1.6",
-        "1.9.4-recommended": "1.12.2-1.22.1.6",
-        "1.9-latest": "1.12.2-1.22.1.6",
-        "1.9-recommended": "1.12.2-1.22.1.6",
-        "1.8.9-latest": "1.12.2-1.22.1.6",
-        "1.8.9-recommended": "1.12.2-1.22.1.6",
-        "1.8.8-latest": "1.12.2-1.22.1.6",
-        "1.8.8-recommended": "1.12.2-1.22.1.6",
-        "1.8-latest": "1.12.2-1.22.1.6",
-        "1.8-recommended": "1.12.2-1.22.1.6"
+        "1.12.2-latest": "1.12.2-1.22.1.7",
+        "1.12.2-recommended": "1.12.2-1.22.1.7",
+        "1.12-latest": "1.12.2-1.22.1.7",
+        "1.12-recommended": "1.12.2-1.22.1.7",
+        "1.11.2-latest": "1.12.2-1.22.1.7",
+        "1.11.2-recommended": "1.12.2-1.22.1.7",
+        "1.11-latest": "1.12.2-1.22.1.7",
+        "1.11-recommended": "1.12.2-1.22.1.7",
+        "1.10.2-latest": "1.12.2-1.22.1.7",
+        "1.10.2-recommended": "1.12.2-1.22.1.7",
+        "1.10-latest": "1.12.2-1.22.1.7",
+        "1.10-recommended": "1.12.2-1.22.1.7",
+        "1.9.4-latest": "1.12.2-1.22.1.7",
+        "1.9.4-recommended": "1.12.2-1.22.1.7",
+        "1.9-latest": "1.12.2-1.22.1.7",
+        "1.9-recommended": "1.12.2-1.22.1.7",
+        "1.8.9-latest": "1.12.2-1.22.1.7",
+        "1.8.9-recommended": "1.12.2-1.22.1.7",
+        "1.8.8-latest": "1.12.2-1.22.1.7",
+        "1.8.8-recommended": "1.12.2-1.22.1.7",
+        "1.8-latest": "1.12.2-1.22.1.7",
+        "1.8-recommended": "1.12.2-1.22.1.7"
     }
 }
