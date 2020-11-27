@@ -66,7 +66,7 @@ public final class RandomPatches {
 	public static final String DEFAULT_WINDOW_TITLE = "Minecraft " + TRLUtils.MC_VERSION;
 
 	public static final boolean BIGGER_PACKETS_PLEASE_INSTALLED =
-			RPUtils.detect("net.elnounch.mc.biggerpacketsplz.BiggerBacketsPlzCoreMod");
+			RPUtils.detect("net.elnounch.mc.biggerpacketsplz.BiggerPacketsPlzCoreMod");
 
 	public static final boolean EIGENCRAFT_INSTALLED =
 			RPUtils.detect("org.gr1m.mc.mup.core.MupCore");
