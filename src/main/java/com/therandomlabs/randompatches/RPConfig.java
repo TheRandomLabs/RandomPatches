@@ -103,8 +103,8 @@ public final class RPConfig {
 		public static int keepAlivePacketInterval = 15;
 
 		@Config.RangeInt(min = 1)
-		@Config.Property("The login timeout in seconds.")
-		public static int loginTimeout = 900;
+		@Config.Property("The login timeout in ticks.")
+		public static int loginTimeout = 1800;
 
 		@Config.RangeInt(min = 1)
 		@Config.Property({
