@@ -1,12 +1,19 @@
 {
     "homepage": "https://www.curseforge.com/minecraft/mc-mods/randompatches",
+    "1.16.4": {
+        "1.16.4-1.22.1.9": "The default login timeout is now 1800 ticks (90 seconds)."
+    },
     "1.16.3": {
+        "1.16.4-1.22.1.9": "The default login timeout is now 1800 ticks (90 seconds).",
         "1.16.2-1.22.1.2": "Added a license to mods.toml."
     },
     "1.16.2": {
+        "1.16.4-1.22.1.9": "The default login timeout is now 1800 ticks (90 seconds).",
         "1.16.2-1.22.1.2": "Added a license to mods.toml."
     },
     "1.16.1": {
+        "1.16.4-1.22.1.9": "The default login timeout is now 1800 ticks (90 seconds).",
+        "1.16.2-1.22.1.2": "Added a license to mods.toml.",
         "1.16.1-1.22.1.1": "Fixed the TickNextTick list out of synch fix.",
         "1.16.1-1.22.1.0": "Reimplemented the TickNextTick list out of synch fix.",
         "1.16.1-1.22.0.0": "Now compatible with and requires Forge 1.16.1-32.0.67 or higher.",
@@ -66,6 +73,7 @@
         "1.13.2-1.15.1.0": "Initial port to Minecraft 1.13.2."
     },
     "1.12.2": {
+        "1.12.2-1.22.1.9": "The default login timeout is now 1800 ticks (90 seconds).",
         "1.12.2-1.22.1.8": "No longer errors when Bigger Packets Please is installed.",
         "1.12.2-1.22.1.7": "Fixed the ItemBucket patch.",
         "1.12.2-1.22.1.6": "Fixed CatServer compatibility with the ItemBucket patch again.",
@@ -150,6 +158,7 @@
         "1.12.2-1.0.0.0": "Initial release."
     },
     "1.12.1": {
+        "1.12.2-1.22.1.9": "The default login timeout is now 1800 ticks (90 seconds).",
         "1.12.2-1.22.1.8": "No longer errors when Bigger Packets Please is installed.",
         "1.12.2-1.22.1.7": "Fixed the ItemBucket patch.",
         "1.12.2-1.22.1.6": "Fixed CatServer compatibility with the ItemBucket patch again.",
@@ -234,6 +243,7 @@
         "1.12.2-1.0.0.0": "Initial release."
     },
     "1.12": {
+        "1.12.2-1.22.1.9": "The default login timeout is now 1800 ticks (90 seconds).",
         "1.12.2-1.22.1.8": "No longer errors when Bigger Packets Please is installed.",
         "1.12.2-1.22.1.7": "Fixed the ItemBucket patch.",
         "1.12.2-1.22.1.6": "Fixed CatServer compatibility with the ItemBucket patch again.",
@@ -318,6 +328,7 @@
         "1.12.2-1.0.0.0": "Initial release."
     },
     "1.11.2": {
+        "1.12.2-1.22.1.9": "The default login timeout is now 1800 ticks (90 seconds).",
         "1.12.2-1.22.1.8": "No longer errors when Bigger Packets Please is installed.",
         "1.12.2-1.22.1.7": "Fixed the ItemBucket patch.",
         "1.12.2-1.22.1.6": "Fixed CatServer compatibility with the ItemBucket patch again.",
@@ -402,6 +413,7 @@
         "1.12.2-1.0.0.0": "Initial release."
     },
     "1.11": {
+        "1.12.2-1.22.1.9": "The default login timeout is now 1800 ticks (90 seconds).",
         "1.12.2-1.22.1.8": "No longer errors when Bigger Packets Please is installed.",
         "1.12.2-1.22.1.7": "Fixed the ItemBucket patch.",
         "1.12.2-1.22.1.6": "Fixed CatServer compatibility with the ItemBucket patch again.",
@@ -486,6 +498,7 @@
         "1.12.2-1.0.0.0": "Initial release."
     },
     "1.10.2": {
+        "1.12.2-1.22.1.9": "The default login timeout is now 1800 ticks (90 seconds).",
         "1.12.2-1.22.1.8": "No longer errors when Bigger Packets Please is installed.",
         "1.12.2-1.22.1.7": "Fixed the ItemBucket patch.",
         "1.12.2-1.22.1.6": "Fixed CatServer compatibility with the ItemBucket patch again.",
@@ -570,6 +583,7 @@
         "1.12.2-1.0.0.0": "Initial release."
     },
     "1.10": {
+        "1.12.2-1.22.1.9": "The default login timeout is now 1800 ticks (90 seconds).",
         "1.12.2-1.22.1.8": "No longer errors when Bigger Packets Please is installed.",
         "1.12.2-1.22.1.7": "Fixed the ItemBucket patch.",
         "1.12.2-1.22.1.6": "Fixed CatServer compatibility with the ItemBucket patch again.",
@@ -654,6 +668,7 @@
         "1.12.2-1.0.0.0": "Initial release."
     },
     "1.9.4": {
+        "1.12.2-1.22.1.9": "The default login timeout is now 1800 ticks (90 seconds).",
         "1.12.2-1.22.1.8": "No longer errors when Bigger Packets Please is installed.",
         "1.12.2-1.22.1.7": "Fixed the ItemBucket patch.",
         "1.12.2-1.22.1.6": "Fixed CatServer compatibility with the ItemBucket patch again.",
@@ -731,6 +746,7 @@
         "1.12.2-1.0.0.0": "Initial release."
     },
     "1.9": {
+        "1.12.2-1.22.1.9": "The default login timeout is now 1800 ticks (90 seconds).",
         "1.12.2-1.22.1.8": "No longer errors when Bigger Packets Please is installed.",
         "1.12.2-1.22.1.7": "Fixed the ItemBucket patch.",
         "1.12.2-1.22.1.6": "Fixed CatServer compatibility with the ItemBucket patch again.",
@@ -808,6 +824,7 @@
         "1.12.2-1.0.0.0": "Initial release."
     },
     "1.8.9": {
+        "1.12.2-1.22.1.9": "The default login timeout is now 1800 ticks (90 seconds).",
         "1.12.2-1.22.1.8": "No longer errors when Bigger Packets Please is installed.",
         "1.12.2-1.22.1.7": "Fixed the ItemBucket patch.",
         "1.12.2-1.22.1.6": "Fixed CatServer compatibility with the ItemBucket patch again.",
@@ -885,6 +902,7 @@
         "1.12.2-1.0.0.0": "Initial release."
     },
     "1.8.8": {
+        "1.12.2-1.22.1.9": "The default login timeout is now 1800 ticks (90 seconds).",
         "1.12.2-1.22.1.8": "No longer errors when Bigger Packets Please is installed.",
         "1.12.2-1.22.1.7": "Fixed the ItemBucket patch.",
         "1.12.2-1.22.1.6": "Fixed CatServer compatibility with the ItemBucket patch again.",
@@ -962,6 +980,7 @@
         "1.12.2-1.0.0.0": "Initial release."
     },
     "1.8": {
+        "1.12.2-1.22.1.9": "The default login timeout is now 1800 ticks (90 seconds).",
         "1.12.2-1.22.1.8": "No longer errors when Bigger Packets Please is installed.",
         "1.12.2-1.22.1.7": "Fixed the ItemBucket patch.",
         "1.12.2-1.22.1.6": "Fixed CatServer compatibility with the ItemBucket patch again.",
@@ -1039,10 +1058,12 @@
         "1.12.2-1.0.0.0": "Initial release."
     },
     "promos": {
-        "1.16.3-latest": "1.16.2-1.22.1.2",
-        "1.16.3-recommended": "1.16.2-1.22.1.2",
-        "1.16.2-latest": "1.16.2-1.22.1.2",
-        "1.16.2-recommended": "1.16.2-1.22.1.2",
+        "1.16.4-latest": "1.16.4-1.22.1.9",
+        "1.16.4-recommended": "1.16.4-1.22.1.9",
+        "1.16.3-latest": "1.16.4-1.22.1.9",
+        "1.16.3-recommended": "1.16.4-1.22.1.9",
+        "1.16.2-latest": "1.16.4-1.22.1.9",
+        "1.16.2-recommended": "1.16.4-1.22.1.9",
         "1.16.1-latest": "1.16.1-1.22.1.1",
         "1.16.1-recommended": "1.16.1-1.22.1.1",
         "1.15.2-latest": "1.15.2-1.22.1.1",
@@ -1055,27 +1076,27 @@
         "1.14.2-recommended": "1.14.2-1.16.2.0",
         "1.13.2-latest": "1.13.2-1.7.2.0",
         "1.13.2-recommended": "1.13.2-1.17.2.0",
-        "1.12.2-latest": "1.12.2-1.22.1.8",
-        "1.12.2-recommended": "1.12.2-1.22.1.8",
-        "1.12-latest": "1.12.2-1.22.1.8",
-        "1.12-recommended": "1.12.2-1.22.1.8",
-        "1.11.2-latest": "1.12.2-1.22.1.8",
-        "1.11.2-recommended": "1.12.2-1.22.1.8",
-        "1.11-latest": "1.12.2-1.22.1.8",
-        "1.11-recommended": "1.12.2-1.22.1.8",
-        "1.10.2-latest": "1.12.2-1.22.1.8",
-        "1.10.2-recommended": "1.12.2-1.22.1.8",
-        "1.10-latest": "1.12.2-1.22.1.8",
-        "1.10-recommended": "1.12.2-1.22.1.8",
-        "1.9.4-latest": "1.12.2-1.22.1.8",
-        "1.9.4-recommended": "1.12.2-1.22.1.8",
-        "1.9-latest": "1.12.2-1.22.1.8",
-        "1.9-recommended": "1.12.2-1.22.1.8",
-        "1.8.9-latest": "1.12.2-1.22.1.8",
-        "1.8.9-recommended": "1.12.2-1.22.1.8",
-        "1.8.8-latest": "1.12.2-1.22.1.8",
-        "1.8.8-recommended": "1.12.2-1.22.1.8",
-        "1.8-latest": "1.12.2-1.22.1.8",
-        "1.8-recommended": "1.12.2-1.22.1.8"
+        "1.12.2-latest": "1.12.2-1.22.1.9",
+        "1.12.2-recommended": "1.12.2-1.22.1.9",
+        "1.12-latest": "1.12.2-1.22.1.9",
+        "1.12-recommended": "1.12.2-1.22.1.9",
+        "1.11.2-latest": "1.12.2-1.22.1.9",
+        "1.11.2-recommended": "1.12.2-1.22.1.9",
+        "1.11-latest": "1.12.2-1.22.1.9",
+        "1.11-recommended": "1.12.2-1.22.1.9",
+        "1.10.2-latest": "1.12.2-1.22.1.9",
+        "1.10.2-recommended": "1.12.2-1.22.1.9",
+        "1.10-latest": "1.12.2-1.22.1.9",
+        "1.10-recommended": "1.12.2-1.22.1.9",
+        "1.9.4-latest": "1.12.2-1.22.1.9",
+        "1.9.4-recommended": "1.12.2-1.22.1.9",
+        "1.9-latest": "1.12.2-1.22.1.9",
+        "1.9-recommended": "1.12.2-1.22.1.9",
+        "1.8.9-latest": "1.12.2-1.22.1.9",
+        "1.8.9-recommended": "1.12.2-1.22.1.9",
+        "1.8.8-latest": "1.12.2-1.22.1.9",
+        "1.8.8-recommended": "1.12.2-1.22.1.9",
+        "1.8-latest": "1.12.2-1.22.1.9",
+        "1.8-recommended": "1.12.2-1.22.1.9"
     }
 }
