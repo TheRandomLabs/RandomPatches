@@ -87,7 +87,7 @@ public final class RPConfig {
 
 		@Config.RangeInt(min = 1)
 		@Config.Property("The login timeout in ticks.")
-		public static int loginTimeout = 900;
+		public static int loginTimeout = 1800;
 
 		@Config.RangeInt(min = 1)
 		@Config.Property({
