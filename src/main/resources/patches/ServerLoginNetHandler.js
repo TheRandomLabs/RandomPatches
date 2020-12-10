@@ -26,7 +26,7 @@ function initializeCoreMod() {
 				"type": "CLASS",
 				"name": "net.minecraft.network.login.ServerLoginNetHandler"
 			},
-			"transformer": function(classNode) {
+			"transformer": function (classNode) {
 				var methods = classNode.methods;
 
 				for (var i in methods) {
@@ -47,7 +47,7 @@ function patchTick(instructions) {
 	for (var i = 0; i < instructions.size(); i++) {
 		var instruction = instructions.get(i);
 
-		if (instruction.getOpcode() == Opcodes.SIPUSH && instruction.operand == 600) {
+		if (instruction.getType() == AbstractInsnNode.INT_INSN) {
 			loginTimeout = instruction;
 			break;
 		}
