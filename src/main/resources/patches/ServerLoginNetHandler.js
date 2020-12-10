@@ -1,6 +1,7 @@
 var ASMAPI = Java.type("net.minecraftforge.coremod.api.ASMAPI");
 var Opcodes = Java.type("org.objectweb.asm.Opcodes");
 
+var AbstractInsnNode = Java.type("org.objectweb.asm.tree.AbstractInsnNode")
 var FieldInsnNode = Java.type("org.objectweb.asm.tree.FieldInsnNode");
 
 var TICK = ASMAPI.mapMethod("func_73660_a");
