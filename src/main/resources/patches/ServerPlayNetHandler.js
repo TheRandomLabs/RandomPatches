@@ -39,7 +39,7 @@ function initializeCoreMod() {
 				"type": "CLASS",
 				"name": "net.minecraft.network.play.ServerPlayNetHandler"
 			},
-			"transformer": function(classNode) {
+			"transformer": function (classNode) {
 				var methods = classNode.methods;
 
 				for (var i in methods) {
@@ -108,7 +108,11 @@ function patchTick(instructions) {
 		var instruction = instructions.get(i);
 
 		if (keepAliveInterval == null) {
-			if (instruction.getOpcode() == Opcodes.LDC && instruction.cst == 15000) {
+			//https://github.com/Mohist-Community/Mohist/blob/
+			//21553670acc2c41bfc198eb1c89e05af89121aa9/patches/minecraft/
+			//net/minecraft/network/play/ServerPlayNetHandler.java.patch#L199
+			if (instruction.getOpcode() == Opcodes.LDC &&
+				(instruction.cst == 15000 || instruction.cst == 25000)) {
 				keepAliveInterval = instruction;
 			}
 
