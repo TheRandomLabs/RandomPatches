@@ -62,16 +62,16 @@ public final class RPConfig implements ConfigData {
 
 	public static final class ConnectionTimeouts implements ConfigData {
 		@TOMLConfigSerializer.Comment(
-				"The interval at which KeepAlive packets are sent to clients."
+				"The interval in seconds at which KeepAlive packets are sent to clients."
 		)
 		@ConfigEntry.Gui.Tooltip
 		public int keepAlivePacketIntervalSeconds = 15;
 
-		@TOMLConfigSerializer.Comment("The read timeout.")
+		@TOMLConfigSerializer.Comment("The read timeout in seconds.")
 		@ConfigEntry.Gui.Tooltip
 		public int readTimeoutSeconds = 120;
 
-		@TOMLConfigSerializer.Comment("The login timeout.")
+		@TOMLConfigSerializer.Comment("The login timeout in ticks.")
 		@ConfigEntry.Gui.Tooltip
 		public int loginTimeoutTicks = 2400;
 
