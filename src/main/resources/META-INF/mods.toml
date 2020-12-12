@@ -1,10 +1,9 @@
 modLoader = "javafml"
-loaderVersion = "[16,)"
+loaderVersion = "[32,)"
 license = "MIT"
 issueTrackerURL = "https://github.com/TheRandomLabs/RandomPatches/issues"
 
 [[mods]]
-
 modId = "randompatches"
 version = "${file.jarVersion}"
 displayName = "RandomPatches"
@@ -15,3 +14,10 @@ authors = "TheRandomLabs"
 description = '''
 RandomPatches, a bunch of miscellaneous patches for Minecraft.
 '''
+
+[[dependencies.randompatches]]
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.16,1.17)"
+ordering = "NONE"
+side = "BOTH"

@@ -1,3 +1,18 @@
+apply plugin: "java-library"
+
+version = "1.16.4-2.0.0.0"
+group = "com.therandomlabs.randompatches"
+archivesBaseName = "randompatches"
+
+ext {
+	commonGradleBranch = "master"
+	useMixin = true
+	minecraftVersion = "1.16.4"
+	forgeVersion = "35.1.12"
+	mappingsChannel = "snapshot"
+	mappingsVersion = "20201212-mixed-1.16.4"
+}
+
 buildscript {
 	repositories {
 		jcenter()
@@ -5,184 +20,25 @@ buildscript {
 		mavenCentral()
 
 		maven {
+			url "https://plugins.gradle.org/m2/"
+		}
+
+		maven {
 			url "http://files.minecraftforge.net/maven"
 		}
+
+		maven {
+			url "https://dist.creeper.host/Sponge/maven"
+		}
 	}
 
 	dependencies {
-		classpath group: "net.minecraftforge.gradle", name: "ForgeGradle", version: "3.+", changing: true
-		classpath "com.github.jengelman.gradle.plugins:shadow:4.0.1"
+		classpath group: "net.minecraftforge.gradle", name: "ForgeGradle",
+				version: "3.+", changing: true
+		classpath "com.github.jengelman.gradle.plugins:shadow:4.0.4"
+		classpath "gradle.plugin.com.matthewprenger:CurseGradle:1.4.0"
+		classpath "org.spongepowered:mixingradle:0.7-SNAPSHOT"
 	}
 }
 
-apply plugin: "net.minecraftforge.gradle"
-apply plugin: 'eclipse'
-apply plugin: "com.github.johnrengelman.shadow"
-
-version = "1.16.4-1.22.1.10"
-group = "com.therandomlabs.randompatches"
-archivesBaseName = "randompatches"
-
-sourceCompatibility = JavaVersion.VERSION_1_8
-targetCompatibility = JavaVersion.VERSION_1_8
-compileJava.sourceCompatibility = JavaVersion.VERSION_1_8
-compileJava.targetCompatibility = JavaVersion.VERSION_1_8
-
-ext {
-    trlutilsClassesDir = file("build/trlutils")
-}
-
-configurations {
-    nonModDep
-}
-
-minecraft {
-	mappings channel: "snapshot", version: "20200514-1.16"
-
-	accessTransformer = file("src/main/resources/META-INF/accesstransformer.cfg")
-
-	runs {
-		client {
-			environment "MOD_CLASSES", [
-					sourceSets.main.output.resourcesDir.absolutePath,
-					sourceSets.main.output.classesDirs.asPath,
-					project.trlutilsClassesDir.absolutePath
-			].join(File.pathSeparator)
-
-			workingDirectory project.file("run")
-
-			property "forge.logging.markers", "SCAN,REGISTRIES,REGISTRYDUMP"
-
-			property "forge.logging.console.level", "debug"
-
-			mods {
-				randompatches {
-					source sourceSets.main
-				}
-			}
-		}
-
-		server {
-			environment "MOD_CLASSES", [
-					sourceSets.main.output.resourcesDir.absolutePath,
-					sourceSets.main.output.classesDirs.asPath,
-					project.trlutilsClassesDir.absolutePath
-			].join(File.pathSeparator)
-
-			workingDirectory project.file("run")
-
-			property "forge.logging.markers", "SCAN,REGISTRIES,REGISTRYDUMP"
-
-			property "forge.logging.console.level", "debug"
-
-			mods {
-				randompatches {
-					source sourceSets.main
-				}
-			}
-		}
-
-		data {
-			environment "MOD_CLASSES", [
-					sourceSets.main.output.resourcesDir.absolutePath,
-					sourceSets.main.output.classesDirs.asPath,
-					project.trlutilsClassesDir.absolutePath
-			].join(File.pathSeparator)
-
-			workingDirectory project.file('run')
-
-			property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
-
-			property 'forge.logging.console.level', 'debug'
-
-			args '--mod', 'randompatches', '--all', '--output', file('src/generated/resources/')
-
-			mods {
-				randompatches {
-					source sourceSets.main
-				}
-			}
-		}
-	}
-}
-
-repositories {
-	mavenCentral()
-
-	maven {
-		url "https://jitpack.io"
-	}
-}
-
-dependencies {
-	minecraft "net.minecraftforge:forge:1.16.1-32.0.68"
-
-	compile group: "com.github.TheRandomLabs", name: "TRLUtils-Forge", version: "1.16-SNAPSHOT", changing: true
-	nonModDep group: "com.github.TheRandomLabs", name: "TRLUtils-Forge", version: "1.16-SNAPSHOT", changing: true
-}
-
-task extractNonMod(type: Copy) {
-	project.trlutilsClassesDir.delete()
-	project.trlutilsClassesDir.mkdirs()
-	from zipTree(project.configurations.nonModDep.find {
-		it.name.startsWith("TRLUtils")
-	})
-	into project.trlutilsClassesDir
-}
-
-compileJava.dependsOn(extractNonMod)
-
-shadowJar {
-	classifier = ""
-
-	dependencies {
-		include(dependency("com.github.TheRandomLabs:TRLUtils-Config:master-SNAPSHOT"))
-		include(dependency("com.github.TheRandomLabs:TRLUtils-Forge:1.16-SNAPSHOT"))
-	}
-
-	relocate "com.therandomlabs.utils", "com.therandomlabs.randompatches.repackage.com.therandomlabs.utils"
-}
-
-reobf {
-	shadowJar {
-		dependsOn createMcpToSrg
-		mappings = createMcpToSrg.output
-	}
-}
-
-artifacts {
-	archives shadowJar
-}
-
-jar {
-	manifest {
-		attributes([
-			"FMLCorePlugin": "com.therandomlabs.randompatches.core.RPCore",
-			"Specification-Title": project.name,
-			"Specification-Vendor": "TheRandomLabs",
-			"Specification-Version": "1",
-			"Implementation-Title": project.name,
-			"Implementation-Version": "${version}",
-			"Implementation-Vendor": "TheRandomLabs",
-			"Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-			"Fingerprint": project.findProperty("signSHA1") ?: ""
-		])
-	}
-}
-
-import net.minecraftforge.gradle.common.task.SignJar
-
-task signJar(type: SignJar, dependsOn: jar) {
-	onlyIf {
-		project.hasProperty("keyStore")
-	}
-
-	keyStore = project.findProperty("keyStore")
-	alias = project.findProperty("keyStoreAlias")
-	storePass = project.findProperty("keyStorePass")
-	keyPass = project.findProperty("keyStoreKeyPass")
-	inputFile = jar.archivePath
-	outputFile = jar.archivePath
-}
-
-build.dependsOn signJar
+apply from: "https://raw.githubusercontent.com/TheRandomLabs/Common-Gradle/${project.commonGradleBranch}/forge.gradle"
