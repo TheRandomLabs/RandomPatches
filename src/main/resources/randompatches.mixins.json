@@ -1,12 +1,14 @@
 {
 	"required": true,
 	"package": "com.therandomlabs.randompatches.mixin",
+	"plugin": "com.therandomlabs.randompatches.mixin.RPMixinConfig",
 	"compatibilityLevel": "JAVA_8",
 	"refmap": "randompatches.refmap.json",
 	"mixins": [
-		"ReadTimeoutHandlerMixin",
-		"ServerLoginNetHandlerMixin",
-		"ServerPlayNetHandlerMixin",
+		"timeouts.ReadTimeoutHandlerMixin",
+		"timeouts.ServerLoginNetHandlerMixin",
+		"timeouts.ServerPlayNetHandlerKeepAliveMixin",
+		"ServerPlayNetHandlerPlayerSpeedLimitsMixin",
 		"ServerTickListMixin"
 	],
 	"injectors": {

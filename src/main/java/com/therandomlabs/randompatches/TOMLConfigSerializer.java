@@ -52,6 +52,7 @@ import com.google.common.base.CaseFormat;
 import me.shedaniel.autoconfig1u.AutoConfig;
 import me.shedaniel.autoconfig1u.ConfigData;
 import me.shedaniel.autoconfig1u.ConfigManager;
+import me.shedaniel.autoconfig1u.annotation.ConfigEntry;
 import me.shedaniel.autoconfig1u.serializer.ConfigSerializer;
 import me.shedaniel.autoconfig1u.util.Utils;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
@@ -61,11 +62,24 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * A {@link ConfigSerializer} for TOML with more strongly enforced validation, enforced
- * lower_snake_case, and support for comments through the use of {@link Comment}.
+ * A {@link ConfigSerializer} for TOML that uses NightConfig.
+ * <p>
+ * Compared to {@link me.shedaniel.autoconfig1u.serializer.Toml4jConfigSerializer},
+ * this {@link ConfigSerializer} ensures that {@link ConfigData#validatePostLoad()} is always
+ * called and any updated values are written to disk on both serialization and deserialization.
+ * <p>
+ * In addition, NightConfig's {@code Spec*} annotations are supported, and invalid values
+ * are automatically reset to the defaults.
+ * <p>
+ * Furthermore, lower_snake_case for key names is enforced, and comments for properties, categories
+ * and configuration files may be specified through the use of {@link Comment}.
+ * <p>
+ * {@link #reloadFromDisk()} may be used to reload the configuration from disk if a reference to
+ * the {@link TOMLConfigSerializer} is stored.
  *
  * @param <T> the configuration type.
  */
+@SuppressWarnings("DuplicatedCode")
 public final class TOMLConfigSerializer<T extends ConfigData> implements ConfigSerializer<T> {
 	/**
 	 * A TOML configuration comment.
@@ -81,6 +95,9 @@ public final class TOMLConfigSerializer<T extends ConfigData> implements ConfigS
 	}
 
 	private static final Logger logger = LogManager.getLogger();
+
+	//Used to access private utility methods through reflection.
+	private static final ObjectConverter objectConverter = new ObjectConverter();
 
 	private static final Method mustPreserve;
 	private static final Method getConverter;
@@ -118,7 +135,7 @@ public final class TOMLConfigSerializer<T extends ConfigData> implements ConfigS
 		);
 
 		bottomElementType = ObfuscationReflectionHelper.findMethod(
-				ObjectConverter.class, "bottomElementType", ParameterizedType.class
+				ObjectConverter.class, "bottomElementType", Collection.class
 		);
 		elementTypes = ObfuscationReflectionHelper.findMethod(
 				ObjectConverter.class, "elementTypes", ParameterizedType.class
@@ -256,6 +273,10 @@ public final class TOMLConfigSerializer<T extends ConfigData> implements ConfigS
 	) throws IllegalAccessException, InvocationTargetException {
 		while (clazz != Object.class) {
 			for (Field field : clazz.getDeclaredFields()) {
+				if (field.isAnnotationPresent(ConfigEntry.Gui.Excluded.class)) {
+					continue;
+				}
+
 				/* Check modifiers. */
 				final int fieldModifiers = field.getModifiers();
 
@@ -323,8 +344,9 @@ public final class TOMLConfigSerializer<T extends ConfigData> implements ConfigS
 						destination.set(path, converted);
 					} else if (value instanceof Collection) {
 						//Ensure ConfigFormat supports collection element type.
-						Collection<?> src = (Collection<?>) value;
-						Class<?> bottomType = (Class<?>) bottomElementType.invoke(converter, src);
+						Collection<?> source = (Collection<?>) value;
+						Class<?> bottomType =
+								(Class<?>) bottomElementType.invoke(objectConverter, source);
 
 						if (format.supportsType(bottomType)) {
 							destination.set(path, value);
@@ -359,6 +381,10 @@ public final class TOMLConfigSerializer<T extends ConfigData> implements ConfigS
 	) throws IllegalAccessException, InvocationTargetException {
 		while (clazz != Object.class) {
 			for (Field field : clazz.getDeclaredFields()) {
+				if (field.isAnnotationPresent(ConfigEntry.Gui.Excluded.class)) {
+					continue;
+				}
+
 				/* Check modifiers. */
 				final int fieldModifiers = field.getModifiers();
 
@@ -414,12 +440,12 @@ public final class TOMLConfigSerializer<T extends ConfigData> implements ConfigS
 							Collection.class.isAssignableFrom(fieldType)) {
 						final Collection<?> source = (Collection<?>) value;
 						final Class<?> sourceBottomType =
-								(Class<?>) bottomElementType.invoke(null, source);
+								(Class<?>) bottomElementType.invoke(objectConverter, source);
 
 						final ParameterizedType genericType =
 								(ParameterizedType) field.getGenericType();
 						final List<Class<?>> destinationTypes =
-								(List<Class<?>>) elementTypes.invoke(null, genericType);
+								(List<Class<?>>) elementTypes.invoke(objectConverter, genericType);
 						final Class<?> destinationBottomType =
 								destinationTypes.get(destinationTypes.size() - 1);
 

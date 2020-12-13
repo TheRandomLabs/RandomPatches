@@ -23,21 +23,74 @@
 
 package com.therandomlabs.randompatches.mixin;
 
-import com.therandomlabs.randompatches.RandomPatches;
-import io.netty.handler.timeout.ReadTimeoutHandler;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.ModifyArg;
+import java.util.List;
+import java.util.Set;
 
-@Mixin(ReadTimeoutHandler.class)
-public final class ReadTimeoutHandlerMixin {
-	@ModifyArg(method = "<init>(I)V", at = @At(
-			value = "INVOKE",
-			target = "io/netty/handler/timeout/ReadTimeoutHandler.<init>" +
-					"(JLjava/util/concurrent/TimeUnit;)V"
-	))
-	public int getTimeout(int timeout) {
-		return timeout == 30 ?
-				RandomPatches.config().connectionTimeouts.readTimeoutSeconds : timeout;
+import com.therandomlabs.randompatches.RandomPatches;
+import org.objectweb.asm.tree.ClassNode;
+import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
+import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
+
+public final class RPMixinConfig implements IMixinConfigPlugin {
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void onLoad(String mixinPackage) {
+		//No-op.
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String getRefMapperConfig() {
+		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
+		return RandomPatches.config().misc.isMixinClassEnabled(mixinClassName);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void acceptTargets(Set<String> myTargets, Set<String> otherTargets) {
+		//No-op.
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<String> getMixins() {
+		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void preApply(
+			String targetClassName, ClassNode targetClass, String mixinClassName,
+			IMixinInfo mixinInfo
+	) {
+		//No-op.
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void postApply(
+			String targetClassName, ClassNode targetClass, String mixinClassName,
+			IMixinInfo mixinInfo
+	) {
+		//No-op.
 	}
 }

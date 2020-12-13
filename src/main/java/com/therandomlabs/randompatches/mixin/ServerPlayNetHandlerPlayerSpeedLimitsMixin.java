@@ -25,40 +25,12 @@ package com.therandomlabs.randompatches.mixin;
 
 import com.therandomlabs.randompatches.RandomPatches;
 import net.minecraft.network.play.ServerPlayNetHandler;
-import net.minecraft.util.Util;
-import net.minecraft.util.text.ITextComponent;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
-import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(ServerPlayNetHandler.class)
-public final class ServerPlayNetHandlerMixin {
-	@Shadow
-	private long keepAliveTime;
-
-	@Redirect(method = "tick", at = @At(
-			value = "INVOKE",
-			target = "net/minecraft/network/play/ServerPlayNetHandler.disconnect" +
-					"(Lnet/minecraft/util/text/ITextComponent;)V",
-			ordinal = 2
-	))
-	public void disconnect(ServerPlayNetHandler handler, ITextComponent reason) {
-		final long readTimeoutMillis =
-				RandomPatches.config().connectionTimeouts.readTimeoutSeconds * 1000L;
-
-		if (Util.milliTime() - keepAliveTime >= readTimeoutMillis) {
-			handler.disconnect(reason);
-		}
-	}
-
-	@ModifyConstant(method = "tick", constant = @Constant(longValue = 15000L))
-	public long getKeepAlivePacketInterval(long interval) {
-		return RandomPatches.config().connectionTimeouts.keepAlivePacketIntervalSeconds * 1000L;
-	}
-
+public final class ServerPlayNetHandlerPlayerSpeedLimitsMixin {
 	@ModifyConstant(method = "processPlayer", constant = @Constant(floatValue = 100.0F))
 	public float getMaxPlayerSpeed(float speed) {
 		return RandomPatches.config().playerSpeedLimits.maxSpeed;
