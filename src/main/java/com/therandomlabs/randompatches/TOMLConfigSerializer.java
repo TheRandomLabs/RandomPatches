@@ -75,8 +75,9 @@ import org.apache.logging.log4j.Logger;
  * Furthermore, lower_snake_case for key names is enforced, and comments for properties, categories
  * and configuration files may be specified through the use of {@link Comment}.
  * <p>
- * {@link #reloadFromDisk()} may be used to reload the configuration from disk if a reference to
- * the {@link TOMLConfigSerializer} is stored.
+ * If a reference to the {@code TOMLConfigSerializer} is stored, {@link #getConfig()} may be used
+ * to retrieve the configuration object, and {@link #reloadFromDisk()} may be used to reload the
+ * configuration from disk.
  *
  * @param <T> the configuration type.
  */
