@@ -18,7 +18,7 @@ I've partnered with BisectHosting! In my experience, their servers are lag-free,
 of high quality. Check them out here:
 
 <a href="https://bisecthosting.com/TheRandomLabs">
-	<img src="https://www.bisecthosting.com/images/logos/dark_text@1538x500.png" width="385" height="125" border="0" style="background-color: white">
+	<img src="https://www.bisecthosting.com/images/logos/dark_text@1538x500.png" width="385" height="125" border="0">
 </a>
 
 Use the code "**TheRandomLabs**" to get 25% off your first month!
