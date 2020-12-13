@@ -85,8 +85,8 @@ RandomPatches attempts to fix this issue using the solution described by malte08
 
 ### Window title and icon
 
-By default, RandomPatches removes the annoying `*` in the Minecraft title that indicates that the
-game is modded. In addition, the following window properties can be configured:
+By default, RandomPatches removes the annoying `*` in the Minecraft window title that indicates
+that the game is modded. In addition, the following window properties can be configured:
 
 * Title (the Minecraft version and current activity can be included)
 * 16x16 icon
