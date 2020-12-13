@@ -33,7 +33,7 @@ import org.spongepowered.asm.mixin.injection.ModifyConstant;
 public final class ServerPlayNetHandlerPlayerSpeedLimitsMixin {
 	@ModifyConstant(method = "processPlayer", constant = @Constant(floatValue = 100.0F))
 	private float getMaxPlayerSpeed(float speed) {
-		return RandomPatches.config().playerSpeedLimits.maxSpeed;
+		return RandomPatches.config().playerSpeedLimits.defaultMaxSpeed;
 	}
 
 	@ModifyConstant(method = "processPlayer", constant = @Constant(floatValue = 300.0F))

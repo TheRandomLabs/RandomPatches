@@ -47,8 +47,7 @@ import org.apache.commons.lang3.StringUtils;
 @SuppressWarnings("CanBeFinal")
 @TOMLConfigSerializer.Comment({
 		"RandomPatches configuration.",
-		"All configuration options not under the \"client\" category are server-sided unless " +
-				"otherwise stated."
+		"All configuration options not under [client] are server-sided unless otherwise stated."
 })
 @Config(name = RandomPatches.MOD_ID)
 public final class RPConfig implements ConfigData {
@@ -63,7 +62,7 @@ public final class RPConfig implements ConfigData {
 	public static final class Window implements ConfigData {
 		@ConfigEntry.Gui.Excluded
 		public static final String DEFAULT_TITLE = FMLEnvironment.production ?
-				"Minecraft* %s" : "RandomPatches";
+				"Minecraft %s" : "RandomPatches";
 
 		@ConfigEntry.Gui.Excluded
 		private static final String DEFAULT_ICON =
@@ -83,7 +82,7 @@ public final class RPConfig implements ConfigData {
 		})
 		@ConfigEntry.Gui.Tooltip
 		public String titleWithActivity = FMLEnvironment.production ?
-				"Minecraft* %s - %s" : "RandomPatches - %2$s";
+				"Minecraft %s - %s" : "RandomPatches - %2$s";
 
 		@Path("icon_16x16")
 		@TOMLConfigSerializer.Comment("The path to the 16x16 Minecraft window icon.")
@@ -188,11 +187,11 @@ public final class RPConfig implements ConfigData {
 
 	public static final class PlayerSpeedLimits {
 		@TOMLConfigSerializer.Comment({
-				"The maximum player speed.",
+				"The maximum player speed when not riding a vehicle or flying with elytra.",
 				"The vanilla default is 100.0."
 		})
 		@ConfigEntry.Gui.Tooltip
-		public float maxSpeed = 1000000.0F;
+		public float defaultMaxSpeed = 1000000.0F;
 
 		@TOMLConfigSerializer.Comment({
 				"The maximum player elytra speed.",
