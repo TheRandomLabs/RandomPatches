@@ -1,6 +1,8 @@
 version = "1.15.2-0.0.0.5-fabric"
 group = "com.therandomlabs.randompatches"
 
-apply from: "https://raw.githubusercontent.com/TheRandomLabs/Common-Gradle/master/fabric/1.15.gradle"
+ext.commonGradleBranch = "f41b12d11f1cf738db1868175336db97a1c024a0"
+
+apply from: "https://raw.githubusercontent.com/TheRandomLabs/Common-Gradle/${project.commonGradleBranch}/fabric/1.15.gradle"
 
 archivesBaseName = "randompatches"
