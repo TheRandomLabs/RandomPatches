@@ -12,6 +12,11 @@ A bunch of miscellaneous patches for Minecraft.
 On Forge, RandomPatches only contains features that require Mixins. Tweaks that *don't* require
 Mixins go in [RandomTweaks](https://www.curseforge.com/minecraft/mc-mods/randomtweaks).
 
+**When reporting issues or suggesting enhancements, please use the**
+**[GitHub issue tracker](https://github.com/TheRandomLabs/RandomPatches/issues)—it's easier to**
+**keep track of things this way. Avoid commenting them on the CurseForge project page or sending**
+**them to me in a direct message. Thank you!**
+
 ## Sponsors
 
 I've partnered with BisectHosting! In my experience, their servers are lag-free, easy to manage and
