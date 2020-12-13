@@ -185,6 +185,7 @@ public final class TOMLConfigSerializer<T extends ConfigData> implements ConfigS
 				IOException ex) {
 			//We throw a RuntimeException instead of a SerializationException so that errors
 			//can be detected more easily.
+			throw new RuntimeException("Failed to serialize: " + configClass, ex);
 		}
 	}
 
@@ -210,7 +211,7 @@ public final class TOMLConfigSerializer<T extends ConfigData> implements ConfigS
 				IOException ex) {
 			//We throw a RuntimeException instead of a SerializationException so that errors
 			//can be detected more easily.
-			throw new RuntimeException(ex);
+			throw new RuntimeException("Failed to deserialize: " + configClass, ex);
 		}
 	}
 
