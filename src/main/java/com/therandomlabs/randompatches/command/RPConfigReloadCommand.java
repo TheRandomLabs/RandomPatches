@@ -38,6 +38,7 @@ public final class RPConfigReloadCommand {
 
 	/**
 	 * Registers the command that reloads the RandomPatches configuration.
+	 *
 	 * @param dispatcher the {@link CommandDispatcher}.
 	 */
 	public static void register(CommandDispatcher<CommandSource> dispatcher) {

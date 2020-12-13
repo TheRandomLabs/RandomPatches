@@ -34,7 +34,7 @@ import net.minecraft.world.NextTickListEntry;
  * {@code "TickNextTick list out of synch"} {@link IllegalStateException}.
  * This class should only be used by
  * {@link com.therandomlabs.randompatches.mixin.ServerTickListMixin}.
- *
+ * <p>
  * An explanation can be found
  * <a href="https://github.com/SleepyTrousers/EnderCore/issues/105">here</a>.
  */
