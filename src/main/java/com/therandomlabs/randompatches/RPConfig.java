@@ -85,18 +85,25 @@ public final class RPConfig implements ConfigData {
 				"Minecraft %s - %s" : "RandomPatches - %2$s";
 
 		@Path("icon_16x16")
-		@TOMLConfigSerializer.Comment("The path to the 16x16 Minecraft window icon.")
+		@TOMLConfigSerializer.Comment(
+				"The path to the 16x16 Minecraft window icon relative to the Minecraft " +
+						"instance directory."
+		)
 		@ConfigEntry.Gui.Tooltip
 		public String icon16 = DEFAULT_ICON;
 
 		@Path("icon_32x32")
-		@TOMLConfigSerializer.Comment("The path to the 16x16 Minecraft window icon.")
+		@TOMLConfigSerializer.Comment(
+				"The path to the 16x16 Minecraft window icon relative to the Minecraft " +
+						"instance directory."
+		)
 		@ConfigEntry.Gui.Tooltip
 		public String icon32 = DEFAULT_ICON;
 
 		@Path("icon_256x256")
 		@TOMLConfigSerializer.Comment({
-				"The path to the 256x256 Minecraft window icon.",
+				"The path to the 256x256 Minecraft window icon relative to the Minecraft " +
+						"instance directory.",
 				"This is only used on Mac OS X."
 		})
 		@ConfigEntry.Gui.Tooltip
