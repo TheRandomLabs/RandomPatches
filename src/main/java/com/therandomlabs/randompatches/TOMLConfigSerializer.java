@@ -39,6 +39,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.electronwill.nightconfig.core.CommentedConfig;
+import com.electronwill.nightconfig.core.Config;
 import com.electronwill.nightconfig.core.ConfigFormat;
 import com.electronwill.nightconfig.core.EnumGetMethod;
 import com.electronwill.nightconfig.core.UnmodifiableConfig;
@@ -112,7 +113,12 @@ public final class TOMLConfigSerializer<T extends ConfigData> implements ConfigS
 	private final Class<T> configClass;
 	private final CommentedFileConfig fileConfig;
 
+	private T config;
+
 	static {
+		//Preserve declaration order.
+		Config.setInsertionOrderPreserved(true);
+
 		Class<?> annotationUtils;
 
 		try {
@@ -164,7 +170,7 @@ public final class TOMLConfigSerializer<T extends ConfigData> implements ConfigS
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void serialize(T config) throws SerializationException {
+	public void serialize(T config) {
 		try {
 			final T defaultConfig = createDefault();
 
@@ -174,10 +180,11 @@ public final class TOMLConfigSerializer<T extends ConfigData> implements ConfigS
 			//are updated.
 			moveToObjectConfig(fileConfig, config, configClass, defaultConfig);
 
-			validateAndSave(config, defaultConfig);
+			this.config = validateAndSave(config, defaultConfig);
 		} catch (RuntimeException | IllegalAccessException | InvocationTargetException |
 				IOException ex) {
-			throw new SerializationException(ex);
+			//We throw a RuntimeException instead of a SerializationException so that errors
+			//can be detected more easily.
 		}
 	}
 
@@ -185,7 +192,7 @@ public final class TOMLConfigSerializer<T extends ConfigData> implements ConfigS
 	 * {@inheritDoc}
 	 */
 	@Override
-	public T deserialize() throws SerializationException {
+	public T deserialize() {
 		T config = createDefault();
 
 		if (!Files.exists(fileConfig.getNioPath())) {
@@ -197,11 +204,13 @@ public final class TOMLConfigSerializer<T extends ConfigData> implements ConfigS
 		try {
 			fileConfig.load();
 			moveToObjectConfig(fileConfig, config, configClass, defaultConfig);
-			validateAndSave(config, defaultConfig);
-			return config;
+			this.config = validateAndSave(config, defaultConfig);
+			return this.config;
 		} catch (RuntimeException | IllegalAccessException | InvocationTargetException |
 				IOException ex) {
-			throw new SerializationException(ex);
+			//We throw a RuntimeException instead of a SerializationException so that errors
+			//can be detected more easily.
+			throw new RuntimeException(ex);
 		}
 	}
 
@@ -211,6 +220,15 @@ public final class TOMLConfigSerializer<T extends ConfigData> implements ConfigS
 	@Override
 	public T createDefault() {
 		return Utils.constructUnsafely(configClass);
+	}
+
+	/**
+	 * Returns this {@link TOMLConfigSerializer}'s configuration.
+	 *
+	 * @return this {@link TOMLConfigSerializer}'s configuration.
+	 */
+	public T getConfig() {
+		return config;
 	}
 
 	/**
@@ -224,7 +242,7 @@ public final class TOMLConfigSerializer<T extends ConfigData> implements ConfigS
 		}
 	}
 
-	private void validateAndSave(T config, Object defaultConfig)
+	private T validateAndSave(T config, Object defaultConfig)
 			throws IllegalAccessException, InvocationTargetException, IOException {
 		config = validate(config);
 		//Reset the file configuration before moving data to it.
@@ -246,6 +264,7 @@ public final class TOMLConfigSerializer<T extends ConfigData> implements ConfigS
 		}
 
 		FileUtils.write(fileConfig.getFile(), string, StandardCharsets.UTF_8);
+		return config;
 	}
 
 	@SuppressWarnings("PMD.PreserveStackTrace")

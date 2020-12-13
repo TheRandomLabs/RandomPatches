@@ -40,7 +40,7 @@ public final class ServerTickListMixin {
 			value = "INVOKE",
 			target = "com/google/common/collect/Sets.newHashSet()Ljava/util/HashSet;"
 	))
-	public HashSet newScheduledTickHashSet() {
+	private HashSet newScheduledTickHashSet() {
 		return RandomPatches.config().misc.fixTickSchedulerDesync ?
 				new ScheduledTickHashSet() : new HashSet();
 	}

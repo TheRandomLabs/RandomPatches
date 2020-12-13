@@ -40,7 +40,7 @@ public final class ServerLoginNetHandlerMixin {
 	private int connectionTimer;
 
 	@Inject(method = "tick", at = @At("TAIL"))
-	public void tick(CallbackInfo info) {
+	private void tick(CallbackInfo info) {
 		if (connectionTimer >= RandomPatches.config().connectionTimeouts.loginTimeoutTicks) {
 			((ServerLoginNetHandler) (Object) this).disconnect(
 					new TranslationTextComponent("multiplayer.disconnect.slow_login")
@@ -53,7 +53,7 @@ public final class ServerLoginNetHandlerMixin {
 			target = "net/minecraft/network/login/ServerLoginNetHandler.disconnect" +
 					"(Lnet/minecraft/util/text/ITextComponent;)V"
 	))
-	public void disconnect(ServerLoginNetHandler handler, ITextComponent reason) {
+	private void disconnect(ServerLoginNetHandler handler, ITextComponent reason) {
 		//No-op.
 	}
 }

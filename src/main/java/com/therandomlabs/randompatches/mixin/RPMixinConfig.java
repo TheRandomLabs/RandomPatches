@@ -23,15 +23,40 @@
 
 package com.therandomlabs.randompatches.mixin;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 
+import com.google.common.collect.ImmutableSet;
+import com.google.common.reflect.ClassPath;
 import com.therandomlabs.randompatches.RandomPatches;
+import net.minecraftforge.fml.loading.FMLLoader;
 import org.objectweb.asm.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
 
+/**
+ * The RandomPatches mixin config plugin.
+ */
+@SuppressWarnings("UnstableApiUsage")
 public final class RPMixinConfig implements IMixinConfigPlugin {
+	private static final ImmutableSet<ClassPath.ClassInfo> mixinClasses;
+
+	static {
+		ClassPath classPath;
+
+		try {
+			classPath = ClassPath.from(FMLLoader.getLaunchClassLoader());
+		} catch (IOException ex) {
+			throw new RuntimeException("Failed to list RandomPatches mixins", ex);
+		}
+
+		final String mixinPackage = RPMixinConfig.class.getPackage().getName();
+		mixinClasses = classPath.getTopLevelClassesRecursive(mixinPackage).stream().
+				filter(info -> info.getSimpleName().endsWith("Mixin")).
+				collect(ImmutableSet.toImmutableSet());
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -92,5 +117,16 @@ public final class RPMixinConfig implements IMixinConfigPlugin {
 			IMixinInfo mixinInfo
 	) {
 		//No-op.
+	}
+
+	/**
+	 * Returns a set of {@link ClassPath.ClassInfo} instances representing all RandomPatches
+	 * mixin classes.
+	 *
+	 * @return an {@link ImmutableSet} of {@link ClassPath.ClassInfo} instances representing all
+	 * RandomPatches mixin classes.
+	 */
+	public static ImmutableSet<ClassPath.ClassInfo> getMixinClasses() {
+		return mixinClasses;
 	}
 }

@@ -45,7 +45,7 @@ public final class ServerPlayNetHandlerKeepAliveMixin {
 					"(Lnet/minecraft/util/text/ITextComponent;)V",
 			ordinal = 2
 	))
-	public void disconnect(ServerPlayNetHandler handler, ITextComponent reason) {
+	private void disconnect(ServerPlayNetHandler handler, ITextComponent reason) {
 		final long keepAliveTimeoutMillis =
 				RandomPatches.config().connectionTimeouts.keepAliveTimeoutSeconds * 1000L;
 
@@ -59,22 +59,7 @@ public final class ServerPlayNetHandlerKeepAliveMixin {
 			//CraftBukkit changes it to 25000.
 			@Constant(longValue = 25000L)
 	})
-	public long getKeepAlivePacketInterval(long interval) {
+	private long getKeepAlivePacketInterval(long interval) {
 		return RandomPatches.config().connectionTimeouts.keepAlivePacketIntervalSeconds * 1000L;
-	}
-
-	@ModifyConstant(method = "processPlayer", constant = @Constant(floatValue = 100.0F))
-	public float getMaxPlayerSpeed(float speed) {
-		return RandomPatches.config().playerSpeedLimits.maxSpeed;
-	}
-
-	@ModifyConstant(method = "processPlayer", constant = @Constant(floatValue = 300.0F))
-	public float getMaxPlayerElytraSpeed(float speed) {
-		return RandomPatches.config().playerSpeedLimits.maxElytraSpeed;
-	}
-
-	@ModifyConstant(method = "processVehicleMove", constant = @Constant(doubleValue = 100.0))
-	public double getMaxPlayerVehicleSpeed(double speed) {
-		return RandomPatches.config().playerSpeedLimits.maxVehicleSpeed;
 	}
 }

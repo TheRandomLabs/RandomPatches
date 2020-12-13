@@ -36,7 +36,7 @@ public final class ReadTimeoutHandlerMixin {
 			target = "io/netty/handler/timeout/ReadTimeoutHandler.<init>" +
 					"(JLjava/util/concurrent/TimeUnit;)V"
 	))
-	public int getTimeout(int timeout) {
+	private int getTimeout(int timeout) {
 		final int forgeReadTimeout =
 				Integer.parseInt(System.getProperty("forge.readTimeout", "30"));
 		return timeout == 30 || timeout == forgeReadTimeout ?

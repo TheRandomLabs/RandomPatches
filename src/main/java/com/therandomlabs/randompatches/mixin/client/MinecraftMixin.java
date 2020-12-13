@@ -21,28 +21,36 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.therandomlabs.randompatches.mixin;
+package com.therandomlabs.randompatches.mixin.client;
 
-import com.therandomlabs.randompatches.RandomPatches;
-import net.minecraft.network.play.ServerPlayNetHandler;
+import java.io.InputStream;
+
+import com.therandomlabs.randompatches.client.RPWindowHandler;
+import net.minecraft.client.MainWindow;
+import net.minecraft.client.Minecraft;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.Constant;
-import org.spongepowered.asm.mixin.injection.ModifyConstant;
+import org.spongepowered.asm.mixin.Overwrite;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Redirect;
 
-@Mixin(ServerPlayNetHandler.class)
-public final class ServerPlayNetHandlerPlayerSpeedLimitsMixin {
-	@ModifyConstant(method = "processPlayer", constant = @Constant(floatValue = 100.0F))
-	private float getMaxPlayerSpeed(float speed) {
-		return RandomPatches.config().playerSpeedLimits.maxSpeed;
+@Mixin(Minecraft.class)
+public final class MinecraftMixin {
+	/**
+	 * @author TheRandomLabs
+	 * @reason an overwrite is the least convoluted way to implement this.
+	 */
+	@Overwrite
+	private String getWindowTitle() {
+		RPWindowHandler.enable();
+		return RPWindowHandler.getWindowTitle();
 	}
 
-	@ModifyConstant(method = "processPlayer", constant = @Constant(floatValue = 300.0F))
-	private float getMaxPlayerElytraSpeed(float speed) {
-		return RandomPatches.config().playerSpeedLimits.maxElytraSpeed;
-	}
-
-	@ModifyConstant(method = "processVehicleMove", constant = @Constant(doubleValue = 100.0))
-	private double getMaxPlayerVehicleSpeed(double speed) {
-		return RandomPatches.config().playerSpeedLimits.maxVehicleSpeed;
+	@Redirect(method = "<init>", at = @At(
+			value = "INVOKE",
+			target = "net/minecraft/client/MainWindow.setWindowIcon" +
+					"(Ljava/io/InputStream;Ljava/io/InputStream;)V"
+	))
+	private void setWindowIcon(MainWindow mainWindow, InputStream stream16, InputStream stream32) {
+		RPWindowHandler.updateWindowIcon(stream16, stream32);
 	}
 }

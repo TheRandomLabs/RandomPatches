@@ -23,20 +23,23 @@
 
 package com.therandomlabs.randompatches;
 
-import java.io.IOException;
+import java.nio.file.InvalidPathException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import com.electronwill.nightconfig.core.conversion.Path;
 import com.electronwill.nightconfig.core.conversion.SpecIntInRange;
 import com.google.common.reflect.ClassPath;
+import com.therandomlabs.randompatches.client.RPWindowHandler;
 import com.therandomlabs.randompatches.mixin.RPMixinConfig;
 import me.shedaniel.autoconfig1u.ConfigData;
 import me.shedaniel.autoconfig1u.annotation.Config;
 import me.shedaniel.autoconfig1u.annotation.ConfigEntry;
-import net.minecraftforge.fml.loading.FMLLoader;
+import net.minecraftforge.fml.loading.FMLEnvironment;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * The RandomPatches configuration.
@@ -49,6 +52,95 @@ import net.minecraftforge.fml.loading.FMLLoader;
 })
 @Config(name = RandomPatches.MOD_ID)
 public final class RPConfig implements ConfigData {
+	public static final class Client {
+		@TOMLConfigSerializer.Comment("Options related to the Minecraft window.")
+		@ConfigEntry.Category("window")
+		@ConfigEntry.Gui.CollapsibleObject
+		@ConfigEntry.Gui.Tooltip
+		public Window window = new Window();
+	}
+
+	public static final class Window implements ConfigData {
+		@ConfigEntry.Gui.Excluded
+		public static final String DEFAULT_TITLE = FMLEnvironment.production ?
+				"Minecraft* %s" : "RandomPatches";
+
+		@ConfigEntry.Gui.Excluded
+		private static final String DEFAULT_ICON =
+				FMLEnvironment.production ? "" : "../src/main/resources/logo.png";
+
+		@TOMLConfigSerializer.Comment({
+				"The Minecraft window title.",
+				"The Minecraft version is provided as an argument."
+		})
+		@ConfigEntry.Gui.Tooltip
+		public String title = DEFAULT_TITLE;
+
+		@TOMLConfigSerializer.Comment({
+				"The Minecraft window title that takes into account the current activity.",
+				"The Minecraft version and current activity are provided as arguments.",
+				"For example: \"RandomPatches - %2$s\""
+		})
+		@ConfigEntry.Gui.Tooltip
+		public String titleWithActivity = FMLEnvironment.production ?
+				"Minecraft* %s - %s" : "RandomPatches - %2$s";
+
+		@Path("icon_16x16")
+		@TOMLConfigSerializer.Comment("The path to the 16x16 Minecraft window icon.")
+		@ConfigEntry.Gui.Tooltip
+		public String icon16 = DEFAULT_ICON;
+
+		@Path("icon_32x32")
+		@TOMLConfigSerializer.Comment("The path to the 16x16 Minecraft window icon.")
+		@ConfigEntry.Gui.Tooltip
+		public String icon32 = DEFAULT_ICON;
+
+		@Path("icon_256x256")
+		@TOMLConfigSerializer.Comment({
+				"The path to the 256x256 Minecraft window icon.",
+				"This is only used on Mac OS X."
+		})
+		@ConfigEntry.Gui.Tooltip
+		public String icon256 = DEFAULT_ICON;
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public void validatePostLoad() {
+			icon16 = validateIconPath(icon16);
+			icon32 = validateIconPath(icon32);
+			icon256 = validateIconPath(icon256);
+
+			if (icon16.isEmpty()) {
+				if (!icon256.isEmpty()) {
+					icon16 = icon256;
+				} else if (!icon32.isEmpty()) {
+					icon16 = icon32;
+				}
+			}
+
+			if (icon32.isEmpty()) {
+				icon32 = icon256.isEmpty() ? icon16 : icon256;
+			}
+
+			if (icon256.isEmpty()) {
+				icon256 = icon32;
+			}
+
+			RPWindowHandler.onConfigReload();
+		}
+
+		private String validateIconPath(String path) {
+			try {
+				Paths.get(path);
+				return path;
+			} catch (InvalidPathException ex) {
+				return DEFAULT_ICON;
+			}
+		}
+	}
+
 	public static final class ConnectionTimeouts implements ConfigData {
 		@TOMLConfigSerializer.Comment({
 				"The connection read timeout in seconds.",
@@ -120,11 +212,16 @@ public final class RPConfig implements ConfigData {
 	@SuppressWarnings("UnstableApiUsage")
 	public static final class Misc implements ConfigData {
 		@ConfigEntry.Gui.Excluded
-		private static final Map<String, String> mixins = new HashMap<>();
+		private static final Map<String, String> mixins = RPMixinConfig.getMixinClasses().stream().
+				collect(Collectors.toMap(
+						ClassPath.ClassInfo::getName,
+						info -> StringUtils.substring(info.getSimpleName(), -5)
+				));
 
 		@TOMLConfigSerializer.Comment({
 				"The name of the command that reloads this configuration from disk.",
-				"Set this to an empty string to disable the command."
+				"Set this to an empty string to disable the command.",
+				"Changes to this option are applied when a server is loaded."
 		})
 		@ConfigEntry.Gui.Tooltip
 		public String configReloadCommand = "rpconfigreload";
@@ -138,6 +235,7 @@ public final class RPConfig implements ConfigData {
 
 		@TOMLConfigSerializer.Comment({
 				"A list of mixins that should not be applied. Available mixins:",
+				"- Minecraft: Required for changing Minecraft window options.",
 				"- ReadTimeoutHandler: Required for changing the read timeout.",
 				"- ServerLoginNetHandler: Required for changing the login timeout.",
 				"- ServerPlayNetHandlerKeepAlive: Required for changing KeepAlive packet settings.",
@@ -148,26 +246,6 @@ public final class RPConfig implements ConfigData {
 		})
 		@ConfigEntry.Gui.Tooltip
 		public List<String> mixinBlacklist = new ArrayList<>();
-
-		static {
-			ClassPath classPath;
-
-			try {
-				classPath = ClassPath.from(FMLLoader.getLaunchClassLoader());
-			} catch (IOException ex) {
-				throw new RuntimeException("Failed to list RandomPatches mixins", ex);
-			}
-
-			final String mixinPackage = RPMixinConfig.class.getPackage().getName();
-
-			for (ClassPath.ClassInfo info : classPath.getTopLevelClasses(mixinPackage)) {
-				final String name = info.getSimpleName();
-
-				if (name.endsWith("Mixin")) {
-					mixins.put(info.getName(), name.substring(0, name.length() - 5));
-				}
-			}
-		}
 
 		/**
 		 * {@inheritDoc}
@@ -192,6 +270,11 @@ public final class RPConfig implements ConfigData {
 			return !mixinBlacklist.contains(mixins.get(mixinClassName));
 		}
 	}
+
+	@TOMLConfigSerializer.Comment("Client-sided options.")
+	@ConfigEntry.Category("client")
+	@ConfigEntry.Gui.TransitiveObject
+	public Client client = new Client();
 
 	@TOMLConfigSerializer.Comment("Options related to connection timeouts.")
 	@ConfigEntry.Category("connection_timeouts")

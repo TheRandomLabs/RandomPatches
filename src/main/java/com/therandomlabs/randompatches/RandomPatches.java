@@ -31,6 +31,8 @@ import net.minecraftforge.fml.ExtensionPoint;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * The main class for RandomPatches.
@@ -43,15 +45,17 @@ public final class RandomPatches {
 	 */
 	public static final String MOD_ID = "randompatches";
 
-	private static RPConfig config;
+	/**
+	 * The RandomPatches logger. This should only be used by RandomPatches.
+	 */
+	public static final Logger logger = LogManager.getLogger(MOD_ID);
+
 	private static TOMLConfigSerializer<RPConfig> serializer;
 
 	/**
 	 * Constructs a {@link RandomPatches} instance.
 	 */
 	public RandomPatches() {
-		reloadConfig();
-
 		if (ModList.get().isLoaded("cloth-config")) {
 			ModLoadingContext.get().registerExtensionPoint(
 					ExtensionPoint.CONFIGGUIFACTORY,
@@ -74,23 +78,22 @@ public final class RandomPatches {
 	 * @return an {@link RPConfig} object.
 	 */
 	public static RPConfig config() {
-		if (config == null) {
+		if (serializer == null) {
 			reloadConfig();
 		}
 
-		return config;
+		return serializer.getConfig();
 	}
 
 	/**
 	 * Reloads the RandomPatches configuration from disk.
 	 */
 	public static void reloadConfig() {
-		if (config == null) {
+		if (serializer == null) {
 			AutoConfig.register(RPConfig.class, (definition, configClass) -> {
 				serializer = new TOMLConfigSerializer<>(definition, configClass);
 				return serializer;
 			});
-			config = AutoConfig.getConfigHolder(RPConfig.class).getConfig();
 		} else {
 			serializer.reloadFromDisk();
 		}
