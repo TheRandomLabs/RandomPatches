@@ -18,7 +18,7 @@ I've partnered with BisectHosting! In my experience, their servers are lag-free,
 of high quality. Check them out here:
 
 <a href="https://bisecthosting.com/TheRandomLabs">
-	<img src="https://www.bisecthosting.com/images/logos/dark_text@1538x500.png" width="385" height="125" border="0">
+	<img src="https://www.bisecthosting.com/images/logos/dark_text@1538x500.png" width="385" height="125" border="0" style="background-color: white">
 </a>
 
 Use the code "**TheRandomLabs**" to get 25% off your first month!
@@ -41,9 +41,10 @@ mod. As a result, clients can connect to a server with a different version of th
 the server.
 
 By default, RandomPatches aims to be as non-invasive as possible—there are no breaking changes to
-game mechanics or noticeable GUI additions. Indeed, with the default settings, the mod should be
+game mechanics or conspicuous GUI additions. Indeed, with the default settings, the mod should be
 virtually unnoticeable when one is not specifically looking for it. In addition, RandomPatches
-should automatically disable its features if they are implemented by another mod.
+should automatically disable any of its features that are implemented by another mod in order to
+preserve compatibility wherever possible.
 
 ## Features
 
@@ -51,7 +52,7 @@ Features without a side specified are server-sided.
 
 ### Connection timeouts
 
-In vanilla Minecraft, the connection timeouts are hardcoded, and are often not long enough for
+In vanilla Minecraft, the connection timeouts are hardcoded, and often not long enough for
 slower computers or heavier modded instances. To counter this, RandomPatches allows several
 connection timeouts to be configured:
 
@@ -66,10 +67,10 @@ to be configured.
 
 ### Player speed limits
 
-In vanilla Minecraft, the player speed limits are hardcoded, and are set to values that are often
+In vanilla Minecraft, the player speed limits are hardcoded, and set to values that are often
 not high enough in certain cases. As a result, rubber banding occurs, and
 `[Player] moved too quickly!` is spammed in the log. To prevent this, RandomPatches changes the
-following player speed limits from 100.0 to a higher value by default:
+following player speed limits to a higher value by default:
 
 * Default maximum player speed
 * Maximum player elytra speed
@@ -77,15 +78,15 @@ following player speed limits from 100.0 to a higher value by default:
 
 ### Tick scheduler desync fix
 
-Occasionally, the tick scheduler becomes desynchronised, and Minecraft crashes, throwing an
-`IllegalStateException` with the message `TickNextTick list out of synch`. RandomPatches attempts
-to fix this issue using the solution described by malte0811
+Occasionally, the tick scheduler becomes desynchronised, and as a result, Minecraft crashes,
+throwing an `IllegalStateException` with the message `TickNextTick list out of synch`.
+RandomPatches attempts to fix this issue using the solution described by malte0811
 [here](https://github.com/SleepyTrousers/EnderCore/issues/105).
 
 ### Window title and icon
 
-By default, RandomPatches removes the `*` in the Minecraft title that indicates that the game is
-modded. In addition, the following window properties can be configured:
+By default, RandomPatches removes the annoying `*` in the Minecraft title that indicates that the
+game is modded. In addition, the following window properties can be configured:
 
 * Title (the Minecraft version and current activity can be included)
 * 16x16 icon
