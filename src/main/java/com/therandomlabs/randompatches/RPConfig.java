@@ -137,7 +137,7 @@ public final class RPConfig implements ConfigData {
 		public boolean fixTickSchedulerDesync = true;
 
 		@TOMLConfigSerializer.Comment({
-				"A list of mixins not to apply. Available mixins:",
+				"A list of mixins that should not be applied. Available mixins:",
 				"- ReadTimeoutHandler: Required for changing the read timeout.",
 				"- ServerLoginNetHandler: Required for changing the login timeout.",
 				"- ServerPlayNetHandlerKeepAlive: Required for changing KeepAlive packet settings.",

@@ -22,5 +22,5 @@
 	"text.autoconfig.randompatches.option.misc.fixTickSchedulerDesync": "Fix tick scheduler desync",
 	"text.autoconfig.randompatches.option.misc.fixTickSchedulerDesync.@Tooltip": "Fixes the \"TickNextTick list out of synch\" IllegalStateException.",
 	"text.autoconfig.randompatches.option.misc.mixinBlacklist": "Mixin blacklist",
-	"text.autoconfig.randompatches.option.misc.mixinBlacklist.@Tooltip": "A list of mixins not to apply."
+	"text.autoconfig.randompatches.option.misc.mixinBlacklist.@Tooltip": "A list of mixins that should not be applied."
 }
