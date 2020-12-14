@@ -21,22 +21,32 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.therandomlabs.randompatches.mixin;
+package com.therandomlabs.randompatches.mixin.datafixerupper;
 
-import com.mojang.datafixers.DataFixer;
-import com.therandomlabs.randompatches.util.FakeDataFixer;
-import net.minecraft.util.datafix.DataFixesManager;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.SharedConstants;
+import net.minecraft.world.storage.SaveFormat;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Redirect;
 
-@Mixin(DataFixesManager.class)
-public final class DataFixesManagerMixin {
-	/**
-	 * @author TheRandomLabs
-	 * @reason this is the least convoluted way to implement this.
-	 */
-	@Overwrite
-	private static DataFixer createFixer() {
-		return new FakeDataFixer();
+@Mixin(MinecraftServer.class)
+public final class MinecraftServerMixin {
+	@SuppressWarnings("ConstantConditions")
+	@Redirect(method = "convertLevel", at = @At(
+			value = "INVOKE",
+			target = "net/minecraft/world/storage/SaveFormat$LevelSave.needsConversion()Z"
+	))
+	private static boolean needsConversion(SaveFormat.LevelSave save) {
+		final int version = save.getLevelSummary().method_29586().getVersionId();
+
+		if (save.needsConversion() || version != SharedConstants.getVersion().getWorldVersion()) {
+			throw new RuntimeException(
+					"Worlds last played on an older or newer version of Minecraft cannot be " +
+							"loaded when DataFixerUpper is disabled by RandomPatches."
+			);
+		}
+
+		return false;
 	}
 }

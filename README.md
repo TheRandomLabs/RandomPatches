@@ -107,6 +107,12 @@ enabling this feature.
 Optimize feature again before re-enabling it.
 * Take regular backups of your worlds.
 
+Although worlds last played on an older or newer version of Minecraft theoretically cannot be loaded
+when DataFixerUpper is disabled by RandomPatches, it's better to be safe than sorry.
+
+This feature does nothing if
+[DataFixerSlayer](https://www.curseforge.com/minecraft/mc-mods/datafixerslayer) is installed.
+
 ### Window title and icon
 
 By default, RandomPatches removes the annoying `*` in the Minecraft window title that indicates

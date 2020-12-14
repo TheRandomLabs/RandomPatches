@@ -1,4 +1,6 @@
 {
+	"selectWorld.unableToLoad": "Unable to load world",
+	"selectWorld.dataFixerUpperDisabled": "Worlds last played on an older or newer version of Minecraft cannot be loaded when DataFixerUpper is disabled by RandomPatches.",
 	"text.autoconfig.randompatches.title": "RandomPatches configuration",
 	"text.autoconfig.randompatches.category.client": "Client",
 	"text.autoconfig.randompatches.option.client.window": "Window",

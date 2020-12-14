@@ -5,15 +5,17 @@
 	"compatibilityLevel": "JAVA_8",
 	"refmap": "randompatches.refmap.json",
 	"mixins": [
-		"DataFixesManagerMixin",
 		"ServerPlayNetHandlerPlayerSpeedLimitsMixin",
 		"ServerTickListMixin",
+		"datafixerupper.DataFixesManagerMixin",
+		"datafixerupper.MinecraftServerMixin",
 		"timeouts.ReadTimeoutHandlerMixin",
 		"timeouts.ServerLoginNetHandlerMixin",
 		"timeouts.ServerPlayNetHandlerKeepAliveMixin"
 	],
 	"client": [
-		"client.MinecraftMixin"
+		"client.MinecraftMixin",
+		"client.datafixerupper.ConfirmBackupScreenMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

@@ -287,6 +287,14 @@ public final class RPConfig implements ConfigData {
 		}
 
 		/**
+		 * Whether DataFixerUpper should be disabled.
+		 * @return {@code true} if DataFixerUpper should be disabled, or otherwise {@code false}.
+		 */
+		public boolean disableDataFixerUpper() {
+			return disableDataFixerUpper && !isLoaded("vazkii.dfs.DataFixerSlayer");
+		}
+
+		/**
 		 * Returns whether the specified RandomPatches mixin class is enabled.
 		 *
 		 * @param mixinClassName a RandomPatches mixin class name.
@@ -296,8 +304,8 @@ public final class RPConfig implements ConfigData {
 		public boolean isMixinClassEnabled(String mixinClassName) {
 			final String simpleName = mixins.get(mixinClassName);
 
-			if ("DataFixesManager".equals(simpleName) &&
-					(!disableDataFixerUpper || isLoaded("vazkii.dfs.DataFixerSlayer"))) {
+			if (("DataFixesManager".equals(simpleName) || "MinecraftServer".equals(simpleName) ||
+					"ConfirmBackupScreen".equals(simpleName)) && !disableDataFixerUpper()) {
 				return false;
 			}
 
