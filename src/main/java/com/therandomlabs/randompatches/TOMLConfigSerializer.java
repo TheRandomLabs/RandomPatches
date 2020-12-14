@@ -33,8 +33,10 @@ import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -47,8 +49,15 @@ import com.electronwill.nightconfig.core.conversion.Converter;
 import com.electronwill.nightconfig.core.conversion.ForceBreakdown;
 import com.electronwill.nightconfig.core.conversion.InvalidValueException;
 import com.electronwill.nightconfig.core.conversion.ObjectConverter;
+import com.electronwill.nightconfig.core.conversion.SpecDoubleInRange;
 import com.electronwill.nightconfig.core.conversion.SpecEnum;
+import com.electronwill.nightconfig.core.conversion.SpecFloatInRange;
+import com.electronwill.nightconfig.core.conversion.SpecIntInRange;
+import com.electronwill.nightconfig.core.conversion.SpecLongInRange;
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
+import com.electronwill.nightconfig.core.io.CharacterOutput;
+import com.electronwill.nightconfig.core.io.CharsWrapper;
+import com.electronwill.nightconfig.toml.TomlWriter;
 import com.google.common.base.CaseFormat;
 import me.shedaniel.autoconfig1u.AutoConfig;
 import me.shedaniel.autoconfig1u.ConfigData;
@@ -100,6 +109,8 @@ public final class TOMLConfigSerializer<T extends ConfigData> implements ConfigS
 
 	//Used to access private utility methods through reflection.
 	private static final ObjectConverter objectConverter = new ObjectConverter();
+	//Used to call ValueWriter#write(Object, CharacterOutput, TomlWriter).
+	private static final TomlWriter tomlWriter = new TomlWriter();
 
 	private static final Method mustPreserve;
 	private static final Method getConverter;
@@ -109,6 +120,8 @@ public final class TOMLConfigSerializer<T extends ConfigData> implements ConfigS
 	private static final Method bottomElementType;
 	private static final Method elementTypes;
 
+	private static final Method write;
+
 	private static final Method load;
 
 	private final Class<T> configClass;
@@ -116,6 +129,8 @@ public final class TOMLConfigSerializer<T extends ConfigData> implements ConfigS
 
 	private T config;
 
+	//Yeah, this class is pretty hacky.
+	//The things I do to avoid writing my own configuration libraries.
 	static {
 		//Preserve declaration order.
 		Config.setInsertionOrderPreserved(true);
@@ -146,6 +161,18 @@ public final class TOMLConfigSerializer<T extends ConfigData> implements ConfigS
 		);
 		elementTypes = ObfuscationReflectionHelper.findMethod(
 				ObjectConverter.class, "elementTypes", ParameterizedType.class
+		);
+
+		Class<?> valueWriter;
+
+		try {
+			valueWriter = Class.forName("com.electronwill.nightconfig.toml.ValueWriter");
+		} catch (ClassNotFoundException ex) {
+			throw new RuntimeException(ex);
+		}
+
+		write = ObfuscationReflectionHelper.findMethod(
+				valueWriter, "write", Object.class, CharacterOutput.class, TomlWriter.class
 		);
 
 		load = ObfuscationReflectionHelper.findMethod(ConfigManager.class, "load");
@@ -288,7 +315,7 @@ public final class TOMLConfigSerializer<T extends ConfigData> implements ConfigS
 	}
 
 	//Taken and adapted from ObjectConverter.
-	@SuppressWarnings({"unchecked", "PMD.PreserveStackTrace"})
+	@SuppressWarnings({"unchecked", "PMD.CloseResource", "PMD.PreserveStackTrace"})
 	private void moveToFileConfig(
 			Object object, Class<?> clazz, CommentedConfig destination, Object defaultConfig
 	) throws IllegalAccessException, InvocationTargetException {
@@ -310,7 +337,8 @@ public final class TOMLConfigSerializer<T extends ConfigData> implements ConfigS
 				}
 
 				/* Get value. */
-				Object value = checkField(field, field.get(object), defaultConfig);
+				final Object defaultValue = field.get(defaultConfig);
+				Object value = checkField(field, field.get(object), defaultValue);
 
 				final Converter<Object, Object> converter =
 						(Converter<Object, Object>) getConverter.invoke(null, field);
@@ -322,6 +350,8 @@ public final class TOMLConfigSerializer<T extends ConfigData> implements ConfigS
 				/* Write to config. */
 				final List<String> path = getPath(field);
 				final ConfigFormat<?> format = destination.configFormat();
+
+				boolean category = false;
 
 				if (value == null) {
 					destination.set(path, null);
@@ -336,7 +366,8 @@ public final class TOMLConfigSerializer<T extends ConfigData> implements ConfigS
 						}
 					} else if (field.isAnnotationPresent(ForceBreakdown.class) ||
 							!format.supportsType(valueType)) {
-						//This is a category.
+						category = true;
+
 						destination.set(path, value);
 						final CommentedConfig converted = destination.createSubConfig();
 
@@ -349,7 +380,7 @@ public final class TOMLConfigSerializer<T extends ConfigData> implements ConfigS
 										path, configClass, ex
 								);
 
-								value = field.get(defaultConfig);
+								value = defaultValue;
 
 								try {
 									((ConfigData) value).validatePostLoad();
@@ -361,7 +392,7 @@ public final class TOMLConfigSerializer<T extends ConfigData> implements ConfigS
 							}
 						}
 
-						moveToFileConfig(value, valueType, converted, field.get(defaultConfig));
+						moveToFileConfig(value, valueType, converted, defaultValue);
 						destination.set(path, converted);
 					} else if (value instanceof Collection) {
 						//Ensure ConfigFormat supports collection element type.
@@ -382,9 +413,42 @@ public final class TOMLConfigSerializer<T extends ConfigData> implements ConfigS
 					}
 				}
 
+				/* Set comment. */
+				final List<String> commentLines = new ArrayList<>();
+
 				if (field.isAnnotationPresent(Comment.class)) {
-					final String[] lines = field.getAnnotation(Comment.class).value();
-					final String comment = Arrays.stream(lines).
+					Collections.addAll(commentLines, field.getAnnotation(Comment.class).value());
+				}
+
+				if (!category) {
+					if (field.isAnnotationPresent(SpecIntInRange.class)) {
+						final SpecIntInRange range = field.getAnnotation(SpecIntInRange.class);
+						commentLines.add("Min: " + range.min());
+						commentLines.add("Max: " + range.max());
+					} else if (field.isAnnotationPresent(SpecLongInRange.class)) {
+						final SpecLongInRange range = field.getAnnotation(SpecLongInRange.class);
+						commentLines.add("Min: " + range.min());
+						commentLines.add("Max: " + range.max());
+					} else if (field.isAnnotationPresent(SpecDoubleInRange.class)) {
+						final SpecDoubleInRange range =
+								field.getAnnotation(SpecDoubleInRange.class);
+						commentLines.add("Min: " + range.min());
+						commentLines.add("Max: " + range.max());
+					} else if (field.isAnnotationPresent(SpecFloatInRange.class)) {
+						final SpecFloatInRange range = field.getAnnotation(SpecFloatInRange.class);
+						commentLines.add("Min: " + range.min());
+						commentLines.add("Max: " + range.max());
+					}
+
+					final Object convertedDefaultValue =
+							converter == null ? defaultValue : converter.convertFromField(value);
+					final CharsWrapper.Builder builder = new CharsWrapper.Builder(16);
+					write.invoke(null, convertedDefaultValue, builder, tomlWriter);
+					commentLines.add("Default: " + builder);
+				}
+
+				if (!commentLines.isEmpty()) {
+					final String comment = commentLines.stream().
 							map(line -> " " + line).
 							collect(Collectors.joining(System.lineSeparator()));
 					destination.setComment(path, comment);
@@ -437,11 +501,12 @@ public final class TOMLConfigSerializer<T extends ConfigData> implements ConfigS
 
 				/* Write value to field, and convert if necessary. */
 				final Class<?> fieldType = field.getType();
+				final Object defaultValue = field.get(defaultConfig);
 
 				try {
 					if (value instanceof UnmodifiableConfig &&
 							!(fieldType.isAssignableFrom(value.getClass()))) {
-						final UnmodifiableConfig cfg = (UnmodifiableConfig) value;
+						final UnmodifiableConfig subconfig = (UnmodifiableConfig) value;
 
 						// Gets or creates the field and convert it (if null OR not preserved)
 						Object fieldValue = field.get(object);
@@ -449,13 +514,9 @@ public final class TOMLConfigSerializer<T extends ConfigData> implements ConfigS
 						if (fieldValue == null) {
 							fieldValue = Utils.constructUnsafely(fieldType);
 							field.set(object, fieldValue);
-							moveToObjectConfig(
-									cfg, fieldValue, fieldType, field.get(defaultConfig)
-							);
+							moveToObjectConfig(subconfig, fieldValue, fieldType, defaultValue);
 						} else if (!(boolean) mustPreserve.invoke(null, field, clazz)) {
-							moveToObjectConfig(
-									cfg, fieldValue, fieldType, field.get(defaultConfig)
-							);
+							moveToObjectConfig(subconfig, fieldValue, fieldType, defaultValue);
 						}
 					} else if (value instanceof Collection &&
 							Collection.class.isAssignableFrom(fieldType)) {
@@ -473,7 +534,7 @@ public final class TOMLConfigSerializer<T extends ConfigData> implements ConfigS
 						if (sourceBottomType == null ||
 								destinationBottomType == null ||
 								destinationBottomType.isAssignableFrom(sourceBottomType)) {
-							value = checkField(field, value, defaultConfig);
+							value = checkField(field, value, defaultValue);
 							field.set(object, value);
 						} else {
 							//AutoConfig doesn't support collections of objects.
@@ -483,9 +544,9 @@ public final class TOMLConfigSerializer<T extends ConfigData> implements ConfigS
 						}
 					} else {
 						if (value == null && (boolean) mustPreserve.invoke(null, field, clazz)) {
-							checkField(field, field.get(object), defaultConfig);
+							checkField(field, field.get(object), defaultValue);
 						} else {
-							checkField(field, value, defaultConfig);
+							checkField(field, value, defaultValue);
 
 							if (fieldType.isEnum()) {
 								final Class<? extends Enum> enumType =
@@ -523,14 +584,17 @@ public final class TOMLConfigSerializer<T extends ConfigData> implements ConfigS
 				collect(Collectors.toList());
 	}
 
-	private Object checkField(Field field, Object value, Object defaultConfig)
+	private Object checkField(Field field, Object value, Object defaultValue)
 			throws IllegalAccessException, InvocationTargetException {
 		try {
 			checkField.invoke(null, field, value);
 			return value;
-		} catch (InvalidValueException ex) {
-			//Reset to default value.
-			value = field.get(defaultConfig);
+		} catch (InvocationTargetException ex) {
+			if (!(ex.getCause() instanceof InvalidValueException)) {
+				throw ex;
+			}
+
+			value = defaultValue;
 			//Ensure default value is valid.
 			checkField.invoke(null, field, value);
 			return value;

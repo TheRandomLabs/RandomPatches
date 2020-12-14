@@ -38,9 +38,9 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.resources.ResourcePackType;
 import net.minecraft.resources.VanillaPack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SharedConstants;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.loading.FMLEnvironment;
-import net.minecraftforge.versions.mcp.MCPVersion;
 import org.apache.commons.io.IOUtils;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.lwjgl.glfw.GLFW;
@@ -106,11 +106,12 @@ public final class RPWindowHandler {
 			}
 
 			return String.format(
-					config.titleWithActivity, MCPVersion.getMCVersion(), I18n.format(activity)
+					config.titleWithActivity, SharedConstants.getVersion().getName(),
+					I18n.format(activity)
 			);
 		}
 
-		return String.format(config.title, MCPVersion.getMCVersion());
+		return String.format(config.title, SharedConstants.getVersion().getName());
 	}
 
 	/**

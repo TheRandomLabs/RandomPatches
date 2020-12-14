@@ -1,11 +1,12 @@
 # RandomPatches
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
-
 [![Build](https://jitci.com/gh/TheRandomLabs/RandomPatches/svg?branch=1.16-forge)](https://jitci.com/gh/TheRandomLabs/RandomPatches)
-[![Downloads](http://cf.way2muchnoise.eu/full_randompatches_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/randompatches)
-
 [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/TheRandomLabs/RandomPatches.svg)](http://isitmaintained.com/project/TheRandomLabs/RandomPatches "Average time to resolve an issue")
+
+[![Downloads](http://cf.way2muchnoise.eu/full_randompatches_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/randompatches)
+[![Files](https://curse.nikky.moe/api/img/285612/files?logo)](https://www.curseforge.com/minecraft/mc-mods/randompatches/files)
+[![Download](https://curse.nikky.moe/api/img/285612?logo)](https://curse.nikky.moe/api/url/285612)
 
 A bunch of miscellaneous patches for Minecraft.
 
@@ -53,7 +54,7 @@ preserve compatibility wherever possible.
 
 ## Features
 
-Features without a side specified are server-sided.
+Features without a specified side are server-sided.
 
 ### Connection timeouts
 
@@ -61,13 +62,18 @@ In vanilla Minecraft, the connection timeouts are hardcoded, and often not long 
 slower computers or heavier modded instances. To counter this, RandomPatches allows several
 connection timeouts to be configured:
 
-* The connection read timeout (this is both client and server-sided)
-* The login timeout (how long the server waits for a player to log in)
-* The KeepAlive timeout (how long the server waits for a player to return a KeepAlive packet
-before disconnecting them)
+* The connection read timeout
+  * Both client and server-sided
+  * Raised to 120 seconds from the vanilla value of 30 seconds by default
+* The login timeout
+  * How long the server waits for a player to log in
+  * Raised to 2400 ticks (120 seconds) from the vanilla value of 600 ticks (30 seconds) by default
+* The KeepAlive timeout
+  * How long the server waits for a player to return a KeepAlive packet before disconnecting them
+  * Raised to 120 seconds from the vanilla value of 30 seconds by default
 
 In addition, RandomPatches allows the interval at which KeepAlive packets are sent to clients
-to be configured.
+to be configured, although it is recommended that this be left at the vanilla value of 15 seconds.
 </details>
 
 ### Player speed limits
@@ -83,10 +89,23 @@ following player speed limits to a higher value by default:
 
 ### Tick scheduler desync fix
 
-Occasionally, the tick scheduler becomes desynchronised, and as a result, Minecraft crashes,
+Occasionally, the tick scheduler becomes desynchronized, and as a result, Minecraft crashes,
 throwing an `IllegalStateException` with the message `TickNextTick list out of synch`.
 RandomPatches attempts to fix this issue using the solution described by malte0811
 [here](https://github.com/SleepyTrousers/EnderCore/issues/105).
+
+### Disable DataFixerUpper
+
+This disables the execution of DataFixerUpper, reducing RAM usage and decreasing the Minecraft
+loading time. However, this feature is disabled by default, and enabling it is **not recommended**,
+as DataFixerUpper is responsible for the backwards compatibility of worlds. However, if you insist
+on disabling DataFixerUpper:
+
+* Ensure you have used the Optimize feature on any worlds from previous versions of Minecraft before
+enabling this feature.
+* Before migrating worlds to new versions of Minecraft, ensure this feature is disabled, and use the
+Optimize feature again before re-enabling it.
+* Take regular backups of your worlds.
 
 ### Window title and icon
 

@@ -31,6 +31,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.electronwill.nightconfig.core.conversion.Path;
+import com.electronwill.nightconfig.core.conversion.SpecDoubleInRange;
+import com.electronwill.nightconfig.core.conversion.SpecFloatInRange;
 import com.electronwill.nightconfig.core.conversion.SpecIntInRange;
 import com.google.common.reflect.ClassPath;
 import com.therandomlabs.randompatches.client.RPWindowHandler;
@@ -39,6 +41,7 @@ import me.shedaniel.autoconfig1u.ConfigData;
 import me.shedaniel.autoconfig1u.annotation.Config;
 import me.shedaniel.autoconfig1u.annotation.ConfigEntry;
 import net.minecraftforge.fml.loading.FMLEnvironment;
+import net.minecraftforge.fml.loading.FMLLoader;
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -197,6 +200,7 @@ public final class RPConfig implements ConfigData {
 				"The maximum player speed when not riding a vehicle or flying with elytra.",
 				"The vanilla default is 100.0."
 		})
+		@SpecFloatInRange(min = 0.0F, max = Float.MAX_VALUE)
 		@ConfigEntry.Gui.Tooltip
 		public float defaultMaxSpeed = 1000000.0F;
 
@@ -204,6 +208,7 @@ public final class RPConfig implements ConfigData {
 				"The maximum player elytra speed.",
 				"The vanilla default is 300.0."
 		})
+		@SpecFloatInRange(min = 0.0F, max = Float.MAX_VALUE)
 		@ConfigEntry.Gui.Tooltip
 		public float maxElytraSpeed = 1000000.0F;
 
@@ -211,6 +216,7 @@ public final class RPConfig implements ConfigData {
 				"The maximum player vehicle speed.",
 				"The vanilla default is 100.0."
 		})
+		@SpecDoubleInRange(min = 0.0, max = Double.MAX_VALUE)
 		@ConfigEntry.Gui.Tooltip
 		public double maxVehicleSpeed = 1000000.0;
 	}
@@ -221,7 +227,7 @@ public final class RPConfig implements ConfigData {
 		private static final Map<String, String> mixins = RPMixinConfig.getMixinClasses().stream().
 				collect(Collectors.toMap(
 						ClassPath.ClassInfo::getName,
-						info -> StringUtils.substring(info.getSimpleName(), -5)
+						info -> StringUtils.substring(info.getSimpleName(), 0, -5)
 				));
 
 		@TOMLConfigSerializer.Comment({
@@ -238,6 +244,21 @@ public final class RPConfig implements ConfigData {
 		})
 		@ConfigEntry.Gui.Tooltip
 		public boolean fixTickSchedulerDesync = true;
+
+		@TOMLConfigSerializer.Comment({
+				"Disables the execution of DataFixerUpper.",
+				"This reduces RAM usage and decreases the Minecraft loading time.",
+				"WARNING: THIS IS NOT RECOMMENDED!",
+				"- DataFixerUpper is responsible for the backwards compatibility of worlds.",
+				"- Ensure you have used the Optimize feature on any worlds from previous " +
+						"versions of Minecraft before enabling this feature.",
+				"- Before migrating worlds to new versions of Minecraft, ensure this feature is " +
+						"disabled, and use the Optimize feature again before re-enabling it.",
+				"- Take regular backups of your worlds.",
+				"Changes to this option are applied after a game restart."
+		})
+		@ConfigEntry.Gui.Tooltip
+		public boolean disableDataFixerUpper = !FMLEnvironment.production;
 
 		@TOMLConfigSerializer.Comment({
 				"A list of mixins that should not be applied. Available mixins:",
@@ -273,7 +294,24 @@ public final class RPConfig implements ConfigData {
 		 * or otherwise {@code false}.
 		 */
 		public boolean isMixinClassEnabled(String mixinClassName) {
-			return !mixinBlacklist.contains(mixins.get(mixinClassName));
+			final String simpleName = mixins.get(mixinClassName);
+
+			if ("DataFixesManager".equals(simpleName) &&
+					(!disableDataFixerUpper || isLoaded("vazkii.dfs.DataFixerSlayer"))) {
+				return false;
+			}
+
+			return !mixinBlacklist.contains(simpleName);
+		}
+
+		private static boolean isLoaded(String className) {
+			try {
+				Class.forName(className, false, FMLLoader.getLaunchClassLoader());
+			} catch (ClassNotFoundException ex) {
+				return false;
+			}
+
+			return true;
 		}
 	}
 

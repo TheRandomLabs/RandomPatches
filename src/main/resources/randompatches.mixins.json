@@ -5,6 +5,7 @@
 	"compatibilityLevel": "JAVA_8",
 	"refmap": "randompatches.refmap.json",
 	"mixins": [
+		"DataFixesManagerMixin",
 		"ServerPlayNetHandlerPlayerSpeedLimitsMixin",
 		"ServerTickListMixin",
 		"timeouts.ReadTimeoutHandlerMixin",

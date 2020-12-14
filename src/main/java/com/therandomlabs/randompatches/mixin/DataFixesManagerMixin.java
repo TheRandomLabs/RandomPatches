@@ -21,36 +21,22 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.therandomlabs.randompatches.mixin.client;
+package com.therandomlabs.randompatches.mixin;
 
-import java.io.InputStream;
-
-import com.therandomlabs.randompatches.client.RPWindowHandler;
-import net.minecraft.client.MainWindow;
-import net.minecraft.client.Minecraft;
+import com.mojang.datafixers.DataFixer;
+import com.therandomlabs.randompatches.util.FakeDataFixer;
+import net.minecraft.util.datafix.DataFixesManager;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Redirect;
 
-@Mixin(Minecraft.class)
-public final class MinecraftMixin {
+@Mixin(DataFixesManager.class)
+public final class DataFixesManagerMixin {
 	/**
 	 * @author TheRandomLabs
 	 * @reason this is the least convoluted way to implement this.
 	 */
 	@Overwrite
-	private String getWindowTitle() {
-		RPWindowHandler.enable();
-		return RPWindowHandler.getWindowTitle();
-	}
-
-	@Redirect(method = "<init>", at = @At(
-			value = "INVOKE",
-			target = "net/minecraft/client/MainWindow.setWindowIcon" +
-					"(Ljava/io/InputStream;Ljava/io/InputStream;)V"
-	))
-	private void setWindowIcon(MainWindow mainWindow, InputStream stream16, InputStream stream32) {
-		RPWindowHandler.updateWindowIcon(stream16, stream32);
+	private static DataFixer createFixer() {
+		return new FakeDataFixer();
 	}
 }
