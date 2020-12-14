@@ -110,6 +110,8 @@ Optimize feature again before re-enabling it.
 Although worlds last played on an older or newer version of Minecraft theoretically cannot be loaded
 when DataFixerUpper is disabled by RandomPatches, it's better to be safe than sorry.
 
+To make this clear, **RandomPatches is not responsible for any damage caused by this feature.**
+
 This feature does nothing if
 [DataFixerSlayer](https://www.curseforge.com/minecraft/mc-mods/datafixerslayer) is installed.
 
