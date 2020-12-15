@@ -57,6 +57,7 @@ import com.electronwill.nightconfig.core.conversion.SpecLongInRange;
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.io.CharacterOutput;
 import com.electronwill.nightconfig.core.io.CharsWrapper;
+import com.electronwill.nightconfig.core.io.ParsingException;
 import com.electronwill.nightconfig.toml.TomlWriter;
 import com.google.common.base.CaseFormat;
 import me.shedaniel.autoconfig1u.AutoConfig;
@@ -222,19 +223,25 @@ public final class TOMLConfigSerializer<T extends ConfigData> implements ConfigS
 	 */
 	@Override
 	public T deserialize() {
-		T config = createDefault();
-
 		if (!Files.exists(fileConfig.getNioPath())) {
+			config = createDefault();
 			return config;
 		}
 
 		final T defaultConfig = createDefault();
 
 		try {
-			fileConfig.load();
+			try {
+				fileConfig.load();
+			} catch (ParsingException ex) {
+				logger.error("Failed to deserialize: " + configClass, ex);
+				return config;
+			}
+
+			config = createDefault();
 			moveToObjectConfig(fileConfig, config, configClass, defaultConfig);
-			this.config = validateAndSave(config, defaultConfig);
-			return this.config;
+			config = validateAndSave(config, defaultConfig);
+			return config;
 		} catch (RuntimeException | IllegalAccessException | InvocationTargetException |
 				IOException ex) {
 			//We throw a RuntimeException instead of a SerializationException so that errors

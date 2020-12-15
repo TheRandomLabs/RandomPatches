@@ -88,18 +88,22 @@ public final class RPConfig implements ConfigData {
 				"Minecraft %s - %s" : "RandomPatches - %2$s";
 
 		@Path("icon_16x16")
-		@TOMLConfigSerializer.Comment(
+		@TOMLConfigSerializer.Comment({
 				"The path to the 16x16 Minecraft window icon relative to the Minecraft " +
-						"instance directory."
-		)
+						"instance directory.",
+				"Forward slashes should be used even on Windows to preserve compatibility with " +
+						"other platforms, and backward slashes will automatically be replaced."
+		})
 		@ConfigEntry.Gui.Tooltip
 		public String icon16 = DEFAULT_ICON;
 
 		@Path("icon_32x32")
-		@TOMLConfigSerializer.Comment(
+		@TOMLConfigSerializer.Comment({
 				"The path to the 16x16 Minecraft window icon relative to the Minecraft " +
-						"instance directory."
-		)
+						"instance directory.",
+				"Forward slashes should be used even on Windows to preserve compatibility with " +
+						"other platforms, and backward slashes will automatically be replaced."
+		})
 		@ConfigEntry.Gui.Tooltip
 		public String icon32 = DEFAULT_ICON;
 
@@ -143,7 +147,7 @@ public final class RPConfig implements ConfigData {
 		private String validateIconPath(String path) {
 			try {
 				Paths.get(path);
-				return path;
+				return path.replace('\\', '/');
 			} catch (InvalidPathException ex) {
 				return DEFAULT_ICON;
 			}
