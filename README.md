@@ -145,5 +145,8 @@ explanation.
 installed, a configuration GUI can be accessed from the mod menu.
 * In case of unaddressed compatibility issues, individual mixins can be disabled through the mixin
 blacklist.
+  * Most mixins are not automatically disabled when the features that depend on them are.
+  * This is done to allow features to be enabled or disabled in-game without the need for restarts.
+  * A list of these mixins can be found in the comments for the mixin blacklist.
 * The configuration can be reloaded from disk in-game through the use of a command
 (`/rpconfigreload` by default).
