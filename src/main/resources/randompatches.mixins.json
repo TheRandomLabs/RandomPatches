@@ -6,6 +6,7 @@
 	"refmap": "randompatches.refmap.json",
 	"mixins": [
 		"ServerPlayNetHandlerPlayerSpeedLimitsMixin",
+		"ServerRecipePlacerMixin",
 		"ServerTickListMixin",
 		"datafixerupper.DataFixesManagerMixin",
 		"datafixerupper.MinecraftServerMixin",

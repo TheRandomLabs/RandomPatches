@@ -87,12 +87,21 @@ following player speed limits to a higher value by default:
 * Maximum player elytra speed
 * Maximum player vehicle speed
 
-### Tick scheduler desync fix
+### Fix tick scheduler desync
 
-Occasionally, the tick scheduler becomes desynchronized, and as a result, Minecraft crashes,
-throwing an `IllegalStateException` with the message `TickNextTick list out of synch`.
-RandomPatches attempts to fix this issue using the solution described by malte0811
-[here](https://github.com/SleepyTrousers/EnderCore/issues/105).
+In vanilla Minecraft, the tick scheduler occasionally becomes desynchronized, and as a result,
+Minecraft crashes, throwing an `IllegalStateException` with the message
+`TickNextTick list out of synch`. RandomPatches attempts to fix this issue using the solution
+described by malte0811 [here](https://github.com/SleepyTrousers/EnderCore/issues/105).
+
+This bug is reported as [MC-28660](https://bugs.mojang.com/browse/MC-28660).
+
+### Fix recipe book not moving ingredients with tags
+
+In vanilla Minecraft, the recipe book does not automatically transfer ingredients with NBT tags to
+the crafting grid. RandomPatches fixes this issue.
+
+This bug is reported as [MC-129057](https://bugs.mojang.com/browse/MC-129057).
 
 ### Disable DataFixerUpper
 

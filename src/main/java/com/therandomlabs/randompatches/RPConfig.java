@@ -230,6 +230,12 @@ public final class RPConfig implements ConfigData {
 						info -> StringUtils.substring(info.getSimpleName(), 0, -5)
 				));
 
+		@TOMLConfigSerializer.Comment("Miscellaneous bug fixes.")
+		@ConfigEntry.Category("bug_fixes")
+		@ConfigEntry.Gui.CollapsibleObject
+		@ConfigEntry.Gui.Tooltip
+		public MiscBugFixes bugFixes = new MiscBugFixes();
+
 		@TOMLConfigSerializer.Comment({
 				"The name of the command that reloads this configuration from disk.",
 				"Set this to an empty string to disable the command.",
@@ -237,13 +243,6 @@ public final class RPConfig implements ConfigData {
 		})
 		@ConfigEntry.Gui.Tooltip
 		public String configReloadCommand = "rpconfigreload";
-
-		@TOMLConfigSerializer.Comment({
-				"Fixes the \"TickNextTick list out of synch\" IllegalStateException.",
-				"For more information, see: https://github.com/SleepyTrousers/EnderCore/issues/105"
-		})
-		@ConfigEntry.Gui.Tooltip
-		public boolean fixTickSchedulerDesync = true;
 
 		@TOMLConfigSerializer.Comment({
 				"Disables the execution of DataFixerUpper.",
@@ -268,6 +267,8 @@ public final class RPConfig implements ConfigData {
 				"- ServerPlayNetHandlerKeepAlive: Required for changing KeepAlive packet settings.",
 				"- ServerPlayNetHandlerPlayerSpeedLimits: Required for changing player speed " +
 						"limits.",
+				"- ServerRecipePlacer: Required for fixing the recipe book not moving " +
+						"ingredients with tags.",
 				"- ServerTickList: Required for fixing tick scheduler desync.",
 				"Changes to this option are applied after a game restart."
 		})
@@ -321,6 +322,24 @@ public final class RPConfig implements ConfigData {
 
 			return true;
 		}
+	}
+
+	public static final class MiscBugFixes {
+		@TOMLConfigSerializer.Comment({
+				"Fixes the \"TickNextTick list out of synch\" IllegalStateException.",
+				"This bug is reported as MC-28660: https://bugs.mojang.com/browse/MC-28660",
+				"For more information, see: https://github.com/SleepyTrousers/EnderCore/issues/105"
+		})
+		@ConfigEntry.Gui.Tooltip
+		public boolean fixTickSchedulerDesync = true;
+
+		@TOMLConfigSerializer.Comment({
+				"Fixes the recipe book not automatically moving ingredients with NBT tags to the " +
+						"crafting grid.",
+				"This bug is reported as MC-129057: https://bugs.mojang.com/browse/MC-129057"
+		})
+		@ConfigEntry.Gui.Tooltip
+		public boolean fixRecipeBookNotMovingIngredientsWithTags = true;
 	}
 
 	@TOMLConfigSerializer.Comment("Client-sided options.")

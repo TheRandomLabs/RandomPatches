@@ -23,25 +23,49 @@
 
 package com.therandomlabs.randompatches.mixin;
 
-import java.util.HashSet;
-
 import com.therandomlabs.randompatches.RandomPatches;
-import com.therandomlabs.randompatches.world.ScheduledTickHashSet;
-import net.minecraft.world.server.ServerTickList;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.ServerRecipePlacer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-@SuppressWarnings("rawtypes")
-@Mixin(ServerTickList.class)
-public final class ServerTickListMixin {
-	@SuppressWarnings({"UnresolvedMixinReference", "PMD.LooseCoupling"})
-	@Redirect(method = "<init>", at = @At(
-			value = "INVOKE",
-			target = "com/google/common/collect/Sets.newHashSet()Ljava/util/HashSet;"
-	))
-	private HashSet createScheduledTicksHashSet() {
-		return RandomPatches.config().misc.bugFixes.fixTickSchedulerDesync ?
-				new ScheduledTickHashSet() : new HashSet();
+@Mixin(ServerRecipePlacer.class)
+public final class ServerRecipePlacerMixin {
+	@Redirect(
+			method = "consumeIngredient",
+			at = @At(
+					value = "INVOKE",
+					target = "net/minecraft/entity/player/PlayerInventory." +
+							"findSlotMatchingUnusedItem(Lnet/minecraft/item/ItemStack;)I"
+			)
+	)
+	private int getSlotWithUnusedStack(PlayerInventory inventory, ItemStack stack) {
+		if (RandomPatches.config().misc.bugFixes.fixRecipeBookNotMovingIngredientsWithTags) {
+			for (int i = 0; i < inventory.mainInventory.size(); i++) {
+				final ItemStack toMatch = inventory.mainInventory.get(i);
+
+				if (!toMatch.isEmpty() && toMatch.getItem() == stack.getItem() &&
+						!toMatch.isDamaged() && !toMatch.isEnchanted() &&
+						!toMatch.hasDisplayName()) {
+					return i;
+				}
+			}
+
+			return -1;
+		}
+
+		for (int i = 0; i < inventory.mainInventory.size(); i++) {
+			final ItemStack toMatch = inventory.mainInventory.get(i);
+
+			if (!toMatch.isEmpty() && toMatch.getItem() == stack.getItem() &&
+					ItemStack.areItemStackTagsEqual(toMatch, stack) &&
+					!toMatch.isDamaged() && !toMatch.isEnchanted() && !toMatch.hasDisplayName()) {
+				return i;
+			}
+		}
+
+		return -1;
 	}
 }
