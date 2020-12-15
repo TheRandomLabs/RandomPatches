@@ -92,7 +92,8 @@ public final class RPConfig implements ConfigData {
 				"The path to the 16x16 Minecraft window icon relative to the Minecraft " +
 						"instance directory.",
 				"Forward slashes should be used even on Windows to preserve compatibility with " +
-						"other platforms, and backward slashes will automatically be replaced."
+						"other platforms.",
+				"Backward slashes will automatically be replaced."
 		})
 		@ConfigEntry.Gui.Tooltip
 		public String icon16 = DEFAULT_ICON;
@@ -102,7 +103,8 @@ public final class RPConfig implements ConfigData {
 				"The path to the 16x16 Minecraft window icon relative to the Minecraft " +
 						"instance directory.",
 				"Forward slashes should be used even on Windows to preserve compatibility with " +
-						"other platforms, and backward slashes will automatically be replaced."
+						"other platforms.",
+				"Backward slashes will automatically be replaced."
 		})
 		@ConfigEntry.Gui.Tooltip
 		public String icon32 = DEFAULT_ICON;
