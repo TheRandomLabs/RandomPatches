@@ -131,7 +131,7 @@ public final class TOMLConfigSerializer<T extends ConfigData> implements ConfigS
 	private T config;
 
 	//Yeah, this class is pretty hacky.
-	//The things I do to avoid writing my own configuration libraries.
+	//The things I do to avoid writing my own configuration libraries...
 	static {
 		//Preserve declaration order.
 		Config.setInsertionOrderPreserved(true);
@@ -228,17 +228,21 @@ public final class TOMLConfigSerializer<T extends ConfigData> implements ConfigS
 			return config;
 		}
 
-		final T defaultConfig = createDefault();
-
 		try {
 			try {
 				fileConfig.load();
 			} catch (ParsingException ex) {
 				logger.error("Failed to deserialize: " + configClass, ex);
+
+				if (config == null) {
+					config = createDefault();
+				}
+
 				return config;
 			}
 
 			config = createDefault();
+			final T defaultConfig = createDefault();
 			moveToObjectConfig(fileConfig, config, configClass, defaultConfig);
 			config = validateAndSave(config, defaultConfig);
 			return config;
