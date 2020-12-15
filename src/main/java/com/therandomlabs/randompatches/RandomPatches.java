@@ -31,6 +31,7 @@ import net.minecraftforge.fml.ExtensionPoint;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.loading.FMLPaths;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -91,7 +92,9 @@ public final class RandomPatches {
 	public static void reloadConfig() {
 		if (serializer == null) {
 			AutoConfig.register(RPConfig.class, (definition, configClass) -> {
-				serializer = new TOMLConfigSerializer<>(definition, configClass);
+				serializer = new TOMLConfigSerializer<>(
+						definition, configClass, FMLPaths.CONFIGDIR.get()
+				);
 				return serializer;
 			});
 		} else {

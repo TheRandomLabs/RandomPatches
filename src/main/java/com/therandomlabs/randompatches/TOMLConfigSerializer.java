@@ -33,6 +33,7 @@ import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -67,7 +68,6 @@ import me.shedaniel.autoconfig1u.annotation.ConfigEntry;
 import me.shedaniel.autoconfig1u.serializer.ConfigSerializer;
 import me.shedaniel.autoconfig1u.util.Utils;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
-import net.minecraftforge.fml.loading.FMLPaths;
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -82,6 +82,9 @@ import org.apache.logging.log4j.message.ParameterizedMessage;
  * <p>
  * In addition, NightConfig's {@code Spec*} annotations are supported, and invalid values
  * are automatically reset to the defaults.
+ * <p>
+ * Moreover, {@link com.electronwill.nightconfig.core.conversion.Path} annotations may be
+ * utilised to manually specify property keys in TOML.
  * <p>
  * Furthermore, lower_snake_case for key names is enforced, and comments for properties, categories
  * and configuration files may be specified through the use of {@link Comment}.
@@ -186,14 +189,15 @@ public final class TOMLConfigSerializer<T extends ConfigData> implements ConfigS
 	 *
 	 * @param definition a definition.
 	 * @param configClass a configuration class.
+	 * @param configDirectory the directory in which the configuration file should be stored.
 	 */
 	public TOMLConfigSerializer(
-			me.shedaniel.autoconfig1u.annotation.Config definition, Class<T> configClass
+			me.shedaniel.autoconfig1u.annotation.Config definition, Class<T> configClass,
+			Path configDirectory
 	) {
 		this.configClass = configClass;
-		this.fileConfig = CommentedFileConfig.of(
-				FMLPaths.CONFIGDIR.get().toAbsolutePath().resolve(definition.name() + ".toml")
-		);
+		this.fileConfig =
+				CommentedFileConfig.of(configDirectory.resolve(definition.name() + ".toml"));
 	}
 
 	/**
