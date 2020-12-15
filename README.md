@@ -96,6 +96,15 @@ described by malte0811 [here](https://github.com/SleepyTrousers/EnderCore/issues
 
 This bug is reported as [MC-28660](https://bugs.mojang.com/browse/MC-28660).
 
+### Fix [MC-2025](https://bugs.mojang.com/browse/MC-2025)
+
+Because of floating point precision errors, the bounding box of an entity can be calculated as
+smaller than the expected value. When the entity is saved then reloaded, the bounding box may be
+recomputed such that it intersects a wall. To counter this, RandomPatches stores the bounding box
+when an entity is saved, then makes it use the same bounding box when it is loaded.
+
+For more information, see [this Reddit post](https://redd.it/8pgd4q) from which this fix comes from.
+
 ### Fix recipe book not moving ingredients with tags
 
 In vanilla Minecraft, the recipe book does not automatically transfer ingredients with NBT tags to

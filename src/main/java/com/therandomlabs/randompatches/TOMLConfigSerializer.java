@@ -71,6 +71,7 @@ import net.minecraftforge.fml.loading.FMLPaths;
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.message.ParameterizedMessage;
 
 /**
  * A {@link ConfigSerializer} for TOML that uses NightConfig.
@@ -232,7 +233,9 @@ public final class TOMLConfigSerializer<T extends ConfigData> implements ConfigS
 			try {
 				fileConfig.load();
 			} catch (ParsingException ex) {
-				logger.error("Failed to deserialize: " + configClass, ex);
+				logger.error(
+						new ParameterizedMessage("Failed to deserialize: {}", configClass), ex
+				);
 
 				if (config == null) {
 					config = createDefault();

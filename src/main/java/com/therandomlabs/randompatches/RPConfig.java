@@ -267,6 +267,7 @@ public final class RPConfig implements ConfigData {
 
 		@TOMLConfigSerializer.Comment({
 				"A list of mixins that should not be applied. Available mixins:",
+				"- Entity: Required for fixing MC-2025.",
 				"- Minecraft: Required for changing Minecraft window options.",
 				"- ReadTimeoutHandler: Required for changing the read timeout.",
 				"- ServerLoginNetHandler: Required for changing the login timeout.",
@@ -338,6 +339,11 @@ public final class RPConfig implements ConfigData {
 		})
 		@ConfigEntry.Gui.Tooltip
 		public boolean fixTickSchedulerDesync = true;
+
+		@Path("fix_mc-2025")
+		@TOMLConfigSerializer.Comment("Fixes MC-2025: https://bugs.mojang.com/browse/MC-2025")
+		@ConfigEntry.Gui.Tooltip
+		public boolean fixMC2025 = true;
 
 		@TOMLConfigSerializer.Comment({
 				"Fixes the recipe book not automatically moving ingredients with NBT tags to the " +
