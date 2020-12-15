@@ -10,6 +10,8 @@ ext {
 	forgeVersion = "35.1.12"
 	mappingsChannel = "snapshot"
 	mappingsVersion = "20201212-mixed-1.16.4"
+	clothConfigVersion = "4.1.1"
+	autoconfigVersion = "3.0"
 }
 
 buildscript {

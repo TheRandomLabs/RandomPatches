@@ -1,5 +1,6 @@
 {
 	"required": true,
+	"minVersion": "0.8",
 	"package": "com.therandomlabs.randompatches.mixin",
 	"plugin": "com.therandomlabs.randompatches.mixin.RPMixinConfig",
 	"compatibilityLevel": "JAVA_8",
@@ -21,6 +22,5 @@
 	],
 	"injectors": {
 		"defaultRequire": 1
-	},
-	"minVersion": "0.8"
+	}
 }
