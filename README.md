@@ -116,7 +116,7 @@ This bug is reported as [MC-129057](https://bugs.mojang.com/browse/MC-129057).
 
 This disables the execution of DataFixerUpper, reducing RAM usage and decreasing the Minecraft
 loading time. However, this feature is disabled by default, and enabling it is **not recommended**,
-as DataFixerUpper is responsible for the backwards compatibility of worlds. However, if you insist
+as DataFixerUpper is responsible for the backwards compatibility of worlds. Even so, if you insist
 on disabling DataFixerUpper:
 
 * Ensure you have used the Optimize feature on any worlds from previous versions of Minecraft before
