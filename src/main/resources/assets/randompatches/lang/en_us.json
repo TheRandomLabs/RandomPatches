@@ -48,6 +48,8 @@
 	"text.autoconfig.randompatches.option.misc.bugFixes.fixTickSchedulerDesync.@Tooltip": "Fixes the \"TickNextTick list out of synch\" IllegalStateException.",
 	"text.autoconfig.randompatches.option.misc.bugFixes.fixMC2025": "Fix MC-2025",
 	"text.autoconfig.randompatches.option.misc.bugFixes.fixMC2025.@Tooltip": "Fixes MC-2025.",
+	"text.autoconfig.randompatches.option.misc.bugFixes.fixPlayerHeadStacking": "Fix player head stacking",
+	"text.autoconfig.randompatches.option.misc.bugFixes.fixPlayerHeadStacking.@Tooltip": "Fixes player heads from the same player sometimes not stacking.",
 	"text.autoconfig.randompatches.option.misc.bugFixes.fixRecipeBookNotMovingIngredientsWithTags": "Fix recipe book not moving ingredients with tags",
 	"text.autoconfig.randompatches.option.misc.bugFixes.fixRecipeBookNotMovingIngredientsWithTags.@Tooltip": "Fixes the recipe book not automatically moving ingredients with NBT tags to the crafting grid."
 }
