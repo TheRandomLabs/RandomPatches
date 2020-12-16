@@ -78,7 +78,6 @@ public final class ConfirmBackupScreenMixin extends Screen {
 
 	/**
 	 * @author TheRandomLabs
-	 * @reason this is the least convoluted way to implement this.
 	 */
 	@SuppressWarnings("ConstantConditions")
 	@Override

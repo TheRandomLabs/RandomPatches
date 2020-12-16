@@ -33,7 +33,6 @@ import org.spongepowered.asm.mixin.Overwrite;
 public final class DataFixesManagerMixin {
 	/**
 	 * @author TheRandomLabs
-	 * @reason this is the least convoluted way to implement this.
 	 */
 	@Overwrite
 	private static DataFixer createFixer() {

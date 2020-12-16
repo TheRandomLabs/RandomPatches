@@ -43,11 +43,14 @@ public final class RPConfigReloadCommand {
 	 */
 	public static void register(CommandDispatcher<CommandSource> dispatcher) {
 		final String name = RandomPatches.config().misc.configReloadCommand;
-		dispatcher.register(
-				LiteralArgumentBuilder.<CommandSource>literal(name).
-						requires(source -> source.hasPermissionLevel(4)).
-						executes(context -> execute(context.getSource()))
-		);
+
+		if (!name.isEmpty()) {
+			dispatcher.register(
+					LiteralArgumentBuilder.<CommandSource>literal(name).
+							requires(source -> source.hasPermissionLevel(4)).
+							executes(context -> execute(context.getSource()))
+			);
+		}
 	}
 
 	private static int execute(CommandSource source) {

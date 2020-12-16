@@ -35,6 +35,7 @@ import com.electronwill.nightconfig.core.conversion.SpecDoubleInRange;
 import com.electronwill.nightconfig.core.conversion.SpecFloatInRange;
 import com.electronwill.nightconfig.core.conversion.SpecIntInRange;
 import com.google.common.reflect.ClassPath;
+import com.therandomlabs.autoconfigtoml.TOMLConfigSerializer;
 import com.therandomlabs.randompatches.client.RPWindowHandler;
 import com.therandomlabs.randompatches.mixin.RPMixinConfig;
 import me.shedaniel.autoconfig1u.ConfigData;

@@ -37,7 +37,6 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 public final class MinecraftMixin {
 	/**
 	 * @author TheRandomLabs
-	 * @reason this is the least convoluted way to implement this.
 	 */
 	@Overwrite
 	private String getWindowTitle() {
