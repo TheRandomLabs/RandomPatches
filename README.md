@@ -112,6 +112,21 @@ the crafting grid. RandomPatches fixes this issue.
 
 This bug is reported as [MC-129057](https://bugs.mojang.com/browse/MC-129057).
 
+### Fix end portal rendering
+
+In vanilla Minecraft, end portals only render from above and not below. RandomPatches fixes this
+issue.
+
+Without RandomPatches:
+
+![End portal rendering without RandomPatches](https://raw.githubusercontent.com/TheRandomLabs/RandomPatches/misc/End%20Portal%20Rendering%20without%20RandomPatches.png)
+
+With RandomPatches:
+
+![End portal rendering with RandomPatches](https://raw.githubusercontent.com/TheRandomLabs/RandomPatches/misc/End%20Portal%20Rendering%20with%20RandomPatches.png)
+
+This bug is reported as [MC-3366](https://bugs.mojang.com/browse/MC-3366).
+
 ### Disable DataFixerUpper
 
 This disables the execution of DataFixerUpper, reducing RAM usage and decreasing the Minecraft

@@ -56,11 +56,26 @@ import org.apache.commons.lang3.StringUtils;
 @Config(name = RandomPatches.MOD_ID)
 public final class RPConfig implements ConfigData {
 	public static final class Client {
+		@TOMLConfigSerializer.Comment("Client-sided bug fixes.")
+		@ConfigEntry.Category("bug_fixes")
+		@ConfigEntry.Gui.CollapsibleObject
+		@ConfigEntry.Gui.Tooltip
+		public ClientBugFixes bugFixes = new ClientBugFixes();
+
 		@TOMLConfigSerializer.Comment("Options related to the Minecraft window.")
 		@ConfigEntry.Category("window")
 		@ConfigEntry.Gui.CollapsibleObject
 		@ConfigEntry.Gui.Tooltip
 		public Window window = new Window();
+	}
+
+	public static final class ClientBugFixes {
+		@TOMLConfigSerializer.Comment({
+				"Fixes end portals not rendering from below.",
+				"This bug is reported as MC-3366: https://bugs.mojang.com/browse/MC-3366"
+		})
+		@ConfigEntry.Gui.Tooltip
+		public boolean fixEndPortalRendering = true;
 	}
 
 	public static final class Window implements ConfigData {
@@ -268,6 +283,7 @@ public final class RPConfig implements ConfigData {
 
 		@TOMLConfigSerializer.Comment({
 				"A list of mixins that should not be applied. Available mixins:",
+				"- EndPortalTileEntity: Required for fixing end portal rendering.",
 				"- Entity: Required for fixing MC-2025.",
 				"- Minecraft: Required for changing Minecraft window options.",
 				"- ReadTimeoutHandler: Required for changing the read timeout.",
@@ -278,6 +294,7 @@ public final class RPConfig implements ConfigData {
 				"- ServerRecipePlacer: Required for fixing the recipe book not moving " +
 						"ingredients with tags.",
 				"- ServerTickList: Required for fixing tick scheduler desync.",
+				"This option is both client and server-sided.",
 				"Changes to this option are applied after a game restart."
 		})
 		@ConfigEntry.Gui.Tooltip
