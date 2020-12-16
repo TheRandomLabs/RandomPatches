@@ -34,11 +34,12 @@ import net.minecraft.util.text.TranslationTextComponent;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Mutable;
-import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ConfirmBackupScreen.class)
 public final class ConfirmBackupScreenMixin extends Screen {
@@ -76,65 +77,36 @@ public final class ConfirmBackupScreenMixin extends Screen {
 		super(title);
 	}
 
-	/**
-	 * @author TheRandomLabs
-	 */
 	@SuppressWarnings("ConstantConditions")
-	@Override
-	@Overwrite
-	public void init() {
-		super.init();
+	@Inject(method = "init", at = @At("HEAD"), cancellable = true)
+	private void initialize(CallbackInfo info) {
+		modifiedTitle = title;
 
-		boolean cancel = false;
-
-		if (message instanceof TranslationTextComponent) {
-			final String messageKey = ((TranslationTextComponent) message).getKey();
-			cancel = "selectWorld.versionWarning".equals(messageKey) ||
-					"selectWorld.backupWarning".equals(messageKey) ||
-					"selectWorld.dataFixerUpperDisabled".equals(messageKey);
-			modifiedTitle = new TranslationTextComponent("selectWorld.unableToLoad");
-			message = new TranslationTextComponent("selectWorld.dataFixerUpperDisabled");
-		} else {
-			modifiedTitle = title;
-		}
-
-		wrappedText = IBidiRenderer.method_30890(textRenderer, message, width - 50);
-
-		final int yOffset = (wrappedText.method_30887() + 1) * 9;
-
-		if (cancel) {
-			addButton(new Button(
-					width / 2 - 155 + 80, 124 + yOffset, 150, 20, DialogTexts.BACK,
-					button -> client.displayGuiScreen(parentScreen)
-			));
+		if (!(message instanceof TranslationTextComponent)) {
 			return;
 		}
 
-		addButton(new Button(
-				width / 2 - 155, 100 + yOffset, 150, 20,
-				new TranslationTextComponent("selectWorld.backupJoinConfirmButton"),
-				button -> callback.proceed(true, field_212996_j.isChecked())
-		));
+		final String messageKey = ((TranslationTextComponent) message).getKey();
 
-		addButton(new Button(
-				width / 2 - 155 + 160, 100 + yOffset, 150, 20,
-				new TranslationTextComponent("selectWorld.backupJoinSkipButton"),
-				button -> callback.proceed(false, field_212996_j.isChecked())
-		));
-
-		addButton(new Button(
-				width / 2 - 155 + 80, 124 + yOffset, 150, 20, DialogTexts.CANCEL,
-				button -> client.displayGuiScreen(parentScreen)
-		));
-
-		field_212996_j = new CheckboxButton(
-				width / 2 - 155 + 80, 76 + yOffset, 150, 20,
-				new TranslationTextComponent("selectWorld.backupEraseCache"), false
-		);
-
-		if (field_212994_d) {
-			addButton(field_212996_j);
+		if (!"selectWorld.versionWarning".equals(messageKey) &&
+				!"selectWorld.backupWarning".equals(messageKey) &&
+				!"selectWorld.dataFixerUpperDisabled".equals(messageKey)) {
+			return;
 		}
+
+		info.cancel();
+
+		super.init();
+
+		modifiedTitle = new TranslationTextComponent("selectWorld.unableToLoad");
+		message = new TranslationTextComponent("selectWorld.dataFixerUpperDisabled");
+
+		wrappedText = IBidiRenderer.method_30890(textRenderer, message, width - 50);
+
+		addButton(new Button(
+				width / 2 - 155 + 80, 124 + (wrappedText.method_30887() + 1) * 9, 150, 20,
+				DialogTexts.BACK, button -> client.displayGuiScreen(parentScreen)
+		));
 	}
 
 	@ModifyArg(

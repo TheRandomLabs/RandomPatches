@@ -29,19 +29,18 @@ import com.therandomlabs.randompatches.client.RPWindowHandler;
 import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Minecraft.class)
 public final class MinecraftMixin {
-	/**
-	 * @author TheRandomLabs
-	 */
-	@Overwrite
-	private String getWindowTitle() {
+	@Inject(method = "getWindowTitle", at = @At("HEAD"), cancellable = true)
+	private void getWindowTitle(CallbackInfoReturnable<String> info) {
 		RPWindowHandler.enable();
-		return RPWindowHandler.getWindowTitle();
+		info.setReturnValue(RPWindowHandler.getWindowTitle());
+		info.cancel();
 	}
 
 	@Redirect(method = "<init>", at = @At(

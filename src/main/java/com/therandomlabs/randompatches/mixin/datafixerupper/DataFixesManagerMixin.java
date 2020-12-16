@@ -27,15 +27,15 @@ import com.mojang.datafixers.DataFixer;
 import com.therandomlabs.randompatches.util.FakeDataFixer;
 import net.minecraft.util.datafix.DataFixesManager;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(DataFixesManager.class)
 public final class DataFixesManagerMixin {
-	/**
-	 * @author TheRandomLabs
-	 */
-	@Overwrite
-	private static DataFixer createFixer() {
-		return new FakeDataFixer();
+	@Inject(method = "createFixer", at = @At("HEAD"), cancellable = true)
+	private static void createFixer(CallbackInfoReturnable<DataFixer> info) {
+		info.setReturnValue(new FakeDataFixer());
+		info.cancel();
 	}
 }

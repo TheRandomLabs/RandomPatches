@@ -297,6 +297,7 @@ public final class RPConfig implements ConfigData {
 
 		/**
 		 * Whether DataFixerUpper should be disabled.
+		 *
 		 * @return {@code true} if DataFixerUpper should be disabled, or otherwise {@code false}.
 		 */
 		public boolean disableDataFixerUpper() {
