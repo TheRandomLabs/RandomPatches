@@ -59,7 +59,7 @@ public final class CompoundNBTMixin {
 			value = "INVOKE",
 			target = "java/util/Objects.equals(Ljava/lang/Object;Ljava/lang/Object;)Z"
 	))
-	private boolean equals(Object object1, Object object2) {
+	private boolean areTagMapsEqual(Object object1, Object object2) {
 		final RPConfig.PlayerHeadStackingFixMode mode =
 				RandomPatches.config().misc.bugFixes.fixPlayerHeadStacking;
 
