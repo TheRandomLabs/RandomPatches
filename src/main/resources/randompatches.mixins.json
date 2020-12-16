@@ -6,6 +6,7 @@
 	"compatibilityLevel": "JAVA_8",
 	"refmap": "randompatches.refmap.json",
 	"mixins": [
+		"CompoundNBTMixin",
 		"EntityMixin",
 		"ServerPlayNetHandlerPlayerSpeedLimitsMixin",
 		"ServerRecipePlacerMixin",

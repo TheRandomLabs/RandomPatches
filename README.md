@@ -112,6 +112,14 @@ the crafting grid. RandomPatches fixes this issue.
 
 This bug is reported as [MC-129057](https://bugs.mojang.com/browse/MC-129057).
 
+### Fix player head stacking
+
+In vanilla Minecraft, player heads from the same player sometimes do not stack. RandomPatches
+fixes this issue by forcing Minecraft to treat two player heads as equal if they are from the same
+player, and by default, if they have the same texture URL.
+
+This bug is reported as [MC-100044](https://bugs.mojang.com/browse/MC-100044).
+
 ### Fix end portal rendering
 
 In vanilla Minecraft, end portals only render from above and not below. RandomPatches fixes this

@@ -283,6 +283,7 @@ public final class RPConfig implements ConfigData {
 
 		@TOMLConfigSerializer.Comment({
 				"A list of mixins that should not be applied. Available mixins:",
+				"- CompoundNBT: Required for fixing player head stacking.",
 				"- EndPortalTileEntity: Required for fixing end portal rendering.",
 				"- Entity: Required for fixing MC-2025.",
 				"- Minecraft: Required for changing Minecraft window options.",
@@ -353,8 +354,8 @@ public final class RPConfig implements ConfigData {
 	public static final class MiscBugFixes {
 		@TOMLConfigSerializer.Comment({
 				"Fixes the \"TickNextTick list out of synch\" IllegalStateException.",
-				"This bug is reported as MC-28660: https://bugs.mojang.com/browse/MC-28660",
-				"For more information, see: https://github.com/SleepyTrousers/EnderCore/issues/105"
+				"For more information, see: https://github.com/SleepyTrousers/EnderCore/issues/105",
+				"This bug is reported as MC-28660: https://bugs.mojang.com/browse/MC-28660"
 		})
 		@ConfigEntry.Gui.Tooltip
 		public boolean fixTickSchedulerDesync = true;
@@ -365,12 +366,42 @@ public final class RPConfig implements ConfigData {
 		public boolean fixMC2025 = true;
 
 		@TOMLConfigSerializer.Comment({
+				"Fixes player heads from the same player sometimes not stacking.",
+				"DISABLED: Disables this fix.",
+				"REQUIRE_SAME_PLAYER_AND_TEXTURE_URL: Player heads can stack if they are from " +
+						"the same player and have the same texture URL.",
+				"REQUIRE_SAME_PLAYER: Player heads can stack if they are from the same player.",
+				"This bug is reported as MC-100044: https://bugs.mojang.com/browse/MC-100044"
+		})
+		@ConfigEntry.Gui.Tooltip
+		public PlayerHeadStackingFixMode fixPlayerHeadStacking =
+				PlayerHeadStackingFixMode.REQUIRE_SAME_PLAYER_AND_TEXTURE_URL;
+
+		@TOMLConfigSerializer.Comment({
 				"Fixes the recipe book not automatically moving ingredients with NBT tags to the " +
 						"crafting grid.",
 				"This bug is reported as MC-129057: https://bugs.mojang.com/browse/MC-129057"
 		})
 		@ConfigEntry.Gui.Tooltip
 		public boolean fixRecipeBookNotMovingIngredientsWithTags = true;
+	}
+
+	/**
+	 * Player head stacking fix modes.
+	 */
+	public enum PlayerHeadStackingFixMode {
+		/**
+		 * Disable the fix.
+		 */
+		DISABLED,
+		/**
+		 * Require the same player and texture URL.
+		 */
+		REQUIRE_SAME_PLAYER_AND_TEXTURE_URL,
+		/**
+		 * Require the same player.
+		 */
+		REQUIRE_SAME_PLAYER
 	}
 
 	@TOMLConfigSerializer.Comment("Client-sided options.")
