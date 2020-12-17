@@ -259,6 +259,24 @@ public final class RPConfig implements ConfigData {
 		public MiscBugFixes bugFixes = new MiscBugFixes();
 
 		@TOMLConfigSerializer.Comment({
+				"The buoyancy of boats when they are under flowing water.",
+				"The vanilla default is -0.0007.",
+				"Setting this to a positive value allows boats to float up when they move into " +
+						"a higher block of water, fixing MC-91206: " +
+						"https://bugs.mojang.com/browse/MC-91206"
+		})
+		@ConfigEntry.Gui.Tooltip
+		public double boatBuoyancyUnderFlowingWater = FMLEnvironment.production ? 0.023 : 5.0;
+
+		@SpecIntInRange(min = -1, max = Integer.MAX_VALUE)
+		@TOMLConfigSerializer.Comment({
+				"How long it takes in ticks for a boat passenger to be ejected when underwater.",
+				"Set this to -1 to disable underwater boat passenger ejection."
+		})
+		@ConfigEntry.Gui.Tooltip
+		public int underwaterBoatPassengerEjectionDelayTicks = FMLEnvironment.production ? 60 : -1;
+
+		@TOMLConfigSerializer.Comment({
 				"The name of the command that reloads this configuration from disk.",
 				"Set this to an empty string to disable the command.",
 				"Changes to this option are applied when a server is loaded."

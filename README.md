@@ -87,6 +87,20 @@ following player speed limits to a higher value by default:
 * Maximum player elytra speed
 * Maximum player vehicle speed
 
+### Boat options
+
+The following options related to boats can be modified:
+
+* Boat buoyancy under flowing water
+  * In vanilla Minecraft, this is set to a negative value, causing it to be impossible for boats to
+  flow up when they move up into a higher block of water.
+  * This problem is reported as [MC-91206](https://bugs.mojang.com/browse/MC-91206), and has been
+  marked as "Works As Intended".
+  * By default, RandomPatches sets this to a positive value to counteract this.
+* Underwater boat passenger delay
+  * This is how long it takes for a boat passenger to be ejected when underwater.
+  * This can be set to -1 to disable underwater boat passenger ejection.
+
 ### Fix tick scheduler desync
 
 In vanilla Minecraft, the tick scheduler occasionally becomes desynchronized, and as a result,
