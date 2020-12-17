@@ -354,7 +354,9 @@ public final class RPConfig implements ConfigData {
 		public boolean disableDataFixerUpper = !FMLEnvironment.production;
 
 		@TOMLConfigSerializer.Comment({
-				"A list of mixins that should not be applied. Available mixins:",
+				"A list of mixins that should not be applied.",
+				"These are the mixins that are not automatically disabled when the features that " +
+						"depend on them are:",
 				"- BoatEntity: Required for modifying boat options.",
 				"- CCustomPayloadPacket: Required for setting the maximum client custom payload " +
 						"packet size.",
