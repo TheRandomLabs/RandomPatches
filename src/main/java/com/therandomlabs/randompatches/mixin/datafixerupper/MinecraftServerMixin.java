@@ -26,6 +26,7 @@ package com.therandomlabs.randompatches.mixin.datafixerupper;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.SharedConstants;
 import net.minecraft.world.storage.SaveFormat;
+import net.minecraft.world.storage.WorldSummary;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
@@ -38,7 +39,13 @@ public final class MinecraftServerMixin {
 			target = "net/minecraft/world/storage/SaveFormat$LevelSave.needsConversion()Z"
 	))
 	private static boolean needsConversion(SaveFormat.LevelSave save) {
-		final int version = save.getLevelSummary().method_29586().getVersionId();
+		final WorldSummary worldSummary = save.getLevelSummary();
+
+		if (worldSummary == null) {
+			return false;
+		}
+
+		final int version = ((VersionDataMixin) worldSummary.method_29586()).getVersionID();
 
 		if (save.needsConversion() || version != SharedConstants.getVersion().getWorldVersion()) {
 			throw new RuntimeException(

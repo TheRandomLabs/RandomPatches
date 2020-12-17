@@ -92,6 +92,13 @@ public final class RPConfig implements ConfigData {
 		})
 		@ConfigEntry.Gui.Tooltip
 		public float framerateLimitSliderStepSize = 1.0F;
+
+		@TOMLConfigSerializer.Comment(
+				"Causes Minecraft to show the main menu screen after disconnecting rather than " +
+						"the Realms or multiplayer screen."
+		)
+		@ConfigEntry.Gui.Tooltip
+		public boolean returnToMainMenuAfterDisconnect = !FMLEnvironment.production;
 	}
 
 	public static final class ClientBugFixes {
@@ -380,6 +387,8 @@ public final class RPConfig implements ConfigData {
 				"- CompoundNBT: Required for fixing player head stacking.",
 				"- EndPortalTileEntity: Required for fixing end portal rendering.",
 				"- Entity: Required for fixing MC-2025.",
+				"- IngameMenuScreen: Required for making Minecraft show the main menu screen " +
+						"after disconnecting rather than the Realms or multiplayer screen.",
 				"- Minecraft: Required for changing Minecraft window options.",
 				"- NettyCompressionDecoder: Required for setting the maximum compressed packet " +
 						"size.",
@@ -443,8 +452,7 @@ public final class RPConfig implements ConfigData {
 				return false;
 			}
 
-			if (("DataFixesManager".equals(simpleName) || "MinecraftServer".equals(simpleName) ||
-					"ConfirmBackupScreen".equals(simpleName)) && !disableDataFixerUpper()) {
+			if (mixinClassName.contains("datafixerupper") && !disableDataFixerUpper()) {
 				return false;
 			}
 

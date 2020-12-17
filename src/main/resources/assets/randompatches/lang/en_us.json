@@ -9,6 +9,8 @@
 	"text.autoconfig.randompatches.option.client.bugFixes.fixEndPortalRendering.@Tooltip": "Fixes end portals not rendering from below.",
 	"text.autoconfig.randompatches.option.client.bugFixes.fixInvisiblePlayerModel": "Fix invisible player model",
 	"text.autoconfig.randompatches.option.client.bugFixes.fixInvisiblePlayerModel.@Tooltip": "Fixes the player model sometimes disappearing in certain instances.",
+	"text.autoconfig.randompatches.option.client.bugFixes.returnToMainMenuAfterDisconnect": "Return to main menu after disconnect",
+	"text.autoconfig.randompatches.option.client.bugFixes.returnToMainMenuAfterDisconnect.@Tooltip": "Causes Minecraft to show the main menu screen after disconnecting.",
 	"text.autoconfig.randompatches.option.client.window": "Window",
 	"text.autoconfig.randompatches.option.client.window.@Tooltip": "Options related to the Minecraft window.",
 	"text.autoconfig.randompatches.option.client.window.title": "Title",

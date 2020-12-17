@@ -233,6 +233,11 @@ With RandomPatches:
 In vanilla Minecraft, the framerate limit slider step size is 10.0. RandomPatches changes this to
 1.0 by default.
 
+### Return to main menu after disconnect
+
+This feature makes Minecraft return to the main menu screen after disconnecting rather than the
+Realms or multiplayer screen.
+
 ## Configuration
 
 The RandomPatches configuration can be found at `config/randompatches.toml`.
