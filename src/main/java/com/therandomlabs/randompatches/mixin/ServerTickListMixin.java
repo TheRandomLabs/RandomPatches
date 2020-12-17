@@ -25,7 +25,6 @@ package com.therandomlabs.randompatches.mixin;
 
 import java.util.HashSet;
 
-import com.therandomlabs.randompatches.RandomPatches;
 import com.therandomlabs.randompatches.world.ScheduledTickHashSet;
 import net.minecraft.world.server.ServerTickList;
 import org.spongepowered.asm.mixin.Mixin;
@@ -41,7 +40,6 @@ public final class ServerTickListMixin {
 			target = "com/google/common/collect/Sets.newHashSet()Ljava/util/HashSet;"
 	))
 	private HashSet createScheduledTicksHashSet() {
-		return RandomPatches.config().misc.bugFixes.fixTickSchedulerDesync ?
-				new ScheduledTickHashSet() : new HashSet();
+		return new ScheduledTickHashSet();
 	}
 }

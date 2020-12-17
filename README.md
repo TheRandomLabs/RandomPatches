@@ -118,6 +118,27 @@ The following options related to boats can be modified:
   * This is how long it takes for a boat passenger to be ejected when underwater.
   * This can be set to -1 to disable underwater boat passenger ejection.
 
+### Disable DataFixerUpper
+
+This disables the execution of DataFixerUpper, reducing RAM usage and decreasing the Minecraft
+loading time. However, this feature is disabled by default, and enabling it is **not recommended**,
+as DataFixerUpper is responsible for the backwards compatibility of worlds. Even so, if you insist
+on disabling DataFixerUpper:
+
+* Ensure you have used the Optimize feature on any worlds from previous versions of Minecraft before
+enabling this feature.
+* Before migrating worlds to new versions of Minecraft, ensure this feature is disabled, and use the
+Optimize feature again before re-enabling it.
+* Take regular backups of your worlds.
+
+Although worlds last played on an older or newer version of Minecraft theoretically cannot be loaded
+when DataFixerUpper is disabled by RandomPatches, it's better to be safe than sorry.
+
+To make this clear, **RandomPatches is not responsible for any damage caused by this feature.**
+
+This feature does nothing if
+[DataFixerSlayer](https://www.curseforge.com/minecraft/mc-mods/datafixerslayer) is installed.
+
 ### Fix tick scheduler desync
 
 In vanilla Minecraft, the tick scheduler occasionally becomes desynchronized, and as a result,
@@ -166,26 +187,15 @@ With RandomPatches:
 
 This bug is reported as [MC-3366](https://bugs.mojang.com/browse/MC-3366).
 
-### Disable DataFixerUpper
+### Fix invisible player model
 
-This disables the execution of DataFixerUpper, reducing RAM usage and decreasing the Minecraft
-loading time. However, this feature is disabled by default, and enabling it is **not recommended**,
-as DataFixerUpper is responsible for the backwards compatibility of worlds. Even so, if you insist
-on disabling DataFixerUpper:
+In certain instances in vanilla Minecraft, the player model sometimes disappears. This is most
+noticeable when flying with elytra in a straight line in third-person mode:
 
-* Ensure you have used the Optimize feature on any worlds from previous versions of Minecraft before
-enabling this feature.
-* Before migrating worlds to new versions of Minecraft, ensure this feature is disabled, and use the
-Optimize feature again before re-enabling it.
-* Take regular backups of your worlds.
+[![Invisible player model bug](http://img.youtube.com/vi/YdbxknpfJHQ/0.jpg)](http://www.youtube.com/watch?v=YdbxknpfJHQ "Invisible Player Model Bug")
 
-Although worlds last played on an older or newer version of Minecraft theoretically cannot be loaded
-when DataFixerUpper is disabled by RandomPatches, it's better to be safe than sorry.
-
-To make this clear, **RandomPatches is not responsible for any damage caused by this feature.**
-
-This feature does nothing if
-[DataFixerSlayer](https://www.curseforge.com/minecraft/mc-mods/datafixerslayer) is installed.
+RandomPatches fixes this issue. Thanks to [Fuzs_](https://www.curseforge.com/members/fuzs_) for
+finding this fix!
 
 ### Window title and icon
 

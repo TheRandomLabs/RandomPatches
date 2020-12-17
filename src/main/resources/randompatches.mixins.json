@@ -25,6 +25,7 @@
 		"client.BambooBlockMixin",
 		"client.EndPortalTileEntityMixin",
 		"client.MinecraftMixin",
+		"client.PlayerRendererMixin",
 		"client.PotionItemMixin",
 		"client.datafixerupper.ConfirmBackupScreenMixin",
 		"client.packetsizelimits.CCustomPayloadPacketMixin"

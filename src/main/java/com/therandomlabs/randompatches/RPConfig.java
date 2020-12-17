@@ -101,6 +101,16 @@ public final class RPConfig implements ConfigData {
 		})
 		@ConfigEntry.Gui.Tooltip
 		public boolean fixEndPortalRendering = true;
+
+		@TOMLConfigSerializer.Comment({
+				"Fixes the player model sometimes disappearing in certain instances.",
+				"This is most noticeable when flying with elytra in a straight line in " +
+						"third-person mode.",
+				"A video of this issue can be found here: https://youtu.be/YdbxknpfJHQ",
+				"Changes to this option are applied after a game restart."
+		})
+		@ConfigEntry.Gui.Tooltip
+		public boolean fixInvisiblePlayerModel = true;
 	}
 
 	public static final class Window implements ConfigData {
@@ -382,7 +392,6 @@ public final class RPConfig implements ConfigData {
 						"limits.",
 				"- ServerRecipePlacer: Required for fixing the recipe book not moving " +
 						"ingredients with tags.",
-				"- ServerTickList: Required for fixing tick scheduler desync.",
 				"This option is both client and server-sided.",
 				"Changes to this option are applied after a game restart."
 		})
@@ -420,8 +429,17 @@ public final class RPConfig implements ConfigData {
 		public boolean isMixinClassEnabled(String mixinClassName) {
 			final String simpleName = mixins.get(mixinClassName);
 
+			if ("PlayerRenderer".equals(simpleName) &&
+					!RandomPatches.config().client.bugFixes.fixInvisiblePlayerModel) {
+				return false;
+			}
+
 			if ("BambooBlock".equals(simpleName) &&
 					!RandomPatches.config().client.optimizeBambooRendering) {
+				return false;
+			}
+
+			if ("ServerTickList".equals(simpleName) && !bugFixes.fixTickSchedulerDesync) {
 				return false;
 			}
 

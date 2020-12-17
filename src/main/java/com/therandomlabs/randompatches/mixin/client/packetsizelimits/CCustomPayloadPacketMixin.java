@@ -37,8 +37,7 @@ public final class CCustomPayloadPacketMixin {
 	}
 
 	@ModifyConstant(
-			method = "readPacketData",
-			constant = @Constant(
+			method = "readPacketData", constant = @Constant(
 					stringValue = "Payload may not be larger than " + Short.MAX_VALUE + " bytes"
 			)
 	)

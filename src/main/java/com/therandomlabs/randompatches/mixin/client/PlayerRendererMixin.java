@@ -21,27 +21,22 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.therandomlabs.randompatches.mixin.timeouts;
+package com.therandomlabs.randompatches.mixin.client;
 
-import com.therandomlabs.randompatches.RandomPatches;
-import io.netty.handler.timeout.ReadTimeoutHandler;
+import net.minecraft.client.renderer.entity.PlayerRenderer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.ModifyArg;
+import org.spongepowered.asm.mixin.injection.Redirect;
 
-@Mixin(ReadTimeoutHandler.class)
-public final class ReadTimeoutHandlerMixin {
-	//On the client, a ReadTimeoutHandler is created in NetworkManager.
-	//On the server, a ReadTimeoutHandler is created in NetworkSystem.
-	@ModifyArg(method = "<init>(I)V", at = @At(
+@Mixin(PlayerRenderer.class)
+public final class PlayerRendererMixin {
+	@Redirect(method = "setupTransforms", at = @At(
 			value = "INVOKE",
-			target = "io/netty/handler/timeout/ReadTimeoutHandler.<init>" +
-					"(JLjava/util/concurrent/TimeUnit;)V"
+			target = "java/lang/Math.acos(D)D"
 	))
-	private int getTimeout(int timeout) {
-		final int forgeReadTimeout =
-				Integer.parseInt(System.getProperty("forge.readTimeout", "30"));
-		return timeout == 30 || timeout == forgeReadTimeout ?
-				RandomPatches.config().connectionTimeouts.readTimeoutSeconds : timeout;
+	private double acos(double a) {
+		//Sometimes, Math#acos(double) is called with a value larger than 1.0, which results in
+		//a rotation angle of NaN, thus causing the player model to disappear.
+		return Math.acos(Math.min(a, 1.0));
 	}
 }
