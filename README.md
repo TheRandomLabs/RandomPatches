@@ -76,6 +76,23 @@ In addition, RandomPatches allows the interval at which KeepAlive packets are se
 to be configured, although it is recommended that this be left at the vanilla value of 15 seconds.
 </details>
 
+### Packet size limits
+
+RandomPatches allows several packet size limits to be configured, which by default are raised from
+the vanilla limits:
+
+* Maximum compressed packet size
+  * This option is both client and server-sided.
+  * Setting this to a higher value than the vanilla limit can fix
+  [MC-185901](https://bugs.mojang.com/browse/MC-185901), which may cause players to be disconnected.
+* Maximum NBT compound tag packet size
+  * This option is both client and server-sided.
+  * Setting this to a higher value than the vanilla limit may prevent players from being
+  disconnected.
+* Maximum client custom payload packet size
+  * Setting this to a higher value than the vanilla limit may prevent the client from being
+  disconnected.
+
 ### Player speed limits
 
 In vanilla Minecraft, the player speed limits are hardcoded, and set to values that are often

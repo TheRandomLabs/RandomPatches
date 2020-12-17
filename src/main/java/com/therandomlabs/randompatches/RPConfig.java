@@ -34,6 +34,7 @@ import com.electronwill.nightconfig.core.conversion.Path;
 import com.electronwill.nightconfig.core.conversion.SpecDoubleInRange;
 import com.electronwill.nightconfig.core.conversion.SpecFloatInRange;
 import com.electronwill.nightconfig.core.conversion.SpecIntInRange;
+import com.electronwill.nightconfig.core.conversion.SpecLongInRange;
 import com.google.common.reflect.ClassPath;
 import com.therandomlabs.autoconfigtoml.TOMLConfigSerializer;
 import com.therandomlabs.randompatches.client.RPWindowHandler;
@@ -217,6 +218,41 @@ public final class RPConfig implements ConfigData {
 		}
 	}
 
+	public static final class PacketSizeLimits {
+		@SpecIntInRange(min = 0x100, max = Integer.MAX_VALUE)
+		@TOMLConfigSerializer.Comment({
+				"The maximum compressed packet size.",
+				"The vanilla limit is " + 0x200000 + ".",
+				"This option is both client and server-sided.",
+				"Setting this to a higher value than the vanilla limit can fix MC-185901, " +
+						"which may cause players to be disconnected: " +
+						"https://bugs.mojang.com/browse/MC-185901"
+		})
+		@ConfigEntry.Gui.Tooltip
+		public int maxCompressedPacketSize = 0x1000000;
+
+		@SpecIntInRange(min = 0x100, max = Integer.MAX_VALUE)
+		@TOMLConfigSerializer.Comment({
+				"The maximum NBT compound tag packet size.",
+				"The vanilla limit is " + 0x200000 + ".",
+				"This option is both client and server-sided.",
+				"Setting this to a higher value than the vanilla limit may prevent players from " +
+						"being disconnected."
+		})
+		@ConfigEntry.Gui.Tooltip
+		public int maxNBTCompoundTagPacketSize = 0x1000000;
+
+		@SpecIntInRange(min = 0x100, max = Integer.MAX_VALUE)
+		@TOMLConfigSerializer.Comment({
+				"The maximum client custom payload packet size.",
+				"The vanilla limit is " + Short.MAX_VALUE + ".",
+				"Setting this to a higher value than the vanilla limit may prevent the client " +
+						"from being disconnected."
+		})
+		@ConfigEntry.Gui.Tooltip
+		public int maxClientCustomPayloadPacketSize = 0x1000000;
+	}
+
 	public static final class PlayerSpeedLimits {
 		@TOMLConfigSerializer.Comment({
 				"The maximum player speed when not riding a vehicle or flying with elytra.",
@@ -302,10 +338,15 @@ public final class RPConfig implements ConfigData {
 		@TOMLConfigSerializer.Comment({
 				"A list of mixins that should not be applied. Available mixins:",
 				"- BoatEntity: Required for modifying boat options.",
+				"- CCustomPayloadPacket: Required for setting the maximum client custom payload " +
+						"packet size.",
 				"- CompoundNBT: Required for fixing player head stacking.",
 				"- EndPortalTileEntity: Required for fixing end portal rendering.",
 				"- Entity: Required for fixing MC-2025.",
 				"- Minecraft: Required for changing Minecraft window options.",
+				"- NettyCompressionDecoder: Required for setting the maximum compressed packet " +
+						"size.",
+				"- PacketBuffer: Required for setting the maximum NBT compound tag packet size.",
 				"- ReadTimeoutHandler: Required for changing the read timeout.",
 				"- ServerLoginNetHandler: Required for changing the login timeout.",
 				"- ServerPlayNetHandlerKeepAlive: Required for changing KeepAlive packet settings.",
@@ -432,6 +473,11 @@ public final class RPConfig implements ConfigData {
 	@ConfigEntry.Category("connection_timeouts")
 	@ConfigEntry.Gui.TransitiveObject
 	public ConnectionTimeouts connectionTimeouts = new ConnectionTimeouts();
+
+	@TOMLConfigSerializer.Comment("Options related to packet size limits.")
+	@ConfigEntry.Category("packet_size_limits")
+	@ConfigEntry.Gui.TransitiveObject
+	public PacketSizeLimits packetSizeLimits = new PacketSizeLimits();
 
 	@TOMLConfigSerializer.Comment("Options related to player speed limits.")
 	@ConfigEntry.Category("player_speed_limits")

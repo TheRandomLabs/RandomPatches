@@ -14,6 +14,8 @@
 		"ServerTickListMixin",
 		"datafixerupper.DataFixesManagerMixin",
 		"datafixerupper.MinecraftServerMixin",
+		"packetsizelimits.NettyCompressionDecoderMixin",
+		"packetsizelimits.PacketBufferMixin",
 		"timeouts.ReadTimeoutHandlerMixin",
 		"timeouts.ServerLoginNetHandlerMixin",
 		"timeouts.ServerPlayNetHandlerKeepAliveMixin"
@@ -21,7 +23,8 @@
 	"client": [
 		"client.EndPortalTileEntityMixin",
 		"client.MinecraftMixin",
-		"client.datafixerupper.ConfirmBackupScreenMixin"
+		"client.datafixerupper.ConfirmBackupScreenMixin",
+		"client.packetsizelimits.CCustomPayloadPacketMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
