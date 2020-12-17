@@ -34,7 +34,6 @@ import com.electronwill.nightconfig.core.conversion.Path;
 import com.electronwill.nightconfig.core.conversion.SpecDoubleInRange;
 import com.electronwill.nightconfig.core.conversion.SpecFloatInRange;
 import com.electronwill.nightconfig.core.conversion.SpecIntInRange;
-import com.electronwill.nightconfig.core.conversion.SpecLongInRange;
 import com.google.common.reflect.ClassPath;
 import com.therandomlabs.autoconfigtoml.TOMLConfigSerializer;
 import com.therandomlabs.randompatches.client.RPWindowHandler;
@@ -68,6 +67,14 @@ public final class RPConfig implements ConfigData {
 		@ConfigEntry.Gui.CollapsibleObject
 		@ConfigEntry.Gui.Tooltip
 		public Window window = new Window();
+
+		@SpecFloatInRange(min = Float.MIN_VALUE, max = 260.0F)
+		@TOMLConfigSerializer.Comment({
+				"The framerate limit slider step size.",
+				"The vanilla default is 10.0."
+		})
+		@ConfigEntry.Gui.Tooltip
+		public float framerateLimitSliderStepSize = 1.0F;
 	}
 
 	public static final class ClientBugFixes {

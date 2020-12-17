@@ -197,6 +197,11 @@ that the game is modded. In addition, the following window properties can be con
 * 32x32 icon
 * 256x256 icon (only takes effect on Mac OS X)
 
+### Framerate limit slider step size
+
+In vanilla Minecraft, the framerate limit slider step size is 10.0. RandomPatches changes this to
+1.0 by default.
+
 ## Configuration
 
 The RandomPatches configuration can be found at `config/randompatches.toml`.

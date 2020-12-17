@@ -21,6 +21,7 @@
 		"timeouts.ServerPlayNetHandlerKeepAliveMixin"
 	],
 	"client": [
+		"client.AbstractOptionMixin",
 		"client.EndPortalTileEntityMixin",
 		"client.MinecraftMixin",
 		"client.datafixerupper.ConfirmBackupScreenMixin",
