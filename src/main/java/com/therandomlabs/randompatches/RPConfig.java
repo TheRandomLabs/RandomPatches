@@ -301,6 +301,7 @@ public final class RPConfig implements ConfigData {
 
 		@TOMLConfigSerializer.Comment({
 				"A list of mixins that should not be applied. Available mixins:",
+				"- BoatEntity: Required for modifying boat options.",
 				"- CompoundNBT: Required for fixing player head stacking.",
 				"- EndPortalTileEntity: Required for fixing end portal rendering.",
 				"- Entity: Required for fixing MC-2025.",
