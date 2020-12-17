@@ -248,6 +248,7 @@ public final class RPConfig implements ConfigData {
 		@ConfigEntry.Gui.Tooltip
 		public int maxCompressedPacketSize = 0x1000000;
 
+		@Path("max_nbt_compound_tag_packet_size")
 		@SpecIntInRange(min = 0x100, max = Integer.MAX_VALUE)
 		@TOMLConfigSerializer.Comment({
 				"The maximum NBT compound tag packet size.",
