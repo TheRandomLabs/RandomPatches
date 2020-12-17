@@ -207,8 +207,8 @@ Thanks to [darkevilmac](https://minecraft.curseforge.com/projects/fast-bamboo) f
 
 ### Remove glowing effect from potions
 
-By default, RandomPatches removes the glowing effect from potions, making potion colors
-significantly more visible.
+By default, RandomPatches removes the glowing effect from potions, making potion colors more
+visible.
 
 Without RandomPatches:
 

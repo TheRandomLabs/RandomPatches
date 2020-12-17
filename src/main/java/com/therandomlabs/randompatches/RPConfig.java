@@ -80,7 +80,7 @@ public final class RPConfig implements ConfigData {
 
 		@TOMLConfigSerializer.Comment({
 				"Removes the glowing effect from potions.",
-				"This makes the potion colors significantly more visible."
+				"This makes the potion colors more visible."
 		})
 		@ConfigEntry.Gui.Tooltip
 		public boolean removeGlowingEffectFromPotions = true;
