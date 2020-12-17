@@ -22,6 +22,7 @@
 	],
 	"client": [
 		"client.AbstractOptionMixin",
+		"client.BambooBlockMixin",
 		"client.EndPortalTileEntityMixin",
 		"client.MinecraftMixin",
 		"client.datafixerupper.ConfirmBackupScreenMixin",

@@ -68,6 +68,16 @@ public final class RPConfig implements ConfigData {
 		@ConfigEntry.Gui.Tooltip
 		public Window window = new Window();
 
+		@TOMLConfigSerializer.Comment({
+				"Optimizes bamboo rendering.",
+				"This works by overriding the method that returns the ambient occlusion light " +
+						"value for the bamboo block, which runs some expensive logic, but always " +
+						"returns 1.0F.",
+				"Changes to this option are applied after a game restart."
+		})
+		@ConfigEntry.Gui.Tooltip
+		public boolean optimizeBambooRendering = true;
+
 		@SpecFloatInRange(min = Float.MIN_VALUE, max = 260.0F)
 		@TOMLConfigSerializer.Comment({
 				"The framerate limit slider step size.",
@@ -398,6 +408,11 @@ public final class RPConfig implements ConfigData {
 		 */
 		public boolean isMixinClassEnabled(String mixinClassName) {
 			final String simpleName = mixins.get(mixinClassName);
+
+			if ("BambooBlock".equals(simpleName) &&
+					!RandomPatches.config().client.optimizeBambooRendering) {
+				return false;
+			}
 
 			if (("DataFixesManager".equals(simpleName) || "MinecraftServer".equals(simpleName) ||
 					"ConfirmBackupScreen".equals(simpleName)) && !disableDataFixerUpper()) {
