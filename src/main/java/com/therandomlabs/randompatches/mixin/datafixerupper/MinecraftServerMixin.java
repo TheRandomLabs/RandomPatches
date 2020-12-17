@@ -33,7 +33,6 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(MinecraftServer.class)
 public final class MinecraftServerMixin {
-	@SuppressWarnings("ConstantConditions")
 	@Redirect(method = "convertLevel", at = @At(
 			value = "INVOKE",
 			target = "net/minecraft/world/storage/SaveFormat$LevelSave.needsConversion()Z"
