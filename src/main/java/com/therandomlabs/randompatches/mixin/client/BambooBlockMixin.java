@@ -38,6 +38,9 @@ public final class BambooBlockMixin extends Block {
 		super(properties);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@SuppressWarnings("deprecation")
 	@Override
 	public float getAmbientOcclusionLightValue(

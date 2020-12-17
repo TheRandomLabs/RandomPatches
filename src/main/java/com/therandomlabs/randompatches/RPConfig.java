@@ -374,6 +374,7 @@ public final class RPConfig implements ConfigData {
 				"- NettyCompressionDecoder: Required for setting the maximum compressed packet " +
 						"size.",
 				"- PacketBuffer: Required for setting the maximum NBT compound tag packet size.",
+				"- PotionItem: Required for removing the glowing effect from potions.",
 				"- ReadTimeoutHandler: Required for changing the read timeout.",
 				"- ServerLoginNetHandler: Required for changing the login timeout.",
 				"- ServerPlayNetHandlerKeepAlive: Required for changing KeepAlive packet settings.",
