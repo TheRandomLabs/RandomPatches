@@ -197,7 +197,7 @@ that the game is modded. In addition, the following window properties can be con
 * 32x32 icon
 * 256x256 icon (only takes effect on Mac OS X)
 
-### Bamboo rendering optimization
+### Optimize bamboo rendering
 
 RandomPatches optimizes bamboo rendering. This works by overriding the method that returns the
 ambient occlusion light value for the bamboo block, which runs some expensive logic, but always
