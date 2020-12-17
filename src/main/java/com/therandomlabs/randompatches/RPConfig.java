@@ -78,6 +78,13 @@ public final class RPConfig implements ConfigData {
 		@ConfigEntry.Gui.Tooltip
 		public boolean optimizeBambooRendering = true;
 
+		@TOMLConfigSerializer.Comment({
+				"Removes the glowing effect from potions.",
+				"This makes the potion colors significantly more visible."
+		})
+		@ConfigEntry.Gui.Tooltip
+		public boolean removeGlowingEffectFromPotions = true;
+
 		@SpecFloatInRange(min = Float.MIN_VALUE, max = 260.0F)
 		@TOMLConfigSerializer.Comment({
 				"The framerate limit slider step size.",

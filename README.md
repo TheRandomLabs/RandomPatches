@@ -205,6 +205,19 @@ returns `1.0F`.
 
 Thanks to [darkevilmac](https://minecraft.curseforge.com/projects/fast-bamboo) for finding this fix!
 
+### Remove glowing effect from potions
+
+By default, RandomPatches removes the glowing effect from potions, making potion colors
+significantly more visible.
+
+Without RandomPatches:
+
+![Potions without RandomPatches](https://raw.githubusercontent.com/TheRandomLabs/RandomPatches/misc/Potions%20without%20RandomPatches.png)
+
+With RandomPatches:
+
+![Potions with RandomPatches](https://raw.githubusercontent.com/TheRandomLabs/RandomPatches/misc/Potions%20with%20RandomPatches.png)
+
 ### Framerate limit slider step size
 
 In vanilla Minecraft, the framerate limit slider step size is 10.0. RandomPatches changes this to

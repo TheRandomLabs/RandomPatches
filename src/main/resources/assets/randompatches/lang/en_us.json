@@ -21,6 +21,8 @@
 	"text.autoconfig.randompatches.option.client.window.icon256.@Tooltip": "The path to the 256x256 Minecraft window icon relative to the Minecraft instance directory.",
 	"text.autoconfig.randompatches.option.client.optimizeBambooRendering": "Optimize bamboo rendering",
 	"text.autoconfig.randompatches.option.client.optimizeBambooRendering.@Tooltip": "Optimizes bamboo rendering.",
+	"text.autoconfig.randompatches.option.client.removeGlowingEffectFromPotions": "Remove glowing effect from potions",
+	"text.autoconfig.randompatches.option.client.removeGlowingEffectFromPotions.@Tooltip": "Removes the glowing effect from potions.",
 	"text.autoconfig.randompatches.option.client.framerateLimitSliderStepSize": "Framerate limit slider step size",
 	"text.autoconfig.randompatches.option.client.framerateLimitSliderStepSize.@Tooltip": "The framerate limit slider step size.",
 	"text.autoconfig.randompatches.category.connection_timeouts": "Connection timeouts",
