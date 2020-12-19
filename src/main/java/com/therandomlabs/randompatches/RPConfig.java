@@ -237,6 +237,8 @@ public final class RPConfig implements ConfigData {
 				"The Minecraft window title.",
 				"Variables:",
 				" - ${mcversion}: The Minecraft version",
+				" - ${username}: The username.",
+				" - ${modsloaded}: The number of mods loaded.",
 				" - ${modversion:modid}: The version of the mod with the specified ID.",
 				"'$' can be escaped by using an extra '$'."
 		})
