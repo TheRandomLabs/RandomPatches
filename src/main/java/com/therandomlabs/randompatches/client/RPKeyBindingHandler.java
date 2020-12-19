@@ -83,6 +83,8 @@ public final class RPKeyBindingHandler {
 
 		private static final Minecraft mc = Minecraft.getInstance();
 
+		private RPKeyBindings() {}
+
 		/**
 		 * Handles key events. This should only be called by
 		 * {@link KeyboardListenerMixin}.
