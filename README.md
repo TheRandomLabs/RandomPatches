@@ -197,6 +197,21 @@ noticeable when flying with elytra in a straight line in third-person mode:
 RandomPatches fixes this issue. Thanks to [Fuzs_](https://www.curseforge.com/members/fuzs_) for
 finding this fix!
 
+### Key bindings
+
+RandomPatches makes the following key bindings configurable in the controls screen:
+
+* Toggle Narrator
+* Pause
+  * This is only for pausing and unpausing the game; the Escape key is still used to close GUI
+  screens.
+* Toggle GUI
+* Toggle Debug Info
+  * The F3 key is still used for F3 actions.
+
+RandomPatches also makes standalone modifier keys not conflict with key combinations with that
+modifier key, which seems to be intended Forge behavior.
+
 ### Window title and icon
 
 By default, RandomPatches removes the annoying `*` in the Minecraft window title that indicates

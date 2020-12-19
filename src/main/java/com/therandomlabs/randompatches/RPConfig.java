@@ -36,6 +36,7 @@ import com.electronwill.nightconfig.core.conversion.SpecFloatInRange;
 import com.electronwill.nightconfig.core.conversion.SpecIntInRange;
 import com.google.common.reflect.ClassPath;
 import com.therandomlabs.autoconfigtoml.TOMLConfigSerializer;
+import com.therandomlabs.randompatches.client.RPKeyBindingHandler;
 import com.therandomlabs.randompatches.client.RPWindowHandler;
 import com.therandomlabs.randompatches.mixin.RPMixinConfig;
 import me.shedaniel.autoconfig1u.ConfigData;
@@ -61,6 +62,12 @@ public final class RPConfig implements ConfigData {
 		@ConfigEntry.Gui.CollapsibleObject
 		@ConfigEntry.Gui.Tooltip
 		public ClientBugFixes bugFixes = new ClientBugFixes();
+
+		@TOMLConfigSerializer.Comment("Options related to key bindings.")
+		@ConfigEntry.Category("key_bindings")
+		@ConfigEntry.Gui.CollapsibleObject
+		@ConfigEntry.Gui.Tooltip
+		public KeyBindings keyBindings = new KeyBindings();
 
 		@TOMLConfigSerializer.Comment("Options related to the Minecraft window.")
 		@ConfigEntry.Category("window")
@@ -118,6 +125,58 @@ public final class RPConfig implements ConfigData {
 		})
 		@ConfigEntry.Gui.Tooltip
 		public boolean fixInvisiblePlayerModel = true;
+	}
+
+	public static final class KeyBindings implements ConfigData {
+		@TOMLConfigSerializer.Comment("The narrator toggle key binding.")
+		@ConfigEntry.Gui.Tooltip
+		public boolean toggleNarrator = true;
+
+		@TOMLConfigSerializer.Comment({
+				"The pause key binding.",
+				"This is only for pausing and unpausing the game; the Escape key is still used " +
+						"to close GUI screens."
+		})
+		@ConfigEntry.Gui.Tooltip
+		public boolean pause = true;
+
+		@Path("toggle_gui")
+		@TOMLConfigSerializer.Comment("The GUI toggle key binding.")
+		@ConfigEntry.Gui.Tooltip
+		public boolean toggleGUI = true;
+
+		@TOMLConfigSerializer.Comment({
+				"The debug info toggle key binding.",
+				"The F3 key is still used for F3 actions."
+		})
+		@ConfigEntry.Gui.Tooltip
+		public boolean toggleDebugInfo = true;
+
+		@TOMLConfigSerializer.Comment(
+				"Makes standalone modifier keys not conflict with key combinations with that " +
+						"modifier key, which seems to be intended Forge behavior."
+		)
+		@ConfigEntry.Gui.Tooltip
+		public boolean standaloneModifiersDoNotConflictWithCombinations = true;
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public void validatePostLoad() {
+			RPKeyBindingHandler.onConfigReload();
+		}
+
+		/**
+		 * Returns whether the debug info toggle key binding is enabled.
+		 * @return {@code true} if the debug info toggle key binding is enabled, or otherwise
+		 * {@code false}.
+		 */
+		public boolean toggleDebugInfo() {
+			final Misc config = RandomPatches.config().misc;
+			return toggleDebugInfo && !config.mixinBlacklist.contains("KeyboardListener") &&
+					!config.mixinBlacklist.contains("KeyboardListenerAccessor");
+		}
 	}
 
 	public static final class Window implements ConfigData {
@@ -389,6 +448,11 @@ public final class RPConfig implements ConfigData {
 				"- Entity: Required for fixing MC-2025.",
 				"- IngameMenuScreen: Required for making Minecraft show the main menu screen " +
 						"after disconnecting rather than the Realms or multiplayer screen.",
+				"- KeyBinding: Required for making standalone modifier keys not conflict with " +
+						"key combinations with that modifier key.",
+				"- KeyboardListener: Required for the narrator toggle, escape, GUI toggle and " +
+						"debug key bindings.",
+				"- KeyboardListenerAccessor: Required for the debug key binding.",
 				"- Minecraft: Required for changing Minecraft window options.",
 				"- NettyCompressionDecoder: Required for setting the maximum compressed packet " +
 						"size.",

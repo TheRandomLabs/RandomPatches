@@ -51,7 +51,7 @@ import org.lwjgl.system.MemoryStack;
 import org.lwjgl.system.MemoryUtil;
 
 /**
- * Applies the RandomPatches configuration options relating to the Minecraft window.
+ * Contains Minecraft window-related code for RandomPatches.
  */
 public final class RPWindowHandler {
 	private static boolean enabled;
@@ -62,7 +62,9 @@ public final class RPWindowHandler {
 	 * Enables this class's functionality if it has not already been enabled.
 	 */
 	public static void enable() {
-		enabled = true;
+		if (FMLEnvironment.dist == Dist.CLIENT) {
+			enabled = true;
+		}
 	}
 
 	/**

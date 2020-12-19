@@ -30,6 +30,9 @@
 		"client.PlayerRendererMixin",
 		"client.PotionItemMixin",
 		"client.datafixerupper.ConfirmBackupScreenMixin",
+		"client.keybindings.KeyBindingMixin",
+		"client.keybindings.KeyboardListenerAccessorMixin",
+		"client.keybindings.KeyboardListenerMixin",
 		"client.packetsizelimits.CCustomPayloadPacketMixin"
 	],
 	"injectors": {

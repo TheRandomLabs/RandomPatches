@@ -38,14 +38,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Entity.class)
 public final class EntityMixin {
-	@Inject(
-			method = "writeWithoutTypeId",
-			at = @At(
-					value = "INVOKE",
-					target = "net/minecraft/entity/Entity.getMotion()" +
+	@Inject(method = "writeWithoutTypeId", at = @At(
+			value = "INVOKE",
+			target = "net/minecraft/entity/Entity.getMotion()" +
 							"Lnet/minecraft/util/math/vector/Vector3d;"
-			)
-	)
+	))
 	private void writeWithoutTypeId(
 			CompoundNBT compound, CallbackInfoReturnable<CompoundNBT> info
 	) {

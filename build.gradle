@@ -21,9 +21,7 @@ buildscript {
 
 		mavenCentral()
 
-		maven {
-			url "https://plugins.gradle.org/m2/"
-		}
+		gradlePluginPortal()
 
 		maven {
 			url "http://files.minecraftforge.net/maven"
