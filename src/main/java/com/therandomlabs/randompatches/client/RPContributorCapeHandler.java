@@ -110,7 +110,6 @@ public final class RPContributorCapeHandler {
 	/**
 	 * Attempts to download the RandomPatches contributor list.
 	 */
-	@SuppressWarnings("NonAtomicOperationOnVolatileField")
 	public static void downloadContributorList() {
 		if (attemptingDownload || tries > 5) {
 			return;
