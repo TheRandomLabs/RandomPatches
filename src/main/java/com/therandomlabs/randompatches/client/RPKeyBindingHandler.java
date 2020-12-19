@@ -26,7 +26,6 @@ package com.therandomlabs.randompatches.client;
 import com.therandomlabs.randompatches.RPConfig;
 import com.therandomlabs.randompatches.RandomPatches;
 import com.therandomlabs.randompatches.mixin.client.keybindings.KeyboardListenerAccessorMixin;
-import com.therandomlabs.randompatches.mixin.client.keybindings.KeyboardListenerMixin;
 import net.minecraft.client.AbstractOption;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.IngameMenuScreen;
@@ -87,7 +86,7 @@ public final class RPKeyBindingHandler {
 
 		/**
 		 * Handles key events. This should only be called by
-		 * {@link KeyboardListenerMixin}.
+		 * {@link com.therandomlabs.randompatches.mixin.client.keybindings.KeyboardListenerMixin}.
 		 *
 		 * @param key the key.
 		 * @param action the action.
@@ -114,6 +113,10 @@ public final class RPKeyBindingHandler {
 				} else if (mc.currentScreen instanceof IngameMenuScreen) {
 					mc.currentScreen.onClose();
 				}
+			}
+
+			if (mc.currentScreen != null && !mc.currentScreen.passEvents) {
+				return;
 			}
 
 			if (config.toggleGUI && action != GLFW.GLFW_RELEASE &&

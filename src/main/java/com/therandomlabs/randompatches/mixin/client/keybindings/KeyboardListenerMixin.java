@@ -43,8 +43,9 @@ public abstract class KeyboardListenerMixin {
 
 	@Inject(method = "onKeyEvent", at = @At(
 			value = "INVOKE",
-			target = "net/minecraft/client/util/InputMappings.getInputByCode(II)" +
-					"Lnet/minecraft/client/util/InputMappings$Input;"
+			target = "net/minecraft/client/gui/INestedGuiEventHandler.getFocused()" +
+					"Lnet/minecraft/client/gui/IGuiEventListener;",
+			ordinal = 0
 	))
 	private void onKeyEvent(
 			long window, int key, int scanCode, int action, int modifiers, CallbackInfo info
