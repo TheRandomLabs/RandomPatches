@@ -449,8 +449,8 @@ public final class RPConfig implements ConfigData {
 				"- CompoundNBT: Required for fixing player head stacking.",
 				"- EndPortalTileEntity: Required for fixing end portal rendering.",
 				"- Entity: Required for fixing MC-2025.",
-				"- IngameMenuScreen: Required for making Minecraft show the main menu screen " +
-						"after disconnecting rather than the Realms or multiplayer screen.",
+				"- IngameMenuScreen, Screen: Required for making Minecraft show the main menu " +
+						"screen after disconnecting rather than the Realms or multiplayer screen.",
 				"- KeyBinding: Required for making standalone modifier keys not conflict with " +
 						"key combinations with that modifier key.",
 				"- KeyboardListener: Required for the narrator toggle, escape, GUI toggle and " +
