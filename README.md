@@ -234,6 +234,7 @@ that the game is modded. In addition, the following window properties can be con
   * `${username}`: Username
   * `${modsloaded}`: Number of mods loaded
   * `${modversion:modid}`: Version of the mod with the specified ID
+  * '$' can be escaped by using an extra '$'.
 * 16x16 icon
 * 32x32 icon
 * 256x256 icon (only takes effect on Mac OS X)
