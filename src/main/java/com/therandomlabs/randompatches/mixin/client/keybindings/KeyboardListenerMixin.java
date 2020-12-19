@@ -51,7 +51,7 @@ public abstract class KeyboardListenerMixin {
 	private void onKeyEvent(
 			long window, int key, int scanCode, int action, int modifiers, CallbackInfo info
 	) {
-		RPKeyBindingHandler.RPKeyBindings.onKeyEvent(key, action, scanCode);
+		RPKeyBindingHandler.KeyBindings.onKeyEvent(key, action, scanCode);
 	}
 
 	@ModifyConstant(method = "onKeyEvent", constant = @Constant(intValue = GLFW.GLFW_KEY_B))

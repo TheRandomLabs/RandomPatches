@@ -1,6 +1,7 @@
 {
 	"selectWorld.unableToLoad": "Unable to load world",
 	"selectWorld.dataFixerUpperDisabled": "Worlds last played on an older or newer version of Minecraft cannot be loaded when DataFixerUpper is disabled by RandomPatches.",
+	"key.secondarySprint": "Sprint (Secondary)",
 	"key.narrator": "Toggle Narrator",
 	"key.pause": "Pause",
 	"key.gui": "Toggle GUI",
@@ -15,6 +16,8 @@
 	"text.autoconfig.randompatches.option.client.bugFixes.fixInvisiblePlayerModel.@Tooltip": "Fixes the player model sometimes disappearing in certain instances.",
 	"text.autoconfig.randompatches.option.client.keyBindings": "Key bindings",
 	"text.autoconfig.randompatches.option.client.keyBindings.@Tooltip": "Options related to key bindings.",
+	"text.autoconfig.randompatches.option.client.keyBindings.secondarySprint": "Sprint (Secondary)",
+	"text.autoconfig.randompatches.option.client.keyBindings.secondarySprint.@Tooltip": "The secondary sprint key binding.",
 	"text.autoconfig.randompatches.option.client.keyBindings.toggleNarrator": "Toggle Narrator",
 	"text.autoconfig.randompatches.option.client.keyBindings.toggleNarrator.@Tooltip": "The narrator toggle key binding.",
 	"text.autoconfig.randompatches.option.client.keyBindings.pause": "Pause",

@@ -31,6 +31,7 @@
 		"client.PotionItemMixin",
 		"client.ScreenMixin",
 		"client.datafixerupper.ConfirmBackupScreenMixin",
+		"client.keybindings.ClientPlayerEntityMixin",
 		"client.keybindings.KeyBindingMixin",
 		"client.keybindings.KeyboardListenerAccessorMixin",
 		"client.keybindings.KeyboardListenerMixin",

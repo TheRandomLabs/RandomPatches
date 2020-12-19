@@ -23,6 +23,8 @@
 
 package com.therandomlabs.randompatches.client;
 
+import java.util.List;
+
 import com.therandomlabs.randompatches.RPConfig;
 import com.therandomlabs.randompatches.RandomPatches;
 import com.therandomlabs.randompatches.mixin.client.keybindings.KeyboardListenerAccessorMixin;
@@ -50,7 +52,14 @@ public final class RPKeyBindingHandler {
 	 * <p>
 	 * A separate class in necessary to prevent certain classes from being loaded too early.
 	 */
-	public static final class RPKeyBindings {
+	public static final class KeyBindings {
+		/**
+		 * The secondary sprint key binding.
+		 */
+		public static final KeyBinding SECONDARY_SPRINT = new KeyBinding(
+				"key.secondarySprint", GLFW.GLFW_KEY_W, "key.categories.movement"
+		);
+
 		/**
 		 * The narrator toggle key binding.
 		 */
@@ -82,7 +91,7 @@ public final class RPKeyBindingHandler {
 
 		private static final Minecraft mc = Minecraft.getInstance();
 
-		private RPKeyBindings() {}
+		private KeyBindings() {}
 
 		/**
 		 * Handles key events. This should only be called by
@@ -141,10 +150,16 @@ public final class RPKeyBindingHandler {
 
 		private static void register() {
 			final RPConfig.KeyBindings config = RandomPatches.config().client.keyBindings;
-			register(TOGGLE_NARRATOR, config.toggleNarrator);
-			register(PAUSE, config.pause);
-			register(TOGGLE_GUI, config.toggleGUI);
-			register(TOGGLE_DEBUG_INFO, config.toggleDebugInfo());
+			final List<String> mixinBlacklist = RandomPatches.config().misc.mixinBlacklist;
+
+			register(SECONDARY_SPRINT, config.secondarySprint());
+
+			if (!mixinBlacklist.contains("KeyboardListener")) {
+				register(TOGGLE_NARRATOR, config.toggleNarrator);
+				register(PAUSE, config.pause);
+				register(TOGGLE_GUI, config.toggleGUI);
+				register(TOGGLE_DEBUG_INFO, config.toggleDebugInfo());
+			}
 		}
 
 		private static void register(KeyBinding keyBinding, boolean enabled) {
@@ -170,7 +185,7 @@ public final class RPKeyBindingHandler {
 
 		@Override
 		public boolean isActive() {
-			final Screen screen = RPKeyBindings.mc.currentScreen;
+			final Screen screen = KeyBindings.mc.currentScreen;
 			return screen == null || !(screen.getFocused() instanceof TextFieldWidget) ||
 					!((TextFieldWidget) screen.getFocused()).func_212955_f();
 		}
@@ -189,8 +204,7 @@ public final class RPKeyBindingHandler {
 	 * Enables this class's functionality if it has not already been enabled.
 	 */
 	public static void enable() {
-		if (FMLEnvironment.dist == Dist.CLIENT && !enabled &&
-				!RandomPatches.config().misc.mixinBlacklist.contains("KeyboardListener")) {
+		if (FMLEnvironment.dist == Dist.CLIENT && !enabled) {
 			enabled = true;
 			onConfigReload();
 		}
@@ -202,7 +216,7 @@ public final class RPKeyBindingHandler {
 	 */
 	public static void onConfigReload() {
 		if (FMLEnvironment.dist == Dist.CLIENT && enabled) {
-			RPKeyBindings.register();
+			KeyBindings.register();
 		}
 	}
 }

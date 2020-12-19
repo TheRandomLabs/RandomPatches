@@ -23,45 +23,46 @@
 
 package com.therandomlabs.randompatches.mixin.client.keybindings;
 
-import com.therandomlabs.randompatches.RPConfig;
 import com.therandomlabs.randompatches.RandomPatches;
 import com.therandomlabs.randompatches.client.RPKeyBindingHandler;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.client.util.InputMappings;
-import net.minecraftforge.client.settings.KeyModifier;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(KeyBinding.class)
-public final class KeyBindingMixin {
-	@SuppressWarnings({"ConstantConditions", "PMD.CompareObjectsWithEquals"})
-	@Inject(method = "conflicts", at = @At("HEAD"), cancellable = true)
-	private void conflicts(KeyBinding keyBinding, CallbackInfoReturnable<Boolean> info) {
-		if (!RandomPatches.config().client.keyBindings.secondarySprint()) {
-			return;
+@Mixin(ClientPlayerEntity.class)
+public final class ClientPlayerEntityMixin {
+	@Redirect(method = "livingTick", at = @At(
+			value = "INVOKE",
+			target = "net/minecraft/client/settings/KeyBinding.isKeyDown()Z"
+	))
+	private boolean isSprintKeyDown(KeyBinding sprintKeyBinding) {
+		if (sprintKeyBinding.isKeyDown()) {
+			return true;
 		}
 
-		final KeyBinding forward = Minecraft.getInstance().gameSettings.keyBindForward;
-		final KeyBinding secondarySprint = RPKeyBindingHandler.KeyBindings.SECONDARY_SPRINT;
-
-		if (((Object) this == forward && keyBinding == secondarySprint) ||
-				((Object) this == secondarySprint && keyBinding == forward)) {
-			info.setReturnValue(false);
-			info.cancel();
+		if (!RandomPatches.config().client.keyBindings.secondarySprint) {
+			return false;
 		}
+
+		final InputMappings.Input forwardKey =
+				Minecraft.getInstance().gameSettings.keyBindForward.getKey();
+		return !RPKeyBindingHandler.KeyBindings.SECONDARY_SPRINT.getKey().equals(forwardKey) &&
+				RPKeyBindingHandler.KeyBindings.SECONDARY_SPRINT.isKeyDown();
 	}
 
-	@Redirect(method = "conflicts", at = @At(
+	@Redirect(method = "livingTick", at = @At(
 			value = "INVOKE",
-			target = "net/minecraftforge/client/settings/KeyModifier.matches" +
-					"(Lnet/minecraft/client/util/InputMappings$Input;)Z"
+			target = "net/minecraft/client/entity/player/ClientPlayerEntity.setSprinting(Z)V",
+			ordinal = 0
 	))
-	private boolean matches(KeyModifier modifier, InputMappings.Input key) {
-		final RPConfig.KeyBindings config = RandomPatches.config().client.keyBindings;
-		return !config.standaloneModifiersDoNotConflictWithCombinations && modifier.matches(key);
+	private void enableSprintingThroughSecondarySprint(ClientPlayerEntity player, boolean flag) {
+		if (!RandomPatches.config().client.keyBindings.secondarySprint ||
+				RPKeyBindingHandler.KeyBindings.SECONDARY_SPRINT.isKeyDown()) {
+			player.setSprinting(true);
+		}
 	}
 }

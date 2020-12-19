@@ -129,6 +129,14 @@ public final class RPConfig implements ConfigData {
 
 	public static final class KeyBindings implements ConfigData {
 		@TOMLConfigSerializer.Comment({
+				"The secondary sprint key binding.",
+				"This allows the double tap sprint functionality to be disabled, " +
+						"fixing MC-203401: https://bugs.mojang.com/browse/MC-203401"
+		})
+		@ConfigEntry.Gui.Tooltip
+		public boolean secondarySprint = true;
+
+		@TOMLConfigSerializer.Comment({
 				"The narrator toggle key binding.",
 				"This fixes MC-122645: https://bugs.mojang.com/browse/MC-122645"
 		})
@@ -138,19 +146,24 @@ public final class RPConfig implements ConfigData {
 		@TOMLConfigSerializer.Comment({
 				"The pause key binding.",
 				"This is only for pausing and unpausing the game; the Escape key is still used " +
-						"to close GUI screens."
+						"to close GUI screens.",
+				"This partially fixes MC-147718: https://bugs.mojang.com/browse/MC-147718"
 		})
 		@ConfigEntry.Gui.Tooltip
 		public boolean pause = true;
 
 		@Path("toggle_gui")
-		@TOMLConfigSerializer.Comment("The GUI toggle key binding.")
+		@TOMLConfigSerializer.Comment({
+				"The GUI toggle key binding.",
+				"This partially fixes MC-147718: https://bugs.mojang.com/browse/MC-147718"
+		})
 		@ConfigEntry.Gui.Tooltip
 		public boolean toggleGUI = true;
 
 		@TOMLConfigSerializer.Comment({
 				"The debug info toggle key binding.",
-				"The F3 key is still used for F3 actions."
+				"The F3 key is still used for F3 actions.",
+				"This partially fixes MC-147718: https://bugs.mojang.com/browse/MC-147718"
 		})
 		@ConfigEntry.Gui.Tooltip
 		public boolean toggleDebugInfo = true;
@@ -168,6 +181,16 @@ public final class RPConfig implements ConfigData {
 		@Override
 		public void validatePostLoad() {
 			RPKeyBindingHandler.onConfigReload();
+		}
+
+		/**
+		 * Returns whether the secondary sprint key binding is enabled.
+		 * @return {@code true} if the secondary sprint key binding is enabled, or otherwise
+		 * {@code false}.
+		 */
+		public boolean secondarySprint() {
+			return secondarySprint &&
+					!RandomPatches.config().misc.mixinBlacklist.contains("ClientPlayerEntity");
 		}
 
 		/**
@@ -446,13 +469,17 @@ public final class RPConfig implements ConfigData {
 				"- BoatEntity: Required for modifying boat options.",
 				"- CCustomPayloadPacket: Required for setting the maximum client custom payload " +
 						"packet size.",
+				"- ClientPlayerEntity: Required for the secondary sprint key binding.",
 				"- CompoundNBT: Required for fixing player head stacking.",
 				"- EndPortalTileEntity: Required for fixing end portal rendering.",
 				"- Entity: Required for fixing MC-2025.",
 				"- IngameMenuScreen, Screen: Required for making Minecraft show the main menu " +
 						"screen after disconnecting rather than the Realms or multiplayer screen.",
-				"- KeyBinding: Required for making standalone modifier keys not conflict with " +
-						"key combinations with that modifier key.",
+				"- KeyBinding:",
+				"  - Required for making the forward movement key not conflict with the " +
+						"secondary sprint key.",
+				"  - Required for making standalone modifier keys not conflict with key " +
+						"combinations with that modifier key.",
 				"- KeyboardListener: Required for the narrator toggle, escape, GUI toggle and " +
 						"debug key bindings.",
 				"- KeyboardListenerAccessor: Required for the debug key binding.",

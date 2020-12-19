@@ -199,16 +199,21 @@ finding this fix!
 
 ### Key bindings
 
-RandomPatches makes the following key bindings configurable in the controls screen:
+RandomPatches makes the narrator toggle key binding configurable in the controls screen,
+fixing [MC-122645](https://bugs.mojang.com/browse/MC-122645). In addition, RandomPatches makes
+the following key bindings configurable, largely fixing
+[MC-147718](https://bugs.mojang.com/browse/MC-147718):
 
-* Toggle Narrator
-  * This fixes [MC-122645](https://bugs.mojang.com/browse/MC-122645).
 * Pause
   * This is only for pausing and unpausing the game; the Escape key is still used to close GUI
   screens.
 * Toggle GUI
 * Toggle Debug Info
   * The F3 key is still used for F3 actions.
+
+Furthermore, RandomPatches adds a second configurable key binding for sprinting, which allows the
+double tap sprint functionality to be disabled, fixing
+[MC-203401](https://bugs.mojang.com/browse/MC-203401).
 
 RandomPatches also makes standalone modifier keys not conflict with key combinations with that
 modifier key, which seems to be intended Forge behavior.
