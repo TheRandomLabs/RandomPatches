@@ -44,7 +44,7 @@ bug fixes for Minecraft.
 When installed on a client, RandomPatches should be completely compatible with servers without the
 mod, and when installed on a server, it should be completely compatible with clients without the
 mod. As a result, clients can connect to a server with a different version of the mod to the one on
-the server. Furthermore, RandomPatches contains no features that requires the mod to be installed
+the server. Furthermore, RandomPatches contains no features that require the mod to be installed
 both on the client and the server.
 
 By default, RandomPatches aims to be as non-invasive as possible—there are no breaking changes to
