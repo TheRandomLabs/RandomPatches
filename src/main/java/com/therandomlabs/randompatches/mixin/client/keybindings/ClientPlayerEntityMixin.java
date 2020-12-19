@@ -46,7 +46,6 @@ public abstract class ClientPlayerEntityMixin extends PlayerEntity {
 	}
 
 	//We let the server handle the dismount logic.
-
 	/**
 	 * {@inheritDoc}
 	 */

@@ -24,6 +24,7 @@
 package com.therandomlabs.randompatches;
 
 import com.therandomlabs.autoconfigtoml.TOMLConfigSerializer;
+import com.therandomlabs.randompatches.client.RPContributorCapeHandler;
 import com.therandomlabs.randompatches.client.RPKeyBindingHandler;
 import com.therandomlabs.randompatches.command.RPConfigReloadCommand;
 import me.shedaniel.autoconfig1u.AutoConfig;
@@ -67,6 +68,10 @@ public final class RandomPatches {
 
 		MinecraftForge.EVENT_BUS.addListener(this::registerCommands);
 		RPKeyBindingHandler.enable();
+
+		if (RandomPatches.config().client.contributorCapes) {
+			RPContributorCapeHandler.downloadContributorList();
+		}
 	}
 
 	private void registerCommands(RegisterCommandsEvent event) {

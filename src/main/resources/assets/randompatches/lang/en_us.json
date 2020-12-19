@@ -51,6 +51,8 @@
 	"text.autoconfig.randompatches.option.client.framerateLimitSliderStepSize.@Tooltip": "The framerate limit slider step size.",
 	"text.autoconfig.randompatches.option.client.returnToMainMenuAfterDisconnect": "Return to main menu after disconnect",
 	"text.autoconfig.randompatches.option.client.returnToMainMenuAfterDisconnect.@Tooltip": "Causes Minecraft to show the main menu screen after disconnecting.",
+	"text.autoconfig.randompatches.option.client.contributorCapes": "Contributor capes",
+	"text.autoconfig.randompatches.option.client.contributorCapes.@Tooltip": "Gives capes to RandomPatches contributors.",
 	"text.autoconfig.randompatches.category.connection_timeouts": "Connection timeouts",
 	"text.autoconfig.randompatches.option.connectionTimeouts.readTimeoutSeconds": "Read timeout in seconds",
 	"text.autoconfig.randompatches.option.connectionTimeouts.readTimeoutSeconds.@Tooltip": "The read timeout.",

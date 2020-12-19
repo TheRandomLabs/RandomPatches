@@ -106,6 +106,10 @@ public final class RPConfig implements ConfigData {
 		)
 		@ConfigEntry.Gui.Tooltip
 		public boolean returnToMainMenuAfterDisconnect = !FMLEnvironment.production;
+
+		@TOMLConfigSerializer.Comment("Gives capes to RandomPatches contributors.")
+		@ConfigEntry.Gui.Tooltip
+		public boolean contributorCapes = true;
 	}
 
 	public static final class ClientBugFixes {
@@ -600,7 +604,10 @@ public final class RPConfig implements ConfigData {
 		public boolean fixTickSchedulerDesync = true;
 
 		@Path("fix_mc-2025")
-		@TOMLConfigSerializer.Comment("Fixes MC-2025: https://bugs.mojang.com/browse/MC-2025")
+		@TOMLConfigSerializer.Comment({
+				"Fixes MC-2025: https://bugs.mojang.com/browse/MC-2025",
+				"For more information, see: https://redd.it/8pgd4q"
+		})
 		@ConfigEntry.Gui.Tooltip
 		public boolean fixMC2025 = true;
 
