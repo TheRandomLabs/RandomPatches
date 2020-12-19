@@ -227,7 +227,7 @@ public final class RPConfig implements ConfigData {
 	public static final class Window implements ConfigData {
 		@ConfigEntry.Gui.Excluded
 		public static final String DEFAULT_TITLE = FMLEnvironment.production ?
-				"Minecraft ${mcversion}" : "RandomPatches";
+				"Minecraft ${mcversion}" : "RandomPatches (${username}$, ${modsloaded} mods)";
 
 		@ConfigEntry.Gui.Excluded
 		private static final String DEFAULT_ICON =
@@ -248,12 +248,15 @@ public final class RPConfig implements ConfigData {
 				"Variables:",
 				" - ${mcversion}: The Minecraft version",
 				" - ${activity}: The current activity.",
+				" - ${username}: The username.",
+				" - ${modsloaded}: The number of mods loaded.",
 				" - ${modversion:modid}: The version of the mod with the specified ID.",
 				"'$' can be escaped by using an extra '$'."
 		})
 		@ConfigEntry.Gui.Tooltip
 		public String titleWithActivity = FMLEnvironment.production ?
-				"Minecraft ${mcversion} - ${activity}" : "RandomPatches - ${activity}";
+				"Minecraft ${mcversion} - ${activity}" :
+				"RandomPatches (${username}$, ${modsloaded} mods)- ${activity}";
 
 		@Path("icon_16x16")
 		@TOMLConfigSerializer.Comment({

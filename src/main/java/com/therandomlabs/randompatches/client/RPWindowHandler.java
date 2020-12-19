@@ -73,6 +73,14 @@ public final class RPWindowHandler {
 				return activity;
 			}
 
+			if (key.equals("username")) {
+				return Minecraft.getInstance().getSession().getUsername();
+			}
+
+			if (key.equals("modsloaded")) {
+				return Integer.toString(ModList.get().getMods().size());
+			}
+
 			if (key.startsWith("modversion:")) {
 				final String modID = key.substring("modversion:".length());
 				final ModFileInfo fileInfo = ModList.get().getModFileById(modID);

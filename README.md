@@ -227,7 +227,13 @@ modifier key, which seems to be intended Forge behavior.
 By default, RandomPatches removes the annoying `*` in the Minecraft window title that indicates
 that the game is modded. In addition, the following window properties can be configured:
 
-* Title (the Minecraft version, current activity and mod versions are provided as variables)
+* Title
+  * Severable variables are provided:
+  * `${mcversion}`: Minecraft version
+  * `${activity}`: Current activity
+  * `${username}`: Username
+  * `${modsloaded}`: Number of mods loaded
+  * `${modversion:modid}`: Version of the mod with the specified ID
 * 16x16 icon
 * 32x32 icon
 * 256x256 icon (only takes effect on Mac OS X)
