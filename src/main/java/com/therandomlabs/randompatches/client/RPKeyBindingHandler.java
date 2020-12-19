@@ -106,13 +106,12 @@ public final class RPKeyBindingHandler {
 				}
 			}
 
-			if (config.pause && action != GLFW.GLFW_RELEASE && PAUSE.matchesKey(key, scanCode) &&
-					(mc.currentScreen == null || mc.currentScreen instanceof IngameMenuScreen)) {
-				mc.displayInGameMenu(InputMappings.isKeyDown(
-						mc.getWindow().getHandle(), GLFW.GLFW_KEY_F3
-				));
-
-				if (mc.currentScreen instanceof IngameMenuScreen) {
+			if (config.pause && action != GLFW.GLFW_RELEASE && PAUSE.matchesKey(key, scanCode)) {
+				if (mc.currentScreen == null) {
+					mc.displayInGameMenu(InputMappings.isKeyDown(
+							mc.getWindow().getHandle(), GLFW.GLFW_KEY_F3
+					));
+				} else if (mc.currentScreen instanceof IngameMenuScreen) {
 					mc.currentScreen.onClose();
 				}
 			}
