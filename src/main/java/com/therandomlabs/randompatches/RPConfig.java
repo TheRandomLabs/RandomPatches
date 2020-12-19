@@ -128,7 +128,10 @@ public final class RPConfig implements ConfigData {
 	}
 
 	public static final class KeyBindings implements ConfigData {
-		@TOMLConfigSerializer.Comment("The narrator toggle key binding.")
+		@TOMLConfigSerializer.Comment({
+				"The narrator toggle key binding.",
+				"This fixes MC-122645: https://bugs.mojang.com/browse/MC-122645"
+		})
 		@ConfigEntry.Gui.Tooltip
 		public boolean toggleNarrator = true;
 

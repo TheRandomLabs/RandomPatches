@@ -202,6 +202,7 @@ finding this fix!
 RandomPatches makes the following key bindings configurable in the controls screen:
 
 * Toggle Narrator
+  * This fixes [MC-122645](https://bugs.mojang.com/browse/MC-122645).
 * Pause
   * This is only for pausing and unpausing the game; the Escape key is still used to close GUI
   screens.
