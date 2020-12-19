@@ -179,8 +179,8 @@ public final class RPKeyBindingHandler {
 		}
 	}
 
-	private static class ToggleNarratorKeyConflictContext implements IKeyConflictContext {
-		public static final ToggleNarratorKeyConflictContext INSTANCE =
+	private static final class ToggleNarratorKeyConflictContext implements IKeyConflictContext {
+		private static final ToggleNarratorKeyConflictContext INSTANCE =
 				new ToggleNarratorKeyConflictContext();
 
 		@Override

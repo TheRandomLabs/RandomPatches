@@ -208,7 +208,7 @@ public final class RPConfig implements ConfigData {
 	public static final class Window implements ConfigData {
 		@ConfigEntry.Gui.Excluded
 		public static final String DEFAULT_TITLE = FMLEnvironment.production ?
-				"Minecraft %s" : "RandomPatches";
+				"Minecraft ${mcversion}" : "RandomPatches";
 
 		@ConfigEntry.Gui.Excluded
 		private static final String DEFAULT_ICON =
@@ -216,15 +216,21 @@ public final class RPConfig implements ConfigData {
 
 		@TOMLConfigSerializer.Comment({
 				"The Minecraft window title.",
-				"The Minecraft version is provided as an argument."
+				"Variables:",
+				" - ${mcversion}: The Minecraft version",
+				" - ${modversion:modid}: The version of the mod with the specified ID.",
+				"'$' can be escaped by using an extra '$'."
 		})
 		@ConfigEntry.Gui.Tooltip
 		public String title = DEFAULT_TITLE;
 
 		@TOMLConfigSerializer.Comment({
 				"The Minecraft window title that takes into account the current activity.",
-				"The Minecraft version and current activity are provided as arguments.",
-				"For example: \"RandomPatches - %2$s\""
+				"Variables:",
+				" - ${mcversion}: The Minecraft version",
+				" - ${activity}: The current activity.",
+				" - ${modversion:modid}: The version of the mod with the specified ID.",
+				"'$' can be escaped by using an extra '$'."
 		})
 		@ConfigEntry.Gui.Tooltip
 		public String titleWithActivity = FMLEnvironment.production ?

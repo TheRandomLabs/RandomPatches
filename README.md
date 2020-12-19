@@ -44,7 +44,8 @@ bug fixes for Minecraft.
 When installed on a client, RandomPatches should be completely compatible with servers without the
 mod, and when installed on a server, it should be completely compatible with clients without the
 mod. As a result, clients can connect to a server with a different version of the mod to the one on
-the server.
+the server. Furthermore, RandomPatches contains no features that requires the mod to be installed
+both on the client and the server.
 
 By default, RandomPatches aims to be as non-invasive as possible—there are no breaking changes to
 game mechanics or conspicuous GUI additions. Indeed, with the default settings, the mod should be
@@ -223,7 +224,7 @@ modifier key, which seems to be intended Forge behavior.
 By default, RandomPatches removes the annoying `*` in the Minecraft window title that indicates
 that the game is modded. In addition, the following window properties can be configured:
 
-* Title (the Minecraft version and current activity can be included)
+* Title (the Minecraft version, current activity and mod versions are provided as variables)
 * 16x16 icon
 * 32x32 icon
 * 256x256 icon (only takes effect on Mac OS X)

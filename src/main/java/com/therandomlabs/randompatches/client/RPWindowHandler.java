@@ -40,8 +40,13 @@ import net.minecraft.resources.VanillaPack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SharedConstants;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.loading.FMLEnvironment;
+import net.minecraftforge.fml.loading.moddiscovery.ModFileInfo;
+import net.minecraftforge.forgespi.language.IModInfo;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.text.StrLookup;
+import org.apache.commons.lang3.text.StrSubstitutor;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWImage;
@@ -53,7 +58,43 @@ import org.lwjgl.system.MemoryUtil;
 /**
  * Contains Minecraft window-related code for RandomPatches.
  */
+@SuppressWarnings("deprecation")
 public final class RPWindowHandler {
+	private static final class TitleLookup extends StrLookup<String> {
+		private static final TitleLookup INSTANCE = new TitleLookup();
+
+		@Override
+		public String lookup(String key) {
+			if (key.equals("mcversion")) {
+				return SharedConstants.getVersion().getName();
+			}
+
+			if (key.equals("activity")) {
+				return activity;
+			}
+
+			if (key.startsWith("modversion:")) {
+				final String modID = key.substring("modversion:".length());
+				final ModFileInfo fileInfo = ModList.get().getModFileById(modID);
+
+				if (fileInfo == null) {
+					return null;
+				}
+
+				for (IModInfo modInfo : fileInfo.getMods()) {
+					if (modID.equals(modInfo.getModId())) {
+						return modInfo.getVersion().toString();
+					}
+				}
+			}
+
+			return null;
+		}
+	}
+
+	private static final StrSubstitutor titleSubstitutor = new StrSubstitutor(TitleLookup.INSTANCE);
+
+	private static String activity;
 	private static boolean enabled;
 
 	private RPWindowHandler() {}
@@ -93,27 +134,26 @@ public final class RPWindowHandler {
 		final Minecraft mc = Minecraft.getInstance();
 		final ClientPlayNetHandler handler = mc.getConnection();
 
-		if (handler != null && handler.getNetworkManager().isChannelOpen()) {
-			final String activity;
-
-			if (mc.getIntegratedServer() != null && !mc.getIntegratedServer().getPublic()) {
-				activity = "title.singleplayer";
-			} else if (mc.isConnectedToRealms()) {
-				activity = "title.multiplayer.realms";
-			} else if (mc.getIntegratedServer() == null &&
-					(mc.getCurrentServerData() == null || !mc.getCurrentServerData().isOnLAN())) {
-				activity = "title.multiplayer.other";
-			} else {
-				activity = "title.multiplayer.lan";
-			}
-
-			return String.format(
-					config.titleWithActivity, SharedConstants.getVersion().getName(),
-					I18n.format(activity)
-			);
+		if (handler == null || !handler.getNetworkManager().isChannelOpen()) {
+			activity = null;
+			return titleSubstitutor.replace(config.title);
 		}
 
-		return String.format(config.title, SharedConstants.getVersion().getName());
+		final String activityKey;
+
+		if (mc.getIntegratedServer() != null && !mc.getIntegratedServer().getPublic()) {
+			activityKey = "title.singleplayer";
+		} else if (mc.isConnectedToRealms()) {
+			activityKey = "title.multiplayer.realms";
+		} else if (mc.getIntegratedServer() == null &&
+				(mc.getCurrentServerData() == null || !mc.getCurrentServerData().isOnLAN())) {
+			activityKey = "title.multiplayer.other";
+		} else {
+			activityKey = "title.multiplayer.lan";
+		}
+
+		activity = I18n.format(activityKey);
+		return titleSubstitutor.replace(config.titleWithActivity);
 	}
 
 	/**
