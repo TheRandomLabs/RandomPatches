@@ -256,7 +256,7 @@ public final class RPConfig implements ConfigData {
 		@ConfigEntry.Gui.Tooltip
 		public String titleWithActivity = FMLEnvironment.production ?
 				"Minecraft ${mcversion} - ${activity}" :
-				"RandomPatches (${username}$, ${modsloaded} mods)- ${activity}";
+				"RandomPatches (${username}$, ${modsloaded} mods) - ${activity}";
 
 		@Path("icon_16x16")
 		@TOMLConfigSerializer.Comment({
