@@ -29,56 +29,56 @@ import net.minecraft.client.gui.screen.DirtMessageScreen;
 import net.minecraft.client.gui.screen.IngameMenuScreen;
 import net.minecraft.client.gui.screen.MainMenuScreen;
 import net.minecraft.client.gui.screen.MultiplayerScreen;
-import net.minecraft.client.gui.widget.Widget;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.realms.RealmsBridgeScreen;
 import net.minecraft.util.text.TranslationTextComponent;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
+import org.spongepowered.asm.mixin.injection.Slice;
 
 @Mixin(IngameMenuScreen.class)
 public final class IngameMenuScreenMixin {
-	@Redirect(method = "addButtons", at = @At(
-			value = "INVOKE",
-			target = "net/minecraft/client/gui/screen/IngameMenuScreen.addButton(Lnet/minecraft/" +
-					"client/gui/widget/Widget;)Lnet/minecraft/client/gui/widget/Widget;"
-	))
-	private Widget addButton(IngameMenuScreen screen, Widget button) {
-		if ("menu.returnToMenu".equals(((TranslationTextComponent) button.getMessage()).getKey())) {
-			button = new Button(
-					screen.width / 2 - 102, screen.height / 4 + 120 - 16, 204, 20,
-					new TranslationTextComponent("menu.returnToMenu"), this::returnToMenu
-			);
-		}
-
-		return ((ScreenMixin) screen).invokeAddButton(button);
-	}
-
 	@SuppressWarnings("ConstantConditions")
-	@Unique
-	private void returnToMenu(Button button) {
-		final Minecraft mc = Minecraft.getInstance();
+	@ModifyArg(
+			method = "addButtons",
+			slice = @Slice(
+					from = @At(
+							value = "INVOKE",
+							target = "net/minecraft/client/Minecraft.isSingleplayer()Z"
+					)
+			),
+			at = @At(
+					value = "INVOKE",
+					target = "net/minecraft/client/gui/widget/button/Button.<init>" +
+							"(IIIILnet/minecraft/util/text/ITextComponent;" +
+							"Lnet/minecraft/client/gui/widget/button/Button$IPressable;)V",
+					ordinal = 0 //We set the ordinal just in case. :P
+			)
+	)
+	private Button.IPressable adjustOnPress(Button.IPressable onPress) {
+		return button -> {
+			final Minecraft mc = Minecraft.getInstance();
 
-		button.active = false;
-		mc.world.sendQuittingDisconnectingPacket();
+			button.active = false;
+			mc.world.sendQuittingDisconnectingPacket();
 
-		if (mc.isIntegratedServerRunning()) {
-			mc.func_213231_b(new DirtMessageScreen(
-					new TranslationTextComponent("menu.savingLevel")
-			));
-		} else {
-			mc.func_213254_o();
-		}
+			if (mc.isIntegratedServerRunning()) {
+				mc.func_213231_b(new DirtMessageScreen(
+						new TranslationTextComponent("menu.savingLevel")
+				));
+			} else {
+				mc.func_213254_o();
+			}
 
-		if (RandomPatches.config().client.returnToMainMenuAfterDisconnect ||
-				mc.isIntegratedServerRunning()) {
-			mc.displayGuiScreen(new MainMenuScreen());
-		} else if (mc.isConnectedToRealms()) {
-			new RealmsBridgeScreen().switchToRealms(new MainMenuScreen());
-		} else {
-			mc.displayGuiScreen(new MultiplayerScreen(new MainMenuScreen()));
-		}
+			if (RandomPatches.config().client.returnToMainMenuAfterDisconnect ||
+					mc.isIntegratedServerRunning()) {
+				mc.displayGuiScreen(new MainMenuScreen());
+			} else if (mc.isConnectedToRealms()) {
+				new RealmsBridgeScreen().switchToRealms(new MainMenuScreen());
+			} else {
+				mc.displayGuiScreen(new MultiplayerScreen(new MainMenuScreen()));
+			}
+		};
 	}
 }

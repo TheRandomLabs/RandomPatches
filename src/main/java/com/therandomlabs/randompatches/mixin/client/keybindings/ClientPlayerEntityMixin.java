@@ -23,18 +23,47 @@
 
 package com.therandomlabs.randompatches.mixin.client.keybindings;
 
+import com.mojang.authlib.GameProfile;
 import com.therandomlabs.randompatches.RandomPatches;
 import com.therandomlabs.randompatches.client.RPKeyBindingHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.client.util.InputMappings;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(ClientPlayerEntity.class)
-public final class ClientPlayerEntityMixin {
+public abstract class ClientPlayerEntityMixin extends PlayerEntity {
+	//CHECKSTYLE IGNORE MissingJavadocMethod FOR NEXT 1 LINES
+	protected ClientPlayerEntityMixin(World world, BlockPos pos, float yaw, GameProfile profile) {
+		super(world, pos, yaw, profile);
+	}
+
+	//We let the server handle the dismount logic.
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected boolean shouldDismount() {
+		return false;
+	}
+
+	@ModifyArg(method = "tick", at = @At(
+			value = "INVOKE",
+			target = "net/minecraft/network/play/client/CInputPacket.<init>(FFZZ)V"
+	), index = 3)
+	private boolean shouldDismount(boolean sneaking) {
+		return RandomPatches.config().client.keyBindings.dismount ?
+				RPKeyBindingHandler.KeyBindings.DISMOUNT.isKeyDown() : sneaking;
+	}
+
 	@Redirect(method = "livingTick", at = @At(
 			value = "INVOKE",
 			target = "net/minecraft/client/settings/KeyBinding.isKeyDown()Z"

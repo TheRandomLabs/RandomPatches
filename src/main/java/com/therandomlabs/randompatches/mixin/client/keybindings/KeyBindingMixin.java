@@ -41,17 +41,28 @@ public final class KeyBindingMixin {
 	@SuppressWarnings({"ConstantConditions", "PMD.CompareObjectsWithEquals"})
 	@Inject(method = "conflicts", at = @At("HEAD"), cancellable = true)
 	private void conflicts(KeyBinding keyBinding, CallbackInfoReturnable<Boolean> info) {
-		if (!RandomPatches.config().client.keyBindings.secondarySprint()) {
-			return;
+		final RPConfig.KeyBindings config = RandomPatches.config().client.keyBindings;
+
+		if (config.secondarySprint()) {
+			final KeyBinding forward = Minecraft.getInstance().gameSettings.keyBindForward;
+			final KeyBinding secondarySprint = RPKeyBindingHandler.KeyBindings.SECONDARY_SPRINT;
+
+			if (((Object) this == forward && keyBinding == secondarySprint) ||
+					((Object) this == secondarySprint && keyBinding == forward)) {
+				info.setReturnValue(false);
+				info.cancel();
+			}
 		}
 
-		final KeyBinding forward = Minecraft.getInstance().gameSettings.keyBindForward;
-		final KeyBinding secondarySprint = RPKeyBindingHandler.KeyBindings.SECONDARY_SPRINT;
+		if (config.dismount()) {
+			final KeyBinding sneak = Minecraft.getInstance().gameSettings.keySneak;
+			final KeyBinding dismount = RPKeyBindingHandler.KeyBindings.DISMOUNT;
 
-		if (((Object) this == forward && keyBinding == secondarySprint) ||
-				((Object) this == secondarySprint && keyBinding == forward)) {
-			info.setReturnValue(false);
-			info.cancel();
+			if (((Object) this == sneak && keyBinding == dismount) ||
+					((Object) this == dismount && keyBinding == sneak)) {
+				info.setReturnValue(false);
+				info.cancel();
+			}
 		}
 	}
 

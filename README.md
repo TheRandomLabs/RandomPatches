@@ -135,7 +135,7 @@ Optimize feature again before re-enabling it.
 Although worlds last played on an older or newer version of Minecraft theoretically cannot be loaded
 when DataFixerUpper is disabled by RandomPatches, it's better to be safe than sorry.
 
-To make this clear, **RandomPatches is not responsible for any damage caused by this feature.**
+To be clear, **RandomPatches is not responsible for any damage caused by this feature.**
 
 This feature does nothing if
 [DataFixerSlayer](https://www.curseforge.com/minecraft/mc-mods/datafixerslayer) is installed.
@@ -216,6 +216,9 @@ Furthermore, RandomPatches adds a second configurable key binding for sprinting,
 double tap sprint functionality to be disabled, fixing
 [MC-203401](https://bugs.mojang.com/browse/MC-203401).
 
+Additionally, RandomPatches adds a dismount key binding, which allows the dismount key to be
+different from the sneak key.
+
 RandomPatches also makes standalone modifier keys not conflict with key combinations with that
 modifier key, which seems to be intended Forge behavior.
 
@@ -274,5 +277,7 @@ blacklist.
   * Most mixins are not automatically disabled when the features that depend on them are.
   * This is done to allow features to be enabled or disabled in-game without the need for restarts.
   * A list of these mixins can be found in the comments for the mixin blacklist.
+  * **Please report an issue if you need to use the mixin blacklist to resolve a compatibility**
+  **issue.**
 * The configuration can be reloaded from disk in-game through the use of a command
 (`/rpconfigreload` by default).

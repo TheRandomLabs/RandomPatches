@@ -137,6 +137,12 @@ public final class RPConfig implements ConfigData {
 		public boolean secondarySprint = true;
 
 		@TOMLConfigSerializer.Comment({
+				"The dismount key binding.",
+				"This allows the dismount key to be different from the sneak key."
+		})
+		public boolean dismount = true;
+
+		@TOMLConfigSerializer.Comment({
 				"The narrator toggle key binding.",
 				"This fixes MC-122645: https://bugs.mojang.com/browse/MC-122645"
 		})
@@ -194,6 +200,15 @@ public final class RPConfig implements ConfigData {
 		}
 
 		/**
+		 * Returns whether the dismount key binding is enabled.
+		 * @return {@code true} if the dismount key binding is enabled, or otherwise {@code false}.
+		 */
+		public boolean dismount() {
+			return dismount &&
+					!RandomPatches.config().misc.mixinBlacklist.contains("ClientPlayerEntity");
+		}
+
+		/**
 		 * Returns whether the debug info toggle key binding is enabled.
 		 * @return {@code true} if the debug info toggle key binding is enabled, or otherwise
 		 * {@code false}.
@@ -234,7 +249,7 @@ public final class RPConfig implements ConfigData {
 		})
 		@ConfigEntry.Gui.Tooltip
 		public String titleWithActivity = FMLEnvironment.production ?
-				"Minecraft %s - %s" : "RandomPatches - %2$s";
+				"Minecraft ${mcversion} - ${activity}" : "RandomPatches - ${activity}";
 
 		@Path("icon_16x16")
 		@TOMLConfigSerializer.Comment({
@@ -456,7 +471,8 @@ public final class RPConfig implements ConfigData {
 		@TOMLConfigSerializer.Comment({
 				"Disables the execution of DataFixerUpper.",
 				"This reduces RAM usage and decreases the Minecraft loading time.",
-				"WARNING: THIS IS NOT RECOMMENDED!",
+				"WARNING: THIS IS NOT RECOMMENDED! RandomPatches is not responsible for any " +
+						"damage caused by this feature.",
 				"- DataFixerUpper is responsible for the backwards compatibility of worlds.",
 				"- Ensure you have used the Optimize feature on any worlds from previous " +
 						"versions of Minecraft before enabling this feature.",
@@ -475,15 +491,19 @@ public final class RPConfig implements ConfigData {
 				"- BoatEntity: Required for modifying boat options.",
 				"- CCustomPayloadPacket: Required for setting the maximum client custom payload " +
 						"packet size.",
-				"- ClientPlayerEntity: Required for the secondary sprint key binding.",
+				"- ClientPlayerEntity: Required for the secondary sprint and dismount key " +
+						"bindings.",
+				"- ClientPlayNetHandler: Required for making the dismount overlay message show " +
+						"the correct key when the dismount key binding is enabled.",
 				"- CompoundNBT: Required for fixing player head stacking.",
 				"- EndPortalTileEntity: Required for fixing end portal rendering.",
 				"- Entity: Required for fixing MC-2025.",
-				"- IngameMenuScreen, Screen: Required for making Minecraft show the main menu " +
+				"- IngameMenuScreen: Required for making Minecraft show the main menu " +
 						"screen after disconnecting rather than the Realms or multiplayer screen.",
 				"- KeyBinding:",
 				"  - Required for making the forward movement key not conflict with the " +
 						"secondary sprint key.",
+				"  - Required for making the sneak key not conflict with the dismount key.",
 				"  - Required for making standalone modifier keys not conflict with key " +
 						"combinations with that modifier key.",
 				"- KeyboardListener: Required for the narrator toggle, escape, GUI toggle and " +

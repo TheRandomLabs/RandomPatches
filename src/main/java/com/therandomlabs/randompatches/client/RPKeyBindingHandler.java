@@ -61,6 +61,13 @@ public final class RPKeyBindingHandler {
 		);
 
 		/**
+		 * The dismount key binding.
+		 */
+		public static final KeyBinding DISMOUNT = new KeyBinding(
+				"key.dismount", GLFW.GLFW_KEY_LEFT_SHIFT, "key.categories.gameplay"
+		);
+
+		/**
 		 * The narrator toggle key binding.
 		 */
 		public static final KeyBinding TOGGLE_NARRATOR = new KeyBinding(
@@ -153,6 +160,7 @@ public final class RPKeyBindingHandler {
 			final List<String> mixinBlacklist = RandomPatches.config().misc.mixinBlacklist;
 
 			register(SECONDARY_SPRINT, config.secondarySprint());
+			register(DISMOUNT, config.dismount());
 
 			if (!mixinBlacklist.contains("KeyboardListener")) {
 				register(TOGGLE_NARRATOR, config.toggleNarrator);

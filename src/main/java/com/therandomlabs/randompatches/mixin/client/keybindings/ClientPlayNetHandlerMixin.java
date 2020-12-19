@@ -21,15 +21,27 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.therandomlabs.randompatches.mixin.client;
+package com.therandomlabs.randompatches.mixin.client.keybindings;
 
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.widget.Widget;
+import com.therandomlabs.randompatches.RandomPatches;
+import com.therandomlabs.randompatches.client.RPKeyBindingHandler;
+import net.minecraft.client.network.play.ClientPlayNetHandler;
+import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.util.text.ITextComponent;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.gen.Invoker;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Redirect;
 
-@Mixin(Screen.class)
-public interface ScreenMixin {
-	@Invoker
-	Widget invokeAddButton(Widget button);
+@Mixin(ClientPlayNetHandler.class)
+public final class ClientPlayNetHandlerMixin {
+	@Redirect(method = "handleSetPassengers", at = @At(
+			value = "INVOKE",
+			target = "Lnet/minecraft/client/settings/KeyBinding;getBoundKeyLocalizedText()" +
+					"Lnet/minecraft/util/text/ITextComponent;"
+	))
+	private ITextComponent getDismountKeyLocalizedText(KeyBinding sneakKeyBinding) {
+		return RandomPatches.config().client.keyBindings.dismount() ?
+				RPKeyBindingHandler.KeyBindings.DISMOUNT.getBoundKeyLocalizedText() :
+				sneakKeyBinding.getBoundKeyLocalizedText();
+	}
 }
