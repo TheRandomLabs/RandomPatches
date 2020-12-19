@@ -43,9 +43,10 @@ public abstract class KeyboardListenerMixin {
 
 	@Inject(method = "onKeyEvent", at = @At(
 			value = "INVOKE",
-			target = "net/minecraft/client/gui/INestedGuiEventHandler.getFocused()" +
-					"Lnet/minecraft/client/gui/IGuiEventListener;",
-			ordinal = 0
+			shift = At.Shift.BY,
+			by = 2,
+			target = "net/minecraft/client/gui/screen/WithNarratorSettingsScreen." +
+					"updateNarratorButtonText()V"
 	))
 	private void onKeyEvent(
 			long window, int key, int scanCode, int action, int modifiers, CallbackInfo info
