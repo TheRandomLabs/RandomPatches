@@ -26,20 +26,17 @@ package com.therandomlabs.randompatches;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 import com.electronwill.nightconfig.core.conversion.Path;
 import com.electronwill.nightconfig.core.conversion.SpecDoubleInRange;
 import com.electronwill.nightconfig.core.conversion.SpecFloatInRange;
 import com.electronwill.nightconfig.core.conversion.SpecIntInRange;
-import com.google.common.reflect.ClassPath;
 import com.therandomlabs.autoconfigtoml.TOMLConfigSerializer;
 import com.therandomlabs.randompatches.client.CauldronWaterTranslucencyHandler;
 import com.therandomlabs.randompatches.client.RPKeyBindingHandler;
 import com.therandomlabs.randompatches.client.RPWindowHandler;
-import com.therandomlabs.randompatches.mixin.RPMixinConfig;
 import me.shedaniel.autoconfig1u.ConfigData;
 import me.shedaniel.autoconfig1u.annotation.Config;
 import me.shedaniel.autoconfig1u.annotation.ConfigEntry;
@@ -462,15 +459,7 @@ public final class RPConfig implements ConfigData {
 		public double maxVehicleSpeed = 1000000.0;
 	}
 
-	@SuppressWarnings("UnstableApiUsage")
 	public static final class Misc implements ConfigData {
-		@ConfigEntry.Gui.Excluded
-		private static final Map<String, String> mixins = RPMixinConfig.getMixinClasses().stream().
-				collect(Collectors.toMap(
-						ClassPath.ClassInfo::getName,
-						info -> StringUtils.substring(info.getSimpleName(), 0, -5)
-				));
-
 		@TOMLConfigSerializer.Comment("Miscellaneous bug fixes.")
 		@ConfigEntry.Category("bug_fixes")
 		@ConfigEntry.Gui.CollapsibleObject
@@ -571,10 +560,7 @@ public final class RPConfig implements ConfigData {
 		@Override
 		public void validatePostLoad() throws ValidationException {
 			configReloadCommand = configReloadCommand.trim();
-			//Remove invalid values and sort alphabetically.
-			mixinBlacklist = mixinBlacklist.stream().
-					filter(mixins::containsValue).
-					sorted().collect(Collectors.toList());
+			Collections.sort(mixinBlacklist);
 		}
 
 		/**
@@ -594,7 +580,8 @@ public final class RPConfig implements ConfigData {
 		 * or otherwise {@code false}.
 		 */
 		public boolean isMixinClassEnabled(String mixinClassName) {
-			final String simpleName = mixins.get(mixinClassName);
+			final String[] parts = StringUtils.split(mixinClassName, '.');
+			final String simpleName = StringUtils.substring(parts[parts.length - 1], 0, -5);
 
 			if ("PlayerRenderer".equals(simpleName) &&
 					!RandomPatches.config().client.bugFixes.fixInvisiblePlayerModel) {
