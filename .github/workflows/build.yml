@@ -5,7 +5,8 @@ jobs:
     strategy:
       matrix:
         java: [8-jdk, 11-jdk, 15-jdk]
-    runs-on: ubuntu-20.04
+        os: [ubuntu-20.04, windows-latest]
+    runs-on: ${{ matrix.os }}
     container:
       image: openjdk:${{ matrix.java }}
       options: --user root

@@ -639,6 +639,14 @@ public final class RPConfig implements ConfigData {
 		public PlayerHeadStackingFixMode fixPlayerHeadStacking =
 				PlayerHeadStackingFixMode.REQUIRE_SAME_PLAYER_AND_TEXTURE_URL;
 
+		@Path("fix_duplicate_entity_uuids")
+		@TOMLConfigSerializer.Comment({
+				"Fixes duplicate entity UUIDs by assigning new UUIDs to the affected entities.",
+				"This bug is reported as MC-95649: https://bugs.mojang.com/browse/MC-95649"
+		})
+		@ConfigEntry.Gui.Tooltip
+		public boolean fixDuplicateEntityUUIDs = true;
+
 		@TOMLConfigSerializer.Comment({
 				"Fixes the recipe book not automatically moving ingredients with NBT tags to the " +
 						"crafting grid.",

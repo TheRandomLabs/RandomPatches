@@ -10,8 +10,7 @@
 
 A bunch of miscellaneous patches for Minecraft.
 
-On Forge, RandomPatches only contains features that require Mixins. Tweaks that *don't* require
-Mixins go in [RandomTweaks](https://www.curseforge.com/minecraft/mc-mods/randomtweaks).
+Also check out [RandomTweaks](https://www.curseforge.com/minecraft/mc-mods/randomtweaks)!
 
 **When reporting issues or suggesting enhancements, please use the**
 **[GitHub issue tracker](https://github.com/TheRandomLabs/RandomPatches/issues)—it's easier to**
@@ -38,8 +37,8 @@ easy to manage, and of high quality. Check them out here:
 
 ## Aims
 
-RandomPatches aims to be a highly configurable collection of minor vanilla-compatible tweaks and
-bug fixes for Minecraft.
+RandomPatches aims to be a highly configurable collection of bug fixes and quality of life
+improvements for Minecraft, and additionally to allow several hardcoded settings to be configured.
 
 When installed on a client, RandomPatches should be completely compatible with servers without the
 mod, and when installed on a server, it should be completely compatible with clients without the
@@ -52,6 +51,14 @@ game mechanics or conspicuous GUI additions. Indeed, with the default settings, 
 virtually unnoticeable when one is not specifically looking for it. In addition, RandomPatches
 should automatically disable any of its features that are implemented by another mod in order to
 preserve compatibility wherever possible.
+
+### How is RandomPatches different from RandomTweaks?
+
+RandomPatches aims to not add or significantly modify any game mechanics. For instance,
+auto-third person is a new minor game mechanic, so it belongs in RandomTweaks.
+The distinction is blurrier for certain features—in these instances, features that require mixins
+in the Forge version, such as removing the glowing effect from potions, and bug fixes, such as
+the MC-2025 fix, are put in RandomPatches.
 
 ## Features
 
@@ -157,6 +164,14 @@ recomputed such that it intersects a wall. To counter this, RandomPatches stores
 when an entity is saved, then makes it use the same bounding box when it is loaded.
 
 For more information, see [this Reddit post](https://redd.it/8pgd4q) from which this fix comes from.
+
+### Fix duplicate entity UUIDs
+
+RandomPatches fixes duplicate entity UUIDs and the resulting log spam by assigning new UUIDs to the
+affected entities. This fix was found by
+[CAS_ual_TY](https://www.curseforge.com/minecraft/mc-mods/deuf-duplicate-entity-uuid-fix).
+
+This bug is reported as [MC-95649](https://bugs.mojang.com/browse/MC-95649).
 
 ### Fix recipe book not moving ingredients with tags
 
