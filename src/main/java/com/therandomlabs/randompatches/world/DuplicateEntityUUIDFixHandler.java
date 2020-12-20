@@ -46,8 +46,7 @@ public final class DuplicateEntityUUIDFixHandler {
 	@SubscribeEvent
 	public static void onChunkLoad(ChunkEvent.Load event) {
 		if (!RandomPatches.config().misc.bugFixes.fixDuplicateEntityUUIDs ||
-				!(event.getWorld() instanceof ServerWorld) ||
-				!(event.getChunk() instanceof Chunk)) {
+				event.getWorld().isRemote()) {
 			return;
 		}
 

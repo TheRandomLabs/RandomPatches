@@ -6,6 +6,7 @@
 	"compatibilityLevel": "JAVA_8",
 	"refmap": "randompatches.refmap.json",
 	"mixins": [
+		"AnimalEntityMixin",
 		"BoatEntityMixin",
 		"CompoundNBTMixin",
 		"EntityMixin",
@@ -14,7 +15,6 @@
 		"ServerTickListMixin",
 		"datafixerupper.DataFixesManagerMixin",
 		"datafixerupper.MinecraftServerMixin",
-		"datafixerupper.VersionDataMixin",
 		"packetsizelimits.NettyCompressionDecoderMixin",
 		"packetsizelimits.PacketBufferMixin",
 		"timeouts.ReadTimeoutHandlerMixin",
@@ -33,7 +33,6 @@
 		"client.keybindings.ClientPlayerEntityMixin",
 		"client.keybindings.ClientPlayNetHandlerMixin",
 		"client.keybindings.KeyBindingMixin",
-		"client.keybindings.KeyboardListenerAccessorMixin",
 		"client.keybindings.KeyboardListenerMixin",
 		"client.packetsizelimits.CCustomPayloadPacketMixin"
 	],

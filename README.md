@@ -165,6 +165,14 @@ when an entity is saved, then makes it use the same bounding box when it is load
 
 For more information, see [this Reddit post](https://redd.it/8pgd4q) from which this fix comes from.
 
+### Fix animal breeding hearts
+
+RandomPatches fixes animals which can breed only showing hearts once instead of continuously.
+Thanks to [Fuzs_](https://www.curseforge.com/minecraft/mc-mods/breeding-hearts) for finding this
+fix!
+
+This bug is reported as [MC-93826](https://bugs.mojang.com/browse/MC-93826).
+
 ### Fix duplicate entity UUIDs
 
 RandomPatches fixes duplicate entity UUIDs and the resulting log spam by assigning new UUIDs to the
@@ -188,7 +196,7 @@ player, and by default, if they have the same texture URL.
 
 This bug is reported as [MC-100044](https://bugs.mojang.com/browse/MC-100044).
 
-### Fix end portal rendering
+### Fix end portal rendering (client-sided)
 
 In vanilla Minecraft, end portals only render from above and not below. RandomPatches fixes this
 issue.
@@ -203,17 +211,17 @@ With RandomPatches:
 
 This bug is reported as [MC-3366](https://bugs.mojang.com/browse/MC-3366).
 
-### Fix invisible player model
+### Fix invisible player model (client-sided)
 
 In certain instances in vanilla Minecraft, the player model sometimes disappears. This is most
 noticeable when flying with elytra in a straight line in third-person mode:
 
 [![Invisible player model bug](http://img.youtube.com/vi/YdbxknpfJHQ/0.jpg)](http://www.youtube.com/watch?v=YdbxknpfJHQ "Invisible Player Model Bug")
 
-RandomPatches fixes this issue. Thanks to [Fuzs_](https://www.curseforge.com/members/fuzs_) for
-finding this fix!
+RandomPatches fixes this issue. Again, thanks to [Fuzs_](https://www.curseforge.com/members/fuzs_)
+for finding this fix!
 
-### Key bindings
+### Key bindings (client-sided)
 
 RandomPatches makes the narrator toggle key binding configurable in the controls screen,
 fixing [MC-122645](https://bugs.mojang.com/browse/MC-122645). In addition, RandomPatches makes
@@ -237,7 +245,7 @@ different from the sneak key.
 RandomPatches also makes standalone modifier keys not conflict with key combinations with that
 modifier key, which seems to be intended Forge behavior.
 
-### Window title and icon
+### Window title and icon (client-sided)
 
 By default, RandomPatches removes the annoying `*` in the Minecraft window title that indicates
 that the game is modded. In addition, the following window properties can be configured:
@@ -255,7 +263,7 @@ that the game is modded. In addition, the following window properties can be con
 * 32x32 icon
 * 256x256 icon (only takes effect on Mac OS X)
 
-### Optimize bamboo rendering
+### Optimize bamboo rendering (client-sided)
 
 RandomPatches optimizes bamboo rendering. This works by overriding the method that returns the
 ambient occlusion light value for the bamboo block, which runs some expensive logic, but always
@@ -263,7 +271,7 @@ returns `1.0F`.
 
 Thanks to [darkevilmac](https://minecraft.curseforge.com/projects/fast-bamboo) for finding this fix!
 
-### Remove glowing effect from potions
+### Remove glowing effect from potions (client-sided)
 
 By default, RandomPatches removes the glowing effect from potions, making potion colors more
 visible.
@@ -283,12 +291,12 @@ experimental settings:
 
 ![Experimental settings warning](https://raw.githubusercontent.com/TheRandomLabs/RandomPatches/misc/Experimental%20settings%20warning.png)
 
-### Framerate limit slider step size
+### Framerate limit slider step size (client-sided)
 
 In vanilla Minecraft, the framerate limit slider step size is 10.0. RandomPatches changes this to
 1.0 by default.
 
-### Return to main menu after disconnect
+### Return to main menu after disconnect (client-sided)
 
 This feature makes Minecraft return to the main menu screen after disconnecting rather than the
 Realms or multiplayer screen.
@@ -307,7 +315,6 @@ blacklist.
   * Most mixins are not automatically disabled when the features that depend on them are.
   * This is done to allow features to be enabled or disabled in-game without the need for restarts.
   * A list of these mixins can be found in the comments for the mixin blacklist.
-  * **Please report an issue if you need to use the mixin blacklist to resolve a compatibility**
-  **issue.**
+  * **Please report an issue if you need to use the mixin blacklist to resolve a conflict.**
 * The configuration can be reloaded from disk in-game through the use of a command
 (`/rpconfigreload` by default).

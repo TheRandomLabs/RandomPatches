@@ -81,6 +81,6 @@ public abstract class KeyboardListenerMixin {
 			constant = @Constant(intValue = GLFW.GLFW_KEY_F3, ordinal = 0)
 	)
 	private int getToggleDebugInfoKey(int key) {
-		return RandomPatches.config().client.keyBindings.toggleDebugInfo() ? GLFW_KEY_UNUSED : key;
+		return RandomPatches.config().client.keyBindings.toggleDebugInfo ? GLFW_KEY_UNUSED : key;
 	}
 }

@@ -44,7 +44,7 @@ public final class MinecraftServerMixin {
 			return false;
 		}
 
-		final int version = ((VersionDataMixin) worldSummary.method_29586()).getVersionID();
+		final int version = worldSummary.method_29586().versionId;
 
 		if (save.needsConversion() || version != SharedConstants.getVersion().getWorldVersion()) {
 			throw new RuntimeException(

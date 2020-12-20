@@ -218,17 +218,6 @@ public final class RPConfig implements ConfigData {
 			return dismount &&
 					!RandomPatches.config().misc.mixinBlacklist.contains("ClientPlayerEntity");
 		}
-
-		/**
-		 * Returns whether the debug info toggle key binding is enabled.
-		 * @return {@code true} if the debug info toggle key binding is enabled, or otherwise
-		 * {@code false}.
-		 */
-		public boolean toggleDebugInfo() {
-			final Misc config = RandomPatches.config().misc;
-			return toggleDebugInfo && !config.mixinBlacklist.contains("KeyboardListener") &&
-					!config.mixinBlacklist.contains("KeyboardListenerAccessor");
-		}
 	}
 
 	public static final class Window implements ConfigData {
@@ -505,6 +494,7 @@ public final class RPConfig implements ConfigData {
 				"A list of mixins that should not be applied.",
 				"These are the mixins that are not automatically disabled when the features that " +
 						"depend on them are:",
+				"- AnimalEntity: Required for fixing animal breeding hearts.",
 				"- BoatEntity: Required for modifying boat options.",
 				"- CCustomPayloadPacket: Required for setting the maximum client custom payload " +
 						"packet size.",
@@ -525,7 +515,6 @@ public final class RPConfig implements ConfigData {
 						"combinations with that modifier key.",
 				"- KeyboardListener: Required for the narrator toggle, escape, GUI toggle and " +
 						"debug key bindings.",
-				"- KeyboardListenerAccessor: Required for the debug key binding.",
 				"- Minecraft:",
 				"  - Required for changing Minecraft window options.",
 				"  - Required for disabling the warning that displays when loading a world that " +
@@ -626,6 +615,14 @@ public final class RPConfig implements ConfigData {
 		})
 		@ConfigEntry.Gui.Tooltip
 		public boolean fixMC2025 = true;
+
+		@TOMLConfigSerializer.Comment({
+				"Fixes animals which can breed only showing hearts once initially instead of " +
+						"continuously.",
+				"This bug is reported as MC-93826: https://bugs.mojang.com/browse/MC-93826"
+		})
+		@ConfigEntry.Gui.Tooltip
+		public boolean fixAnimalBreedingHearts = true;
 
 		@TOMLConfigSerializer.Comment({
 				"Fixes player heads from the same player sometimes not stacking.",

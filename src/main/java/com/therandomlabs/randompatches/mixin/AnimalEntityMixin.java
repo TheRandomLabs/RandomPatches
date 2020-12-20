@@ -21,15 +21,35 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.therandomlabs.randompatches.mixin.datafixerupper;
+package com.therandomlabs.randompatches.mixin;
 
-import net.minecraft.world.storage.VersionData;
+import com.therandomlabs.randompatches.RandomPatches;
+import net.minecraft.entity.passive.AnimalEntity;
+import net.minecraft.particles.IParticleData;
+import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.gen.Accessor;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Redirect;
 
-@Mixin(VersionData.class)
-public interface VersionDataMixin {
-	//This is necessary because Version#getVersionId() is annotated with @OnlyIn(Dist.CLIENT).
-	@Accessor("versionId")
-	int getVersionID();
+@Mixin(AnimalEntity.class)
+public final class AnimalEntityMixin {
+	@Redirect(method = "livingTick", at = @At(
+			value = "INVOKE",
+			target = "Lnet/minecraft/world/World;addParticle" +
+					"(Lnet/minecraft/particles/IParticleData;DDDDDD)V"
+	))
+	private void addParticle(
+			World world, IParticleData particleData, double x, double y, double z,
+			double xOffset, double yOffset, double zOffset
+	) {
+		if (!world.isRemote && RandomPatches.config().misc.bugFixes.fixAnimalBreedingHearts) {
+			//addParticle is not implemented in ServerWorld.
+			((ServerWorld) world).spawnParticle(
+					particleData, x, y, z, 1, xOffset, yOffset, zOffset, 0.0
+			);
+		} else {
+			world.addParticle(particleData, x, y, z, xOffset, yOffset, zOffset);
+		}
+	}
 }

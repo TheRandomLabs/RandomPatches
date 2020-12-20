@@ -27,7 +27,6 @@ import java.util.List;
 
 import com.therandomlabs.randompatches.RPConfig;
 import com.therandomlabs.randompatches.RandomPatches;
-import com.therandomlabs.randompatches.mixin.client.keybindings.KeyboardListenerAccessorMixin;
 import net.minecraft.client.AbstractOption;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.IngameMenuScreen;
@@ -140,11 +139,11 @@ public final class RPKeyBindingHandler {
 				mc.gameSettings.hideGUI = !mc.gameSettings.hideGUI;
 			}
 
-			if (config.toggleDebugInfo() && action == GLFW.GLFW_RELEASE &&
+			if (config.toggleDebugInfo && action == GLFW.GLFW_RELEASE &&
 					TOGGLE_DEBUG_INFO.matchesKey(key, scanCode)) {
 				if (TOGGLE_DEBUG_INFO.getKey().getKeyCode() == GLFW.GLFW_KEY_F3 &&
-						((KeyboardListenerAccessorMixin) mc.keyboardListener).isActionKeyF3()) {
-					((KeyboardListenerAccessorMixin) mc.keyboardListener).setActionKeyF3(false);
+						mc.keyboardListener.actionKeyF3) {
+					mc.keyboardListener.actionKeyF3 = false;
 				} else {
 					mc.gameSettings.showDebugInfo = !mc.gameSettings.showDebugInfo;
 					mc.gameSettings.showDebugProfilerChart =
@@ -166,7 +165,7 @@ public final class RPKeyBindingHandler {
 				register(TOGGLE_NARRATOR, config.toggleNarrator);
 				register(PAUSE, config.pause);
 				register(TOGGLE_GUI, config.toggleGUI);
-				register(TOGGLE_DEBUG_INFO, config.toggleDebugInfo());
+				register(TOGGLE_DEBUG_INFO, config.toggleDebugInfo);
 			}
 		}
 
