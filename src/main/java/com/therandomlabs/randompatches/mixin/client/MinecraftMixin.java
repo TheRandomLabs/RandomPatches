@@ -25,9 +25,12 @@ package com.therandomlabs.randompatches.mixin.client;
 
 import java.io.InputStream;
 
+import com.mojang.serialization.Lifecycle;
+import com.therandomlabs.randompatches.RandomPatches;
 import com.therandomlabs.randompatches.client.RPWindowHandler;
 import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
+import net.minecraft.world.storage.IServerConfiguration;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -50,5 +53,21 @@ public final class MinecraftMixin {
 	))
 	private void setWindowIcon(MainWindow mainWindow, InputStream stream16, InputStream stream32) {
 		RPWindowHandler.updateWindowIcon(stream16, stream32);
+	}
+
+	@Redirect(
+			method = "startIntegratedServer(Ljava/lang/String;" +
+					"Lnet/minecraft/util/registry/DynamicRegistries$Impl;" +
+					"Ljava/util/function/Function;Lcom/mojang/datafixers/util/Function4;" +
+					"ZLnet/minecraft/client/Minecraft$WorldSelectionType;)V",
+			at = @At(
+					value = "INVOKE",
+					target = "net/minecraft/world/storage/IServerConfiguration.getLifecycle()" +
+							"Lcom/mojang/serialization/Lifecycle;"
+			)
+	)
+	private Lifecycle getLifecycle(IServerConfiguration config) {
+		return RandomPatches.config().client.disableExperimentalSettingsWarning ?
+				Lifecycle.stable() : config.getLifecycle();
 	}
 }

@@ -92,6 +92,13 @@ public final class RPConfig implements ConfigData {
 		@ConfigEntry.Gui.Tooltip
 		public boolean removeGlowingEffectFromPotions = true;
 
+		@TOMLConfigSerializer.Comment(
+				"Disables the warning that displays when loading a world that uses experimental " +
+						"settings."
+		)
+		@ConfigEntry.Gui.Tooltip
+		public boolean disableExperimentalSettingsWarning = true;
+
 		@SpecFloatInRange(min = Float.MIN_VALUE, max = 260.0F)
 		@TOMLConfigSerializer.Comment({
 				"The framerate limit slider step size.",
@@ -227,26 +234,27 @@ public final class RPConfig implements ConfigData {
 	public static final class Window implements ConfigData {
 		@ConfigEntry.Gui.Excluded
 		public static final String DEFAULT_TITLE = FMLEnvironment.production ?
-				"Minecraft ${mcversion}" : "RandomPatches (${username}$, ${modsloaded} mods)";
+				"Minecraft ${mcversion}" :
+				"RandomPatches (${username}) - ${modsloaded} mods loaded";
 
 		@ConfigEntry.Gui.Excluded
 		private static final String DEFAULT_ICON =
 				FMLEnvironment.production ? "" : "../src/main/resources/logo.png";
 
 		@TOMLConfigSerializer.Comment({
-				"The Minecraft window title.",
+				"The simple Minecraft window title.",
+				"The current activity, the number of mods loaded and mod versions are not " +
+						"available.",
 				"Variables:",
 				" - ${mcversion}: The Minecraft version",
 				" - ${username}: The username.",
-				" - ${modsloaded}: The number of mods loaded.",
-				" - ${modversion:modid}: The version of the mod with the specified ID.",
 				"'$' can be escaped by using an extra '$'."
 		})
 		@ConfigEntry.Gui.Tooltip
-		public String title = DEFAULT_TITLE;
+		public String simpleTitle = DEFAULT_TITLE;
 
 		@TOMLConfigSerializer.Comment({
-				"The Minecraft window title that takes into account the current activity.",
+				"The Minecraft window title.",
 				"Variables:",
 				" - ${mcversion}: The Minecraft version",
 				" - ${activity}: The current activity.",
@@ -256,9 +264,9 @@ public final class RPConfig implements ConfigData {
 				"'$' can be escaped by using an extra '$'."
 		})
 		@ConfigEntry.Gui.Tooltip
-		public String titleWithActivity = FMLEnvironment.production ?
+		public String title = FMLEnvironment.production ?
 				"Minecraft ${mcversion} - ${activity}" :
-				"RandomPatches (${username}$, ${modsloaded} mods) - ${activity}";
+				"RandomPatches (${username}) - ${modsloaded} mods loaded - ${activity}";
 
 		@Path("icon_16x16")
 		@TOMLConfigSerializer.Comment({
@@ -518,7 +526,10 @@ public final class RPConfig implements ConfigData {
 				"- KeyboardListener: Required for the narrator toggle, escape, GUI toggle and " +
 						"debug key bindings.",
 				"- KeyboardListenerAccessor: Required for the debug key binding.",
-				"- Minecraft: Required for changing Minecraft window options.",
+				"- Minecraft:",
+				"  - Required for changing Minecraft window options.",
+				"  - Required for disabling the warning that displays when loading a world that " +
+						"uses experimental settings.",
 				"- NettyCompressionDecoder: Required for setting the maximum compressed packet " +
 						"size.",
 				"- PacketBuffer: Required for setting the maximum NBT compound tag packet size.",

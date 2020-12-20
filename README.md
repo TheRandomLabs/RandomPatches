@@ -230,10 +230,11 @@ that the game is modded. In addition, the following window properties can be con
 * Title
   * Severable variables are provided:
   * `${mcversion}`: Minecraft version
-  * `${activity}`: Current activity
+  * `${activity}`: Current activity (not available in the simple title)
   * `${username}`: Username
-  * `${modsloaded}`: Number of mods loaded
+  * `${modsloaded}`: Number of mods loaded (not available in the simple title)
   * `${modversion:modid}`: Version of the mod with the specified ID
+  (not available in the simple title)
   * '$' can be escaped by using an extra '$'.
 * 16x16 icon
 * 32x32 icon
@@ -259,6 +260,13 @@ Without RandomPatches:
 With RandomPatches:
 
 ![Potions with RandomPatches](https://raw.githubusercontent.com/TheRandomLabs/RandomPatches/misc/Potions%20with%20RandomPatches.png)
+
+### Disable experimental settings warning
+
+By default, RandomPatches disables the warning that displays when loading a world that uses
+experimental settings:
+
+![Experimental settings warning](https://raw.githubusercontent.com/TheRandomLabs/RandomPatches/misc/Experimental%20settings%20warning.png)
 
 ### Framerate limit slider step size
 

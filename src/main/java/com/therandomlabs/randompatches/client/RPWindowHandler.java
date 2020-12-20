@@ -77,11 +77,11 @@ public final class RPWindowHandler {
 				return Minecraft.getInstance().getSession().getUsername();
 			}
 
-			if (key.equals("modsloaded")) {
+			if (key.equals("modsloaded") && ModList.get() != null) {
 				return Integer.toString(ModList.get().getMods().size());
 			}
 
-			if (key.startsWith("modversion:")) {
+			if (key.startsWith("modversion:") && ModList.get() != null) {
 				final String modID = key.substring("modversion:".length());
 				final ModFileInfo fileInfo = ModList.get().getModFileById(modID);
 
@@ -144,7 +144,7 @@ public final class RPWindowHandler {
 
 		if (handler == null || !handler.getNetworkManager().isChannelOpen()) {
 			activity = null;
-			return titleSubstitutor.replace(config.title);
+			return titleSubstitutor.replace(config.simpleTitle);
 		}
 
 		final String activityKey;
@@ -161,7 +161,7 @@ public final class RPWindowHandler {
 		}
 
 		activity = I18n.format(activityKey);
-		return titleSubstitutor.replace(config.titleWithActivity);
+		return titleSubstitutor.replace(config.title);
 	}
 
 	/**
