@@ -63,6 +63,8 @@ public abstract class EndPortalTileEntityRendererMixin {
 			return;
 		}
 
+		info.cancel();
+
 		final float r = (RANDOM.nextFloat() * 0.5F + 0.1F) * colorMultiplier;
 		final float g = (RANDOM.nextFloat() * 0.5F + 0.4F) * colorMultiplier;
 		final float b = (RANDOM.nextFloat() * 0.5F + 0.5F) * colorMultiplier;
@@ -91,8 +93,6 @@ public abstract class EndPortalTileEntityRendererMixin {
 				tileEntity, model, vertexBuilder, 0.0F, 1.0F, y, y, 1.0F,
 				1.0F, 0.0F, 0.0F, r, g, b, Direction.UP
 		);
-
-		info.cancel();
 	}
 
 	@SuppressWarnings("UnresolvedMixinReference")

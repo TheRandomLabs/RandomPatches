@@ -50,7 +50,6 @@ public final class KeyBindingMixin {
 			if (((Object) this == forward && keyBinding == secondarySprint) ||
 					((Object) this == secondarySprint && keyBinding == forward)) {
 				info.setReturnValue(false);
-				info.cancel();
 			}
 		}
 
@@ -61,7 +60,6 @@ public final class KeyBindingMixin {
 			if (((Object) this == sneak && keyBinding == dismount) ||
 					((Object) this == dismount && keyBinding == sneak)) {
 				info.setReturnValue(false);
-				info.cancel();
 			}
 		}
 	}

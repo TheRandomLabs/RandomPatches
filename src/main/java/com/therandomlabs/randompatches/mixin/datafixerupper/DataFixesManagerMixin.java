@@ -36,6 +36,5 @@ public final class DataFixesManagerMixin {
 	@Inject(method = "createFixer", at = @At("HEAD"), cancellable = true)
 	private static void createFixer(CallbackInfoReturnable<DataFixer> info) {
 		info.setReturnValue(new FakeDataFixer());
-		info.cancel();
 	}
 }

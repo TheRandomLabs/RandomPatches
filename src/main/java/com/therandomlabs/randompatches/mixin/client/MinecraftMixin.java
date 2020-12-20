@@ -43,7 +43,6 @@ public final class MinecraftMixin {
 	private void getWindowTitle(CallbackInfoReturnable<String> info) {
 		RPWindowHandler.enable();
 		info.setReturnValue(RPWindowHandler.getWindowTitle());
-		info.cancel();
 	}
 
 	@Redirect(method = "<init>", at = @At(

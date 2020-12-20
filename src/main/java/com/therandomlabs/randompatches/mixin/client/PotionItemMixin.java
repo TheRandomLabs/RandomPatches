@@ -36,7 +36,6 @@ public final class PotionItemMixin {
 	private void hasEffect(CallbackInfoReturnable<Boolean> info) {
 		if (RandomPatches.config().client.removeGlowingEffectFromPotions) {
 			info.setReturnValue(false);
-			info.cancel();
 		}
 	}
 }
