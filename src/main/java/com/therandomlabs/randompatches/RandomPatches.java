@@ -43,7 +43,7 @@ import org.apache.logging.log4j.Logger;
 /**
  * The main class for RandomPatches.
  */
-@SuppressWarnings("PMD.NonThreadSafeSingleton")
+@SuppressWarnings({"PMD.NonThreadSafeSingleton", "PMD.UseUtilityClass"})
 @Mod.EventBusSubscriber
 @Mod(RandomPatches.MOD_ID)
 public final class RandomPatches {
