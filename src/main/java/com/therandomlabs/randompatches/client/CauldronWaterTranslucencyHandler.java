@@ -21,23 +21,44 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.therandomlabs.randompatches.mixin.client;
+package com.therandomlabs.randompatches.client;
 
 import com.therandomlabs.randompatches.RandomPatches;
-import net.minecraft.tileentity.EndPortalTileEntity;
-import net.minecraft.util.Direction;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import net.minecraft.block.Blocks;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderTypeLookup;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fml.loading.FMLEnvironment;
 
-@Mixin(EndPortalTileEntity.class)
-public final class EndPortalTileEntityMixin {
-	@Inject(method = "shouldRenderFace", at = @At("HEAD"), cancellable = true)
-	private void shouldRenderFace(Direction face, CallbackInfoReturnable<Boolean> info) {
-		if (RandomPatches.config().client.bugFixes.fixEndPortalsNotRenderingFromBelow) {
-			info.setReturnValue(face == Direction.UP || face == Direction.DOWN);
-			info.cancel();
+/**
+ * Handles the fix for water in cauldrons rendering as opaque.
+ */
+public final class CauldronWaterTranslucencyHandler {
+	private static boolean enabled;
+
+	private CauldronWaterTranslucencyHandler() {}
+
+	/**
+	 * Enables this class's functionality if it has not already been enabled.
+	 */
+	public static void enable() {
+		if (FMLEnvironment.dist == Dist.CLIENT) {
+			enabled = true;
+			onConfigReload();
+		}
+	}
+
+	/**
+	 * Called by {@link com.therandomlabs.randompatches.RPConfig.ClientBugFixes} when the
+	 * RandomPatches configuration is reloaded.
+	 */
+	public static void onConfigReload() {
+		if (FMLEnvironment.dist == Dist.CLIENT && enabled) {
+			RenderTypeLookup.setRenderLayer(
+					Blocks.CAULDRON,
+					RandomPatches.config().client.bugFixes.fixWaterInCauldronsRenderingAsOpaque ?
+							RenderType.getTranslucent() : RenderType.getSolid()
+			);
 		}
 	}
 }

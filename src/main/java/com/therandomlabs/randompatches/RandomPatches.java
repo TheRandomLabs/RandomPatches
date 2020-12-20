@@ -24,13 +24,11 @@
 package com.therandomlabs.randompatches;
 
 import com.therandomlabs.autoconfigtoml.TOMLConfigSerializer;
+import com.therandomlabs.randompatches.client.CauldronWaterTranslucencyHandler;
 import com.therandomlabs.randompatches.client.RPContributorCapeHandler;
 import com.therandomlabs.randompatches.client.RPKeyBindingHandler;
 import com.therandomlabs.randompatches.command.RPConfigReloadCommand;
 import me.shedaniel.autoconfig1u.AutoConfig;
-import net.minecraft.block.Blocks;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ExtensionPoint;
@@ -70,13 +68,12 @@ public final class RandomPatches {
 			);
 		}
 
+		CauldronWaterTranslucencyHandler.enable();
 		RPKeyBindingHandler.enable();
 
 		if (RandomPatches.config().client.contributorCapes) {
 			RPContributorCapeHandler.downloadContributorList();
 		}
-
-		RenderTypeLookup.setRenderLayer(Blocks.CAULDRON, RenderType.getTranslucent());
 	}
 
 	@SubscribeEvent

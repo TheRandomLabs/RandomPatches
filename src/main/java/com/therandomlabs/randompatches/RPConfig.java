@@ -36,6 +36,7 @@ import com.electronwill.nightconfig.core.conversion.SpecFloatInRange;
 import com.electronwill.nightconfig.core.conversion.SpecIntInRange;
 import com.google.common.reflect.ClassPath;
 import com.therandomlabs.autoconfigtoml.TOMLConfigSerializer;
+import com.therandomlabs.randompatches.client.CauldronWaterTranslucencyHandler;
 import com.therandomlabs.randompatches.client.RPKeyBindingHandler;
 import com.therandomlabs.randompatches.client.RPWindowHandler;
 import com.therandomlabs.randompatches.mixin.RPMixinConfig;
@@ -119,13 +120,20 @@ public final class RPConfig implements ConfigData {
 		public boolean contributorCapes = true;
 	}
 
-	public static final class ClientBugFixes {
+	public static final class ClientBugFixes implements ConfigData {
+		@TOMLConfigSerializer.Comment({
+				"Fixes water in cauldrons rendering as opaque.",
+				"This bug is reported as MC-13187: https://bugs.mojang.com/browse/MC-13187"
+		})
+		@ConfigEntry.Gui.Tooltip
+		public boolean fixWaterInCauldronsRenderingAsOpaque = true;
+
 		@TOMLConfigSerializer.Comment({
 				"Fixes end portals not rendering from below.",
 				"This bug is reported as MC-3366: https://bugs.mojang.com/browse/MC-3366"
 		})
 		@ConfigEntry.Gui.Tooltip
-		public boolean fixEndPortalRendering = true;
+		public boolean fixEndPortalsNotRenderingFromBelow = true;
 
 		@TOMLConfigSerializer.Comment({
 				"Fixes the player model sometimes disappearing in certain instances.",
@@ -136,6 +144,14 @@ public final class RPConfig implements ConfigData {
 		})
 		@ConfigEntry.Gui.Tooltip
 		public boolean fixInvisiblePlayerModel = true;
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public void validatePostLoad() {
+			CauldronWaterTranslucencyHandler.onConfigReload();
+		}
 	}
 
 	public static final class KeyBindings implements ConfigData {

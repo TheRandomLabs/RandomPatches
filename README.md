@@ -196,7 +196,22 @@ player, and by default, if they have the same texture URL.
 
 This bug is reported as [MC-100044](https://bugs.mojang.com/browse/MC-100044).
 
-### Fix end portal rendering (client-sided)
+### Fix water in cauldrons rendering as opaque (client-sided)
+
+In vanilla Minecraft, water in cauldrons renders as opaque. RandomPatches fixes this issue by
+making them render as translucent as intended.
+
+Without RandomPatches:
+
+![Water in cauldron without RandomPatches](https://raw.githubusercontent.com/TheRandomLabs/RandomPatches/misc/Water%20in%20cauldron%20without%20RandomPatches.png)
+
+With RandomPatches:
+
+![Water in cauldron with RandomPatches](https://raw.githubusercontent.com/TheRandomLabs/RandomPatches/misc/Water%20in%20cauldron%20with%20RandomPatches.png)
+
+This bug is reported as [MC-13187](https://bugs.mojang.com/browse/MC-13187).
+
+### Fix end portals not rendering from below (client-sided)
 
 In vanilla Minecraft, end portals only render from above and not below. RandomPatches fixes this
 issue.
