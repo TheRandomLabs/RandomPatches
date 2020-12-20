@@ -120,7 +120,9 @@ public final class RPConfig implements ConfigData {
 	public static final class ClientBugFixes implements ConfigData {
 		@TOMLConfigSerializer.Comment({
 				"Fixes water in cauldrons rendering as opaque.",
-				"This bug is reported as MC-13187: https://bugs.mojang.com/browse/MC-13187"
+				"This bug is reported as MC-13187: https://bugs.mojang.com/browse/MC-13187",
+				"Changes to this option are applied after resources are reloaded or a world " +
+						"restart."
 		})
 		@ConfigEntry.Gui.Tooltip
 		public boolean fixWaterInCauldronsRenderingAsOpaque = true;
