@@ -180,11 +180,11 @@ issue.
 
 Without RandomPatches:
 
-![End portal rendering without RandomPatches](https://raw.githubusercontent.com/TheRandomLabs/RandomPatches/misc/End%20Portal%20Rendering%20without%20RandomPatches.png)
+![End portal rendering without RandomPatches](https://raw.githubusercontent.com/TheRandomLabs/RandomPatches/misc/End%20portal%20rendering%20without%20RandomPatches.png)
 
 With RandomPatches:
 
-![End portal rendering with RandomPatches](https://raw.githubusercontent.com/TheRandomLabs/RandomPatches/misc/End%20Portal%20Rendering%20with%20RandomPatches.png)
+![End portal rendering with RandomPatches](https://raw.githubusercontent.com/TheRandomLabs/RandomPatches/misc/End%20portal%20rendering%20with%20RandomPatches.png)
 
 This bug is reported as [MC-3366](https://bugs.mojang.com/browse/MC-3366).
 
