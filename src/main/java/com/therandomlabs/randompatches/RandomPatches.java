@@ -28,8 +28,11 @@ import com.therandomlabs.randompatches.client.RPContributorCapeHandler;
 import com.therandomlabs.randompatches.client.RPKeyBindingHandler;
 import com.therandomlabs.randompatches.command.RPConfigReloadCommand;
 import me.shedaniel.autoconfig1u.AutoConfig;
-import net.minecraftforge.common.MinecraftForge;
+import net.minecraft.block.Blocks;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraftforge.event.RegisterCommandsEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ExtensionPoint;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -41,6 +44,7 @@ import org.apache.logging.log4j.Logger;
  * The main class for RandomPatches.
  */
 @SuppressWarnings("PMD.NonThreadSafeSingleton")
+@Mod.EventBusSubscriber
 @Mod(RandomPatches.MOD_ID)
 public final class RandomPatches {
 	/**
@@ -66,15 +70,17 @@ public final class RandomPatches {
 			);
 		}
 
-		MinecraftForge.EVENT_BUS.addListener(this::registerCommands);
 		RPKeyBindingHandler.enable();
 
 		if (RandomPatches.config().client.contributorCapes) {
 			RPContributorCapeHandler.downloadContributorList();
 		}
+
+		RenderTypeLookup.setRenderLayer(Blocks.CAULDRON, RenderType.getTranslucent());
 	}
 
-	private void registerCommands(RegisterCommandsEvent event) {
+	@SubscribeEvent
+	public static void registerCommands(RegisterCommandsEvent event) {
 		RPConfigReloadCommand.register(event.getDispatcher());
 	}
 

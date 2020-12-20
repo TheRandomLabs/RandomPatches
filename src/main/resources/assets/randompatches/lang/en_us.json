@@ -35,6 +35,8 @@
 	"text.autoconfig.randompatches.option.client.window.@Tooltip": "Options related to the Minecraft window.",
 	"text.autoconfig.randompatches.option.client.window.simpleTitle": "Simple title",
 	"text.autoconfig.randompatches.option.client.window.simpleTitle.@Tooltip": "The simple Minecraft window title.",
+	"text.autoconfig.randompatches.option.client.window.simpleTitleWithModInfo": "Simple title with mod information",
+	"text.autoconfig.randompatches.option.client.window.simpleTitleWithModInfo.@Tooltip": "The simple Minecraft window title that also takes into account mod information.",
 	"text.autoconfig.randompatches.option.client.window.title": "Title",
 	"text.autoconfig.randompatches.option.client.window.title.@Tooltip": "The Minecraft window title.",
 	"text.autoconfig.randompatches.option.client.window.icon16": "16x16 icon",

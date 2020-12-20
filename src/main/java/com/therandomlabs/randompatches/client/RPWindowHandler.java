@@ -161,7 +161,9 @@ public final class RPWindowHandler {
 		}
 
 		activity = I18n.format(activityKey);
-		return titleSubstitutor.replace(config.title);
+		return titleSubstitutor.replace(
+				ModList.get() == null ? config.simpleTitleWithModInfo : config.title
+		);
 	}
 
 	/**

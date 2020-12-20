@@ -284,7 +284,7 @@ With RandomPatches:
 
 ![Potions with RandomPatches](https://raw.githubusercontent.com/TheRandomLabs/RandomPatches/misc/Potions%20with%20RandomPatches.png)
 
-### Disable experimental settings warning
+### Disable experimental settings warning (client-sided)
 
 By default, RandomPatches disables the warning that displays when loading a world that uses
 experimental settings:
