@@ -211,10 +211,9 @@ With RandomPatches:
 
 This bug is reported as [MC-13187](https://bugs.mojang.com/browse/MC-13187).
 
-### Fix end portals not rendering from below (client-sided)
+### Fix end portals only rendering from above (client-sided)
 
-In vanilla Minecraft, end portals only render from above and not below. RandomPatches fixes this
-issue.
+In vanilla Minecraft, end portals only render from above. RandomPatches fixes this issue.
 
 Without RandomPatches:
 

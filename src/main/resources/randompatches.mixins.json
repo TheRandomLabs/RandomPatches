@@ -24,7 +24,7 @@
 	"client": [
 		"client.AbstractOptionMixin",
 		"client.BambooBlockMixin",
-		"client.EndPortalTileEntityMixin",
+		"client.EndPortalTileEntityRendererMixin",
 		"client.IngameMenuScreenMixin",
 		"client.MinecraftMixin",
 		"client.PlayerRendererMixin",

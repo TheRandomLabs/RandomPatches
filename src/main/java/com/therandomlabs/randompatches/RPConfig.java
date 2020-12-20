@@ -128,11 +128,11 @@ public final class RPConfig implements ConfigData {
 		public boolean fixWaterInCauldronsRenderingAsOpaque = true;
 
 		@TOMLConfigSerializer.Comment({
-				"Fixes end portals not rendering from below.",
+				"Fixes end portals only rendering from above.",
 				"This bug is reported as MC-3366: https://bugs.mojang.com/browse/MC-3366"
 		})
 		@ConfigEntry.Gui.Tooltip
-		public boolean fixEndPortalsNotRenderingFromBelow = true;
+		public boolean fixEndPortalsOnlyRenderingFromAbove = true;
 
 		@TOMLConfigSerializer.Comment({
 				"Fixes the player model sometimes disappearing in certain instances.",
@@ -523,7 +523,7 @@ public final class RPConfig implements ConfigData {
 				"- ClientPlayNetHandler: Required for making the dismount overlay message show " +
 						"the correct key when the dismount key binding is enabled.",
 				"- CompoundNBT: Required for fixing player head stacking.",
-				"- EndPortalTileEntity: Required for fixing end portal rendering.",
+				"- EndPortalTileEntityRenderer: Required for fixing end portal rendering.",
 				"- Entity: Required for fixing MC-2025.",
 				"- IngameMenuScreen: Required for making Minecraft show the main menu " +
 						"screen after disconnecting rather than the Realms or multiplayer screen.",
