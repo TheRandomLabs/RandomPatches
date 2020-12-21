@@ -602,6 +602,10 @@ public final class RPConfig implements ConfigData {
 				return false;
 			}
 
+			if ("TemplateManager".equals(simpleName) && !bugFixes.fixMC149777) {
+				return false;
+			}
+
 			if (mixinClassName.contains("datafixerupper") && !disableDataFixerUpper()) {
 				return false;
 			}
@@ -682,6 +686,14 @@ public final class RPConfig implements ConfigData {
 		})
 		@ConfigEntry.Gui.Tooltip
 		public boolean fixRecipeBookNotMovingIngredientsWithTags = true;
+
+		@Path("fix_mc-149777")
+		@TOMLConfigSerializer.Comment(
+				"Fixes MC-149777, which can cause crashes when loading worlds on Java 11 or " +
+						"newer: https://bugs.mojang.com/browse/MC-149777"
+		)
+		@ConfigEntry.Gui.Tooltip
+		public boolean fixMC149777 = true;
 	}
 
 	/**

@@ -7,9 +7,9 @@ archivesBaseName = "randompatches"
 ext {
 	commonGradleBranch = "master"
 	useMixin = true
-	forgeVersion = "35.1.12"
+	forgeVersion = "35.1.13"
 	mappingsChannel = "snapshot"
-	mappingsVersion = "20201212-mixed-1.16.4"
+	mappingsVersion = "20201220-mixed-1.16.4"
 	clothConfigVersion = "4.1.1"
 	autoConfigVersion = "3.0"
 	autoConfigTOMLVersion = "autoconfig-3.x.x-forge-SNAPSHOT"

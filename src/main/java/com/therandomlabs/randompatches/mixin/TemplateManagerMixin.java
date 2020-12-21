@@ -23,11 +23,12 @@
 
 package com.therandomlabs.randompatches.mixin;
 
-import java.util.Set;
+import java.util.Collections;
+import java.util.Map;
 
-import com.therandomlabs.randompatches.world.ScheduledTickHashSet;
-import net.minecraft.world.NextTickListEntry;
-import net.minecraft.world.server.ServerTickList;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.gen.feature.template.Template;
+import net.minecraft.world.gen.feature.template.TemplateManager;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Mutable;
@@ -36,16 +37,16 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@SuppressWarnings("rawtypes")
-@Mixin(ServerTickList.class)
-public final class ServerTickListMixin {
+@Mixin(TemplateManager.class)
+public final class TemplateManagerMixin {
 	@Shadow
 	@Final
 	@Mutable
-	private Set<NextTickListEntry> pendingTickListEntriesHashSet;
+	private Map<ResourceLocation, Template> templates;
 
+	//Fix taken from Fabric API.
 	@Inject(method = "<init>", at = @At("TAIL"))
 	private void init(CallbackInfo info) {
-		pendingTickListEntriesHashSet = new ScheduledTickHashSet();
+		templates = Collections.synchronizedMap(templates);
 	}
 }

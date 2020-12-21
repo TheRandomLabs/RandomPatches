@@ -52,9 +52,9 @@ public final class ConfirmBackupScreenMixin extends Screen {
 	@Final
 	private Screen parentScreen;
 
-	@Mutable
 	@Shadow
 	@Final
+	@Mutable
 	private ITextComponent message;
 
 	//CHECKSTYLE IGNORE MemberName FOR NEXT 10 LINES

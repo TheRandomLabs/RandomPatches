@@ -99,6 +99,8 @@
 	"text.autoconfig.randompatches.option.misc.bugFixes.fixDuplicateEntityUUIDs.@Tooltip": "Fixes duplicate entity UUIDs by assigning new UUIDs to the affected entities.",
 	"text.autoconfig.randompatches.option.misc.bugFixes.fixRecipeBookNotMovingIngredientsWithTags": "Fix recipe book not moving ingredients with tags",
 	"text.autoconfig.randompatches.option.misc.bugFixes.fixRecipeBookNotMovingIngredientsWithTags.@Tooltip": "Fixes the recipe book not automatically moving ingredients with NBT tags to the crafting grid.",
+	"text.autoconfig.randompatches.option.misc.bugFixes.fixMC149777": "Fix MC-149777",
+	"text.autoconfig.randompatches.option.misc.bugFixes.fixMC149777.@Tooltip": "Fixes MC-149777, which can cause crashes when loading worlds on Java 11 or newer.",
 	"text.autoconfig.randompatches.option.misc.boatBuoyancyUnderFlowingWater": "Boat buoyancy under flowing water",
 	"text.autoconfig.randompatches.option.misc.boatBuoyancyUnderFlowingWater.@Tooltip": "The buoyancy of boats when they are under flowing water.",
 	"text.autoconfig.randompatches.option.misc.underwaterBoatPassengerEjectionDelayTicks": "Underwater boat passenger ejection delay in ticks",

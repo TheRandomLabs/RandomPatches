@@ -203,6 +203,12 @@ player, and by default, if they have the same texture URL.
 
 This bug is reported as [MC-100044](https://bugs.mojang.com/browse/MC-100044).
 
+### Fix [MC-149777](https://bugs.mojang.com/browse/MC-149777)
+
+RandomPatches fixes a rare `ConcurrentModificationException` that occurs when loading worlds on
+Java 11 or newer. This fix was taken from
+[Fabric API](https://github.com/FabricMC/fabric/blob/1.16/fabric-structure-api-v1/src/main/java/net/fabricmc/fabric/mixin/structure/StructureManagerMixin.java).
+
 ### Fix water in cauldrons rendering as opaque (client-sided)
 
 In vanilla Minecraft, water in cauldrons renders as opaque. RandomPatches fixes this issue by
