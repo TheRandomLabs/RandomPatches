@@ -57,12 +57,11 @@ public final class ConfirmBackupScreenMixin extends Screen {
 	@Mutable
 	private ITextComponent message;
 
-	//CHECKSTYLE IGNORE MemberName FOR NEXT 10 LINES
+	//CHECKSTYLE IGNORE MemberName FOR NEXT 9 LINES
 	@Shadow
 	@Final
 	private boolean field_212994_d;
 
-	@SuppressWarnings("PMD.SingularField")
 	@Shadow
 	private IBidiRenderer wrappedText;
 

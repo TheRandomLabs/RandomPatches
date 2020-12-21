@@ -41,7 +41,6 @@ import org.apache.logging.log4j.Logger;
 /**
  * The main class for RandomPatches.
  */
-@SuppressWarnings({"PMD.NonThreadSafeSingleton", "PMD.UseUtilityClass"})
 @Mod.EventBusSubscriber
 @Mod(RandomPatches.MOD_ID)
 public final class RandomPatches {
@@ -55,6 +54,7 @@ public final class RandomPatches {
 	 */
 	public static final Logger logger = LogManager.getLogger(MOD_ID);
 
+	@SuppressWarnings("PMD.NonThreadSafeSingleton")
 	private static TOMLConfigSerializer<RPConfig> serializer;
 
 	/**

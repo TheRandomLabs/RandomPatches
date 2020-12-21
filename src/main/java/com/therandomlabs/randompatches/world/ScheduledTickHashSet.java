@@ -38,7 +38,7 @@ import net.minecraft.world.NextTickListEntry;
  * An explanation can be found
  * <a href="https://github.com/SleepyTrousers/EnderCore/issues/105">here</a>.
  */
-@SuppressWarnings({"NullAway", "rawtypes", "serial"})
+@SuppressWarnings({"rawtypes", "serial"})
 public final class ScheduledTickHashSet extends HashSet<NextTickListEntry> {
 	private static final class ScheduledTickWrapper {
 		Object entry;
