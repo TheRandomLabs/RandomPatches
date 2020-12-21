@@ -24,24 +24,59 @@
 package com.therandomlabs.randompatches.mixin;
 
 import com.therandomlabs.randompatches.RandomPatches;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.CauldronBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.DoubleNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Entity.class)
-public final class EntityMixin {
+public abstract class EntityMixin {
+	@Shadow
+	public abstract AxisAlignedBB getBoundingBox();
+
+	@Shadow
+	public abstract void setBoundingBox(AxisAlignedBB boundingBox);
+
+	@Shadow
+	public abstract boolean isInWater();
+
+	@Shadow
+	protected abstract boolean isInRain();
+
+	@Shadow
+	public World world;
+
+	@Shadow
+	public abstract BlockPos getBlockPos();
+
+	@Shadow
+	public abstract World getEntityWorld();
+
+	@Inject(method = "isWet", at = @At("HEAD"), cancellable = true)
+	private void isWet(CallbackInfoReturnable<Boolean> info) {
+		if (RandomPatches.config().misc.bugFixes.fixEntitiesNotBeingConsideredWetInCauldrons) {
+			info.setReturnValue(isInWater() || isInRain() || isInCauldronFilledWithWater());
+		}
+	}
+
 	@Inject(method = "writeWithoutTypeId", at = @At(
 			value = "INVOKE",
 			target = "net/minecraft/entity/Entity.getMotion()" +
-							"Lnet/minecraft/util/math/vector/Vector3d;"
+					"Lnet/minecraft/util/math/vector/Vector3d;"
 	))
 	private void writeWithoutTypeId(
 			CompoundNBT compound, CallbackInfoReturnable<CompoundNBT> info
@@ -50,7 +85,7 @@ public final class EntityMixin {
 			return;
 		}
 
-		final AxisAlignedBB boundingBox = ((Entity) (Object) this).getBoundingBox();
+		final AxisAlignedBB boundingBox = getBoundingBox();
 		final ListNBT boundingBoxList = new ListNBT();
 
 		//Because of floating point precision errors, the bounding box of an entity can be
@@ -77,7 +112,7 @@ public final class EntityMixin {
 
 		final ListNBT boundingBoxList = compound.getList("BoundingBox", Constants.NBT.TAG_DOUBLE);
 
-		((Entity) (Object) this).setBoundingBox(new AxisAlignedBB(
+		setBoundingBox(new AxisAlignedBB(
 				boundingBoxList.getDouble(0),
 				boundingBoxList.getDouble(1),
 				boundingBoxList.getDouble(2),
@@ -85,5 +120,12 @@ public final class EntityMixin {
 				boundingBoxList.getDouble(4),
 				boundingBoxList.getDouble(5)
 		));
+	}
+
+	@Unique
+	private boolean isInCauldronFilledWithWater() {
+		final BlockState state = getEntityWorld().getBlockState(getBlockPos());
+		//This will need to be changed in 1.17 to make sure that it's water.
+		return state.isIn(Blocks.CAULDRON) && state.get(CauldronBlock.LEVEL) > 0;
 	}
 }

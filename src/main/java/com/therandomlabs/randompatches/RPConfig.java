@@ -524,7 +524,10 @@ public final class RPConfig implements ConfigData {
 						"the correct key when the dismount key binding is enabled.",
 				"- CompoundNBT: Required for fixing player head stacking.",
 				"- EndPortalTileEntityRenderer: Required for fixing end portal rendering.",
-				"- Entity: Required for fixing MC-2025.",
+				"- Entity:",
+				"  - Required for fixing MC-2025.",
+				"  - Required for fixing entities not being considered wet in cauldrons " +
+						"filled with water.",
 				"- IngameMenuScreen: Required for making Minecraft show the main menu " +
 						"screen after disconnecting rather than the Realms or multiplayer screen.",
 				"- KeyBinding:",
@@ -641,6 +644,16 @@ public final class RPConfig implements ConfigData {
 		})
 		@ConfigEntry.Gui.Tooltip
 		public boolean fixAnimalBreedingHearts = true;
+
+		@TOMLConfigSerializer.Comment({
+				"Fixes entities not being considered wet in cauldrons filled with water.",
+				"This allows players to use Riptide in cauldrons filled with water, " +
+						"fixing MC-145311: https://bugs.mojang.com/browse/MC-145311",
+				"This also allows players to receive the Conduit Power effect in cauldrons " +
+						"filled with water.",
+		})
+		@ConfigEntry.Gui.Tooltip
+		public boolean fixEntitiesNotBeingConsideredWetInCauldrons = true;
 
 		@TOMLConfigSerializer.Comment({
 				"Fixes player heads from the same player sometimes not stacking.",

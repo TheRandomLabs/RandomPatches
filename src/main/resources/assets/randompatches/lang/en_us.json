@@ -91,6 +91,8 @@
 	"text.autoconfig.randompatches.option.misc.bugFixes.fixMC2025.@Tooltip": "Fixes MC-2025.",
 	"text.autoconfig.randompatches.option.misc.bugFixes.fixAnimalBreedingHearts": "Fix animal breeding hearts",
 	"text.autoconfig.randompatches.option.misc.bugFixes.fixAnimalBreedingHearts.@Tooltip": "Fixes animals which can breed only showing hearts once initially instead of continuously.",
+	"text.autoconfig.randompatches.option.misc.bugFixes.fixEntitiesNotBeingConsideredWetInCauldrons": "Fix entities not being considered wet in cauldrons",
+	"text.autoconfig.randompatches.option.misc.bugFixes.fixEntitiesNotBeingConsideredWetInCauldrons.@Tooltip": "Fixes entities not being considered wet in cauldrons filled with water.",
 	"text.autoconfig.randompatches.option.misc.bugFixes.fixPlayerHeadStacking": "Fix player head stacking",
 	"text.autoconfig.randompatches.option.misc.bugFixes.fixPlayerHeadStacking.@Tooltip": "Fixes player heads from the same player sometimes not stacking.",
 	"text.autoconfig.randompatches.option.misc.bugFixes.fixDuplicateEntityUUIDs": "Fix duplicate entity UUIDs",

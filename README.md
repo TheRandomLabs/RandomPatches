@@ -188,6 +188,13 @@ the crafting grid. RandomPatches fixes this issue.
 
 This bug is reported as [MC-129057](https://bugs.mojang.com/browse/MC-129057).
 
+### Fix entities not being considered wet in cauldrons
+
+In vanilla Minecraft, entities are not considered wet in cauldrons filled with water. RandomPatches
+fixes this issue, allowing players to use Riptide in cauldrons filled with water, fixing
+[MC-145311](https://bugs.mojang.com/browse/MC-145311). In addition, this fix allows players to
+receive the Conduit Power effect in cauldrons filled with water.
+
 ### Fix player head stacking
 
 In vanilla Minecraft, player heads from the same player sometimes do not stack. RandomPatches
