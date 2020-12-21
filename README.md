@@ -280,7 +280,7 @@ that the game is modded. In addition, the following window properties can be con
 * Title
   * Severable variables are provided:
   * `${mcversion}`: Minecraft version
-  * `${activity}`: Current activity (not available in the simple title)
+  * `${activity}`: Current activity (not available in the simple or normal title)
   * `${username}`: Username
   * `${modsloaded}`: Number of mods loaded (not available in the simple title)
   * `${modversion:modid}`: Version of the mod with the specified ID

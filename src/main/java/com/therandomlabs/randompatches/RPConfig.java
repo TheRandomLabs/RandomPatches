@@ -257,7 +257,7 @@ public final class RPConfig implements ConfigData {
 		public String simpleTitle = DEFAULT_TITLE;
 
 		@TOMLConfigSerializer.Comment({
-				"The simple Minecraft window title that also takes into account mod information.",
+				"The Minecraft window title.",
 				"The current activity is not available.",
 				"Variables:",
 				" - ${mcversion}: The Minecraft version",
@@ -267,11 +267,11 @@ public final class RPConfig implements ConfigData {
 				"'$' can be escaped by using an extra '$'."
 		})
 		@ConfigEntry.Gui.Tooltip
-		public String simpleTitleWithModInfo = FMLEnvironment.production ?
+		public String title = FMLEnvironment.production ?
 				DEFAULT_TITLE : "RandomPatches (${username}) - ${modsloaded} mods loaded";
 
 		@TOMLConfigSerializer.Comment({
-				"The Minecraft window title.",
+				"The Minecraft window title that also takes into account the current activity.",
 				"Variables:",
 				" - ${mcversion}: The Minecraft version",
 				" - ${activity}: The current activity.",
@@ -281,7 +281,7 @@ public final class RPConfig implements ConfigData {
 				"'$' can be escaped by using an extra '$'."
 		})
 		@ConfigEntry.Gui.Tooltip
-		public String title = FMLEnvironment.production ?
+		public String titleWithActivity = FMLEnvironment.production ?
 				"Minecraft ${mcversion} - ${activity}" :
 				"RandomPatches (${username}) - ${modsloaded} mods loaded - ${activity}";
 
