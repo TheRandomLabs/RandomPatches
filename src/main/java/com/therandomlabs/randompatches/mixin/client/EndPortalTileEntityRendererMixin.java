@@ -70,28 +70,28 @@ public abstract class EndPortalTileEntityRendererMixin {
 		final float b = (RANDOM.nextFloat() * 0.5F + 0.5F) * colorMultiplier;
 
 		this.method_23085(
-				tileEntity, model, vertexBuilder, 0.0F, 1.0F, 0.0F, 1.0F, 1.0F, 1.0F, 1.0F,
-				1.0F, r, g, b, Direction.SOUTH
+				tileEntity, model, vertexBuilder, 0.0F, 1.0F, 0.0F, y, 1.0F, 1.0F, 1.0F, 1.0F,
+				r, g, b, Direction.SOUTH
 		);
 		this.method_23085(
-				tileEntity, model, vertexBuilder, 0.0F, 1.0F, 1.0F, 0.0F, 0.0F, 0.0F, 0.0F,
-				0.0F, r, g, b, Direction.NORTH
+				tileEntity, model, vertexBuilder, 0.0F, 1.0F, y, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F,
+				r, g, b, Direction.NORTH
 		);
 		this.method_23085(
-				tileEntity, model, vertexBuilder, 1.0F, 1.0F, 1.0F, 0.0F, 0.0F, 1.0F, 1.0F,
-				0.0F, r, g, b, Direction.EAST
+				tileEntity, model, vertexBuilder, 1.0F, 1.0F, y, 0.0F, 0.0F, 1.0F, 1.0F, 0.0F,
+				r, g, b, Direction.EAST
 		);
 		this.method_23085(
-				tileEntity, model, vertexBuilder, 0.0F, 0.0F, 0.0F, 1.0F, 0.0F, 1.0F, 1.0F,
-				0.0F, r, g, b, Direction.WEST
+				tileEntity, model, vertexBuilder, 0.0F, 0.0F, 0.0F, y, 0.0F, 1.0F, 1.0F, 0.0F,
+				r, g, b, Direction.WEST
 		);
 		this.method_23085(
-				tileEntity, model, vertexBuilder, 0.0F, 1.0F, y, y, 0.0F, 0.0F, 1.0F,
-				1.0F, r, g, b, Direction.DOWN
+				tileEntity, model, vertexBuilder, 0.0F, 1.0F, 0.0F, 0.0F, 0.0F, 0.0F, 1.0F, 1.0F,
+				r, g, b, Direction.DOWN
 		);
 		this.method_23085(
-				tileEntity, model, vertexBuilder, 0.0F, 1.0F, y, y, 1.0F,
-				1.0F, 0.0F, 0.0F, r, g, b, Direction.UP
+				tileEntity, model, vertexBuilder, 0.0F, 1.0F, y, y, 1.0F, 1.0F, 0.0F, 0.0F,
+				r, g, b, Direction.UP
 		);
 	}
 
