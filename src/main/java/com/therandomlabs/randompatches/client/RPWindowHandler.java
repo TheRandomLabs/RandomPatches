@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
+import java.text.NumberFormat;
 
 import com.therandomlabs.randompatches.RPConfig;
 import com.therandomlabs.randompatches.RandomPatches;
@@ -78,7 +79,7 @@ public final class RPWindowHandler {
 			}
 
 			if (key.equals("modsloaded") && ModList.get() != null) {
-				return Integer.toString(ModList.get().getMods().size());
+				return NumberFormat.getInstance().format(ModList.get().getMods().size());
 			}
 
 			if (key.startsWith("modversion:") && ModList.get() != null) {
