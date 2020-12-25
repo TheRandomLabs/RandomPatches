@@ -50,6 +50,7 @@ if (project.hasProperty("curseForgeAPIKey")) {
 
 		project {
 			id = "285612"
+
 			addGameVersion "1.16.1"
 			addGameVersion "1.16.2"
 			addGameVersion "1.16.3"
