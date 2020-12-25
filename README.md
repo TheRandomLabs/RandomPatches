@@ -8,7 +8,7 @@
 [![Files](https://curse.nikky.moe/api/img/285612/files?logo)](https://www.curseforge.com/minecraft/mc-mods/randompatches-fabric/files)
 [![Download](https://curse.nikky.moe/api/img/285612?logo)](https://curse.nikky.moe/api/url/396245)
 
-A bunch of miscellaneous patches for Minecraft.
+A bunch of miscellaneous patches for Minecraft. RandomPatches does **not** require Fabric API!
 
 Also check out [RandomTweaks](https://www.curseforge.com/minecraft/mc-mods/randomtweaks)!
 
