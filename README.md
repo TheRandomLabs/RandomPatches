@@ -58,7 +58,7 @@ RandomPatches aims to not add or significantly modify any game mechanics. For in
 auto-third person is a new minor game mechanic, so it belongs in RandomTweaks.
 The distinction is blurrier for certain features—in these instances, features that require mixins
 in the Forge version, such as removing the glowing effect from potions, and bug fixes, such as
-the MC-2025 fix, are put in RandomPatches.
+the duplicate entity UUID fix, are put in RandomPatches.
 
 ## Features
 
