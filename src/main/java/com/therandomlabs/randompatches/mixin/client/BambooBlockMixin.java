@@ -32,7 +32,8 @@ import org.spongepowered.asm.mixin.Mixin;
 
 @Mixin(BambooBlock.class)
 public final class BambooBlockMixin extends Block {
-	//CHECKSTYLE IGNORE MissingJavadocMethod FOR NEXT 1 LINES
+	//CHECKSTYLE IGNORE MissingJavadocMethod FOR NEXT 2 LINES
+	@SuppressWarnings("ProtectedMembersInFinalClass")
 	protected BambooBlockMixin(Settings settings) {
 		super(settings);
 	}

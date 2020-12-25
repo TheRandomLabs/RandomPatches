@@ -41,6 +41,9 @@ public final class KeyBindingMixin implements BoundKeyAccessor {
 	@Shadow
 	private InputUtil.Key boundKey;
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public InputUtil.Key getBoundKey() {
 		return boundKey;

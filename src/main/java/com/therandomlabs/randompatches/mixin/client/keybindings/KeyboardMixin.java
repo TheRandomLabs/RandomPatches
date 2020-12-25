@@ -42,11 +42,17 @@ public final class KeyboardMixin implements SwitchF3StateAccessor {
 	@Shadow
 	private boolean switchF3State;
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public boolean getSwitchF3State() {
 		return switchF3State;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void setSwitchF3State(boolean state) {
 		switchF3State = state;

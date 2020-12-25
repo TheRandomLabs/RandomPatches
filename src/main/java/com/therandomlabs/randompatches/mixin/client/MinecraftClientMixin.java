@@ -47,7 +47,8 @@ public final class MinecraftClientMixin {
 
 	@Redirect(method = "<init>", at = @At(
 			value = "INVOKE",
-			target = "Lnet/minecraft/client/util/Window;setIcon(Ljava/io/InputStream;Ljava/io/InputStream;)V"
+			target = "Lnet/minecraft/client/util/Window;setIcon" +
+					"(Ljava/io/InputStream;Ljava/io/InputStream;)V"
 	))
 	private void setIcon(Window window, InputStream stream16, InputStream stream32) {
 		RPWindowHandler.updateWindowIcon(stream16, stream32);

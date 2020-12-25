@@ -21,3 +21,45 @@ apply from: "https://raw.githubusercontent.com/TheRandomLabs/Common-Gradle/${pro
 version = "2.0.0"
 group = "com.therandomlabs.randompatches"
 archivesBaseName = "randompatches"
+
+if (project.hasProperty("curseForgeAPIKey")) {
+	curseforge {
+		apiKey = project.curseForgeAPIKey
+
+		project {
+			id = "396245"
+
+			addGameVersion "1.16.1"
+			addGameVersion "1.16.2"
+			addGameVersion "1.16.3"
+			addGameVersion "1.16.4"
+
+			mainArtifact(jar) {
+				changelogType = "markdown"
+				changelog = file("changelog.md")
+				displayName = "RandomPatches ${version}"
+				releaseType = "beta"
+
+				relations {
+					optionalDependency "fabric-api"
+					optionalDependency "cotton-client-commands"
+				}
+			}
+
+			addArtifact(remapJar) {
+				displayName = "RandomPatches ${version} Remap"
+				releaseType = "release"
+			}
+
+			addArtifact(sourcesJar) {
+				displayName = "RandomPatches ${version} Sources"
+				releaseType = "release"
+			}
+
+			addArtifact(javadocJar) {
+				displayName = "RandomPatches ${version} Javadoc"
+				releaseType = "release"
+			}
+		}
+	}
+}

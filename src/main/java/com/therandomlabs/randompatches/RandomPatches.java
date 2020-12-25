@@ -52,6 +52,9 @@ public final class RandomPatches implements ModInitializer {
 	@SuppressWarnings("PMD.NonThreadSafeSingleton")
 	private static TOMLConfigSerializer<RPConfig> serializer;
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void onInitialize() {
 		reloadConfig();

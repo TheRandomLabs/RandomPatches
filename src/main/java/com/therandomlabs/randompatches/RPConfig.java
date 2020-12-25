@@ -543,8 +543,8 @@ public final class RPConfig implements ConfigData {
 				"- BoatEntity: Required for modifying boat options.",
 				"- ClientPlayerEntity: Required for the secondary sprint and dismount key " +
 						"bindings.",
-				"- ClientPlayNetworkHandler: Required for making the dismount overlay message show " +
-						"the correct key when the dismount key binding is enabled.",
+				"- ClientPlayNetworkHandler: Required for making the dismount overlay message " +
+						"show the correct key when the dismount key binding is enabled.",
 				"- CompoundTag: Required for fixing player head stacking.",
 				"- CustomPayloadC2SPacket: Required for setting the maximum client custom " +
 						"payload packet size.",
@@ -594,7 +594,7 @@ public final class RPConfig implements ConfigData {
 		 * {@inheritDoc}
 		 */
 		@Override
-		public void validatePostLoad() throws ValidationException {
+		public void validatePostLoad() {
 			configReloadCommand = configReloadCommand.trim();
 			Collections.sort(mixinBlacklist);
 		}

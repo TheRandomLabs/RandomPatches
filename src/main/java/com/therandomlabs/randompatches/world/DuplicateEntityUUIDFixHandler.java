@@ -39,6 +39,13 @@ public final class DuplicateEntityUUIDFixHandler {
 
 	private DuplicateEntityUUIDFixHandler() {}
 
+	/**
+	 * Called when a chunk is loaded.
+	 *
+	 * @param world the world.
+	 * @param chunk the chunk.
+	 */
+	@SuppressWarnings("ReferenceEquality")
 	public static void onChunkLoad(ServerWorld world, WorldChunk chunk) {
 		if (!RandomPatches.config().misc.bugFixes.fixDuplicateEntityUUIDs) {
 			return;
