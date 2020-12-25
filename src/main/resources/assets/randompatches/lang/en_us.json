@@ -64,6 +64,8 @@
 	"text.autoconfig.randompatches.option.client.returnToMainMenuAfterDisconnect.@Tooltip": "Causes Minecraft to show the main menu screen after disconnecting.",
 	"text.autoconfig.randompatches.option.client.contributorCapes": "Contributor capes",
 	"text.autoconfig.randompatches.option.client.contributorCapes.@Tooltip": "Gives capes to RandomPatches contributors.",
+	"text.autoconfig.randompatches.option.client.configReloadCommand": "Configuration reload command name",
+	"text.autoconfig.randompatches.option.client.configReloadCommand@Tooltip": "The name of the command that reloads this configuration from disk on the client.",
 	"text.autoconfig.randompatches.category.connection_timeouts": "Connection timeouts",
 	"text.autoconfig.randompatches.option.connectionTimeouts.readTimeoutSeconds": "Read timeout in seconds",
 	"text.autoconfig.randompatches.option.connectionTimeouts.readTimeoutSeconds.@Tooltip": "The read timeout.",

@@ -31,6 +31,7 @@ import com.therandomlabs.randompatches.command.RPConfigReloadCommand;
 import me.sargunvohra.mcmods.autoconfig1u.AutoConfig;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
+import net.fabricmc.loader.api.FabricLoader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -53,15 +54,23 @@ public final class RandomPatches implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+		reloadConfig();
+
+		if (FabricLoader.getInstance().isModLoaded("fabric")) {
+			CommandRegistrationCallback.EVENT.register(RPConfigReloadCommand::register);
+		}
+	}
+
+	/**
+	 * Called after {@link net.minecraft.client.MinecraftClient} is initialized.
+	 */
+	public static void postClientInit() {
 		CauldronWaterTranslucencyHandler.enable();
 		RPKeyBindingHandler.enable();
 
 		if (RandomPatches.config().client.contributorCapes) {
 			RPContributorCapeHandler.downloadContributorList();
 		}
-
-		reloadConfig();
-		CommandRegistrationCallback.EVENT.register(RPConfigReloadCommand::register);
 	}
 
 	/**

@@ -262,7 +262,7 @@ public final class RPConfig implements ConfigData {
 		@ConfigEntry.Gui.Excluded
 		private static final String DEFAULT_ICON =
 				FabricLoader.getInstance().isDevelopmentEnvironment() ?
-						"../src/main/resources/logo.png" : "";
+						"../src/main/resources/assets/randompatches/icon.png" : "";
 
 		@TOMLConfigSerializer.Comment({
 				"The simple Minecraft window title.",
@@ -607,6 +607,10 @@ public final class RPConfig implements ConfigData {
 			final String[] parts = StringUtils.split(mixinClassName, '.');
 			final String simpleName = StringUtils.substring(parts[parts.length - 1], 0, -5);
 
+			if ("MinecraftClientPostInit".equals(simpleName)) {
+				return true;
+			}
+
 			if ("VillagerResemblingModel".equals(simpleName) &&
 					!RandomPatches.config().client.bugFixes.fixVillagerRobeTextures) {
 				return false;
@@ -623,10 +627,6 @@ public final class RPConfig implements ConfigData {
 			}
 
 			if ("ServerTickScheduler".equals(simpleName) && !bugFixes.fixTickSchedulerDesync) {
-				return false;
-			}
-
-			if ("TemplateManager".equals(simpleName) && !bugFixes.fixMC149777) {
 				return false;
 			}
 
@@ -710,14 +710,6 @@ public final class RPConfig implements ConfigData {
 		})
 		@ConfigEntry.Gui.Tooltip
 		public boolean fixRecipeBookNotMovingIngredientsWithTags = true;
-
-		@Path("fix_mc-149777")
-		@TOMLConfigSerializer.Comment(
-				"Fixes MC-149777, which can cause crashes when loading worlds on Java 11 or " +
-						"newer: https://bugs.mojang.com/browse/MC-149777"
-		)
-		@ConfigEntry.Gui.Tooltip
-		public boolean fixMC149777 = true;
 	}
 
 	/**

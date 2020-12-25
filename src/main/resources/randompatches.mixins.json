@@ -27,6 +27,7 @@
 		"client.EndPortalBlockEntityRendererMixin",
 		"client.GameMenuScreenMixin",
 		"client.MinecraftClientMixin",
+		"client.MinecraftClientPostInitMixin",
 		"client.OptionMixin",
 		"client.PlayerEntityRendererMixin",
 		"client.PotionItemMixin",
