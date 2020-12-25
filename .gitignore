@@ -34,3 +34,7 @@ out/
 run/
 libs/
 logs/
+
+# other
+
+changelog.md

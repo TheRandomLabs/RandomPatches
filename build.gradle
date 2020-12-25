@@ -43,3 +43,14 @@ buildscript {
 }
 
 apply from: "https://raw.githubusercontent.com/TheRandomLabs/Common-Gradle/${project.commonGradleBranch}/forge/1.16.4.gradle"
+
+curseforge {
+	project {
+		id = "285612"
+		releaseType = "beta"
+		addGameVersion "1.16.1"
+		addGameVersion "1.16.2"
+		addGameVersion "1.16.3"
+		addGameVersion "1.16.4"
+	}
+}
