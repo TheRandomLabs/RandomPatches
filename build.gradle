@@ -61,6 +61,10 @@ if (project.hasProperty("curseForgeAPIKey")) {
 				changelog = file("changelog.md")
 				displayName = "RandomPatches ${version}"
 				releaseType = "beta"
+
+				relations {
+					optionalDependency "cloth-config-forge"
+				}
 			}
 
 			addArtifact(deobfJar) {
