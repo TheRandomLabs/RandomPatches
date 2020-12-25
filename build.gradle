@@ -34,7 +34,7 @@ if (project.hasProperty("curseForgeAPIKey")) {
 			addGameVersion "1.16.3"
 			addGameVersion "1.16.4"
 
-			mainArtifact(remapJar.jar) {
+			mainArtifact(remapJar) {
 				changelogType = "markdown"
 				changelog = file("changelog.md")
 				displayName = "RandomPatches ${version}"
