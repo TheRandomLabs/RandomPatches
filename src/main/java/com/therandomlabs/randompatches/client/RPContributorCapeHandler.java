@@ -82,10 +82,7 @@ public final class RPContributorCapeHandler {
 			return;
 		}
 
-		//If AbstractClientPlayerEntity#playerInfo is null, this method attempts to retrieve it.
-		player.getPlayerInfo();
-
-		if (player.playerInfo == null) {
+		if (player.getPlayerInfo() == null) {
 			player.playerInfo = new NetworkPlayerInfo(new SPlayerListItemPacket().new AddPlayerData(
 					player.getGameProfile(), 0, null, null
 			));
