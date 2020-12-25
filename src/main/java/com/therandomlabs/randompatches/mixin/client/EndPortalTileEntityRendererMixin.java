@@ -101,7 +101,7 @@ public abstract class EndPortalTileEntityRendererMixin {
 			target = "net/minecraft/tileentity/EndPortalTileEntity.shouldRenderFace" +
 					"(Lnet/minecraft/util/Direction;)Z"
 	))
-	private boolean shouldRenderFace(EndPortalTileEntity entity, Direction face) {
+	private boolean shouldRenderFace(EndPortalTileEntity tileEntity, Direction face) {
 		return RandomPatches.config().client.bugFixes.fixEndPortalsOnlyRenderingFromAbove ||
 				face == Direction.UP;
 	}
