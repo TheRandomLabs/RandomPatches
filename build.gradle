@@ -45,7 +45,7 @@ if (project.hasProperty("curseForgeAPIKey")) {
 				}
 			}
 
-			addArtifact(remapSourcesJar.jar) {
+			addArtifact(remapSourcesJar) {
 				displayName = "RandomPatches ${version} Sources"
 				releaseType = "release"
 			}
