@@ -179,6 +179,7 @@ public final class RPConfig implements ConfigData {
 				"The dismount key binding.",
 				"This allows the dismount key to be different from the sneak key."
 		})
+		@ConfigEntry.Gui.Tooltip
 		public boolean dismount = true;
 
 		@TOMLConfigSerializer.Comment({
