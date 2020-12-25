@@ -1,4 +1,4 @@
-# RandomPatches
+# RandomPatches (Forge)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 ![Build](https://github.com/TheRandomLabs/RandomPatches/workflows/Build/badge.svg?branch=1.16-forge)
