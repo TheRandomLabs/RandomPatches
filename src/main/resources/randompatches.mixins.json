@@ -12,6 +12,7 @@
 		"InputSlotFillerMixin",
 		"ServerPlayNetworkHandlerPlayerSpeedLimitsMixin",
 		"ServerTickSchedulerMixin",
+		"ThreadedAnvilChunkStorageMixin",
 		"datafixerupper.MinecraftServerMixin",
 		"datafixerupper.SaveVersionInfoMixin",
 		"datafixerupper.SchemasMixin",
@@ -45,6 +46,7 @@
 		"client.packetsizelimits.CustomPayloadC2SPacketMixin"
 	],
 	"injectors": {
-		"defaultRequire": 1
+		"defaultRequire": 1,
+		"maxShiftBy": 5
 	}
 }
