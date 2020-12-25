@@ -580,7 +580,7 @@ public final class RPConfig implements ConfigData {
 		 * {@inheritDoc}
 		 */
 		@Override
-		public void validatePostLoad() throws ValidationException {
+		public void validatePostLoad() {
 			configReloadCommand = configReloadCommand.trim();
 			Collections.sort(mixinBlacklist);
 		}
