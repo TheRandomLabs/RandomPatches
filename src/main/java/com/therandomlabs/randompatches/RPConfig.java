@@ -528,6 +528,7 @@ public final class RPConfig implements ConfigData {
 				"A list of mixins that should not be applied.",
 				"These are the mixins that are not automatically disabled when the features that " +
 						"depend on them are:",
+				"- AbstractOption: Required for modifying the framerate limit slider step size.",
 				"- AnimalEntity: Required for fixing animal breeding hearts.",
 				"- BoatEntity: Required for modifying boat options.",
 				"- CCustomPayloadPacket: Required for setting the maximum client custom payload " +
