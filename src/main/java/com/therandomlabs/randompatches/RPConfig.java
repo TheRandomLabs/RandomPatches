@@ -128,6 +128,18 @@ public final class RPConfig implements ConfigData {
 		})
 		@ConfigEntry.Gui.Tooltip
 		public String configReloadCommand = "rpclientconfigreload";
+
+		/**
+		 * Returns whether contributor capes are enabled.
+		 *
+		 * @return {@code true} if contributor capes are enabled, or otherwise {@code false}.
+		 */
+		public boolean contributorCapes() {
+			final List<String> mixinBlacklist = RandomPatches.config().misc.mixinBlacklist;
+			return contributorCapes && !mixinBlacklist.contains("AbstractClientPlayerEntity") &&
+					!mixinBlacklist.contains("PlayerEntityRendererContributorCapes") &&
+					!mixinBlacklist.contains("PlayerListEntry");
+		}
 	}
 
 	public static final class ClientBugFixes implements ConfigData {
@@ -525,6 +537,8 @@ public final class RPConfig implements ConfigData {
 				"A list of mixins that should not be applied.",
 				"These are the mixins that are not automatically disabled when the features that " +
 						"depend on them are:",
+				"- AbstractClientPlayerEntity, PlayerEntityRendererContributorCapes, " +
+						"PlayerListEntry: Required for contributor capes.",
 				"- AnimalEntity: Required for fixing animal breeding hearts.",
 				"- BoatEntity: Required for modifying boat options.",
 				"- ClientPlayerEntity: Required for the secondary sprint and dismount key " +

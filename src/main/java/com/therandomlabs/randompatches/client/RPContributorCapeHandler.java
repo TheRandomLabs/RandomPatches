@@ -30,10 +30,18 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
+import com.mojang.authlib.minecraft.MinecraftProfileTexture;
 import com.therandomlabs.randompatches.RandomPatches;
+import com.therandomlabs.randompatches.mixin.client.contributorcapes.AbstractClientPlayerEntityMixin;
+import com.therandomlabs.randompatches.mixin.client.contributorcapes.PlayerListEntryMixin;
+import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.client.network.AbstractClientPlayerEntity;
+import net.minecraft.client.network.PlayerListEntry;
+import net.minecraft.network.packet.s2c.play.PlayerListS2CPacket;
 import net.minecraft.util.Identifier;
 import org.apache.commons.io.IOUtils;
 
@@ -54,10 +62,14 @@ public final class RPContributorCapeHandler {
 	private static int tries;
 
 	private RPContributorCapeHandler() {}
-/*
-	@SubscribeEvent
-	public static void onPreRenderPlayer(RenderPlayerEvent.Pre event) {
-		if (!RandomPatches.config().client.contributorCapes) {
+
+	/**
+	 * Called before a player is rendered.
+	 *
+	 * @param player an {@link AbstractClientPlayerEntity}.
+	 */
+	public static void onPreRenderPlayer(AbstractClientPlayerEntity player) {
+		if (!RandomPatches.config().client.contributorCapes()) {
 			return;
 		}
 
@@ -66,36 +78,39 @@ public final class RPContributorCapeHandler {
 			return;
 		}
 
-		final AbstractClientPlayerEntity player = (AbstractClientPlayerEntity) event.getPlayer();
-
-		if (FMLEnvironment.production && !contributors.contains(player.getCachedUniqueIdString())) {
+		if (!FabricLoader.getInstance().isDevelopmentEnvironment() &&
+				!contributors.contains(player.getUuidAsString())) {
 			return;
 		}
 
-		//If AbstractClientPlayerEntity#playerInfo is null, this method attempts to retrieve it.
-		player.getPlayerInfo();
+		final AbstractClientPlayerEntityMixin accessor = (AbstractClientPlayerEntityMixin) player;
 
-		if (player.playerInfo == null) {
-			player.playerInfo = new NetworkPlayerInfo(new SPlayerListItemPacket().new AddPlayerData(
-					player.getGameProfile(), 0, null, null
+		if (accessor.invokeGetPlayerListEntry() == null) {
+			accessor.setCachedScoreboardEntry(new PlayerListEntry(
+					new PlayerListS2CPacket().new Entry(player.getGameProfile(), 0, null, null)
 			));
-			temporaryPlayerInfos.add(player.getUniqueID());
+			temporaryPlayerInfos.add(player.getUuid());
 		}
 
-		player.playerInfo.playerTextures.putIfAbsent(MinecraftProfileTexture.Type.CAPE, CAPE);
-		player.playerInfo.playerTextures.putIfAbsent(MinecraftProfileTexture.Type.ELYTRA, CAPE);
+		final Map<MinecraftProfileTexture.Type, Identifier> textures =
+				((PlayerListEntryMixin) accessor.invokeGetPlayerListEntry()).getTextures();
+		textures.putIfAbsent(MinecraftProfileTexture.Type.CAPE, CAPE);
+		textures.putIfAbsent(MinecraftProfileTexture.Type.ELYTRA, CAPE);
 	}
 
-	@SubscribeEvent
-	public static void onPostRenderPlayer(RenderPlayerEvent.Post event) {
-		final AbstractClientPlayerEntity player = (AbstractClientPlayerEntity) event.getPlayer();
-		final UUID uniqueID = player.getUniqueID();
+	/**
+	 * Called after a player is rendered.
+	 *
+	 * @param player an {@link AbstractClientPlayerEntity}.
+	 */
+	public static void onPostRenderPlayer(AbstractClientPlayerEntity player) {
+		final UUID uniqueID = player.getUuid();
 
 		if (temporaryPlayerInfos.contains(uniqueID)) {
-			player.playerInfo = null;
+			((AbstractClientPlayerEntityMixin) player).setCachedScoreboardEntry(null);
 			temporaryPlayerInfos.remove(uniqueID);
 		}
-	}*/
+	}
 
 	/**
 	 * Attempts to download the RandomPatches contributor list.

@@ -413,7 +413,6 @@ public final class RPWindowHandler {
 			}
 
 			rootNonLibraryMods++;
-			RandomPatches.logger.error(id);
 		}
 	}
 }
