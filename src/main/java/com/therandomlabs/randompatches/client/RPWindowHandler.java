@@ -144,7 +144,9 @@ public final class RPWindowHandler {
 
 		if (handler == null || !handler.getNetworkManager().isChannelOpen()) {
 			activity = null;
-			return titleSubstitutor.replace(config.simpleTitle);
+			return titleSubstitutor.replace(
+					ModList.get() == null ? config.simpleTitle : config.title
+			);
 		}
 
 		final String activityKey;
@@ -161,9 +163,7 @@ public final class RPWindowHandler {
 		}
 
 		activity = I18n.format(activityKey);
-		return titleSubstitutor.replace(
-				ModList.get() == null ? config.title : config.titleWithActivity
-		);
+		return titleSubstitutor.replace(config.titleWithActivity);
 	}
 
 	/**
