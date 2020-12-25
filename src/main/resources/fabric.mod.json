@@ -9,6 +9,7 @@
 	],
 	"contact": {
 		"homepage": "https://www.curseforge.com/minecraft/mc-mods/randompatches-fabric",
+		"issues": "https://github.com/TheRandomLabs/RandomPatches/issues",
 		"sources": "https://github.com/TheRandomLabs/RandomPatches/tree/1.16-fabric"
 	},
 	"license": "MIT",
