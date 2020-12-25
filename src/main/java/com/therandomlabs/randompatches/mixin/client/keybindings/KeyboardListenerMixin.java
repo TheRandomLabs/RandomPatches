@@ -28,7 +28,6 @@ import com.therandomlabs.randompatches.client.RPKeyBindingHandler;
 import net.minecraft.client.KeyboardListener;
 import org.lwjgl.glfw.GLFW;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -38,9 +37,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(KeyboardListener.class)
 public abstract class KeyboardListenerMixin {
-	@Unique
-	private static final int GLFW_KEY_UNUSED = GLFW.GLFW_KEY_RIGHT_BRACKET + 1;
-
 	@Inject(method = "onKeyEvent", at = @At(
 			value = "INVOKE",
 			shift = At.Shift.BY,
@@ -56,17 +52,17 @@ public abstract class KeyboardListenerMixin {
 
 	@ModifyConstant(method = "onKeyEvent", constant = @Constant(intValue = GLFW.GLFW_KEY_B))
 	private int getToggleNarratorKey(int key) {
-		return RandomPatches.config().client.keyBindings.toggleNarrator ? GLFW_KEY_UNUSED : key;
+		return RandomPatches.config().client.keyBindings.toggleNarrator ? -1 : key;
 	}
 
 	@ModifyConstant(method = "onKeyEvent", constant = @Constant(intValue = GLFW.GLFW_KEY_ESCAPE))
 	private int getPauseKey(int key) {
-		return RandomPatches.config().client.keyBindings.pause ? GLFW_KEY_UNUSED : key;
+		return RandomPatches.config().client.keyBindings.pause ? -1 : key;
 	}
 
 	@ModifyConstant(method = "onKeyEvent", constant = @Constant(intValue = GLFW.GLFW_KEY_F1))
 	private int getToggleGUIKey(int key) {
-		return RandomPatches.config().client.keyBindings.toggleGUI ? GLFW_KEY_UNUSED : key;
+		return RandomPatches.config().client.keyBindings.toggleGUI ? -1 : key;
 	}
 
 	@ModifyConstant(
@@ -81,6 +77,6 @@ public abstract class KeyboardListenerMixin {
 			constant = @Constant(intValue = GLFW.GLFW_KEY_F3, ordinal = 0)
 	)
 	private int getToggleDebugInfoKey(int key) {
-		return RandomPatches.config().client.keyBindings.toggleDebugInfo ? GLFW_KEY_UNUSED : key;
+		return RandomPatches.config().client.keyBindings.toggleDebugInfo ? -1 : key;
 	}
 }
