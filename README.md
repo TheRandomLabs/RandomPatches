@@ -4,8 +4,8 @@
 ![Build](https://github.com/TheRandomLabs/RandomPatches/workflows/Build/badge.svg?branch=1.16-forge)
 [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/TheRandomLabs/RandomPatches.svg)](http://isitmaintained.com/project/TheRandomLabs/RandomPatches "Average time to resolve an issue")
 
-[![Downloads](http://cf.way2muchnoise.eu/full_randompatches_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/randompatches)
-[![Files](https://curse.nikky.moe/api/img/285612/files?logo)](https://www.curseforge.com/minecraft/mc-mods/randompatches/files)
+[![Downloads](http://cf.way2muchnoise.eu/full_randompatches_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/randompatches-forge)
+[![Files](https://curse.nikky.moe/api/img/285612/files?logo)](https://www.curseforge.com/minecraft/mc-mods/randompatches-forge/files)
 [![Download](https://curse.nikky.moe/api/img/285612?logo)](https://curse.nikky.moe/api/url/285612)
 
 A bunch of miscellaneous patches for Minecraft.
