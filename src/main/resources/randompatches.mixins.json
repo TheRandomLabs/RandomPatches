@@ -14,6 +14,7 @@
 		"ServerRecipePlacerMixin",
 		"ServerTickListMixin",
 		"TemplateManagerMixin",
+		"client.VillagerModelMixin",
 		"datafixerupper.DataFixesManagerMixin",
 		"datafixerupper.MinecraftServerMixin",
 		"packetsizelimits.NettyCompressionDecoderMixin",
@@ -25,6 +26,7 @@
 	"client": [
 		"client.AbstractOptionMixin",
 		"client.BambooBlockMixin",
+		"client.EnchantedBookItemMixin",
 		"client.EndPortalTileEntityRendererMixin",
 		"client.IngameMenuScreenMixin",
 		"client.MinecraftMixin",

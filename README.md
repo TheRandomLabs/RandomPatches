@@ -238,6 +238,21 @@ With RandomPatches:
 
 This bug is reported as [MC-3366](https://bugs.mojang.com/browse/MC-3366).
 
+### Fix villager robe textures (client-sided)
+
+In vanilla Minecraft, only 18 out of 20 rows of pixels show of villager robe textures. This issue
+also affects witches. RandomPatches fixes this issue.
+
+Without RandomPatches:
+
+![Villager robe textures without RandomPatches](https://raw.githubusercontent.com/TheRandomLabs/RandomPatches/misc/Villager%20robe%20textures%20without%20RandomPatches.png)
+
+With RandomPatches:
+
+![Villager robe textures with RandomPatches](https://raw.githubusercontent.com/TheRandomLabs/RandomPatches/misc/Villager%20robe%20textures%20with%20RandomPatches.png)
+
+This bug is reported as [MC-53312](https://bugs.mojang.com/browse/MC-53312).
+
 ### Fix invisible player model (client-sided)
 
 In certain instances in vanilla Minecraft, the player model sometimes disappears. This is most
@@ -310,6 +325,19 @@ Without RandomPatches:
 With RandomPatches:
 
 ![Potions with RandomPatches](https://raw.githubusercontent.com/TheRandomLabs/RandomPatches/misc/Potions%20with%20RandomPatches.png)
+
+### Remove glowing effect from enchanted books (client-sided)
+
+RandomPatches can remove the glowing effect from enchanted books. This feature is disabled by
+default.
+
+Without RandomPatches:
+
+![Enchanted books without RandomPatches](https://raw.githubusercontent.com/TheRandomLabs/RandomPatches/misc/Enchanted%20books%20without%20RandomPatches.png)
+
+With RandomPatches:
+
+![Enchanted books with RandomPatches](https://raw.githubusercontent.com/TheRandomLabs/RandomPatches/misc/Enchanted%20books%20with%20RandomPatches.png)
 
 ### Disable experimental settings warning (client-sided)
 

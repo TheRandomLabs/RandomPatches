@@ -90,6 +90,10 @@ public final class RPConfig implements ConfigData {
 		@ConfigEntry.Gui.Tooltip
 		public boolean removeGlowingEffectFromPotions = true;
 
+		@TOMLConfigSerializer.Comment("Removes the glowing effect from enchanted books.")
+		@ConfigEntry.Gui.Tooltip
+		public boolean removeGlowingEffectFromEnchantedBooks = !FMLEnvironment.production;
+
 		@TOMLConfigSerializer.Comment(
 				"Disables the warning that displays when loading a world that uses experimental " +
 						"settings."
@@ -133,6 +137,15 @@ public final class RPConfig implements ConfigData {
 		})
 		@ConfigEntry.Gui.Tooltip
 		public boolean fixEndPortalsOnlyRenderingFromAbove = true;
+
+		@TOMLConfigSerializer.Comment({
+				"Fixes only 18 out of 20 rows of pixels showing of villager robe textures.",
+				"This issue also affects witches.",
+				"This bug is reported as MC-53312: https://bugs.mojang.com/browse/MC-53312",
+				"Changes to this option are applied after a game restart."
+		})
+		@ConfigEntry.Gui.Tooltip
+		public boolean fixVillagerRobeTextures = true;
 
 		@TOMLConfigSerializer.Comment({
 				"Fixes the player model sometimes disappearing in certain instances.",
@@ -523,6 +536,8 @@ public final class RPConfig implements ConfigData {
 				"- ClientPlayNetHandler: Required for making the dismount overlay message show " +
 						"the correct key when the dismount key binding is enabled.",
 				"- CompoundNBT: Required for fixing player head stacking.",
+				"- EnchantedBookItem: Required for removing the glowing effect from enchanted " +
+						"books.",
 				"- EndPortalTileEntityRenderer: Required for fixing end portal rendering.",
 				"- Entity:",
 				"  - Required for fixing MC-2025.",
@@ -587,6 +602,11 @@ public final class RPConfig implements ConfigData {
 		public boolean isMixinClassEnabled(String mixinClassName) {
 			final String[] parts = StringUtils.split(mixinClassName, '.');
 			final String simpleName = StringUtils.substring(parts[parts.length - 1], 0, -5);
+
+			if ("VillagerModel".equals(simpleName) &&
+					!RandomPatches.config().client.bugFixes.fixVillagerRobeTextures) {
+				return false;
+			}
 
 			if ("PlayerRenderer".equals(simpleName) &&
 					!RandomPatches.config().client.bugFixes.fixInvisiblePlayerModel) {
