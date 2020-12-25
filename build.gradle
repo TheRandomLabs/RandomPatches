@@ -44,13 +44,38 @@ buildscript {
 
 apply from: "https://raw.githubusercontent.com/TheRandomLabs/Common-Gradle/${project.commonGradleBranch}/forge/1.16.4.gradle"
 
-curseforge {
-	project {
-		id = "285612"
-		releaseType = "beta"
-		addGameVersion "1.16.1"
-		addGameVersion "1.16.2"
-		addGameVersion "1.16.3"
-		addGameVersion "1.16.4"
+if (project.hasProperty("curseForgeAPIKey")) {
+	curseforge {
+		apiKey = project.curseForgeAPIKey
+
+		project {
+			id = "285612"
+			addGameVersion "1.16.1"
+			addGameVersion "1.16.2"
+			addGameVersion "1.16.3"
+			addGameVersion "1.16.4"
+
+			mainArtifact(jar) {
+				changelogType = "markdown"
+				changelog = file("changelog.md")
+				displayName = "RandomPatches ${version}"
+				releaseType = "beta"
+			}
+
+			addArtifact(deobfJar) {
+				displayName = "RandomPatches ${version} Deobf"
+				releaseType = "release"
+			}
+
+			addArtifact(sourcesJar) {
+				displayName = "RandomPatches ${version} Sources"
+				releaseType = "release"
+			}
+
+			addArtifact(javadocJar) {
+				displayName = "RandomPatches ${version} Javadoc"
+				releaseType = "release"
+			}
+		}
 	}
 }
