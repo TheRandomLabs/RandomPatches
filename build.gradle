@@ -34,24 +34,18 @@ if (project.hasProperty("curseForgeAPIKey")) {
 			addGameVersion "1.16.3"
 			addGameVersion "1.16.4"
 
-			mainArtifact(jar) {
+			mainArtifact(remapJar.jar) {
 				changelogType = "markdown"
 				changelog = file("changelog.md")
 				displayName = "RandomPatches ${version}"
 				releaseType = "beta"
 
 				relations {
-					optionalDependency "fabric-api"
 					optionalDependency "cotton-client-commands"
 				}
 			}
 
-			addArtifact(remapJar) {
-				displayName = "RandomPatches ${version} Remap"
-				releaseType = "release"
-			}
-
-			addArtifact(sourcesJar) {
+			addArtifact(remapSourcesJar.jar) {
 				displayName = "RandomPatches ${version} Sources"
 				releaseType = "release"
 			}
@@ -61,5 +55,13 @@ if (project.hasProperty("curseForgeAPIKey")) {
 				releaseType = "release"
 			}
 		}
+
+		options {
+			forgeGradleIntegration = false
+		}
+	}
+
+	afterEvaluate {
+		tasks.curseforge396245.dependsOn remapJar
 	}
 }

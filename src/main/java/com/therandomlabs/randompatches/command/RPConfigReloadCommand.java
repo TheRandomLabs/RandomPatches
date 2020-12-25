@@ -40,11 +40,8 @@ public final class RPConfigReloadCommand {
 	 * Registers the command that reloads the RandomPatches configuration.
 	 *
 	 * @param dispatcher the {@link CommandDispatcher}.
-	 * @param dedicated whether the server is dedicated.
 	 */
-	public static void register(
-			CommandDispatcher<ServerCommandSource> dispatcher, boolean dedicated
-	) {
+	public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
 		final String name = RandomPatches.config().misc.configReloadCommand;
 
 		if (!name.isEmpty()) {

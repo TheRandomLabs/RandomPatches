@@ -545,6 +545,7 @@ public final class RPConfig implements ConfigData {
 						"bindings.",
 				"- ClientPlayNetworkHandler: Required for making the dismount overlay message " +
 						"show the correct key when the dismount key binding is enabled.",
+				"- CommandManager: Required for the server-sided configuration reload command.",
 				"- CompoundTag: Required for fixing player head stacking.",
 				"- CustomPayloadC2SPacket: Required for setting the maximum client custom " +
 						"payload packet size.",
