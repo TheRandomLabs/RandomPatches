@@ -28,13 +28,18 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
+import java.text.NumberFormat;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.therandomlabs.randompatches.RPConfig;
 import com.therandomlabs.randompatches.RandomPatches;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;
+import net.fabricmc.loader.api.metadata.CustomValue;
+import net.fabricmc.loader.api.metadata.ModMetadata;
 import net.minecraft.SharedConstants;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
@@ -76,7 +81,7 @@ public final class RPWindowHandler {
 			}
 
 			if (key.equals("modsloaded")) {
-				return Integer.toString(FabricLoader.getInstance().getAllMods().size());
+				return NumberFormat.getInstance().format(rootNonLibraryMods);
 			}
 
 			if (key.startsWith("modversion:")) {
@@ -93,7 +98,11 @@ public final class RPWindowHandler {
 		}
 	}
 
+	private static final Pattern fabricPattern = Pattern.compile("^fabric-.*(-v\\d+)$");
+
 	private static final StrSubstitutor titleSubstitutor = new StrSubstitutor(TitleLookup.INSTANCE);
+
+	private static int rootNonLibraryMods;
 
 	private static String activity;
 	private static boolean enabled;
@@ -104,8 +113,9 @@ public final class RPWindowHandler {
 	 * Enables this class's functionality if it has not already been enabled.
 	 */
 	public static void enable() {
-		if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
+		if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT && !enabled) {
 			enabled = true;
+			getRootNonLibraryMods();
 		}
 	}
 
@@ -137,7 +147,7 @@ public final class RPWindowHandler {
 
 		if (handler == null || !handler.getConnection().isOpen()) {
 			activity = null;
-			return titleSubstitutor.replace(config.simpleTitle);
+			return titleSubstitutor.replace(config.title);
 		}
 
 		final String activityKey;
@@ -362,6 +372,48 @@ public final class RPWindowHandler {
 			if (resource != null) {
 				MemoryUtil.memFree(resource);
 			}
+		}
+	}
+
+	//Taken and adapted from Mod Menu.
+	private static void getRootNonLibraryMods() {
+		for (ModContainer mod : FabricLoader.getInstance().getAllMods()) {
+			final ModMetadata metadata = mod.getMetadata();
+			final String id = metadata.getId();
+
+			if ("minecraft".equals(id) || "fabric".equals(id) || "fabricloader".equals(id)) {
+				continue;
+			}
+
+			final CustomValue api = metadata.getCustomValue("modmenu:api");
+
+			if (api != null && api.getAsBoolean()) {
+				continue;
+			}
+
+			final CustomValue generated = metadata.getCustomValue("fabric-loom:generated");
+
+			if (generated != null && generated.getAsBoolean()) {
+				continue;
+			}
+
+			final CustomValue parent = metadata.getCustomValue("modmenu:parent");
+
+			if (parent != null && FabricLoader.getInstance().isModLoaded(parent.getAsString())) {
+				continue;
+			}
+
+			if (FabricLoader.getInstance().isModLoaded("fabric")) {
+				final Matcher matcher = fabricPattern.matcher(id);
+
+				if (matcher.matches() || "fabric-api-base".equals(id) ||
+						"fabric-renderer-indigo".equals(id)) {
+					continue;
+				}
+			}
+
+			rootNonLibraryMods++;
+			RandomPatches.logger.error(id);
 		}
 	}
 }

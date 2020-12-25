@@ -144,9 +144,6 @@ when DataFixerUpper is disabled by RandomPatches, it's better to be safe than so
 
 To be clear, **RandomPatches is not responsible for any damage caused by this feature.**
 
-This feature does nothing if
-[DataFixerSlayer](https://www.curseforge.com/minecraft/mc-mods/datafixerslayer) is installed.
-
 ### Fix tick scheduler desync
 
 In vanilla Minecraft, the tick scheduler occasionally becomes desynchronized, and as a result,

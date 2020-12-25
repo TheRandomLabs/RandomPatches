@@ -265,18 +265,6 @@ public final class RPConfig implements ConfigData {
 						"../src/main/resources/assets/randompatches/icon.png" : "";
 
 		@TOMLConfigSerializer.Comment({
-				"The simple Minecraft window title.",
-				"The current activity, the number of mods loaded and mod versions are not " +
-						"available.",
-				"Variables:",
-				" - ${mcversion}: The Minecraft version",
-				" - ${username}: The username.",
-				"'$' can be escaped by using an extra '$'."
-		})
-		@ConfigEntry.Gui.Tooltip
-		public String simpleTitle = DEFAULT_TITLE;
-
-		@TOMLConfigSerializer.Comment({
 				"The Minecraft window title.",
 				"The current activity is not available.",
 				"Variables:",
