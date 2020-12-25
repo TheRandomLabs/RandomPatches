@@ -21,19 +21,28 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.therandomlabs.randompatches.mixin.client;
+package com.therandomlabs.randompatches.mixin;
 
 import com.therandomlabs.randompatches.RandomPatches;
-import net.minecraft.client.AbstractOption;
+import net.minecraft.server.network.ServerPlayNetworkHandler;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
 
-@Mixin(AbstractOption.class)
-public final class AbstractOptionMixin {
-	@SuppressWarnings("UnresolvedMixinReference")
-	@ModifyConstant(method = "<clinit>", constant = @Constant(floatValue = 10.0F))
-	private static float getFramerateLimitSliderStepSize(float stepSize) {
-		return RandomPatches.config().client.framerateLimitSliderStepSize;
+@Mixin(ServerPlayNetworkHandler.class)
+public final class ServerPlayNetworkHandlerPlayerSpeedLimitsMixin {
+	@ModifyConstant(method = "onPlayerMove", constant = @Constant(floatValue = 100.0F))
+	private float getDefaultMaxPlayerSpeed(float speed) {
+		return RandomPatches.config().playerSpeedLimits.defaultMaxSpeed;
+	}
+
+	@ModifyConstant(method = "onPlayerMove", constant = @Constant(floatValue = 300.0F))
+	private float getMaxPlayerElytraSpeed(float speed) {
+		return RandomPatches.config().playerSpeedLimits.maxElytraSpeed;
+	}
+
+	@ModifyConstant(method = "onVehicleMove", constant = @Constant(doubleValue = 100.0))
+	private double getMaxPlayerVehicleSpeed(double speed) {
+		return RandomPatches.config().playerSpeedLimits.maxVehicleSpeed;
 	}
 }

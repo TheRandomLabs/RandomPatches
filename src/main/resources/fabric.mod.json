@@ -1,0 +1,34 @@
+{
+	"schemaVersion": 1,
+	"id": "randompatches",
+	"version": "${version}",
+	"name": "RandomPatches",
+	"description": "A bunch of miscellaneous patches for Minecraft.",
+	"authors": [
+		"TheRandomLabs"
+	],
+	"contact": {
+		"homepage": "https://www.curseforge.com/minecraft/mc-mods/randompatches-fabric",
+		"sources": "https://github.com/TheRandomLabs/RandomPatches/tree/1.16-fabric"
+	},
+	"license": "MIT",
+	"icon": "assets/randompatches/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.therandomlabs.randompatches.RandomPatches"
+		],
+		"modmenu": [
+			"com.therandomlabs.randompatches.RPModMenuEntryPoint"
+		],
+		"cotton-client-commands": [
+			"com.therandomlabs.randompatches.RPClientCommands"
+		]
+	},
+	"mixins": [
+		"randompatches.mixins.json"
+	],
+	"depends": {
+		"minecraft": "1.16.x"
+	}
+}

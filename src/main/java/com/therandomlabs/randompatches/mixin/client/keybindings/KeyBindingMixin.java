@@ -25,26 +25,34 @@ package com.therandomlabs.randompatches.mixin.client.keybindings;
 
 import com.therandomlabs.randompatches.RPConfig;
 import com.therandomlabs.randompatches.RandomPatches;
+import com.therandomlabs.randompatches.client.BoundKeyAccessor;
 import com.therandomlabs.randompatches.client.RPKeyBindingHandler;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.client.util.InputMappings;
-import net.minecraftforge.client.settings.KeyModifier;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.options.KeyBinding;
+import net.minecraft.client.util.InputUtil;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(KeyBinding.class)
-public final class KeyBindingMixin {
+public final class KeyBindingMixin implements BoundKeyAccessor {
+	@Shadow
+	private InputUtil.Key boundKey;
+
+	@Override
+	public InputUtil.Key getBoundKey() {
+		return boundKey;
+	}
+
 	@SuppressWarnings({"ConstantConditions", "PMD.CompareObjectsWithEquals"})
-	@Inject(method = "conflicts", at = @At("HEAD"), cancellable = true)
+	@Inject(method = "equals", at = @At("HEAD"), cancellable = true)
 	private void conflicts(KeyBinding keyBinding, CallbackInfoReturnable<Boolean> info) {
 		final RPConfig.KeyBindings config = RandomPatches.config().client.keyBindings;
 
 		if (config.secondarySprint()) {
-			final KeyBinding forward = Minecraft.getInstance().gameSettings.keyBindForward;
+			final KeyBinding forward = MinecraftClient.getInstance().options.keyForward;
 			final KeyBinding secondarySprint = RPKeyBindingHandler.KeyBindings.SECONDARY_SPRINT;
 
 			if (((Object) this == forward && keyBinding == secondarySprint) ||
@@ -54,7 +62,7 @@ public final class KeyBindingMixin {
 		}
 
 		if (config.dismount()) {
-			final KeyBinding sneak = Minecraft.getInstance().gameSettings.keySneak;
+			final KeyBinding sneak = MinecraftClient.getInstance().options.keySneak;
 			final KeyBinding dismount = RPKeyBindingHandler.KeyBindings.DISMOUNT;
 
 			if (((Object) this == sneak && keyBinding == dismount) ||
@@ -62,15 +70,5 @@ public final class KeyBindingMixin {
 				info.setReturnValue(false);
 			}
 		}
-	}
-
-	@Redirect(method = "conflicts", at = @At(
-			value = "INVOKE",
-			target = "net/minecraftforge/client/settings/KeyModifier.matches" +
-					"(Lnet/minecraft/client/util/InputMappings$Input;)Z"
-	))
-	private boolean matches(KeyModifier modifier, InputMappings.Input key) {
-		final RPConfig.KeyBindings config = RandomPatches.config().client.keyBindings;
-		return !config.standaloneModifiersDoNotConflictWithCombinations && modifier.matches(key);
 	}
 }

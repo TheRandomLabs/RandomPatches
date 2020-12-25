@@ -21,28 +21,21 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.therandomlabs.randompatches.mixin;
+package com.therandomlabs.randompatches;
 
-import com.therandomlabs.randompatches.RandomPatches;
-import net.minecraft.network.play.ServerPlayNetHandler;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.Constant;
-import org.spongepowered.asm.mixin.injection.ModifyConstant;
+import io.github.prospector.modmenu.api.ConfigScreenFactory;
+import io.github.prospector.modmenu.api.ModMenuApi;
+import me.sargunvohra.mcmods.autoconfig1u.AutoConfig;
 
-@Mixin(ServerPlayNetHandler.class)
-public final class ServerPlayNetHandlerPlayerSpeedLimitsMixin {
-	@ModifyConstant(method = "processPlayer", constant = @Constant(floatValue = 100.0F))
-	private float getDefaultMaxPlayerSpeed(float speed) {
-		return RandomPatches.config().playerSpeedLimits.defaultMaxSpeed;
-	}
-
-	@ModifyConstant(method = "processPlayer", constant = @Constant(floatValue = 300.0F))
-	private float getMaxPlayerElytraSpeed(float speed) {
-		return RandomPatches.config().playerSpeedLimits.maxElytraSpeed;
-	}
-
-	@ModifyConstant(method = "processVehicleMove", constant = @Constant(doubleValue = 100.0))
-	private double getMaxPlayerVehicleSpeed(double speed) {
-		return RandomPatches.config().playerSpeedLimits.maxVehicleSpeed;
+/**
+ * The Mod Menu entry point for the AutoConfig-TOML test mod.
+ */
+public final class RPModMenuEntryPoint implements ModMenuApi {
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public ConfigScreenFactory<?> getModConfigScreenFactory() {
+		return parent -> AutoConfig.getConfigScreen(RPConfig.class, parent).get();
 	}
 }

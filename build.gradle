@@ -1,86 +1,23 @@
-apply plugin: "java-library"
+plugins {
+	id "fabric-loom" version "0.5-SNAPSHOT"
+	id "com.matthewprenger.cursegradle" version "1.4.0"
+	id "com.modrinth.minotaur" version "1.1.0"
+}
+
+ext {
+	commonGradleBranch = "master"
+	yarnMappings = "1.16.4+build.7"
+	loaderVersion = "0.10.8"
+	fabricAPIVersion = "0.28.1+1.16"
+	modMenuVersion = "1.14.13+build.19"
+	clothConfigVersion = "4.8.3"
+	autoConfigVersion = "3.3.1"
+	autoConfigTOMLVersion = "autoconfig-3.x.x-fabric-SNAPSHOT"
+	cottonClientCommandsVersion = "1.0.1+1.16-rc1"
+}
+
+apply from: "https://raw.githubusercontent.com/TheRandomLabs/Common-Gradle/${project.commonGradleBranch}/fabric/1.16.4.gradle"
 
 version = "2.0.0"
 group = "com.therandomlabs.randompatches"
 archivesBaseName = "randompatches"
-
-ext {
-	commonGradleBranch = "master"
-	useMixin = true
-	forgeVersion = "35.1.13"
-	mappingsChannel = "snapshot"
-	mappingsVersion = "20201220-mixed-1.16.4"
-	clothConfigVersion = "4.1.1"
-	autoConfigVersion = "3.0"
-	autoConfigTOMLVersion = "autoconfig-3.x.x-forge-SNAPSHOT"
-}
-
-buildscript {
-	repositories {
-		jcenter()
-
-		mavenCentral()
-
-		gradlePluginPortal()
-
-		maven {
-			url "http://files.minecraftforge.net/maven"
-		}
-
-		maven {
-			url "https://dist.creeper.host/Sponge/maven"
-		}
-	}
-
-	dependencies {
-		classpath group: "net.minecraftforge.gradle", name: "ForgeGradle",
-				version: "3.+", changing: true
-		classpath "com.github.jengelman.gradle.plugins:shadow:4.0.4"
-		classpath "gradle.plugin.com.matthewprenger:CurseGradle:1.4.0"
-		classpath "gradle.plugin.com.modrinth.minotaur:Minotaur:1.1.0"
-		classpath "org.spongepowered:mixingradle:0.7-SNAPSHOT"
-	}
-}
-
-apply from: "https://raw.githubusercontent.com/TheRandomLabs/Common-Gradle/${project.commonGradleBranch}/forge/1.16.4.gradle"
-
-if (project.hasProperty("curseForgeAPIKey")) {
-	curseforge {
-		apiKey = project.curseForgeAPIKey
-
-		project {
-			id = "285612"
-
-			addGameVersion "1.16.1"
-			addGameVersion "1.16.2"
-			addGameVersion "1.16.3"
-			addGameVersion "1.16.4"
-
-			mainArtifact(jar) {
-				changelogType = "markdown"
-				changelog = file("changelog.md")
-				displayName = "RandomPatches ${version}"
-				releaseType = "beta"
-
-				relations {
-					optionalDependency "cloth-config-forge"
-				}
-			}
-
-			addArtifact(deobfJar) {
-				displayName = "RandomPatches ${version} Deobf"
-				releaseType = "release"
-			}
-
-			addArtifact(sourcesJar) {
-				displayName = "RandomPatches ${version} Sources"
-				releaseType = "release"
-			}
-
-			addArtifact(javadocJar) {
-				displayName = "RandomPatches ${version} Javadoc"
-				releaseType = "release"
-			}
-		}
-	}
-}

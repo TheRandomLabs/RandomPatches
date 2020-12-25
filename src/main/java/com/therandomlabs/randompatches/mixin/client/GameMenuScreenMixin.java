@@ -24,60 +24,59 @@
 package com.therandomlabs.randompatches.mixin.client;
 
 import com.therandomlabs.randompatches.RandomPatches;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screen.DirtMessageScreen;
-import net.minecraft.client.gui.screen.IngameMenuScreen;
-import net.minecraft.client.gui.screen.MainMenuScreen;
-import net.minecraft.client.gui.screen.MultiplayerScreen;
-import net.minecraft.client.gui.widget.button.Button;
-import net.minecraft.realms.RealmsBridgeScreen;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.screen.GameMenuScreen;
+import net.minecraft.client.gui.screen.SaveLevelScreen;
+import net.minecraft.client.gui.screen.TitleScreen;
+import net.minecraft.client.gui.screen.multiplayer.MultiplayerScreen;
+import net.minecraft.client.gui.widget.ButtonWidget;
+import net.minecraft.client.realms.gui.screen.RealmsBridgeScreen;
+import net.minecraft.text.TranslatableText;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.Slice;
 
-@Mixin(IngameMenuScreen.class)
-public final class IngameMenuScreenMixin {
+@Mixin(GameMenuScreen.class)
+public final class GameMenuScreenMixin {
 	@SuppressWarnings("ConstantConditions")
 	@ModifyArg(
-			method = "addButtons",
+			method = "initWidgets",
 			slice = @Slice(
 					from = @At(
 							value = "INVOKE",
-							target = "net/minecraft/client/Minecraft.isSingleplayer()Z"
+							target = "Lnet/minecraft/client/MinecraftClient;" +
+									"isIntegratedServerRunning()Z"
 					)
 			),
 			at = @At(
 					value = "INVOKE",
-					target = "net/minecraft/client/gui/widget/button/Button.<init>" +
-							"(IIIILnet/minecraft/util/text/ITextComponent;" +
-							"Lnet/minecraft/client/gui/widget/button/Button$IPressable;)V",
+					target = "Lnet/minecraft/client/gui/widget/ButtonWidget;<init>" +
+							"(IIIILnet/minecraft/text/Text;" +
+							"Lnet/minecraft/client/gui/widget/ButtonWidget$PressAction;)V",
 					ordinal = 0 //We set the ordinal just in case. :P
 			)
 	)
-	private Button.IPressable adjustOnPress(Button.IPressable onPress) {
+	private ButtonWidget.PressAction adjustOnPress(ButtonWidget.PressAction onPress) {
 		return button -> {
-			final Minecraft mc = Minecraft.getInstance();
+			final MinecraftClient mc = MinecraftClient.getInstance();
 
 			button.active = false;
-			mc.world.sendQuittingDisconnectingPacket();
+			mc.world.disconnect();
 
 			if (mc.isIntegratedServerRunning()) {
-				mc.func_213231_b(new DirtMessageScreen(
-						new TranslationTextComponent("menu.savingLevel")
-				));
+				mc.disconnect(new SaveLevelScreen(new TranslatableText("menu.savingLevel")));
 			} else {
-				mc.func_213254_o();
+				mc.disconnect();
 			}
 
 			if (RandomPatches.config().client.returnToMainMenuAfterDisconnect ||
 					mc.isIntegratedServerRunning()) {
-				mc.displayGuiScreen(new MainMenuScreen());
+				mc.openScreen(new TitleScreen());
 			} else if (mc.isConnectedToRealms()) {
-				new RealmsBridgeScreen().switchToRealms(new MainMenuScreen());
+				new RealmsBridgeScreen().switchToRealms(new TitleScreen());
 			} else {
-				mc.displayGuiScreen(new MultiplayerScreen(new MainMenuScreen()));
+				mc.openScreen(new MultiplayerScreen(new TitleScreen()));
 			}
 		};
 	}

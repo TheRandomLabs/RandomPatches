@@ -21,27 +21,26 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.therandomlabs.randompatches.mixin.client.keybindings;
+package com.therandomlabs.randompatches.mixin.client.packetsizelimits;
 
 import com.therandomlabs.randompatches.RandomPatches;
-import com.therandomlabs.randompatches.client.RPKeyBindingHandler;
-import net.minecraft.client.network.play.ClientPlayNetHandler;
-import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.network.packet.c2s.play.CustomPayloadC2SPacket;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.Constant;
+import org.spongepowered.asm.mixin.injection.ModifyConstant;
 
-@Mixin(ClientPlayNetHandler.class)
-public final class ClientPlayNetHandlerMixin {
-	@Redirect(method = "handleSetPassengers", at = @At(
-			value = "INVOKE",
-			target = "Lnet/minecraft/client/settings/KeyBinding;getBoundKeyLocalizedText()" +
-					"Lnet/minecraft/util/text/ITextComponent;"
+@Mixin(CustomPayloadC2SPacket.class)
+public final class CustomPayloadC2SPacketMixin {
+	@ModifyConstant(method = "read", constant = @Constant(intValue = Short.MAX_VALUE))
+	private int getMaxClientCustomPayloadPacketSize(int size) {
+		return RandomPatches.config().packetSizeLimits.maxClientCustomPayloadPacketSize;
+	}
+
+	@ModifyConstant(method = "read", constant = @Constant(
+			stringValue = "Payload may not be larger than " + Short.MAX_VALUE + " bytes"
 	))
-	private ITextComponent getDismountKeyLocalizedText(KeyBinding sneakKeyBinding) {
-		return RandomPatches.config().client.keyBindings.dismount() ?
-				RPKeyBindingHandler.KeyBindings.DISMOUNT.getBoundKeyLocalizedText() :
-				sneakKeyBinding.getBoundKeyLocalizedText();
+	private String getPayloadTooLargeErrorMessage(String message) {
+		return "Payload may not be larger than " +
+				RandomPatches.config().packetSizeLimits.maxClientCustomPayloadPacketSize + " bytes";
 	}
 }

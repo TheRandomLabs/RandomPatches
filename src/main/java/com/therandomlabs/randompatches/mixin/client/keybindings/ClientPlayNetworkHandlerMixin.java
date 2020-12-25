@@ -21,20 +21,27 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.therandomlabs.randompatches.mixin.datafixerupper;
+package com.therandomlabs.randompatches.mixin.client.keybindings;
 
-import com.mojang.datafixers.DataFixer;
-import com.therandomlabs.randompatches.util.FakeDataFixer;
-import net.minecraft.util.datafix.DataFixesManager;
+import com.therandomlabs.randompatches.RandomPatches;
+import com.therandomlabs.randompatches.client.RPKeyBindingHandler;
+import net.minecraft.client.network.ClientPlayNetworkHandler;
+import net.minecraft.client.options.KeyBinding;
+import net.minecraft.text.Text;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import org.spongepowered.asm.mixin.injection.Redirect;
 
-@Mixin(DataFixesManager.class)
-public final class DataFixesManagerMixin {
-	@Inject(method = "createFixer", at = @At("HEAD"), cancellable = true)
-	private static void createFixer(CallbackInfoReturnable<DataFixer> info) {
-		info.setReturnValue(new FakeDataFixer());
+@Mixin(ClientPlayNetworkHandler.class)
+public final class ClientPlayNetworkHandlerMixin {
+	@Redirect(method = "onEntityPassengersSet", at = @At(
+			value = "INVOKE",
+			target = "Lnet/minecraft/client/options/KeyBinding;" +
+					"getBoundKeyLocalizedText()Lnet/minecraft/text/Text;"
+	))
+	private Text getDismountKeyLocalizedText(KeyBinding sneakKeyBinding) {
+		return RandomPatches.config().client.keyBindings.dismount() ?
+				RPKeyBindingHandler.KeyBindings.DISMOUNT.getBoundKeyLocalizedText() :
+				sneakKeyBinding.getBoundKeyLocalizedText();
 	}
 }

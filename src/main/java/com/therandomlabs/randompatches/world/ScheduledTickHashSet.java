@@ -27,19 +27,20 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.minecraft.world.NextTickListEntry;
+import com.therandomlabs.randompatches.mixin.ServerTickSchedulerMixin;
+import net.minecraft.world.ScheduledTick;
 
 /**
  * An implementation of {@link HashSet} designed to prevent the
  * {@code "TickNextTick list out of synch"} {@link IllegalStateException}.
  * This class should only be used by
- * {@link com.therandomlabs.randompatches.mixin.ServerTickListMixin}.
+ * {@link ServerTickSchedulerMixin}.
  * <p>
  * An explanation can be found
  * <a href="https://github.com/SleepyTrousers/EnderCore/issues/105">here</a>.
  */
 @SuppressWarnings({"rawtypes", "serial"})
-public final class ScheduledTickHashSet extends HashSet<NextTickListEntry> {
+public final class ScheduledTickHashSet extends HashSet<ScheduledTick> {
 	private static final class ScheduledTickWrapper {
 		Object entry;
 
@@ -87,7 +88,7 @@ public final class ScheduledTickHashSet extends HashSet<NextTickListEntry> {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean add(NextTickListEntry entry) {
+	public boolean add(ScheduledTick entry) {
 		return backingSet.add(new ScheduledTickWrapper(entry));
 	}
 

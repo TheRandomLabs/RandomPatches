@@ -23,13 +23,13 @@
 
 package com.therandomlabs.randompatches.mixin.client;
 
-import net.minecraft.client.renderer.entity.model.VillagerModel;
+import net.minecraft.client.render.entity.model.VillagerResemblingModel;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
 
-@Mixin(VillagerModel.class)
-public final class VillagerModelMixin {
+@Mixin(VillagerResemblingModel.class)
+public final class VillagerResemblingModelMixin {
 	@ModifyConstant(method = "<init>(FII)V", constant = @Constant(floatValue = 18.0F))
 	private float getRobeHeight(float height) {
 		return 20.0F;

@@ -37,11 +37,10 @@ import com.therandomlabs.autoconfigtoml.TOMLConfigSerializer;
 import com.therandomlabs.randompatches.client.CauldronWaterTranslucencyHandler;
 import com.therandomlabs.randompatches.client.RPKeyBindingHandler;
 import com.therandomlabs.randompatches.client.RPWindowHandler;
-import me.shedaniel.autoconfig1u.ConfigData;
-import me.shedaniel.autoconfig1u.annotation.Config;
-import me.shedaniel.autoconfig1u.annotation.ConfigEntry;
-import net.minecraftforge.fml.loading.FMLEnvironment;
-import net.minecraftforge.fml.loading.FMLLoader;
+import me.sargunvohra.mcmods.autoconfig1u.ConfigData;
+import me.sargunvohra.mcmods.autoconfig1u.annotation.Config;
+import me.sargunvohra.mcmods.autoconfig1u.annotation.ConfigEntry;
+import net.fabricmc.loader.api.FabricLoader;
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -92,7 +91,8 @@ public final class RPConfig implements ConfigData {
 
 		@TOMLConfigSerializer.Comment("Removes the glowing effect from enchanted books.")
 		@ConfigEntry.Gui.Tooltip
-		public boolean removeGlowingEffectFromEnchantedBooks = !FMLEnvironment.production;
+		public boolean removeGlowingEffectFromEnchantedBooks =
+				FabricLoader.getInstance().isDevelopmentEnvironment();
 
 		@TOMLConfigSerializer.Comment(
 				"Disables the warning that displays when loading a world that uses experimental " +
@@ -114,11 +114,20 @@ public final class RPConfig implements ConfigData {
 						"the Realms or multiplayer screen."
 		)
 		@ConfigEntry.Gui.Tooltip
-		public boolean returnToMainMenuAfterDisconnect = !FMLEnvironment.production;
+		public boolean returnToMainMenuAfterDisconnect =
+				FabricLoader.getInstance().isDevelopmentEnvironment();
 
 		@TOMLConfigSerializer.Comment("Gives capes to RandomPatches contributors.")
 		@ConfigEntry.Gui.Tooltip
 		public boolean contributorCapes = true;
+
+		@TOMLConfigSerializer.Comment({
+				"The name of the command that reloads this configuration from disk on the client.",
+				"Set this to an empty string to disable the command.",
+				"Changes to this option are applied after a game restart."
+		})
+		@ConfigEntry.Gui.Tooltip
+		public String configReloadCommand = "rpclientconfigreload";
 	}
 
 	public static final class ClientBugFixes implements ConfigData {
@@ -214,13 +223,6 @@ public final class RPConfig implements ConfigData {
 		@ConfigEntry.Gui.Tooltip
 		public boolean toggleDebugInfo = true;
 
-		@TOMLConfigSerializer.Comment(
-				"Makes standalone modifier keys not conflict with key combinations with that " +
-						"modifier key, which seems to be intended Forge behavior."
-		)
-		@ConfigEntry.Gui.Tooltip
-		public boolean standaloneModifiersDoNotConflictWithCombinations = true;
-
 		/**
 		 * {@inheritDoc}
 		 */
@@ -231,6 +233,7 @@ public final class RPConfig implements ConfigData {
 
 		/**
 		 * Returns whether the secondary sprint key binding is enabled.
+		 *
 		 * @return {@code true} if the secondary sprint key binding is enabled, or otherwise
 		 * {@code false}.
 		 */
@@ -241,6 +244,7 @@ public final class RPConfig implements ConfigData {
 
 		/**
 		 * Returns whether the dismount key binding is enabled.
+		 *
 		 * @return {@code true} if the dismount key binding is enabled, or otherwise {@code false}.
 		 */
 		public boolean dismount() {
@@ -251,12 +255,14 @@ public final class RPConfig implements ConfigData {
 
 	public static final class Window implements ConfigData {
 		@ConfigEntry.Gui.Excluded
-		public static final String DEFAULT_TITLE = FMLEnvironment.production ?
-				"Minecraft ${mcversion}" : "RandomPatches (${username})";
+		public static final String DEFAULT_TITLE =
+				FabricLoader.getInstance().isDevelopmentEnvironment() ?
+						"RandomPatches (${username})" : "Minecraft ${mcversion}";
 
 		@ConfigEntry.Gui.Excluded
 		private static final String DEFAULT_ICON =
-				FMLEnvironment.production ? "" : "../src/main/resources/logo.png";
+				FabricLoader.getInstance().isDevelopmentEnvironment() ?
+						"../src/main/resources/logo.png" : "";
 
 		@TOMLConfigSerializer.Comment({
 				"The simple Minecraft window title.",
@@ -281,8 +287,8 @@ public final class RPConfig implements ConfigData {
 				"'$' can be escaped by using an extra '$'."
 		})
 		@ConfigEntry.Gui.Tooltip
-		public String title = FMLEnvironment.production ?
-				DEFAULT_TITLE : "RandomPatches (${username}) - ${modsloaded} mods loaded";
+		public String title = FabricLoader.getInstance().isDevelopmentEnvironment() ?
+				"RandomPatches (${username}) - ${modsloaded} mods loaded" : DEFAULT_TITLE;
 
 		@TOMLConfigSerializer.Comment({
 				"The Minecraft window title that also takes into account the current activity.",
@@ -295,9 +301,9 @@ public final class RPConfig implements ConfigData {
 				"'$' can be escaped by using an extra '$'."
 		})
 		@ConfigEntry.Gui.Tooltip
-		public String titleWithActivity = FMLEnvironment.production ?
-				"Minecraft ${mcversion} - ${activity}" :
-				"RandomPatches (${username}) - ${modsloaded} mods loaded - ${activity}";
+		public String titleWithActivity = FabricLoader.getInstance().isDevelopmentEnvironment() ?
+				"RandomPatches (${username}) - ${modsloaded} mods loaded - ${activity}" :
+				"Minecraft ${mcversion} - ${activity}";
 
 		@Path("icon_16x16")
 		@TOMLConfigSerializer.Comment({
@@ -490,7 +496,8 @@ public final class RPConfig implements ConfigData {
 						"https://bugs.mojang.com/browse/MC-91206"
 		})
 		@ConfigEntry.Gui.Tooltip
-		public double boatBuoyancyUnderFlowingWater = FMLEnvironment.production ? 0.023 : 5.0;
+		public double boatBuoyancyUnderFlowingWater =
+				FabricLoader.getInstance().isDevelopmentEnvironment() ? 5.0 : 0.023;
 
 		@SpecIntInRange(min = -1, max = Integer.MAX_VALUE)
 		@TOMLConfigSerializer.Comment({
@@ -498,7 +505,8 @@ public final class RPConfig implements ConfigData {
 				"Set this to -1 to disable underwater boat passenger ejection."
 		})
 		@ConfigEntry.Gui.Tooltip
-		public int underwaterBoatPassengerEjectionDelayTicks = FMLEnvironment.production ? 60 : -1;
+		public int underwaterBoatPassengerEjectionDelayTicks =
+				FabricLoader.getInstance().isDevelopmentEnvironment() ? -1 : 60;
 
 		@TOMLConfigSerializer.Comment({
 				"The name of the command that reloads this configuration from disk.",
@@ -522,7 +530,8 @@ public final class RPConfig implements ConfigData {
 				"Changes to this option are applied after a game restart."
 		})
 		@ConfigEntry.Gui.Tooltip
-		public boolean disableDataFixerUpper = !FMLEnvironment.production;
+		public boolean disableDataFixerUpper =
+				FabricLoader.getInstance().isDevelopmentEnvironment();
 
 		@TOMLConfigSerializer.Comment({
 				"A list of mixins that should not be applied.",
@@ -530,45 +539,48 @@ public final class RPConfig implements ConfigData {
 						"depend on them are:",
 				"- AnimalEntity: Required for fixing animal breeding hearts.",
 				"- BoatEntity: Required for modifying boat options.",
-				"- CCustomPayloadPacket: Required for setting the maximum client custom payload " +
-						"packet size.",
 				"- ClientPlayerEntity: Required for the secondary sprint and dismount key " +
 						"bindings.",
-				"- ClientPlayNetHandler: Required for making the dismount overlay message show " +
+				"- ClientPlayNetworkHandler: Required for making the dismount overlay message show " +
 						"the correct key when the dismount key binding is enabled.",
-				"- CompoundNBT: Required for fixing player head stacking.",
+				"- CompoundTag: Required for fixing player head stacking.",
+				"- CustomPayloadC2SPacket: Required for setting the maximum client custom " +
+						"payload packet size.",
 				"- EnchantedBookItem: Required for removing the glowing effect from enchanted " +
 						"books.",
-				"- EndPortalTileEntityRenderer: Required for fixing end portal rendering.",
+				"- EndPortalBlockEntityRenderer: Required for fixing end portal rendering.",
 				"- Entity:",
 				"  - Required for fixing MC-2025.",
 				"  - Required for fixing entities not being considered wet in cauldrons " +
 						"filled with water.",
-				"- IngameMenuScreen: Required for making Minecraft show the main menu " +
-						"screen after disconnecting rather than the Realms or multiplayer screen.",
+				"- GameMenuScreen: Required for making Minecraft show the main menu screen after " +
+						"disconnecting rather than the Realms or multiplayer screen.",
+				"- GameOptions: Required for all key bindings added by RandomPatches.",
+				"- InputSlotFiller: Required for fixing the recipe book not moving " +
+						"ingredients with tags.",
 				"- KeyBinding:",
 				"  - Required for making the forward movement key not conflict with the " +
 						"secondary sprint key.",
 				"  - Required for making the sneak key not conflict with the dismount key.",
 				"  - Required for making standalone modifier keys not conflict with key " +
 						"combinations with that modifier key.",
-				"- KeyboardListener: Required for the narrator toggle, escape, GUI toggle and " +
-						"debug key bindings.",
-				"- Minecraft:",
+				"- Keyboard: Required for the narrator toggle, escape, GUI toggle and debug key " +
+						"bindings.",
+				"- MinecraftClient:",
 				"  - Required for changing Minecraft window options.",
 				"  - Required for disabling the warning that displays when loading a world that " +
 						"uses experimental settings.",
-				"- NettyCompressionDecoder: Required for setting the maximum compressed packet " +
-						"size.",
-				"- PacketBuffer: Required for setting the maximum NBT compound tag packet size.",
+				"- Option: Required for modifying the framerate limit slider step size.",
+				"- PacketByteBuf: Required for setting the maximum NBT compound tag packet size.",
+				"- PacketInflater: Required for setting the maximum compressed packet size.",
 				"- PotionItem: Required for removing the glowing effect from potions.",
 				"- ReadTimeoutHandler: Required for changing the read timeout.",
-				"- ServerLoginNetHandler: Required for changing the login timeout.",
-				"- ServerPlayNetHandlerKeepAlive: Required for changing KeepAlive packet settings.",
-				"- ServerPlayNetHandlerPlayerSpeedLimits: Required for changing player speed " +
+				"- RenderLayers: Required for fixing water in cauldrons rendering as opaque.",
+				"- ServerLoginNetworkHandler: Required for changing the login timeout.",
+				"- ServerPlayNetworkHandlerKeepAlive: Required for changing KeepAlive packet " +
+						"settings.",
+				"- ServerPlayNetworkHandlerPlayerSpeedLimits: Required for changing player speed " +
 						"limits.",
-				"- ServerRecipePlacer: Required for fixing the recipe book not moving " +
-						"ingredients with tags.",
 				"This option is both client and server-sided.",
 				"Changes to this option are applied after a game restart."
 		})
@@ -585,15 +597,6 @@ public final class RPConfig implements ConfigData {
 		}
 
 		/**
-		 * Whether DataFixerUpper should be disabled.
-		 *
-		 * @return {@code true} if DataFixerUpper should be disabled, or otherwise {@code false}.
-		 */
-		public boolean disableDataFixerUpper() {
-			return disableDataFixerUpper && !isLoaded("vazkii.dfs.DataFixerSlayer");
-		}
-
-		/**
 		 * Returns whether the specified RandomPatches mixin class is enabled.
 		 *
 		 * @param mixinClassName a RandomPatches mixin class name.
@@ -604,12 +607,12 @@ public final class RPConfig implements ConfigData {
 			final String[] parts = StringUtils.split(mixinClassName, '.');
 			final String simpleName = StringUtils.substring(parts[parts.length - 1], 0, -5);
 
-			if ("VillagerModel".equals(simpleName) &&
+			if ("VillagerResemblingModel".equals(simpleName) &&
 					!RandomPatches.config().client.bugFixes.fixVillagerRobeTextures) {
 				return false;
 			}
 
-			if ("PlayerRenderer".equals(simpleName) &&
+			if ("PlayerEntityRenderer".equals(simpleName) &&
 					!RandomPatches.config().client.bugFixes.fixInvisiblePlayerModel) {
 				return false;
 			}
@@ -619,7 +622,7 @@ public final class RPConfig implements ConfigData {
 				return false;
 			}
 
-			if ("ServerTickList".equals(simpleName) && !bugFixes.fixTickSchedulerDesync) {
+			if ("ServerTickScheduler".equals(simpleName) && !bugFixes.fixTickSchedulerDesync) {
 				return false;
 			}
 
@@ -627,7 +630,7 @@ public final class RPConfig implements ConfigData {
 				return false;
 			}
 
-			if (mixinClassName.contains("datafixerupper") && !disableDataFixerUpper()) {
+			if (mixinClassName.contains("datafixerupper") && !disableDataFixerUpper) {
 				return false;
 			}
 
@@ -636,7 +639,7 @@ public final class RPConfig implements ConfigData {
 
 		private static boolean isLoaded(String className) {
 			try {
-				Class.forName(className, false, FMLLoader.getLaunchClassLoader());
+				Class.forName(className, false, RPConfig.class.getClassLoader());
 			} catch (ClassNotFoundException ex) {
 				return false;
 			}

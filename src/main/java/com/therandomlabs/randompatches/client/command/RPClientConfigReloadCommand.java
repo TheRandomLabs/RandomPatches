@@ -21,44 +21,42 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.therandomlabs.randompatches.command;
+package com.therandomlabs.randompatches.client.command;
 
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.therandomlabs.randompatches.RandomPatches;
-import net.minecraft.server.command.ServerCommandSource;
-import net.minecraft.text.LiteralText;
+import io.github.cottonmc.clientcommands.CottonClientCommandSource;
+import net.minecraft.text.TranslatableText;
 
 /**
- * The command that reloads the RandomPatches configuration.
+ * The command that reloads the RandomPatches client-sided configuration.
  */
-public final class RPConfigReloadCommand {
-	private RPConfigReloadCommand() {}
+public final class RPClientConfigReloadCommand {
+	private RPClientConfigReloadCommand() {}
 
 	/**
-	 * Registers the command that reloads the RandomPatches configuration.
+	 * Registers the command that reloads the RandomPatches client-sided configuration.
 	 *
 	 * @param dispatcher the {@link CommandDispatcher}.
-	 * @param dedicated whether the server is dedicated.
 	 */
-	public static void register(
-			CommandDispatcher<ServerCommandSource> dispatcher, boolean dedicated
-	) {
-		final String name = RandomPatches.config().misc.configReloadCommand;
+	public static void register(CommandDispatcher<CottonClientCommandSource> dispatcher) {
+		final String name = RandomPatches.config().client.configReloadCommand;
 
 		if (!name.isEmpty()) {
 			dispatcher.register(
-					LiteralArgumentBuilder.<ServerCommandSource>literal(name).
-							requires(source -> source.hasPermissionLevel(4)).
+					LiteralArgumentBuilder.<CottonClientCommandSource>literal(name).
 							executes(context -> execute(context.getSource()))
 			);
 		}
 	}
 
-	private static int execute(ServerCommandSource source) {
+	private static int execute(CottonClientCommandSource source) {
 		RandomPatches.reloadConfig();
-		source.sendFeedback(new LiteralText("RandomPatches configuration reloaded!"), true);
+		source.sendFeedback(
+				new TranslatableText("commands.rpclientconfigreload.success"), true
+		);
 		return Command.SINGLE_SUCCESS;
 	}
 }

@@ -23,10 +23,10 @@
 
 package com.therandomlabs.randompatches.mixin.datafixerupper;
 
+import net.minecraft.SharedConstants;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.SharedConstants;
-import net.minecraft.world.storage.SaveFormat;
-import net.minecraft.world.storage.WorldSummary;
+import net.minecraft.world.level.storage.LevelStorage;
+import net.minecraft.world.level.storage.LevelSummary;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
@@ -35,18 +35,19 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 public final class MinecraftServerMixin {
 	@Redirect(method = "convertLevel", at = @At(
 			value = "INVOKE",
-			target = "net/minecraft/world/storage/SaveFormat$LevelSave.needsConversion()Z"
+			target = "Lnet/minecraft/world/level/storage/LevelStorage$Session;needsConversion()Z"
 	))
-	private static boolean needsConversion(SaveFormat.LevelSave save) {
-		final WorldSummary worldSummary = save.getLevelSummary();
+	private static boolean needsConversion(LevelStorage.Session session) {
+		final LevelSummary summary = session.getLevelSummary();
 
-		if (worldSummary == null) {
+		if (summary == null) {
 			return false;
 		}
 
-		final int version = worldSummary.method_29586().versionId;
+		final int version = ((SaveVersionInfoMixin) summary.method_29586()).getVersionID();
 
-		if (save.needsConversion() || version != SharedConstants.getVersion().getWorldVersion()) {
+		if (session.needsConversion() ||
+				version != SharedConstants.getGameVersion().getWorldVersion()) {
 			throw new RuntimeException(
 					"Worlds last played on an older or newer version of Minecraft cannot be " +
 							"loaded when DataFixerUpper is disabled by RandomPatches."

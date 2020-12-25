@@ -32,8 +32,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(EnchantedBookItem.class)
 public final class EnchantedBookItemMixin {
-	@Inject(method = "hasEffect", at = @At("HEAD"), cancellable = true)
-	private void hasEffect(CallbackInfoReturnable<Boolean> info) {
+	@Inject(method = "hasGlint", at = @At("HEAD"), cancellable = true)
+	private void hasGlint(CallbackInfoReturnable<Boolean> info) {
 		if (RandomPatches.config().client.removeGlowingEffectFromEnchantedBooks) {
 			info.setReturnValue(false);
 		}

@@ -23,12 +23,11 @@
 
 package com.therandomlabs.randompatches.mixin;
 
-import java.util.Collections;
-import java.util.Map;
+import java.util.Set;
 
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.gen.feature.template.Template;
-import net.minecraft.world.gen.feature.template.TemplateManager;
+import com.therandomlabs.randompatches.world.ScheduledTickHashSet;
+import net.minecraft.server.world.ServerTickScheduler;
+import net.minecraft.world.ScheduledTick;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Mutable;
@@ -37,16 +36,16 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(TemplateManager.class)
-public final class TemplateManagerMixin {
+@SuppressWarnings("rawtypes")
+@Mixin(ServerTickScheduler.class)
+public final class ServerTickSchedulerMixin {
 	@Shadow
 	@Final
 	@Mutable
-	private Map<ResourceLocation, Template> templates;
+	private Set<ScheduledTick> scheduledTickActions;
 
-	//Fix taken from Fabric API.
 	@Inject(method = "<init>", at = @At("TAIL"))
 	private void init(CallbackInfo info) {
-		templates = Collections.synchronizedMap(templates);
+		scheduledTickActions = new ScheduledTickHashSet();
 	}
 }

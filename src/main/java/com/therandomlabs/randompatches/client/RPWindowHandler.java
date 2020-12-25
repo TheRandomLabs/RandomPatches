@@ -28,22 +28,21 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
+import java.util.Optional;
 
 import com.therandomlabs.randompatches.RPConfig;
 import com.therandomlabs.randompatches.RandomPatches;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.network.play.ClientPlayNetHandler;
-import net.minecraft.client.renderer.texture.TextureUtil;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.resources.ResourcePackType;
-import net.minecraft.resources.VanillaPack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SharedConstants;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.fml.ModList;
-import net.minecraftforge.fml.loading.FMLEnvironment;
-import net.minecraftforge.fml.loading.moddiscovery.ModFileInfo;
-import net.minecraftforge.forgespi.language.IModInfo;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.loader.api.FabricLoader;
+import net.fabricmc.loader.api.ModContainer;
+import net.minecraft.SharedConstants;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.network.ClientPlayNetworkHandler;
+import net.minecraft.client.resource.language.I18n;
+import net.minecraft.client.texture.TextureUtil;
+import net.minecraft.resource.DefaultResourcePack;
+import net.minecraft.resource.ResourceType;
+import net.minecraft.util.Identifier;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.text.StrLookup;
 import org.apache.commons.lang3.text.StrSubstitutor;
@@ -58,7 +57,6 @@ import org.lwjgl.system.MemoryUtil;
 /**
  * Contains Minecraft window-related code for RandomPatches.
  */
-@SuppressWarnings("deprecation")
 public final class RPWindowHandler {
 	private static final class TitleLookup extends StrLookup<String> {
 		private static final TitleLookup INSTANCE = new TitleLookup();
@@ -66,7 +64,7 @@ public final class RPWindowHandler {
 		@Override
 		public String lookup(String key) {
 			if (key.equals("mcversion")) {
-				return SharedConstants.getVersion().getName();
+				return SharedConstants.getGameVersion().getName();
 			}
 
 			if (key.equals("activity")) {
@@ -74,26 +72,21 @@ public final class RPWindowHandler {
 			}
 
 			if (key.equals("username")) {
-				return Minecraft.getInstance().getSession().getUsername();
+				return MinecraftClient.getInstance().getSession().getUsername();
 			}
 
-			if (key.equals("modsloaded") && ModList.get() != null) {
-				return Integer.toString(ModList.get().getMods().size());
+			if (key.equals("modsloaded")) {
+				return Integer.toString(FabricLoader.getInstance().getAllMods().size());
 			}
 
-			if (key.startsWith("modversion:") && ModList.get() != null) {
+			if (key.startsWith("modversion:")) {
 				final String modID = key.substring("modversion:".length());
-				final ModFileInfo fileInfo = ModList.get().getModFileById(modID);
+				final Optional<ModContainer> container =
+						FabricLoader.getInstance().getModContainer(modID);
 
-				if (fileInfo == null) {
-					return null;
-				}
-
-				for (IModInfo modInfo : fileInfo.getMods()) {
-					if (modID.equals(modInfo.getModId())) {
-						return modInfo.getVersion().toString();
-					}
-				}
+				return container.map(
+						modContainer -> modContainer.getMetadata().getVersion().getFriendlyString()
+				).orElse(null);
 			}
 
 			return null;
@@ -111,7 +104,7 @@ public final class RPWindowHandler {
 	 * Enables this class's functionality if it has not already been enabled.
 	 */
 	public static void enable() {
-		if (FMLEnvironment.dist == Dist.CLIENT) {
+		if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
 			enabled = true;
 		}
 	}
@@ -120,8 +113,8 @@ public final class RPWindowHandler {
 	 * Called by {@link RPConfig.Window} when the RandomPatches configuration is reloaded.
 	 */
 	public static void onConfigReload() {
-		if (FMLEnvironment.dist == Dist.CLIENT && enabled) {
-			Minecraft.getInstance().execute(RPWindowHandler::applySettings);
+		if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT && enabled) {
+			MinecraftClient.getInstance().execute(RPWindowHandler::applySettings);
 		}
 	}
 
@@ -133,37 +126,35 @@ public final class RPWindowHandler {
 	 * options.
 	 */
 	public static String getWindowTitle() {
-		if (FMLEnvironment.dist != Dist.CLIENT || !enabled) {
+		if (FabricLoader.getInstance().getEnvironmentType() != EnvType.CLIENT || !enabled) {
 			return RPConfig.Window.DEFAULT_TITLE;
 		}
 
 		final RPConfig.Window config = RandomPatches.config().client.window;
 
-		final Minecraft mc = Minecraft.getInstance();
-		final ClientPlayNetHandler handler = mc.getConnection();
+		final MinecraftClient mc = MinecraftClient.getInstance();
+		final ClientPlayNetworkHandler handler = mc.getNetworkHandler();
 
-		if (handler == null || !handler.getNetworkManager().isChannelOpen()) {
+		if (handler == null || !handler.getConnection().isOpen()) {
 			activity = null;
 			return titleSubstitutor.replace(config.simpleTitle);
 		}
 
 		final String activityKey;
 
-		if (mc.getIntegratedServer() != null && !mc.getIntegratedServer().getPublic()) {
+		if (mc.getServer() != null && !mc.getServer().isRemote()) {
 			activityKey = "title.singleplayer";
 		} else if (mc.isConnectedToRealms()) {
 			activityKey = "title.multiplayer.realms";
-		} else if (mc.getIntegratedServer() == null &&
-				(mc.getCurrentServerData() == null || !mc.getCurrentServerData().isOnLAN())) {
+		} else if (mc.getServer() == null &&
+				(mc.getCurrentServerEntry() == null || !mc.getCurrentServerEntry().isLocal())) {
 			activityKey = "title.multiplayer.other";
 		} else {
 			activityKey = "title.multiplayer.lan";
 		}
 
-		activity = I18n.format(activityKey);
-		return titleSubstitutor.replace(
-				ModList.get() == null ? config.title : config.titleWithActivity
-		);
+		activity = I18n.translate(activityKey);
+		return titleSubstitutor.replace(config.titleWithActivity);
 	}
 
 	/**
@@ -175,9 +166,10 @@ public final class RPWindowHandler {
 	public static void updateWindowIcon(
 			@Nullable InputStream vanillaIcon16, @Nullable InputStream vanillaIcon32
 	) {
-		if (FMLEnvironment.dist == Dist.CLIENT && enabled) {
+		if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT && enabled) {
 			updateWindowIcon(
-					vanillaIcon16, vanillaIcon32, Minecraft.getInstance().getWindow().getHandle()
+					vanillaIcon16, vanillaIcon32,
+					MinecraftClient.getInstance().getWindow().getHandle()
 			);
 		}
 	}
@@ -193,13 +185,13 @@ public final class RPWindowHandler {
 	public static void updateWindowIcon(
 			@Nullable InputStream vanillaIcon16, @Nullable InputStream vanillaIcon32, long window
 	) {
-		if (FMLEnvironment.dist != Dist.CLIENT || !enabled) {
+		if (FabricLoader.getInstance().getEnvironmentType() != EnvType.CLIENT || !enabled) {
 			return;
 		}
 
 		final RPConfig.Window config = RandomPatches.config().client.window;
 
-		final Minecraft mc = Minecraft.getInstance();
+		final MinecraftClient mc = MinecraftClient.getInstance();
 
 		InputStream stream16 = null;
 		InputStream stream32 = null;
@@ -207,29 +199,29 @@ public final class RPWindowHandler {
 
 		try (MemoryStack stack = MemoryStack.stackPush()) {
 			if (config.icon16.isEmpty()) {
-				final VanillaPack vanillaPack = mc.getPackFinder().getVanillaPack();
+				final DefaultResourcePack vanillaPack = mc.getResourcePackDownloader().getPack();
 
-				stream16 = vanillaIcon16 == null ? vanillaPack.getResourceStream(
-						ResourcePackType.CLIENT_RESOURCES,
-						new ResourceLocation("icons/icon_16x16.png")
+				stream16 = vanillaIcon16 == null ? vanillaPack.open(
+						ResourceType.CLIENT_RESOURCES,
+						new Identifier("icons/icon_16x16.png")
 				) : vanillaIcon16;
 
-				stream32 = vanillaIcon32 == null ? vanillaPack.getResourceStream(
-						ResourcePackType.CLIENT_RESOURCES,
-						new ResourceLocation("icons/icon_32x32.png")
+				stream32 = vanillaIcon32 == null ? vanillaPack.open(
+						ResourceType.CLIENT_RESOURCES,
+						new Identifier("icons/icon_32x32.png")
 				) : vanillaIcon32;
 
-				if (Minecraft.IS_RUNNING_ON_MAC) {
-					stream256 = vanillaPack.getResourceStream(
-							ResourcePackType.CLIENT_RESOURCES,
-							new ResourceLocation("icons/icon_256x256.png")
+				if (MinecraftClient.IS_SYSTEM_MAC) {
+					stream256 = vanillaPack.open(
+							ResourceType.CLIENT_RESOURCES,
+							new Identifier("icons/icon_256x256.png")
 					);
 				}
 			} else {
 				stream16 = new FileInputStream(config.icon16);
 				stream32 = new FileInputStream(config.icon32);
 
-				if (Minecraft.IS_RUNNING_ON_MAC) {
+				if (MinecraftClient.IS_SYSTEM_MAC) {
 					stream256 = new FileInputStream(config.icon256);
 				}
 			}
@@ -310,10 +302,11 @@ public final class RPWindowHandler {
 				STBImage.stbi_image_free(image32);
 			}
 
-			if (Minecraft.IS_RUNNING_ON_MAC) {
+			if (MinecraftClient.IS_SYSTEM_MAC) {
 				if (image256Resized) {
 					MemoryUtil.memFree(image256);
 				} else {
+					//noinspection ConstantConditions
 					STBImage.stbi_image_free(image256);
 				}
 			}
@@ -323,14 +316,14 @@ public final class RPWindowHandler {
 			IOUtils.closeQuietly(stream16);
 			IOUtils.closeQuietly(stream32);
 
-			if (Minecraft.IS_RUNNING_ON_MAC) {
+			if (MinecraftClient.IS_SYSTEM_MAC) {
 				IOUtils.closeQuietly(stream256);
 			}
 		}
 	}
 
 	private static void applySettings() {
-		Minecraft.getInstance().updateWindowTitle();
+		MinecraftClient.getInstance().updateWindowTitle();
 		updateWindowIcon(null, null);
 	}
 

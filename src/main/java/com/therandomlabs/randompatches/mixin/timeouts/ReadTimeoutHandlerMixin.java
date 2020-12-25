@@ -31,17 +31,13 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 
 @Mixin(ReadTimeoutHandler.class)
 public final class ReadTimeoutHandlerMixin {
-	//On the client, a ReadTimeoutHandler is created in NetworkManager.
-	//On the server, a ReadTimeoutHandler is created in NetworkSystem.
 	@ModifyArg(method = "<init>(I)V", at = @At(
 			value = "INVOKE",
 			target = "io/netty/handler/timeout/ReadTimeoutHandler.<init>" +
 					"(JLjava/util/concurrent/TimeUnit;)V"
 	))
 	private int getTimeout(int timeout) {
-		final int forgeReadTimeout =
-				Integer.parseInt(System.getProperty("forge.readTimeout", "30"));
-		return timeout == 30 || timeout == forgeReadTimeout ?
+		return timeout == 30 ?
 				RandomPatches.config().connectionTimeouts.readTimeoutSeconds : timeout;
 	}
 }

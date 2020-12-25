@@ -23,19 +23,20 @@
 
 package com.therandomlabs.randompatches.mixin.client;
 
-import com.therandomlabs.randompatches.RandomPatches;
-import net.minecraft.item.PotionItem;
+import net.minecraft.client.render.entity.PlayerEntityRenderer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import org.spongepowered.asm.mixin.injection.Redirect;
 
-@Mixin(PotionItem.class)
-public final class PotionItemMixin {
-	@Inject(method = "hasGlint", at = @At("HEAD"), cancellable = true)
-	private void hasGlint(CallbackInfoReturnable<Boolean> info) {
-		if (RandomPatches.config().client.removeGlowingEffectFromPotions) {
-			info.setReturnValue(false);
-		}
+@Mixin(PlayerEntityRenderer.class)
+public final class PlayerEntityRendererMixin {
+	@Redirect(method = "setupTransforms", at = @At(
+			value = "INVOKE",
+			target = "java/lang/Math.acos(D)D"
+	))
+	private double acos(double a) {
+		//Sometimes, Math#acos(double) is called with a value larger than 1.0, which results in
+		//a rotation angle of NaN, thus causing the player model to disappear.
+		return Math.acos(Math.min(a, 1.0));
 	}
 }

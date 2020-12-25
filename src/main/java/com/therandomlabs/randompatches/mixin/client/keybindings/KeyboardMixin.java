@@ -25,10 +25,11 @@ package com.therandomlabs.randompatches.mixin.client.keybindings;
 
 import com.therandomlabs.randompatches.RandomPatches;
 import com.therandomlabs.randompatches.client.RPKeyBindingHandler;
-import net.minecraft.client.KeyboardListener;
+import com.therandomlabs.randompatches.client.SwitchF3StateAccessor;
+import net.minecraft.client.Keyboard;
 import org.lwjgl.glfw.GLFW;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -36,16 +37,26 @@ import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import org.spongepowered.asm.mixin.injection.Slice;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(KeyboardListener.class)
-public abstract class KeyboardListenerMixin {
-	@Unique
-	private static final int GLFW_KEY_UNUSED = GLFW.GLFW_KEY_RIGHT_BRACKET + 1;
+@Mixin(Keyboard.class)
+public final class KeyboardMixin implements SwitchF3StateAccessor {
+	@Shadow
+	private boolean switchF3State;
 
-	@Inject(method = "onKeyEvent", at = @At(
+	@Override
+	public boolean getSwitchF3State() {
+		return switchF3State;
+	}
+
+	@Override
+	public void setSwitchF3State(boolean state) {
+		switchF3State = state;
+	}
+
+	@Inject(method = "onKey", at = @At(
 			value = "INVOKE",
 			shift = At.Shift.BY,
 			by = 2,
-			target = "net/minecraft/client/gui/screen/WithNarratorSettingsScreen." +
+			target = "Lnet/minecraft/client/gui/screen/options/NarratorOptionsScreen;" +
 					"updateNarratorButtonText()V"
 	))
 	private void onKeyEvent(
@@ -54,33 +65,33 @@ public abstract class KeyboardListenerMixin {
 		RPKeyBindingHandler.KeyBindings.onKeyEvent(key, action, scanCode);
 	}
 
-	@ModifyConstant(method = "onKeyEvent", constant = @Constant(intValue = GLFW.GLFW_KEY_B))
+	@ModifyConstant(method = "onKey", constant = @Constant(intValue = GLFW.GLFW_KEY_B))
 	private int getToggleNarratorKey(int key) {
-		return RandomPatches.config().client.keyBindings.toggleNarrator ? GLFW_KEY_UNUSED : key;
+		return RandomPatches.config().client.keyBindings.toggleNarrator ? -1 : key;
 	}
 
-	@ModifyConstant(method = "onKeyEvent", constant = @Constant(intValue = GLFW.GLFW_KEY_ESCAPE))
+	@ModifyConstant(method = "onKey", constant = @Constant(intValue = GLFW.GLFW_KEY_ESCAPE))
 	private int getPauseKey(int key) {
-		return RandomPatches.config().client.keyBindings.pause ? GLFW_KEY_UNUSED : key;
+		return RandomPatches.config().client.keyBindings.pause ? -1 : key;
 	}
 
-	@ModifyConstant(method = "onKeyEvent", constant = @Constant(intValue = GLFW.GLFW_KEY_F1))
+	@ModifyConstant(method = "onKey", constant = @Constant(intValue = GLFW.GLFW_KEY_F1))
 	private int getToggleGUIKey(int key) {
-		return RandomPatches.config().client.keyBindings.toggleGUI ? GLFW_KEY_UNUSED : key;
+		return RandomPatches.config().client.keyBindings.toggleGUI ? -1 : key;
 	}
 
 	@ModifyConstant(
-			method = "onKeyEvent",
+			method = "onKey",
 			slice = @Slice(
 					from = @At(
 							value = "INVOKE",
-							target = "net/minecraft/client/util/InputMappings.getInputByCode(II)" +
-									"Lnet/minecraft/client/util/InputMappings$Input;"
+							target = "Lnet/minecraft/client/util/InputUtil;fromKeyCode(II)" +
+									"Lnet/minecraft/client/util/InputUtil$Key;"
 					)
 			),
 			constant = @Constant(intValue = GLFW.GLFW_KEY_F3, ordinal = 0)
 	)
 	private int getToggleDebugInfoKey(int key) {
-		return RandomPatches.config().client.keyBindings.toggleDebugInfo ? GLFW_KEY_UNUSED : key;
+		return RandomPatches.config().client.keyBindings.toggleDebugInfo ? -1 : key;
 	}
 }

@@ -23,14 +23,14 @@
 
 package com.therandomlabs.randompatches.mixin.client.datafixerupper;
 
-import net.minecraft.client.gui.DialogTexts;
-import net.minecraft.client.gui.IBidiRenderer;
-import net.minecraft.client.gui.screen.ConfirmBackupScreen;
+import net.minecraft.class_5489;
+import net.minecraft.client.gui.screen.BackupPromptScreen;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.widget.button.Button;
-import net.minecraft.client.gui.widget.button.CheckboxButton;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.client.gui.screen.ScreenTexts;
+import net.minecraft.client.gui.widget.ButtonWidget;
+import net.minecraft.client.gui.widget.CheckboxWidget;
+import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Mutable;
@@ -41,38 +41,38 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(ConfirmBackupScreen.class)
-public final class ConfirmBackupScreenMixin extends Screen {
+@Mixin(BackupPromptScreen.class)
+public final class BackupPromptScreenMixin extends Screen {
 	@SuppressWarnings("PMD.AvoidProtectedFieldInFinalClass")
 	@Shadow
 	@Final
-	protected ConfirmBackupScreen.ICallback callback;
+	protected BackupPromptScreen.Callback callback;
 
 	@Shadow
 	@Final
-	private Screen parentScreen;
+	private Screen parent;
 
 	@Shadow
 	@Final
 	@Mutable
-	private ITextComponent message;
+	private Text subtitle;
 
 	//CHECKSTYLE IGNORE MemberName FOR NEXT 9 LINES
 	@Shadow
 	@Final
-	private boolean field_212994_d;
+	private boolean showEraseCacheCheckbox;
 
 	@Shadow
-	private IBidiRenderer wrappedText;
+	private class_5489 wrappedText;
 
 	@Shadow
-	private CheckboxButton field_212996_j;
+	private CheckboxWidget eraseCacheCheckbox;
 
 	@Unique
-	private ITextComponent modifiedTitle;
+	private Text modifiedTitle;
 
 	//CHECKSTYLE IGNORE MissingJavadocMethod FOR NEXT 1 LINES
-	protected ConfirmBackupScreenMixin(ITextComponent title) {
+	protected BackupPromptScreenMixin(Text title) {
 		super(title);
 	}
 
@@ -81,11 +81,11 @@ public final class ConfirmBackupScreenMixin extends Screen {
 	private void initialize(CallbackInfo info) {
 		modifiedTitle = title;
 
-		if (!(message instanceof TranslationTextComponent)) {
+		if (!(subtitle instanceof TranslatableText)) {
 			return;
 		}
 
-		final String messageKey = ((TranslationTextComponent) message).getKey();
+		final String messageKey = ((TranslatableText) subtitle).getKey();
 
 		if (!"selectWorld.versionWarning".equals(messageKey) &&
 				!"selectWorld.backupWarning".equals(messageKey) &&
@@ -97,14 +97,14 @@ public final class ConfirmBackupScreenMixin extends Screen {
 
 		super.init();
 
-		modifiedTitle = new TranslationTextComponent("selectWorld.unableToLoad");
-		message = new TranslationTextComponent("selectWorld.dataFixerUpperDisabled");
+		modifiedTitle = new TranslatableText("selectWorld.unableToLoad");
+		subtitle = new TranslatableText("selectWorld.dataFixerUpperDisabled");
 
-		wrappedText = IBidiRenderer.method_30890(textRenderer, message, width - 50);
+		wrappedText = class_5489.method_30890(textRenderer, subtitle, width - 50);
 
-		addButton(new Button(
+		addButton(new ButtonWidget(
 				width / 2 - 155 + 80, 124 + (wrappedText.method_30887() + 1) * 9, 150, 20,
-				DialogTexts.BACK, button -> client.displayGuiScreen(parentScreen)
+				ScreenTexts.BACK, button -> client.openScreen(parent)
 		));
 	}
 
@@ -112,14 +112,13 @@ public final class ConfirmBackupScreenMixin extends Screen {
 			method = "render",
 			at = @At(
 					value = "INVOKE",
-					target = "net/minecraft/client/gui/screen/ConfirmBackupScreen." +
-							"drawCenteredText(Lcom/mojang/blaze3d/matrix/MatrixStack;" +
-							"Lnet/minecraft/client/gui/FontRenderer;" +
-							"Lnet/minecraft/util/text/ITextComponent;III)V"
+					target = "Lnet/minecraft/client/gui/screen/BackupPromptScreen;" +
+							"drawCenteredText(Lnet/minecraft/client/util/math/MatrixStack;" +
+							"Lnet/minecraft/client/font/TextRenderer;Lnet/minecraft/text/Text;III)V"
 			),
 			index = 2
 	)
-	private ITextComponent getTitle(ITextComponent title) {
+	private Text getTitle(Text title) {
 		return modifiedTitle;
 	}
 }

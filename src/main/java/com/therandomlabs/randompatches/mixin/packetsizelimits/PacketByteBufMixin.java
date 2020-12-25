@@ -21,21 +21,18 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.therandomlabs.randompatches.mixin.client;
+package com.therandomlabs.randompatches.mixin.packetsizelimits;
 
 import com.therandomlabs.randompatches.RandomPatches;
-import net.minecraft.item.PotionItem;
+import net.minecraft.network.PacketByteBuf;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import org.spongepowered.asm.mixin.injection.Constant;
+import org.spongepowered.asm.mixin.injection.ModifyConstant;
 
-@Mixin(PotionItem.class)
-public final class PotionItemMixin {
-	@Inject(method = "hasGlint", at = @At("HEAD"), cancellable = true)
-	private void hasGlint(CallbackInfoReturnable<Boolean> info) {
-		if (RandomPatches.config().client.removeGlowingEffectFromPotions) {
-			info.setReturnValue(false);
-		}
+@Mixin(PacketByteBuf.class)
+public final class PacketByteBufMixin {
+	@ModifyConstant(method = "readCompoundTag", constant = @Constant(longValue = 0x200000L))
+	private long getMaxNBTCompoundTagPacketSize(long size) {
+		return RandomPatches.config().packetSizeLimits.maxNBTCompoundTagPacketSize;
 	}
 }

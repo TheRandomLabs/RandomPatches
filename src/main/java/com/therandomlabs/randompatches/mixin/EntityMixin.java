@@ -24,17 +24,17 @@
 package com.therandomlabs.randompatches.mixin;
 
 import com.therandomlabs.randompatches.RandomPatches;
+import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.CauldronBlock;
 import net.minecraft.entity.Entity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.DoubleNBT;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.DoubleTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.Constants;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -46,19 +46,16 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(Entity.class)
 public abstract class EntityMixin {
 	@Shadow
-	public abstract AxisAlignedBB getBoundingBox();
-
-	@Shadow
-	public abstract void setBoundingBox(AxisAlignedBB boundingBox);
-
-	@Shadow
-	public abstract boolean isInWater();
-
-	@Shadow
-	protected abstract boolean isInRain();
-
-	@Shadow
 	public World world;
+
+	@Shadow
+	public abstract Box getBoundingBox();
+
+	@Shadow
+	public abstract void setBoundingBox(Box boundingBox);
+
+	@Shadow
+	public abstract boolean isTouchingWater();
 
 	@Shadow
 	public abstract BlockPos getBlockPos();
@@ -66,27 +63,29 @@ public abstract class EntityMixin {
 	@Shadow
 	public abstract World getEntityWorld();
 
-	@Inject(method = "isWet", at = @At("HEAD"), cancellable = true)
-	private void isWet(CallbackInfoReturnable<Boolean> info) {
+	@Shadow
+	protected abstract boolean isBeingRainedOn();
+
+	@Inject(method = "isTouchingWaterOrRain", at = @At("HEAD"), cancellable = true)
+	private void isTouchingWaterOrRain(CallbackInfoReturnable<Boolean> info) {
 		if (RandomPatches.config().misc.bugFixes.fixEntitiesNotBeingConsideredWetInCauldrons) {
-			info.setReturnValue(isInWater() || isInRain() || isInCauldronFilledWithWater());
+			info.setReturnValue(
+					isTouchingWater() || isBeingRainedOn() || isInCauldronFilledWithWater()
+			);
 		}
 	}
 
-	@Inject(method = "writeWithoutTypeId", at = @At(
+	@Inject(method = "toTag", at = @At(
 			value = "INVOKE",
-			target = "net/minecraft/entity/Entity.getMotion()" +
-					"Lnet/minecraft/util/math/vector/Vector3d;"
+			target = "Lnet/minecraft/entity/Entity;getVelocity()Lnet/minecraft/util/math/Vec3d;"
 	))
-	private void writeWithoutTypeId(
-			CompoundNBT compound, CallbackInfoReturnable<CompoundNBT> info
-	) {
+	private void toTag(CompoundTag compound, CallbackInfoReturnable<CompoundTag> info) {
 		if (!RandomPatches.config().misc.bugFixes.fixMC2025) {
 			return;
 		}
 
-		final AxisAlignedBB boundingBox = getBoundingBox();
-		final ListNBT boundingBoxList = new ListNBT();
+		final Box boundingBox = getBoundingBox();
+		final ListTag boundingBoxList = new ListTag();
 
 		//Because of floating point precision errors, the bounding box of an entity can be
 		//calculated as smaller than the expected value. When the entity is saved then reloaded, the
@@ -94,25 +93,25 @@ public abstract class EntityMixin {
 		//To counter this, we store the bounding box when an entity is saved, then use the same
 		//bounding box when it is loaded.
 		//See: https://redd.it/8pgd4q
-		boundingBoxList.add(DoubleNBT.of(boundingBox.minX));
-		boundingBoxList.add(DoubleNBT.of(boundingBox.minY));
-		boundingBoxList.add(DoubleNBT.of(boundingBox.minZ));
-		boundingBoxList.add(DoubleNBT.of(boundingBox.maxX));
-		boundingBoxList.add(DoubleNBT.of(boundingBox.maxY));
-		boundingBoxList.add(DoubleNBT.of(boundingBox.maxZ));
+		boundingBoxList.add(DoubleTag.of(boundingBox.minX));
+		boundingBoxList.add(DoubleTag.of(boundingBox.minY));
+		boundingBoxList.add(DoubleTag.of(boundingBox.minZ));
+		boundingBoxList.add(DoubleTag.of(boundingBox.maxX));
+		boundingBoxList.add(DoubleTag.of(boundingBox.maxY));
+		boundingBoxList.add(DoubleTag.of(boundingBox.maxZ));
 
 		compound.put("BoundingBox", boundingBoxList);
 	}
 
-	@Inject(method = "read", at = @At("TAIL"))
-	private void read(CompoundNBT compound, CallbackInfo info) {
+	@Inject(method = "fromTag", at = @At("TAIL"))
+	private void read(CompoundTag compound, CallbackInfo info) {
 		if (!RandomPatches.config().misc.bugFixes.fixMC2025 || !compound.contains("BoundingBox")) {
 			return;
 		}
 
-		final ListNBT boundingBoxList = compound.getList("BoundingBox", Constants.NBT.TAG_DOUBLE);
+		final ListTag boundingBoxList = compound.getList("BoundingBox", NbtType.DOUBLE);
 
-		setBoundingBox(new AxisAlignedBB(
+		setBoundingBox(new Box(
 				boundingBoxList.getDouble(0),
 				boundingBoxList.getDouble(1),
 				boundingBoxList.getDouble(2),
@@ -126,6 +125,6 @@ public abstract class EntityMixin {
 	private boolean isInCauldronFilledWithWater() {
 		final BlockState state = getEntityWorld().getBlockState(getBlockPos());
 		//This will need to be changed in 1.17 to make sure that it's water.
-		return state.isIn(Blocks.CAULDRON) && state.get(CauldronBlock.LEVEL) > 0;
+		return state.isOf(Blocks.CAULDRON) && state.get(CauldronBlock.LEVEL) > 0;
 	}
 }

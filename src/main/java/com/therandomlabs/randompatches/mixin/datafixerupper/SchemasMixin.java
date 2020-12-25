@@ -21,31 +21,20 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.therandomlabs.randompatches.mixin;
+package com.therandomlabs.randompatches.mixin.datafixerupper;
 
-import java.util.Set;
-
-import com.therandomlabs.randompatches.world.ScheduledTickHashSet;
-import net.minecraft.world.NextTickListEntry;
-import net.minecraft.world.server.ServerTickList;
-import org.spongepowered.asm.mixin.Final;
+import com.mojang.datafixers.DataFixer;
+import com.therandomlabs.randompatches.util.FakeDataFixer;
+import net.minecraft.datafixer.Schemas;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Mutable;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@SuppressWarnings("rawtypes")
-@Mixin(ServerTickList.class)
-public final class ServerTickListMixin {
-	@Shadow
-	@Final
-	@Mutable
-	private Set<NextTickListEntry> pendingTickListEntriesHashSet;
-
-	@Inject(method = "<init>", at = @At("TAIL"))
-	private void init(CallbackInfo info) {
-		pendingTickListEntriesHashSet = new ScheduledTickHashSet();
+@Mixin(Schemas.class)
+public final class SchemasMixin {
+	@Inject(method = "create", at = @At("HEAD"), cancellable = true)
+	private static void createFixer(CallbackInfoReturnable<DataFixer> info) {
+		info.setReturnValue(new FakeDataFixer());
 	}
 }

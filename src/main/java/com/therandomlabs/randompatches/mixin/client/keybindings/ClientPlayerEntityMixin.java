@@ -25,11 +25,12 @@ package com.therandomlabs.randompatches.mixin.client.keybindings;
 
 import com.mojang.authlib.GameProfile;
 import com.therandomlabs.randompatches.RandomPatches;
+import com.therandomlabs.randompatches.client.BoundKeyAccessor;
 import com.therandomlabs.randompatches.client.RPKeyBindingHandler;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.player.ClientPlayerEntity;
-import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.client.util.InputMappings;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.client.options.KeyBinding;
+import net.minecraft.client.util.InputUtil;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -46,6 +47,7 @@ public abstract class ClientPlayerEntityMixin extends PlayerEntity {
 	}
 
 	//We let the server handle the dismount logic.
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -56,19 +58,19 @@ public abstract class ClientPlayerEntityMixin extends PlayerEntity {
 
 	@ModifyArg(method = "tick", at = @At(
 			value = "INVOKE",
-			target = "net/minecraft/network/play/client/CInputPacket.<init>(FFZZ)V"
+			target = "Lnet/minecraft/network/packet/c2s/play/PlayerInputC2SPacket;<init>(FFZZ)V"
 	), index = 3)
 	private boolean shouldDismount(boolean sneaking) {
 		return RandomPatches.config().client.keyBindings.dismount ?
-				RPKeyBindingHandler.KeyBindings.DISMOUNT.isKeyDown() : sneaking;
+				RPKeyBindingHandler.KeyBindings.DISMOUNT.isPressed() : sneaking;
 	}
 
-	@Redirect(method = "livingTick", at = @At(
+	@Redirect(method = "tickMovement", at = @At(
 			value = "INVOKE",
-			target = "net/minecraft/client/settings/KeyBinding.isKeyDown()Z"
+			target = "Lnet/minecraft/client/options/KeyBinding;isPressed()Z"
 	))
 	private boolean isSprintKeyDown(KeyBinding sprintKeyBinding) {
-		if (sprintKeyBinding.isKeyDown()) {
+		if (sprintKeyBinding.isPressed()) {
 			return true;
 		}
 
@@ -76,20 +78,22 @@ public abstract class ClientPlayerEntityMixin extends PlayerEntity {
 			return false;
 		}
 
-		final InputMappings.Input forwardKey =
-				Minecraft.getInstance().gameSettings.keyBindForward.getKey();
-		return !RPKeyBindingHandler.KeyBindings.SECONDARY_SPRINT.getKey().equals(forwardKey) &&
-				RPKeyBindingHandler.KeyBindings.SECONDARY_SPRINT.isKeyDown();
+		final InputUtil.Key forwardKey =
+				((BoundKeyAccessor) MinecraftClient.getInstance().options.keyForward).getBoundKey();
+		final InputUtil.Key secondarySprintKey =
+				((BoundKeyAccessor) RPKeyBindingHandler.KeyBindings.SECONDARY_SPRINT).getBoundKey();
+		return !secondarySprintKey.equals(forwardKey) &&
+				RPKeyBindingHandler.KeyBindings.SECONDARY_SPRINT.isPressed();
 	}
 
-	@Redirect(method = "livingTick", at = @At(
+	@Redirect(method = "tickMovement", at = @At(
 			value = "INVOKE",
-			target = "net/minecraft/client/entity/player/ClientPlayerEntity.setSprinting(Z)V",
+			target = "Lnet/minecraft/client/network/ClientPlayerEntity;setSprinting(Z)V",
 			ordinal = 0
 	))
 	private void enableSprintingThroughSecondarySprint(ClientPlayerEntity player, boolean flag) {
 		if (!RandomPatches.config().client.keyBindings.secondarySprint ||
-				RPKeyBindingHandler.KeyBindings.SECONDARY_SPRINT.isKeyDown()) {
+				RPKeyBindingHandler.KeyBindings.SECONDARY_SPRINT.isPressed()) {
 			player.setSprinting(true);
 		}
 	}

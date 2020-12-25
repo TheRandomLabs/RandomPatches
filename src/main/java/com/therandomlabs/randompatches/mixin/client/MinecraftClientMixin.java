@@ -28,17 +28,17 @@ import java.io.InputStream;
 import com.mojang.serialization.Lifecycle;
 import com.therandomlabs.randompatches.RandomPatches;
 import com.therandomlabs.randompatches.client.RPWindowHandler;
-import net.minecraft.client.MainWindow;
-import net.minecraft.client.Minecraft;
-import net.minecraft.world.storage.IServerConfiguration;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.util.Window;
+import net.minecraft.world.SaveProperties;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(Minecraft.class)
-public final class MinecraftMixin {
+@Mixin(MinecraftClient.class)
+public final class MinecraftClientMixin {
 	@Inject(method = "getWindowTitle", at = @At("HEAD"), cancellable = true)
 	private void getWindowTitle(CallbackInfoReturnable<String> info) {
 		RPWindowHandler.enable();
@@ -47,26 +47,25 @@ public final class MinecraftMixin {
 
 	@Redirect(method = "<init>", at = @At(
 			value = "INVOKE",
-			target = "net/minecraft/client/MainWindow.setWindowIcon" +
-					"(Ljava/io/InputStream;Ljava/io/InputStream;)V"
+			target = "Lnet/minecraft/client/util/Window;setIcon(Ljava/io/InputStream;Ljava/io/InputStream;)V"
 	))
-	private void setWindowIcon(MainWindow mainWindow, InputStream stream16, InputStream stream32) {
+	private void setIcon(Window window, InputStream stream16, InputStream stream32) {
 		RPWindowHandler.updateWindowIcon(stream16, stream32);
 	}
 
 	@Redirect(
 			method = "startIntegratedServer(Ljava/lang/String;" +
-					"Lnet/minecraft/util/registry/DynamicRegistries$Impl;" +
+					"Lnet/minecraft/util/registry/DynamicRegistryManager$Impl;" +
 					"Ljava/util/function/Function;Lcom/mojang/datafixers/util/Function4;" +
-					"ZLnet/minecraft/client/Minecraft$WorldSelectionType;)V",
+					"ZLnet/minecraft/client/MinecraftClient$WorldLoadAction;)V",
 			at = @At(
 					value = "INVOKE",
-					target = "net/minecraft/world/storage/IServerConfiguration.getLifecycle()" +
+					target = "net/minecraft/world/SaveProperties.getLifecycle()" +
 							"Lcom/mojang/serialization/Lifecycle;"
 			)
 	)
-	private Lifecycle getLifecycle(IServerConfiguration config) {
+	private Lifecycle getLifecycle(SaveProperties properties) {
 		return RandomPatches.config().client.disableExperimentalSettingsWarning ?
-				Lifecycle.stable() : config.getLifecycle();
+				Lifecycle.stable() : properties.getLifecycle();
 	}
 }

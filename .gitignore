@@ -29,11 +29,9 @@ out/
 
 .DS_Store
 
-# forge
+# fabric
 
 run/
-libs/
-logs/
 
 # other
 

@@ -24,11 +24,11 @@
 package com.therandomlabs.randompatches.client;
 
 import com.therandomlabs.randompatches.RandomPatches;
+import com.therandomlabs.randompatches.mixin.client.RenderLayersMixin;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.Blocks;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.RenderTypeLookup;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.fml.loading.FMLEnvironment;
+import net.minecraft.client.render.RenderLayer;
 
 /**
  * Handles the fix for water in cauldrons rendering as opaque.
@@ -42,7 +42,8 @@ public final class CauldronWaterTranslucencyHandler {
 	 * Enables this class's functionality if it has not already been enabled.
 	 */
 	public static void enable() {
-		if (FMLEnvironment.dist == Dist.CLIENT) {
+		if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT &&
+				!RandomPatches.config().misc.mixinBlacklist.contains("RenderLayers")) {
 			enabled = true;
 			onConfigReload();
 		}
@@ -53,11 +54,11 @@ public final class CauldronWaterTranslucencyHandler {
 	 * RandomPatches configuration is reloaded.
 	 */
 	public static void onConfigReload() {
-		if (FMLEnvironment.dist == Dist.CLIENT && enabled) {
-			RenderTypeLookup.setRenderLayer(
+		if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT && enabled) {
+			RenderLayersMixin.getBlocks().put(
 					Blocks.CAULDRON,
 					RandomPatches.config().client.bugFixes.fixWaterInCauldronsRenderingAsOpaque ?
-							RenderType.getTranslucent() : RenderType.getSolid()
+							RenderLayer.getTranslucent() : RenderLayer.getSolid()
 			);
 		}
 	}

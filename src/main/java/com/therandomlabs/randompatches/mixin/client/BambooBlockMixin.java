@@ -27,15 +27,14 @@ import net.minecraft.block.BambooBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockReader;
-import org.checkerframework.checker.nullness.qual.NonNull;
+import net.minecraft.world.BlockView;
 import org.spongepowered.asm.mixin.Mixin;
 
 @Mixin(BambooBlock.class)
 public final class BambooBlockMixin extends Block {
 	//CHECKSTYLE IGNORE MissingJavadocMethod FOR NEXT 1 LINES
-	protected BambooBlockMixin(Properties properties) {
-		super(properties);
+	protected BambooBlockMixin(Settings settings) {
+		super(settings);
 	}
 
 	/**
@@ -43,9 +42,7 @@ public final class BambooBlockMixin extends Block {
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public float getAmbientOcclusionLightValue(
-			@NonNull BlockState state, @NonNull IBlockReader blockReader, @NonNull BlockPos pos
-	) {
+	public float getAmbientOcclusionLightLevel(BlockState state, BlockView world, BlockPos pos) {
 		//This method always return 1.0F, so we avoid doing all the extra work and just return 1.0F.
 		//Thanks to darkevilmac for finding this fix:
 		//https://minecraft.curseforge.com/projects/fast-bamboo

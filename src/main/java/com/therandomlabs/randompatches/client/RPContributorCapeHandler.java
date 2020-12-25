@@ -33,29 +33,19 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
-import com.mojang.authlib.minecraft.MinecraftProfileTexture;
 import com.therandomlabs.randompatches.RandomPatches;
-import net.minecraft.client.entity.player.AbstractClientPlayerEntity;
-import net.minecraft.client.network.play.NetworkPlayerInfo;
-import net.minecraft.network.play.server.SPlayerListItemPacket;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.RenderPlayerEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.loading.FMLEnvironment;
+import net.minecraft.util.Identifier;
 import org.apache.commons.io.IOUtils;
 
 /**
  * Handles contributor capes for RandomPatches.
  */
-@Mod.EventBusSubscriber(value = Dist.CLIENT, modid = RandomPatches.MOD_ID)
 public final class RPContributorCapeHandler {
 	private static final URI CONTRIBUTORS = URI.create(
 			"https://raw.githubusercontent.com/TheRandomLabs/RandomPatches/misc/contributors.txt"
 	);
-	private static final ResourceLocation CAPE =
-			new ResourceLocation(RandomPatches.MOD_ID, "textures/contributor_cape.png");
+	private static final Identifier CAPE =
+			new Identifier(RandomPatches.MOD_ID, "textures/contributor_cape.png");
 
 	private static final Set<UUID> temporaryPlayerInfos = new HashSet<>();
 
@@ -64,7 +54,7 @@ public final class RPContributorCapeHandler {
 	private static int tries;
 
 	private RPContributorCapeHandler() {}
-
+/*
 	@SubscribeEvent
 	public static void onPreRenderPlayer(RenderPlayerEvent.Pre event) {
 		if (!RandomPatches.config().client.contributorCapes) {
@@ -105,7 +95,7 @@ public final class RPContributorCapeHandler {
 			player.playerInfo = null;
 			temporaryPlayerInfos.remove(uniqueID);
 		}
-	}
+	}*/
 
 	/**
 	 * Attempts to download the RandomPatches contributor list.

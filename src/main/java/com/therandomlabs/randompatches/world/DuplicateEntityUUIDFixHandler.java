@@ -24,25 +24,12 @@
 package com.therandomlabs.randompatches.world;
 
 import java.util.Random;
-import java.util.UUID;
 
-import com.therandomlabs.randompatches.RandomPatches;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.ClassInheritanceMultiMap;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.chunk.Chunk;
-import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.event.world.ChunkEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-
-@Mod.EventBusSubscriber(modid = RandomPatches.MOD_ID)
 public final class DuplicateEntityUUIDFixHandler {
 	private static final Random random = new Random();
 
 	private DuplicateEntityUUIDFixHandler() {}
-
+/*
 	@SubscribeEvent
 	public static void onChunkLoad(ChunkEvent.Load event) {
 		if (!RandomPatches.config().misc.bugFixes.fixDuplicateEntityUUIDs ||
@@ -80,5 +67,5 @@ public final class DuplicateEntityUUIDFixHandler {
 				);
 			}
 		}
-	}
+	}*/
 }

@@ -1,12 +1,12 @@
 # RandomPatches
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
-![Build](https://github.com/TheRandomLabs/RandomPatches/workflows/Build/badge.svg?branch=1.16-forge)
+![Build](https://github.com/TheRandomLabs/RandomPatches/workflows/Build/badge.svg?branch=1.16-fabric)
 [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/TheRandomLabs/RandomPatches.svg)](http://isitmaintained.com/project/TheRandomLabs/RandomPatches "Average time to resolve an issue")
 
-[![Downloads](http://cf.way2muchnoise.eu/full_randompatches_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/randompatches-forge)
-[![Files](https://curse.nikky.moe/api/img/285612/files?logo)](https://www.curseforge.com/minecraft/mc-mods/randompatches-forge/files)
-[![Download](https://curse.nikky.moe/api/img/285612?logo)](https://curse.nikky.moe/api/url/285612)
+[![Downloads](http://cf.way2muchnoise.eu/full_randompatches_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/randompatches-fabric)
+[![Files](https://curse.nikky.moe/api/img/285612/files?logo)](https://www.curseforge.com/minecraft/mc-mods/randompatches-fabric/files)
+[![Download](https://curse.nikky.moe/api/img/285612?logo)](https://curse.nikky.moe/api/url/396245)
 
 A bunch of miscellaneous patches for Minecraft.
 
@@ -203,12 +203,6 @@ player, and by default, if they have the same texture URL.
 
 This bug is reported as [MC-100044](https://bugs.mojang.com/browse/MC-100044).
 
-### Fix [MC-149777](https://bugs.mojang.com/browse/MC-149777)
-
-RandomPatches fixes a rare `ConcurrentModificationException` that occurs when loading worlds on
-Java 11 or newer. This fix was taken from
-[Fabric API](https://github.com/FabricMC/fabric/blob/1.16/fabric-structure-api-v1/src/main/java/net/fabricmc/fabric/mixin/structure/StructureManagerMixin.java).
-
 ### Fix water in cauldrons rendering as opaque (client-sided)
 
 In vanilla Minecraft, water in cauldrons renders as opaque. RandomPatches fixes this issue by
@@ -283,9 +277,6 @@ double tap sprint functionality to be disabled, fixing
 
 Additionally, RandomPatches adds a dismount key binding, which allows the dismount key to be
 different from the sneak key.
-
-RandomPatches also makes standalone modifier keys not conflict with key combinations with that
-modifier key, which seems to be intended Forge behavior.
 
 ### Window title and icon (client-sided)
 

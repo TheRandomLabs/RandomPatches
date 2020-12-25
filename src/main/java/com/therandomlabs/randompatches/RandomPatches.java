@@ -28,22 +28,16 @@ import com.therandomlabs.randompatches.client.CauldronWaterTranslucencyHandler;
 import com.therandomlabs.randompatches.client.RPContributorCapeHandler;
 import com.therandomlabs.randompatches.client.RPKeyBindingHandler;
 import com.therandomlabs.randompatches.command.RPConfigReloadCommand;
-import me.shedaniel.autoconfig1u.AutoConfig;
-import net.minecraftforge.event.RegisterCommandsEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.ExtensionPoint;
-import net.minecraftforge.fml.ModList;
-import net.minecraftforge.fml.ModLoadingContext;
-import net.minecraftforge.fml.common.Mod;
+import me.sargunvohra.mcmods.autoconfig1u.AutoConfig;
+import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
  * The main class for RandomPatches.
  */
-@Mod.EventBusSubscriber
-@Mod(RandomPatches.MOD_ID)
-public final class RandomPatches {
+public final class RandomPatches implements ModInitializer {
 	/**
 	 * The RandomPatches mod ID.
 	 */
@@ -57,28 +51,17 @@ public final class RandomPatches {
 	@SuppressWarnings("PMD.NonThreadSafeSingleton")
 	private static TOMLConfigSerializer<RPConfig> serializer;
 
-	/**
-	 * Constructs a {@link RandomPatches} instance.
-	 */
-	public RandomPatches() {
-		if (ModList.get().isLoaded("cloth-config")) {
-			ModLoadingContext.get().registerExtensionPoint(
-					ExtensionPoint.CONFIGGUIFACTORY,
-					() -> (mc, screen) -> AutoConfig.getConfigScreen(RPConfig.class, screen).get()
-			);
-		}
-
+	@Override
+	public void onInitialize() {
 		CauldronWaterTranslucencyHandler.enable();
 		RPKeyBindingHandler.enable();
 
 		if (RandomPatches.config().client.contributorCapes) {
 			RPContributorCapeHandler.downloadContributorList();
 		}
-	}
 
-	@SubscribeEvent
-	public static void registerCommands(RegisterCommandsEvent event) {
-		RPConfigReloadCommand.register(event.getDispatcher());
+		reloadConfig();
+		CommandRegistrationCallback.EVENT.register(RPConfigReloadCommand::register);
 	}
 
 	/**

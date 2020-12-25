@@ -21,28 +21,18 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.therandomlabs.randompatches.mixin.client.packetsizelimits;
+package com.therandomlabs.randompatches.mixin.packetsizelimits;
 
 import com.therandomlabs.randompatches.RandomPatches;
-import net.minecraft.network.play.client.CCustomPayloadPacket;
+import net.minecraft.network.PacketInflater;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
 
-@Mixin(CCustomPayloadPacket.class)
-public final class CCustomPayloadPacketMixin {
-	@ModifyConstant(method = "readPacketData", constant = @Constant(intValue = Short.MAX_VALUE))
-	private int getMaxClientCustomPayloadPacketSize(int size) {
-		return RandomPatches.config().packetSizeLimits.maxClientCustomPayloadPacketSize;
-	}
-
-	@ModifyConstant(
-			method = "readPacketData", constant = @Constant(
-					stringValue = "Payload may not be larger than " + Short.MAX_VALUE + " bytes"
-			)
-	)
-	private String getPayloadTooLargeErrorMessage(String message) {
-		return "Payload may not be larger than " +
-				RandomPatches.config().packetSizeLimits.maxClientCustomPayloadPacketSize + " bytes";
+@Mixin(PacketInflater.class)
+public final class PacketInflaterMixin {
+	@ModifyConstant(method = "decode", constant = @Constant(intValue = 0x200000))
+	private int getMaxCompressedPacketSize(int size) {
+		return RandomPatches.config().packetSizeLimits.maxCompressedPacketSize;
 	}
 }

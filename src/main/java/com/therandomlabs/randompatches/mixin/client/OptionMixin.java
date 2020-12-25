@@ -21,45 +21,19 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.therandomlabs.randompatches.mixin.timeouts;
+package com.therandomlabs.randompatches.mixin.client;
 
 import com.therandomlabs.randompatches.RandomPatches;
-import net.minecraft.network.play.ServerPlayNetHandler;
-import net.minecraft.util.Util;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.client.options.Option;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
-import org.spongepowered.asm.mixin.injection.Redirect;
 
-@Mixin(ServerPlayNetHandler.class)
-public final class ServerPlayNetHandlerKeepAliveMixin {
-	@Shadow
-	private long keepAliveTime;
-
-	@Redirect(method = "tick", at = @At(
-			value = "INVOKE",
-			target = "net/minecraft/network/play/ServerPlayNetHandler.disconnect" +
-					"(Lnet/minecraft/util/text/ITextComponent;)V",
-			ordinal = 2
-	))
-	private void disconnect(ServerPlayNetHandler handler, ITextComponent reason) {
-		final long keepAliveTimeoutMillis =
-				RandomPatches.config().connectionTimeouts.keepAliveTimeoutSeconds * 1000L;
-
-		if (Util.milliTime() - keepAliveTime >= keepAliveTimeoutMillis) {
-			handler.disconnect(reason);
-		}
-	}
-
-	@ModifyConstant(method = "tick", constant = {
-			@Constant(longValue = 15000L),
-			//CraftBukkit changes it to 25000.
-			@Constant(longValue = 25000L)
-	})
-	private long getKeepAlivePacketInterval(long interval) {
-		return RandomPatches.config().connectionTimeouts.keepAlivePacketIntervalSeconds * 1000L;
+@Mixin(Option.class)
+public final class OptionMixin {
+	@SuppressWarnings("UnresolvedMixinReference")
+	@ModifyConstant(method = "<clinit>", constant = @Constant(floatValue = 10.0F))
+	private static float getFramerateLimitSliderStepSize(float stepSize) {
+		return RandomPatches.config().client.framerateLimitSliderStepSize;
 	}
 }

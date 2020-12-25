@@ -27,18 +27,17 @@ import java.util.List;
 
 import com.therandomlabs.randompatches.RPConfig;
 import com.therandomlabs.randompatches.RandomPatches;
-import net.minecraft.client.AbstractOption;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screen.IngameMenuScreen;
+import com.therandomlabs.randompatches.mixin.client.keybindings.GameOptionsMixin;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.screen.GameMenuScreen;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.screen.WithNarratorSettingsScreen;
+import net.minecraft.client.gui.screen.options.NarratorOptionsScreen;
 import net.minecraft.client.gui.widget.TextFieldWidget;
-import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.client.util.InputMappings;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.settings.IKeyConflictContext;
-import net.minecraftforge.client.settings.KeyModifier;
-import net.minecraftforge.fml.loading.FMLEnvironment;
+import net.minecraft.client.options.KeyBinding;
+import net.minecraft.client.options.Option;
+import net.minecraft.client.util.InputUtil;
 import org.apache.commons.lang3.ArrayUtils;
 import org.lwjgl.glfw.GLFW;
 
@@ -70,8 +69,7 @@ public final class RPKeyBindingHandler {
 		 * The narrator toggle key binding.
 		 */
 		public static final KeyBinding TOGGLE_NARRATOR = new KeyBinding(
-				"key.narrator", ToggleNarratorKeyConflictContext.INSTANCE, KeyModifier.CONTROL,
-				InputMappings.Type.KEYSYM, GLFW.GLFW_KEY_B, "key.categories.misc"
+				"key.narrator", InputUtil.UNKNOWN_KEY.getCode(), "key.categories.misc"
 		);
 
 		/**
@@ -95,13 +93,13 @@ public final class RPKeyBindingHandler {
 				"key.debugInfo", GLFW.GLFW_KEY_F3, "key.categories.misc"
 		);
 
-		private static final Minecraft mc = Minecraft.getInstance();
+		private static final MinecraftClient mc = MinecraftClient.getInstance();
 
 		private KeyBindings() {}
 
 		/**
 		 * Handles key events. This should only be called by
-		 * {@link com.therandomlabs.randompatches.mixin.client.keybindings.KeyboardListenerMixin}.
+		 * {@link com.therandomlabs.randompatches.mixin.client.keybindings.KeyboardMixin}.
 		 *
 		 * @param key the key.
 		 * @param action the action.
@@ -111,21 +109,21 @@ public final class RPKeyBindingHandler {
 			final RPConfig.KeyBindings config = RandomPatches.config().client.keyBindings;
 
 			if (config.toggleNarrator && action != GLFW.GLFW_RELEASE &&
-					TOGGLE_NARRATOR.isConflictContextAndModifierActive() &&
+					isNarratorKeyBindingContextActive() &&
 					TOGGLE_NARRATOR.matchesKey(key, scanCode)) {
-				AbstractOption.NARRATOR.func_216722_a(mc.gameSettings, 1);
+				Option.NARRATOR.cycle(mc.options, 1);
 
-				if (mc.currentScreen instanceof WithNarratorSettingsScreen) {
-					((WithNarratorSettingsScreen) mc.currentScreen).updateNarratorButtonText();
+				if (mc.currentScreen instanceof NarratorOptionsScreen) {
+					((NarratorOptionsScreen) mc.currentScreen).updateNarratorButtonText();
 				}
 			}
 
 			if (config.pause && action != GLFW.GLFW_RELEASE && PAUSE.matchesKey(key, scanCode)) {
 				if (mc.currentScreen == null) {
-					mc.displayInGameMenu(InputMappings.isKeyDown(
+					mc.openPauseMenu(InputUtil.isKeyPressed(
 							mc.getWindow().getHandle(), GLFW.GLFW_KEY_F3
 					));
-				} else if (mc.currentScreen instanceof IngameMenuScreen) {
+				} else if (mc.currentScreen instanceof GameMenuScreen) {
 					mc.currentScreen.onClose();
 				}
 			}
@@ -136,22 +134,30 @@ public final class RPKeyBindingHandler {
 
 			if (config.toggleGUI && action != GLFW.GLFW_RELEASE &&
 					TOGGLE_GUI.matchesKey(key, scanCode)) {
-				mc.gameSettings.hideGUI = !mc.gameSettings.hideGUI;
+				mc.options.hudHidden = !mc.options.hudHidden;
 			}
 
 			if (config.toggleDebugInfo && action == GLFW.GLFW_RELEASE &&
 					TOGGLE_DEBUG_INFO.matchesKey(key, scanCode)) {
-				if (TOGGLE_DEBUG_INFO.getKey().getKeyCode() == GLFW.GLFW_KEY_F3 &&
-						mc.keyboardListener.actionKeyF3) {
-					mc.keyboardListener.actionKeyF3 = false;
+				final int toggleDebugInfoKeyCode =
+						((BoundKeyAccessor) TOGGLE_DEBUG_INFO).getBoundKey().getCode();
+				final SwitchF3StateAccessor accessor = (SwitchF3StateAccessor) mc.keyboard;
+
+				if (toggleDebugInfoKeyCode == GLFW.GLFW_KEY_F3 && accessor.getSwitchF3State()) {
+					accessor.setSwitchF3State(false);
 				} else {
-					mc.gameSettings.showDebugInfo = !mc.gameSettings.showDebugInfo;
-					mc.gameSettings.showDebugProfilerChart =
-							mc.gameSettings.showDebugInfo && Screen.hasShiftDown();
-					mc.gameSettings.showLagometer =
-							mc.gameSettings.showDebugInfo && Screen.hasAltDown();
+					mc.options.debugEnabled = !mc.options.debugEnabled;
+					mc.options.debugProfilerEnabled =
+							mc.options.debugEnabled && Screen.hasShiftDown();
+					mc.options.debugTpsEnabled = mc.options.debugTpsEnabled && Screen.hasAltDown();
 				}
 			}
+		}
+
+		private static boolean isNarratorKeyBindingContextActive() {
+			final Screen screen = mc.currentScreen;
+			return screen == null || !(screen.getFocused() instanceof TextFieldWidget) ||
+					!((TextFieldWidget) screen.getFocused()).isActive();
 		}
 
 		private static void register() {
@@ -171,35 +177,20 @@ public final class RPKeyBindingHandler {
 
 		private static void register(KeyBinding keyBinding, boolean enabled) {
 			if (enabled) {
-				if (!ArrayUtils.contains(mc.gameSettings.keyBindings, keyBinding)) {
-					mc.gameSettings.keyBindings =
-							ArrayUtils.add(mc.gameSettings.keyBindings, keyBinding);
+				if (!ArrayUtils.contains(mc.options.keysAll, keyBinding)) {
+					((GameOptionsMixin) mc.options).setKeysAll(
+							ArrayUtils.add(mc.options.keysAll, keyBinding)
+					);
 				}
 			} else {
-				final int index = ArrayUtils.indexOf(mc.gameSettings.keyBindings, keyBinding);
+				final int index = ArrayUtils.indexOf(mc.options.keysAll, keyBinding);
 
 				if (index != ArrayUtils.INDEX_NOT_FOUND) {
-					mc.gameSettings.keyBindings =
-							ArrayUtils.remove(mc.gameSettings.keyBindings, index);
+					((GameOptionsMixin) mc.options).setKeysAll(
+							ArrayUtils.remove(mc.options.keysAll, index)
+					);
 				}
 			}
-		}
-	}
-
-	private static final class ToggleNarratorKeyConflictContext implements IKeyConflictContext {
-		private static final ToggleNarratorKeyConflictContext INSTANCE =
-				new ToggleNarratorKeyConflictContext();
-
-		@Override
-		public boolean isActive() {
-			final Screen screen = KeyBindings.mc.currentScreen;
-			return screen == null || !(screen.getFocused() instanceof TextFieldWidget) ||
-					!((TextFieldWidget) screen.getFocused()).func_212955_f();
-		}
-
-		@Override
-		public boolean conflicts(IKeyConflictContext other) {
-			return true;
 		}
 	}
 
@@ -211,7 +202,8 @@ public final class RPKeyBindingHandler {
 	 * Enables this class's functionality if it has not already been enabled.
 	 */
 	public static void enable() {
-		if (FMLEnvironment.dist == Dist.CLIENT && !enabled) {
+		if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT && !enabled &&
+				!RandomPatches.config().misc.mixinBlacklist.contains("GameOptions")) {
 			enabled = true;
 			onConfigReload();
 		}
@@ -222,7 +214,7 @@ public final class RPKeyBindingHandler {
 	 * configuration is reloaded.
 	 */
 	public static void onConfigReload() {
-		if (FMLEnvironment.dist == Dist.CLIENT && enabled) {
+		if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT && enabled) {
 			KeyBindings.register();
 		}
 	}
