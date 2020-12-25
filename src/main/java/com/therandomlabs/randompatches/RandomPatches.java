@@ -27,11 +27,8 @@ import com.therandomlabs.autoconfigtoml.TOMLConfigSerializer;
 import com.therandomlabs.randompatches.client.CauldronWaterTranslucencyHandler;
 import com.therandomlabs.randompatches.client.RPContributorCapeHandler;
 import com.therandomlabs.randompatches.client.RPKeyBindingHandler;
-import com.therandomlabs.randompatches.command.RPConfigReloadCommand;
 import me.sargunvohra.mcmods.autoconfig1u.AutoConfig;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
-import net.fabricmc.loader.api.FabricLoader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -58,10 +55,6 @@ public final class RandomPatches implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		reloadConfig();
-
-		if (FabricLoader.getInstance().isModLoaded("fabric")) {
-			CommandRegistrationCallback.EVENT.register(RPConfigReloadCommand::register);
-		}
 	}
 
 	/**

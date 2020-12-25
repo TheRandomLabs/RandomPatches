@@ -351,8 +351,8 @@ The RandomPatches configuration can be found at `config/randompatches.toml`.
 * All properties and categories should be well-commented such that there is little need for further
 explanation.
 * All configuration values should be automatically validated and reset if they are invalid.
-* If [Cloth Config API](https://www.curseforge.com/minecraft/mc-mods/cloth-config-forge) is
-installed, a configuration GUI can be accessed from the mod menu.
+* A configuration GUI can be accessed from
+[Mod Menu](https://www.curseforge.com/minecraft/mc-mods/modmenu).
 * In case of unaddressed compatibility issues, individual mixins can be disabled through the mixin
 blacklist.
 * Most mixins are not automatically disabled when the features that depend on them are.
