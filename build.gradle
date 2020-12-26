@@ -83,4 +83,6 @@ if (project.hasProperty("curseForgeAPIKey")) {
 			}
 		}
 	}
+
+	tasks.curseforge.dependsOn build
 }
