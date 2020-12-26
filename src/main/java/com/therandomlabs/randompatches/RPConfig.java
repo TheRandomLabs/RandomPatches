@@ -615,6 +615,10 @@ public final class RPConfig implements ConfigData {
 				return false;
 			}
 
+			if ("AbstractOption".equals(simpleName) && isLoaded("optifine.Patcher")) {
+				return false;
+			}
+
 			if ("BambooBlock".equals(simpleName) &&
 					!RandomPatches.config().client.optimizeBambooRendering) {
 				return false;
