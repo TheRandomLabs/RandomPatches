@@ -5,17 +5,18 @@
 [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/TheRandomLabs/RandomPatches.svg)](http://isitmaintained.com/project/TheRandomLabs/RandomPatches "Average time to resolve an issue")
 
 [![Downloads](http://cf.way2muchnoise.eu/full_randompatches-fabric_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/randompatches-fabric)
-[![Files](https://curse.nikky.moe/api/img/285612/files?logo)](https://www.curseforge.com/minecraft/mc-mods/randompatches-fabric/files)
-[![Download](https://curse.nikky.moe/api/img/285612?logo)](https://curse.nikky.moe/api/url/396245)
+[![Files](https://curse.nikky.moe/api/img/396245/files?logo)](https://www.curseforge.com/minecraft/mc-mods/randompatches-fabric/files)
+[![Download](https://curse.nikky.moe/api/img/396245?logo)](https://curse.nikky.moe/api/url/396245)
 
 A bunch of miscellaneous patches for Minecraft. RandomPatches does **not** require Fabric API!
 
 Also check out [RandomTweaks](https://www.curseforge.com/minecraft/mc-mods/randomtweaks)!
 
 **When reporting issues or suggesting enhancements, please use the**
-**[GitHub issue tracker](https://github.com/TheRandomLabs/RandomPatches/issues)—it's easier to**
-**keep track of things this way. Avoid commenting them on the CurseForge project page or sending**
-**them to me in a direct message. Thank you!**
+**[GitHub issue tracker](https://github.com/TheRandomLabs/RandomPatches/issues), and make sure**
+**you are on the latest version of the mod for your Minecraft version—it's easier to keep track**
+**of things this way. Avoid commenting them on the CurseForge project page or sending them to me**
+**in a direct message. Thank you!**
 
 ## Sponsors
 
