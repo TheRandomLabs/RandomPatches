@@ -13,9 +13,10 @@ A bunch of miscellaneous patches for Minecraft.
 Also check out [RandomTweaks](https://www.curseforge.com/minecraft/mc-mods/randomtweaks)!
 
 **When reporting issues or suggesting enhancements, please use the**
-**[GitHub issue tracker](https://github.com/TheRandomLabs/RandomPatches/issues)—it's easier to**
-**keep track of things this way. Avoid commenting them on the CurseForge project page or sending**
-**them to me in a direct message. Thank you!**
+**[GitHub issue tracker](https://github.com/TheRandomLabs/RandomPatches/issues), and make sure**
+**you are on the latest version of the mod for your Minecraft version—it's easier to keep track**
+**of things this way. Avoid commenting them on the CurseForge project page or sending them to me**
+**in a direct message. Thank you!**
 
 ## Sponsors
 
