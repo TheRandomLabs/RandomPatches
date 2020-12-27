@@ -18,7 +18,7 @@ Also check out [RandomTweaks](https://www.curseforge.com/minecraft/mc-mods/rando
 **of things this way. Avoid commenting them on the CurseForge project page or sending them to me**
 **in a direct message. Thank you!**
 
-## Sponsors
+## Sponsor
 
 I've partnered with Apex Hosting! In my experience, their servers are lag-free, easy to manage,
 and of high quality. Check them out here:
