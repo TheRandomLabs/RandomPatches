@@ -1,12 +1,16 @@
 {
     "homepage": "https://www.curseforge.com/minecraft/mc-mods/randompatches",
     "1.16.4": {
+        "2.0.2": "Fixed the read timeout.\nDouble-tap sprinting is now possible when flying.",
+        "2.0.1": "Fixed client.window.title never being used.\nThe configurable framerate limit slider step size is now disabled when OptiFine is installed.\nMinor improvements.",
         "2.0.0": "Rewrite from scratch using Mixin.",
         "1.16.4-1.22.1.11": "Recompiled with JDK 8.",
         "1.16.4-1.22.1.10": "The read timeout patch is now compatible with certain custom servers.",
         "1.16.4-1.22.1.9": "The default login timeout is now 1800 ticks (90 seconds)."
     },
     "1.16.3": {
+        "2.0.2": "Fixed the read timeout.\nDouble-tap sprinting is now possible when flying.",
+        "2.0.1": "Fixed client.window.title never being used.\nThe configurable framerate limit slider step size is now disabled when OptiFine is installed.\nMinor improvements.",
         "2.0.0": "Rewrite from scratch using Mixin.",
         "1.16.4-1.22.1.11": "Recompiled with JDK 8.",
         "1.16.4-1.22.1.10": "The read timeout patch is now compatible with certain custom servers.",
@@ -14,6 +18,8 @@
         "1.16.2-1.22.1.2": "Added a license to mods.toml."
     },
     "1.16.2": {
+        "2.0.2": "Fixed the read timeout.\nDouble-tap sprinting is now possible when flying.",
+        "2.0.1": "Fixed client.window.title never being used.\nThe configurable framerate limit slider step size is now disabled when OptiFine is installed.\nMinor improvements.",
         "2.0.0": "Rewrite from scratch using Mixin.",
         "1.16.4-1.22.1.11": "Recompiled with JDK 8.",
         "1.16.4-1.22.1.10": "The read timeout patch is now compatible with certain custom servers.",
@@ -21,6 +27,8 @@
         "1.16.2-1.22.1.2": "Added a license to mods.toml."
     },
     "1.16.1": {
+        "2.0.2": "Fixed the read timeout.\nDouble-tap sprinting is now possible when flying.",
+        "2.0.1": "Fixed client.window.title never being used.\nThe configurable framerate limit slider step size is now disabled when OptiFine is installed.\nMinor improvements.",
         "2.0.0": "Rewrite from scratch using Mixin.",
         "1.16.4-1.22.1.11": "Recompiled with JDK 8.",
         "1.16.4-1.22.1.10": "The read timeout patch is now compatible with certain custom servers.",
@@ -1082,14 +1090,14 @@
         "1.12.2-1.0.0.0": "Initial release."
     },
     "promos": {
-        "1.16.4-latest": "2.0.0",
-        "1.16.4-recommended": "2.0.0",
-        "1.16.3-latest": "2.0.0",
-        "1.16.3-recommended": "2.0.0",
-        "1.16.2-latest": "2.0.0",
-        "1.16.2-recommended": "2.0.0",
-        "1.16.1-latest": "2.0.0",
-        "1.16.1-recommended": "2.0.0",
+        "1.16.4-latest": "2.1.0",
+        "1.16.4-recommended": "2.1.0",
+        "1.16.3-latest": "2.1.0",
+        "1.16.3-recommended": "2.1.0",
+        "1.16.2-latest": "2.1.0",
+        "1.16.2-recommended": "2.1.0",
+        "1.16.1-latest": "2.1.0",
+        "1.16.1-recommended": "2.1.0",
         "1.15.2-latest": "1.15.2-1.22.1.1",
         "1.15.2-recommended": "1.15.2-1.22.1.1",
         "1.14.4-latest": "1.14.4-1.22.1.1",
