@@ -28,6 +28,9 @@ import java.util.List;
 import com.therandomlabs.randompatches.RPConfig;
 import com.therandomlabs.randompatches.RandomPatches;
 import com.therandomlabs.randompatches.mixin.client.keybindings.GameOptionsMixin;
+import de.siphalor.amecs.api.AmecsKeyBinding;
+import de.siphalor.amecs.api.KeyModifiers;
+import de.siphalor.amecs.impl.AmecsAPI;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.loader.api.FabricLoader;
@@ -39,6 +42,7 @@ import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.options.KeyBinding;
 import net.minecraft.client.options.Option;
 import net.minecraft.client.util.InputUtil;
+import net.minecraft.util.Identifier;
 import org.apache.commons.lang3.ArrayUtils;
 import org.lwjgl.glfw.GLFW;
 
@@ -70,9 +74,7 @@ public final class RPKeyBindingHandler {
 		/**
 		 * The narrator toggle key binding.
 		 */
-		public static final KeyBinding TOGGLE_NARRATOR = new KeyBinding(
-				"key.narrator", InputUtil.UNKNOWN_KEY.getCode(), "key.categories.misc"
-		);
+		public static final KeyBinding TOGGLE_NARRATOR;
 
 		/**
 		 * The pause key binding.
@@ -96,6 +98,22 @@ public final class RPKeyBindingHandler {
 		);
 
 		private static final MinecraftClient mc = MinecraftClient.getInstance();
+
+		static {
+			if (FabricLoader.getInstance().isModLoaded(AmecsAPI.MOD_ID)) {
+				TOGGLE_NARRATOR = new AmecsKeyBinding(
+						new Identifier(RandomPatches.MOD_ID, "narrator"), InputUtil.Type.KEYSYM,
+						GLFW.GLFW_KEY_B, "key.categories.misc", new KeyModifiers().setControl(true)
+				);
+			} else {
+				//We have to use "key.randompatches.narrator" instead of "key.narrator" because
+				//Amecs insists on putting in the namespace.
+			 	TOGGLE_NARRATOR = new KeyBinding(
+						"key.randompatches.narrator", InputUtil.UNKNOWN_KEY.getCode(),
+						"key.categories.misc"
+				);
+			}
+		}
 
 		private KeyBindings() {}
 

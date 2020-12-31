@@ -249,8 +249,11 @@ for finding this fix!
 ### Key bindings (client-sided)
 
 RandomPatches makes the narrator toggle key binding configurable in the controls screen,
-fixing [MC-122645](https://bugs.mojang.com/browse/MC-122645). In addition, RandomPatches makes
-the following key bindings configurable, largely fixing
+fixing [MC-122645](https://bugs.mojang.com/browse/MC-122645).
+If [Amecs](https://www.curseforge.com/minecraft/mc-mods/amecs) is installed, this key binding is set
+to `Control + b` by default, which is the vanilla default. Otherwise, it is unbound by default.
+
+In addition, RandomPatches makes the following key bindings configurable, largely fixing
 [MC-147718](https://bugs.mojang.com/browse/MC-147718):
 
 * Pause
