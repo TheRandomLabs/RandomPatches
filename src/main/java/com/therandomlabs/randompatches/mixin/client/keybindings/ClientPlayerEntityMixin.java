@@ -53,10 +53,9 @@ public abstract class ClientPlayerEntityMixin extends PlayerEntity {
 	 */
 	@Override
 	protected boolean shouldDismount() {
+		//We let the server handle the dismount logic.
 		return false;
 	}
-
-	//We let the server handle the dismount logic.
 
 	@Shadow
 	public abstract void onRecipeDisplayed(Recipe<?> recipe);
@@ -65,7 +64,7 @@ public abstract class ClientPlayerEntityMixin extends PlayerEntity {
 			value = "INVOKE",
 			target = "Lnet/minecraft/network/packet/c2s/play/PlayerInputC2SPacket;<init>(FFZZ)V"
 	), index = 3)
-	private boolean shouldDismount(boolean sneaking) {
+	private boolean isSneaking(boolean sneaking) {
 		return RandomPatches.config().client.keyBindings.dismount ?
 				RPKeyBindingHandler.KeyBindings.DISMOUNT.isPressed() : sneaking;
 	}
