@@ -565,8 +565,6 @@ public final class RPConfig implements ConfigData {
 				"  - Required for making the forward movement key not conflict with the " +
 						"secondary sprint key.",
 				"  - Required for making the sneak key not conflict with the dismount key.",
-				"  - Required for making standalone modifier keys not conflict with key " +
-						"combinations with that modifier key.",
 				"- Keyboard: Required for the narrator toggle, escape, GUI toggle and debug key " +
 						"bindings.",
 				"- MinecraftClient:",

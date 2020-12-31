@@ -23,6 +23,8 @@
 
 package com.therandomlabs.randompatches.mixin.client.keybindings;
 
+import java.util.Map;
+
 import com.therandomlabs.randompatches.RPConfig;
 import com.therandomlabs.randompatches.RandomPatches;
 import com.therandomlabs.randompatches.client.BoundKeyAccessor;
@@ -30,16 +32,22 @@ import com.therandomlabs.randompatches.client.RPKeyBindingHandler;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.options.KeyBinding;
 import net.minecraft.client.util.InputUtil;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(KeyBinding.class)
 public final class KeyBindingMixin implements BoundKeyAccessor {
 	@Shadow
 	private InputUtil.Key boundKey;
+
+	@Shadow
+	@Final
+	private static Map<String, KeyBinding> keysById;
 
 	/**
 	 * {@inheritDoc}
@@ -73,5 +81,13 @@ public final class KeyBindingMixin implements BoundKeyAccessor {
 				info.setReturnValue(false);
 			}
 		}
+	}
+
+	@SuppressWarnings("ConstantConditions")
+	@Inject(method = "setKeyPressed", at = @At("HEAD"))
+	private static void setKeyPressed(InputUtil.Key key, boolean pressed, CallbackInfo info) {
+		keysById.values().stream().filter(keyBinding -> key.equals(
+				((KeyBindingMixin) (Object) keyBinding).getBoundKey())
+		).forEach(keyBinding -> keyBinding.setPressed(pressed));
 	}
 }
