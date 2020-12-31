@@ -32,9 +32,11 @@ import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.options.KeyBinding;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.recipe.Recipe;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.Redirect;
@@ -46,8 +48,6 @@ public abstract class ClientPlayerEntityMixin extends PlayerEntity {
 		super(world, pos, yaw, profile);
 	}
 
-	//We let the server handle the dismount logic.
-
 	/**
 	 * {@inheritDoc}
 	 */
@@ -56,6 +56,11 @@ public abstract class ClientPlayerEntityMixin extends PlayerEntity {
 		return false;
 	}
 
+	//We let the server handle the dismount logic.
+
+	@Shadow
+	public abstract void onRecipeDisplayed(Recipe<?> recipe);
+
 	@ModifyArg(method = "tick", at = @At(
 			value = "INVOKE",
 			target = "Lnet/minecraft/network/packet/c2s/play/PlayerInputC2SPacket;<init>(FFZZ)V"
@@ -63,6 +68,23 @@ public abstract class ClientPlayerEntityMixin extends PlayerEntity {
 	private boolean shouldDismount(boolean sneaking) {
 		return RandomPatches.config().client.keyBindings.dismount ?
 				RPKeyBindingHandler.KeyBindings.DISMOUNT.isPressed() : sneaking;
+	}
+
+	@Redirect(
+			method = "tickMovement",
+			at = @At(
+					value = "INVOKE",
+					target = "Lnet/minecraft/client/network/ClientPlayerEntity;" +
+							"isSubmergedInWater()Z",
+					ordinal = 0
+			)
+	)
+	private boolean isSubmergedInWater(ClientPlayerEntity player) {
+		//Minecraft only allows double-tap sprinting when the player is either on the ground
+		//or swimming. We combat this by redirecting the swimming check.
+		return player.isSubmergedInWater() ||
+				(RandomPatches.config().client.keyBindings.doubleTapSprintingWhileFlying &&
+						player.abilities.flying);
 	}
 
 	@Redirect(method = "tickMovement", at = @At(

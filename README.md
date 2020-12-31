@@ -264,8 +264,9 @@ screens.
 * The F3 key is still used for F3 actions.
 
 Furthermore, RandomPatches adds a second configurable key binding for sprinting, which allows the
-double tap sprint functionality to be disabled, fixing
-[MC-203401](https://bugs.mojang.com/browse/MC-203401).
+double-tap sprint functionality to be disabled, fixing
+[MC-203401](https://bugs.mojang.com/browse/MC-203401). Moreover, RandomPatches allows double-tap
+sprinting while flying, fixing [MC-68453](https://bugs.mojang.com/browse/MC-68453).
 
 Additionally, RandomPatches adds a dismount key binding, which allows the dismount key to be
 different from the sneak key.

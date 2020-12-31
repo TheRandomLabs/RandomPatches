@@ -193,7 +193,7 @@ public final class RPConfig implements ConfigData {
 	public static final class KeyBindings implements ConfigData {
 		@TOMLConfigSerializer.Comment({
 				"The secondary sprint key binding.",
-				"This allows the double tap sprint functionality to be disabled, " +
+				"This allows double-tap sprinting to be disabled, " +
 						"fixing MC-203401: https://bugs.mojang.com/browse/MC-203401"
 		})
 		@ConfigEntry.Gui.Tooltip
@@ -237,6 +237,13 @@ public final class RPConfig implements ConfigData {
 		})
 		@ConfigEntry.Gui.Tooltip
 		public boolean toggleDebugInfo = true;
+
+		@TOMLConfigSerializer.Comment({
+				"Allows double-tap sprinting while flying.",
+				"This fixes MC-68453: https://bugs.mojang.com/browse/MC-68453"
+		})
+		@ConfigEntry.Gui.Tooltip
+		public boolean doubleTapSprintingWhileFlying = true;
 
 		/**
 		 * {@inheritDoc}
