@@ -286,7 +286,7 @@ By default, RandomPatches removes the annoying `*` in the Minecraft window title
 that the game is modded. In addition, the following window properties can be configured:
 
 * Title
-  * Severable variables are provided:
+  * Several variables are provided:
     * `${mcversion}`: Minecraft version
     * `${activity}`: Current activity (not available in the simple or normal title)
     * `${username}`: Username
