@@ -214,6 +214,13 @@ public final class RPConfig implements ConfigData {
 		@ConfigEntry.Gui.Tooltip
 		public boolean toggleDebugInfo = true;
 
+		@TOMLConfigSerializer.Comment({
+				"Allows double-tap sprinting while flying.",
+				"This fixes MC-68453: https://bugs.mojang.com/browse/MC-68453"
+		})
+		@ConfigEntry.Gui.Tooltip
+		public boolean doubleTapSprintingWhileFlying = true;
+
 		@TOMLConfigSerializer.Comment(
 				"Makes standalone modifier keys not conflict with key combinations with that " +
 						"modifier key, which seems to be intended Forge behavior."

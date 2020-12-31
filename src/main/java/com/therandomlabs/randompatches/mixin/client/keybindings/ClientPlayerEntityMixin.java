@@ -63,6 +63,22 @@ public abstract class ClientPlayerEntityMixin extends PlayerEntity {
 				RPKeyBindingHandler.KeyBindings.DISMOUNT.isKeyDown() : sneaking;
 	}
 
+	@Redirect(
+			method = "livingTick",
+			at = @At(
+					value = "INVOKE",
+					target = "Lnet/minecraft/client/entity/player/ClientPlayerEntity;canSwim()Z",
+					ordinal = 0
+			)
+	)
+	private boolean isSubmergedInWater(ClientPlayerEntity player) {
+		//Minecraft only allows double-tap sprinting when the player is either on the ground
+		//or swimming. We combat this by redirecting the swimming check.
+		return player.canSwim() ||
+				(RandomPatches.config().client.keyBindings.doubleTapSprintingWhileFlying &&
+						player.abilities.isFlying);
+	}
+
 	@Redirect(method = "livingTick", at = @At(
 			value = "INVOKE",
 			target = "net/minecraft/client/settings/KeyBinding.isKeyDown()Z"
