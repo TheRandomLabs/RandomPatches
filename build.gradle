@@ -51,6 +51,7 @@ if (project.hasProperty("curseForgeAPIKey")) {
 				releaseType = "beta"
 
 				relations {
+					optionalDependency "amecs"
 					optionalDependency "cotton-client-commands"
 				}
 			}
