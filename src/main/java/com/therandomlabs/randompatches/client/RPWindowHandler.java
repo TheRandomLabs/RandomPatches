@@ -115,7 +115,7 @@ public final class RPWindowHandler {
 	 * Enables this class's functionality if it has not already been enabled.
 	 */
 	public static void enable() {
-		if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT && !enabled) {
+		if (!enabled) {
 			enabled = true;
 			getRootNonLibraryMods();
 		}
@@ -125,7 +125,7 @@ public final class RPWindowHandler {
 	 * Called by {@link RPConfig.Window} when the RandomPatches configuration is reloaded.
 	 */
 	public static void onConfigReload() {
-		if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT && enabled) {
+		if (enabled) {
 			MinecraftClient.getInstance().execute(RPWindowHandler::applySettings);
 		}
 	}
@@ -138,7 +138,7 @@ public final class RPWindowHandler {
 	 * options.
 	 */
 	public static String getWindowTitle() {
-		if (FabricLoader.getInstance().getEnvironmentType() != EnvType.CLIENT || !enabled) {
+		if (!enabled) {
 			return RPConfig.Window.DEFAULT_TITLE;
 		}
 
@@ -178,7 +178,7 @@ public final class RPWindowHandler {
 	public static void updateWindowIcon(
 			@Nullable InputStream vanillaIcon16, @Nullable InputStream vanillaIcon32
 	) {
-		if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT && enabled) {
+		if (enabled) {
 			updateWindowIcon(
 					vanillaIcon16, vanillaIcon32,
 					MinecraftClient.getInstance().getWindow().getHandle()

@@ -30,7 +30,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
 /**
- * The Mod Menu entry point for the AutoConfig-TOML test mod.
+ * The Mod Menu entry point for RandomPatches.
  */
 @Environment(EnvType.CLIENT)
 public final class RPModMenuEntryPoint implements ModMenuApi {

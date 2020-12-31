@@ -40,6 +40,7 @@ import com.therandomlabs.randompatches.client.RPWindowHandler;
 import me.sargunvohra.mcmods.autoconfig1u.ConfigData;
 import me.sargunvohra.mcmods.autoconfig1u.annotation.Config;
 import me.sargunvohra.mcmods.autoconfig1u.annotation.ConfigEntry;
+import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
 import org.apache.commons.lang3.StringUtils;
 
@@ -183,7 +184,9 @@ public final class RPConfig implements ConfigData {
 		 */
 		@Override
 		public void validatePostLoad() {
-			CauldronWaterTranslucencyHandler.onConfigReload();
+			if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
+				CauldronWaterTranslucencyHandler.onConfigReload();
+			}
 		}
 	}
 
@@ -240,7 +243,9 @@ public final class RPConfig implements ConfigData {
 		 */
 		@Override
 		public void validatePostLoad() {
-			RPKeyBindingHandler.onConfigReload();
+			if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
+				RPKeyBindingHandler.onConfigReload();
+			}
 		}
 
 		/**
@@ -361,7 +366,9 @@ public final class RPConfig implements ConfigData {
 				icon256 = icon32;
 			}
 
-			RPWindowHandler.onConfigReload();
+			if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
+				RPWindowHandler.onConfigReload();
+			}
 		}
 
 		private String validateIconPath(String path) {

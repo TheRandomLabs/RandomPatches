@@ -22,6 +22,6 @@
  */
 
 /**
- * Client-sided command-related classes for the AutoConfig-TOML test mod.
+ * Client-sided command-related classes for RandomPatches.
  */
 package com.therandomlabs.randompatches.client.command;

@@ -31,7 +31,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
 /**
- * The Cotton Client Commands entry point for the AutoConfig-TOML test mod.
+ * The Cotton Client Commands entry point for RandomPatches.
  */
 @Environment(EnvType.CLIENT)
 public final class RPClientCommands implements ClientCommandPlugin {

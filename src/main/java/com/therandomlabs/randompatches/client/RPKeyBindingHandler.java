@@ -101,14 +101,11 @@ public final class RPKeyBindingHandler {
 
 		static {
 			if (FabricLoader.getInstance().isModLoaded(AmecsAPI.MOD_ID)) {
-				TOGGLE_NARRATOR = new AmecsKeyBinding(
-						new Identifier(RandomPatches.MOD_ID, "narrator"), InputUtil.Type.KEYSYM,
-						GLFW.GLFW_KEY_B, "key.categories.misc", new KeyModifiers().setControl(true)
-				);
+				TOGGLE_NARRATOR = AmecsToggleNarratorKeyBinding.TOGGLE_NARRATOR;
 			} else {
 				//We have to use "key.randompatches.narrator" instead of "key.narrator" because
 				//Amecs insists on putting in the namespace.
-			 	TOGGLE_NARRATOR = new KeyBinding(
+				TOGGLE_NARRATOR = new KeyBinding(
 						"key.randompatches.narrator", InputUtil.UNKNOWN_KEY.getCode(),
 						"key.categories.misc"
 				);
@@ -214,6 +211,15 @@ public final class RPKeyBindingHandler {
 		}
 	}
 
+	private static final class AmecsToggleNarratorKeyBinding {
+		//We put this in a separate class to circumvent a NoClassDefFoundError if Amecs is not
+		//installed.
+		private static final KeyBinding TOGGLE_NARRATOR = new AmecsKeyBinding(
+				new Identifier(RandomPatches.MOD_ID, "narrator"), InputUtil.Type.KEYSYM,
+				GLFW.GLFW_KEY_B, "key.categories.misc", new KeyModifiers().setControl(true)
+		);
+	}
+
 	private static boolean enabled;
 
 	private RPKeyBindingHandler() {}
@@ -222,8 +228,7 @@ public final class RPKeyBindingHandler {
 	 * Enables this class's functionality if it has not already been enabled.
 	 */
 	public static void enable() {
-		if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT && !enabled &&
-				!RandomPatches.config().misc.mixinBlacklist.contains("GameOptions")) {
+		if (!enabled && !RandomPatches.config().misc.mixinBlacklist.contains("GameOptions")) {
 			enabled = true;
 			onConfigReload();
 		}
@@ -234,7 +239,7 @@ public final class RPKeyBindingHandler {
 	 * configuration is reloaded.
 	 */
 	public static void onConfigReload() {
-		if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT && enabled) {
+		if (enabled) {
 			KeyBindings.register();
 		}
 	}
