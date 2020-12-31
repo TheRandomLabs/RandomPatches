@@ -63,14 +63,14 @@ slower computers or heavier modded instances. To counter this, RandomPatches all
 connection timeouts to be configured:
 
 * The connection read timeout
-* Both client and server-sided
-* Raised to 120 seconds from the vanilla value of 30 seconds by default
+  * Both client and server-sided
+  * Raised to 120 seconds from the vanilla value of 30 seconds by default
 * The login timeout
-* How long the server waits for a player to log in
-* Raised to 2400 ticks (120 seconds) from the vanilla value of 600 ticks (30 seconds) by default
+  * How long the server waits for a player to log in
+  * Raised to 2400 ticks (120 seconds) from the vanilla value of 600 ticks (30 seconds) by default
 * The KeepAlive timeout
-* How long the server waits for a player to return a KeepAlive packet before disconnecting them
-* Raised to 120 seconds from the vanilla value of 30 seconds by default
+  * How long the server waits for a player to return a KeepAlive packet before disconnecting them
+  * Raised to 120 seconds from the vanilla value of 30 seconds by default
 
 In addition, RandomPatches allows the interval at which KeepAlive packets are sent to clients
 to be configured, although it is recommended that this be left at the vanilla value of 15 seconds.
@@ -82,16 +82,16 @@ RandomPatches allows several packet size limits to be configured, which by defau
 the vanilla limits:
 
 * Maximum compressed packet size
-* This option is both client and server-sided.
-* Setting this to a higher value than the vanilla limit can fix
-[MC-185901](https://bugs.mojang.com/browse/MC-185901), which may cause players to be disconnected.
+  * This option is both client and server-sided.
+  * Setting this to a higher value than the vanilla limit can fix
+  [MC-185901](https://bugs.mojang.com/browse/MC-185901), which may cause players to be disconnected.
 * Maximum NBT compound tag packet size
-* This option is both client and server-sided.
-* Setting this to a higher value than the vanilla limit may prevent players from being
-disconnected.
+  * This option is both client and server-sided.
+  * Setting this to a higher value than the vanilla limit may prevent players from being
+  disconnected.
 * Maximum client custom payload packet size
-* Setting this to a higher value than the vanilla limit may prevent the client from being
-disconnected.
+  * Setting this to a higher value than the vanilla limit may prevent the client from being
+  disconnected.
 
 ### Player speed limits
 
@@ -109,14 +109,14 @@ following player speed limits to a higher value by default:
 The following options related to boats can be modified:
 
 * Boat buoyancy under flowing water
-* In vanilla Minecraft, this is set to a negative value, causing it to be impossible for boats to
-flow up when they move up into a higher block of water.
-* This problem is reported as [MC-91206](https://bugs.mojang.com/browse/MC-91206), and has been
-marked as "Works As Intended".
-* By default, RandomPatches sets this to a positive value to counteract this.
+  * In vanilla Minecraft, this is set to a negative value, causing it to be impossible for boats to
+  flow up when they move up into a higher block of water.
+  * This problem is reported as [MC-91206](https://bugs.mojang.com/browse/MC-91206), and has been
+  marked as "Works As Intended".
+  * By default, RandomPatches sets this to a positive value to counteract this.
 * Underwater boat passenger delay
-* This is how long it takes for a boat passenger to be ejected when underwater.
-* This can be set to -1 to disable underwater boat passenger ejection.
+  * This is how long it takes for a boat passenger to be ejected when underwater.
+  * This can be set to -1 to disable underwater boat passenger ejection.
 
 ### Disable DataFixerUpper
 
@@ -257,8 +257,8 @@ In addition, RandomPatches makes the following key bindings configurable, largel
 [MC-147718](https://bugs.mojang.com/browse/MC-147718):
 
 * Pause
-* This is only for pausing and unpausing the game; the Escape key is still used to close GUI
-screens.
+  * This is only for pausing and unpausing the game; the Escape key is still used to close GUI
+  screens.
 * Toggle GUI
 * Toggle Debug Info
 * The F3 key is still used for F3 actions.
@@ -277,14 +277,14 @@ By default, RandomPatches removes the annoying `*` in the Minecraft window title
 that the game is modded. In addition, the following window properties can be configured:
 
 * Title
-* Severable variables are provided:
-* `${mcversion}`: Minecraft version
-* `${activity}`: Current activity (not available in the simple or normal title)
-* `${username}`: Username
-* `${modsloaded}`: Number of mods loaded (not available in the simple title)
-* `${modversion:modid}`: Version of the mod with the specified ID
-(not available in the simple title)
-* '$' can be escaped by using an extra '$'.
+  * Severable variables are provided:
+    * `${mcversion}`: Minecraft version
+    * `${activity}`: Current activity (not available in the simple or normal title)
+    * `${username}`: Username
+    * `${modsloaded}`: Number of mods loaded (not available in the simple title)
+    * `${modversion:modid}`: Version of the mod with the specified ID
+    (not available in the simple title)
+  * '$' can be escaped by using an extra '$'.
 * 16x16 icon
 * 32x32 icon
 * 256x256 icon (only takes effect on Mac OS X)
@@ -352,8 +352,8 @@ explanation.
 * In case of unaddressed compatibility issues, individual mixins can be disabled through the mixin
 blacklist.
 * Most mixins are not automatically disabled when the features that depend on them are.
-* This is done to allow features to be enabled or disabled in-game without the need for restarts.
-* A list of these mixins can be found in the comments for the mixin blacklist.
-* **Please report an issue if you need to use the mixin blacklist to resolve a conflict.**
+  * This is done to allow features to be enabled or disabled in-game without the need for restarts.
+  * A list of these mixins can be found in the comments for the mixin blacklist.
+  * **Please report an issue if you need to use the mixin blacklist to resolve a conflict.**
 * The configuration can be reloaded from disk in-game through the use of a command
 (`/rpconfigreload` by default).
