@@ -19,7 +19,7 @@
 		"datafixerupper.SchemasMixin",
 		"packetsizelimits.PacketByteBufMixin",
 		"packetsizelimits.PacketInflaterMixin",
-		"timeouts.ReadTimeoutHandlerMixin",
+		"timeouts.ChannelInitializerMixin",
 		"timeouts.ServerLoginNetworkHandlerMixin",
 		"timeouts.ServerPlayNetworkHandlerKeepAliveMixin"
 	],

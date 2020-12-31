@@ -548,6 +548,7 @@ public final class RPConfig implements ConfigData {
 						"PlayerListEntry: Required for contributor capes.",
 				"- AnimalEntity: Required for fixing animal breeding hearts.",
 				"- BoatEntity: Required for modifying boat options.",
+				"- ChannelInitializer: Required for changing the read timeout.",
 				"- ClientPlayerEntity: Required for the secondary sprint and dismount key " +
 						"bindings.",
 				"- ClientPlayNetworkHandler: Required for making the dismount overlay message " +
@@ -582,7 +583,6 @@ public final class RPConfig implements ConfigData {
 				"- PacketByteBuf: Required for setting the maximum NBT compound tag packet size.",
 				"- PacketInflater: Required for setting the maximum compressed packet size.",
 				"- PotionItem: Required for removing the glowing effect from potions.",
-				"- ReadTimeoutHandler: Required for changing the read timeout.",
 				"- RenderLayers: Required for fixing water in cauldrons rendering as opaque.",
 				"- ServerLoginNetworkHandler: Required for changing the login timeout.",
 				"- ServerPlayNetworkHandlerKeepAlive: Required for changing KeepAlive packet " +
