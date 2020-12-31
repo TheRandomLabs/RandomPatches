@@ -45,12 +45,12 @@ public abstract class ClientPlayerEntityMixin extends PlayerEntity {
 		super(world, pos, yaw, profile);
 	}
 
-	//We let the server handle the dismount logic.
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	protected boolean shouldDismount() {
+		//We let the server handle the dismount logic.
 		return false;
 	}
 
@@ -58,7 +58,7 @@ public abstract class ClientPlayerEntityMixin extends PlayerEntity {
 			value = "INVOKE",
 			target = "net/minecraft/network/play/client/CInputPacket.<init>(FFZZ)V"
 	), index = 3)
-	private boolean shouldDismount(boolean sneaking) {
+	private boolean isSneaking(boolean sneaking) {
 		return RandomPatches.config().client.keyBindings.dismount ?
 				RPKeyBindingHandler.KeyBindings.DISMOUNT.isKeyDown() : sneaking;
 	}
