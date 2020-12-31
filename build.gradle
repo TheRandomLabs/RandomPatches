@@ -56,7 +56,7 @@ if (project.hasProperty("curseForgeAPIKey")) {
 				}
 			}
 
-			addArtifact(remapSourcesJar) {
+			addArtifact(sourcesJar) {
 				displayName = "RandomPatches ${version} Sources"
 				releaseType = "release"
 			}
@@ -73,6 +73,6 @@ if (project.hasProperty("curseForgeAPIKey")) {
 	}
 
 	afterEvaluate {
-		tasks.curseforge396245.dependsOn remapJar
+		tasks.curseforge396245.dependsOn build
 	}
 }
