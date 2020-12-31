@@ -29,6 +29,7 @@ import com.therandomlabs.randompatches.RPConfig;
 import com.therandomlabs.randompatches.RandomPatches;
 import com.therandomlabs.randompatches.mixin.client.keybindings.GameOptionsMixin;
 import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.GameMenuScreen;
@@ -44,6 +45,7 @@ import org.lwjgl.glfw.GLFW;
 /**
  * Contains key binding-related code for RandomPatches.
  */
+@Environment(EnvType.CLIENT)
 public final class RPKeyBindingHandler {
 	/**
 	 * Contains key bindings added by RandomPatches.

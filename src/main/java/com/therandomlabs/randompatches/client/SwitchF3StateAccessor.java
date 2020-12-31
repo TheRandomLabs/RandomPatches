@@ -23,9 +23,13 @@
 
 package com.therandomlabs.randompatches.client;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+
 /**
  * An interface used to access the switch F3 state of {@link net.minecraft.client.Keyboard}.
  */
+@Environment(EnvType.CLIENT)
 public interface SwitchF3StateAccessor {
 	/**
 	 * Returns the switch F3 state of this {@link net.minecraft.client.Keyboard}.

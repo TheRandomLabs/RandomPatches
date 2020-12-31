@@ -27,10 +27,13 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.therandomlabs.randompatches.client.command.RPClientConfigReloadCommand;
 import io.github.cottonmc.clientcommands.ClientCommandPlugin;
 import io.github.cottonmc.clientcommands.CottonClientCommandSource;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
 /**
  * The Cotton Client Commands entry point for the AutoConfig-TOML test mod.
  */
+@Environment(EnvType.CLIENT)
 public final class RPClientCommands implements ClientCommandPlugin {
 	/**
 	 * {@inheritDoc}

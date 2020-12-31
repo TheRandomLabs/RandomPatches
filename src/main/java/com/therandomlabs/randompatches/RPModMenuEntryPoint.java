@@ -26,10 +26,13 @@ package com.therandomlabs.randompatches;
 import io.github.prospector.modmenu.api.ConfigScreenFactory;
 import io.github.prospector.modmenu.api.ModMenuApi;
 import me.sargunvohra.mcmods.autoconfig1u.AutoConfig;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
 /**
  * The Mod Menu entry point for the AutoConfig-TOML test mod.
  */
+@Environment(EnvType.CLIENT)
 public final class RPModMenuEntryPoint implements ModMenuApi {
 	/**
 	 * {@inheritDoc}

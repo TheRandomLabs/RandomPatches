@@ -36,6 +36,7 @@ import java.util.regex.Pattern;
 import com.therandomlabs.randompatches.RPConfig;
 import com.therandomlabs.randompatches.RandomPatches;
 import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;
 import net.fabricmc.loader.api.metadata.CustomValue;
@@ -62,6 +63,7 @@ import org.lwjgl.system.MemoryUtil;
 /**
  * Contains Minecraft window-related code for RandomPatches.
  */
+@Environment(EnvType.CLIENT)
 public final class RPWindowHandler {
 	private static final class TitleLookup extends StrLookup<String> {
 		private static final TitleLookup INSTANCE = new TitleLookup();

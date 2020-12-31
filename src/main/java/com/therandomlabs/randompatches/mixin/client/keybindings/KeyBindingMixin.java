@@ -86,6 +86,7 @@ public final class KeyBindingMixin implements BoundKeyAccessor {
 	@SuppressWarnings("ConstantConditions")
 	@Inject(method = "setKeyPressed", at = @At("HEAD"))
 	private static void setKeyPressed(InputUtil.Key key, boolean pressed, CallbackInfo info) {
+		//In vanilla, setPressed is only called on the most recently registered KeyBinding.
 		keysById.values().stream().filter(keyBinding -> key.equals(
 				((KeyBindingMixin) (Object) keyBinding).getBoundKey())
 		).forEach(keyBinding -> keyBinding.setPressed(pressed));

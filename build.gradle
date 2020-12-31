@@ -22,6 +22,16 @@ version = "2.0.1"
 group = "com.therandomlabs.randompatches"
 archivesBaseName = "randompatches"
 
+repositories {
+	maven {
+		url "https://maven.siphalor.de/"
+	}
+}
+
+dependencies {
+	modImplementation "de.siphalor:amecsapi-1.16:1+"
+}
+
 if (project.hasProperty("curseForgeAPIKey")) {
 	curseforge {
 		apiKey = project.curseForgeAPIKey

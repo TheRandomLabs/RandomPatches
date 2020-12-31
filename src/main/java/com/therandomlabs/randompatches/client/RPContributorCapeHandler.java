@@ -38,6 +38,8 @@ import com.mojang.authlib.minecraft.MinecraftProfileTexture;
 import com.therandomlabs.randompatches.RandomPatches;
 import com.therandomlabs.randompatches.mixin.client.contributorcapes.AbstractClientPlayerEntityMixin;
 import com.therandomlabs.randompatches.mixin.client.contributorcapes.PlayerListEntryMixin;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.network.PlayerListEntry;
@@ -48,6 +50,7 @@ import org.apache.commons.io.IOUtils;
 /**
  * Handles contributor capes for RandomPatches.
  */
+@Environment(EnvType.CLIENT)
 public final class RPContributorCapeHandler {
 	private static final URI CONTRIBUTORS = URI.create(
 			"https://raw.githubusercontent.com/TheRandomLabs/RandomPatches/misc/contributors.txt"

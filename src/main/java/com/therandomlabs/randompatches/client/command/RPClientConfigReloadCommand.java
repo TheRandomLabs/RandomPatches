@@ -28,11 +28,14 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.therandomlabs.randompatches.RandomPatches;
 import io.github.cottonmc.clientcommands.CottonClientCommandSource;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.text.TranslatableText;
 
 /**
  * The command that reloads the RandomPatches client-sided configuration.
  */
+@Environment(EnvType.CLIENT)
 public final class RPClientConfigReloadCommand {
 	private RPClientConfigReloadCommand() {}
 

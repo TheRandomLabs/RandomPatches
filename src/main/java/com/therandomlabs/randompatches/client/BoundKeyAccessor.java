@@ -23,11 +23,14 @@
 
 package com.therandomlabs.randompatches.client;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.util.InputUtil;
 
 /**
  * An interface used to access the bound key of a {@link net.minecraft.client.options.KeyBinding}.
  */
+@Environment(EnvType.CLIENT)
 public interface BoundKeyAccessor {
 	/**
 	 * Returns this {@link net.minecraft.client.options.KeyBinding}'s bound key.

@@ -26,6 +26,7 @@ package com.therandomlabs.randompatches.client;
 import com.therandomlabs.randompatches.RandomPatches;
 import com.therandomlabs.randompatches.mixin.client.RenderLayersMixin;
 import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.render.RenderLayer;
@@ -33,6 +34,7 @@ import net.minecraft.client.render.RenderLayer;
 /**
  * Handles the fix for water in cauldrons rendering as opaque.
  */
+@Environment(EnvType.CLIENT)
 public final class CauldronWaterTranslucencyHandler {
 	private static boolean enabled;
 
