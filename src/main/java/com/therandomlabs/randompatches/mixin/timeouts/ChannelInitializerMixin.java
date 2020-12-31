@@ -24,24 +24,20 @@
 package com.therandomlabs.randompatches.mixin.timeouts;
 
 import com.therandomlabs.randompatches.RandomPatches;
-import io.netty.handler.timeout.ReadTimeoutHandler;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 
-@Mixin(ReadTimeoutHandler.class)
-public final class ReadTimeoutHandlerMixin {
-	//On the client, a ReadTimeoutHandler is created in NetworkManager.
-	//On the server, a ReadTimeoutHandler is created in NetworkSystem.
-	@ModifyArg(method = "<init>(I)V", at = @At(
+@Mixin(targets = {
+		"net/minecraft/network/NetworkManager$1",
+		"net/minecraft/network/NetworkSystem$1"
+})
+public final class ChannelInitializerMixin {
+	@ModifyArg(method = "initChannel(Lio/netty/channel/Channel;)V", at = @At(
 			value = "INVOKE",
-			target = "io/netty/handler/timeout/ReadTimeoutHandler.<init>" +
-					"(JLjava/util/concurrent/TimeUnit;)V"
+			target = "io/netty/handler/timeout/ReadTimeoutHandler.<init>(I)V"
 	))
-	private int getTimeout(int timeout) {
-		final int forgeReadTimeout =
-				Integer.parseInt(System.getProperty("forge.readTimeout", "30"));
-		return timeout == 30 || timeout == forgeReadTimeout ?
-				RandomPatches.config().connectionTimeouts.readTimeoutSeconds : timeout;
+	private int getReadTimeout(int timeout) {
+		return RandomPatches.config().connectionTimeouts.readTimeoutSeconds;
 	}
 }

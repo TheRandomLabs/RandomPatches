@@ -18,7 +18,7 @@
 		"datafixerupper.MinecraftServerMixin",
 		"packetsizelimits.NettyCompressionDecoderMixin",
 		"packetsizelimits.PacketBufferMixin",
-		"timeouts.ReadTimeoutHandlerMixin",
+		"timeouts.ChannelInitializerMixin",
 		"timeouts.ServerLoginNetHandlerMixin",
 		"timeouts.ServerPlayNetHandlerKeepAliveMixin"
 	],
