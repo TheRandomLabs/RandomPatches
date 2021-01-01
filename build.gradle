@@ -1,6 +1,6 @@
 apply plugin: "java-library"
 
-version = "2.1.1-forge"
+version = "2.1.2-forge"
 group = "com.therandomlabs.randompatches"
 archivesBaseName = "randompatches"
 
@@ -92,7 +92,7 @@ if (project.hasProperty("curseForgeAPIKey")) {
 }
 
 if (project.hasProperty("modrinthToken")) {
-	task publishModrinth(type: TaskModrinthUpload) {
+	task publishModrinth(type: com.modrinth.minotaur.TaskModrinthUpload) {
 		token = project.modrinthToken
 		projectId = "JmtW1Cr5"
 		versionNumber = version
