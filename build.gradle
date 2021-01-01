@@ -16,10 +16,11 @@ ext {
 	cottonClientCommandsVersion = "1.0.1+1.16-rc1"
 }
 
-apply from: "https://raw.githubusercontent.com/TheRandomLabs/Common-Gradle/${project.commonGradleBranch}/fabric/1.16.4.gradle"
-
 version = "2.1.1-fabric"
 group = "com.therandomlabs.randompatches"
+
+apply from: "https://raw.githubusercontent.com/TheRandomLabs/Common-Gradle/${project.commonGradleBranch}/fabric/1.16.4.gradle"
+
 archivesBaseName = "randompatches"
 
 repositories {
@@ -30,6 +31,12 @@ repositories {
 
 dependencies {
 	modImplementation "de.siphalor:amecsapi-1.16:1+"
+}
+
+tasks.withType(JavaCompile) {
+	options.errorprone {
+		option("NullAway:ExcludedClassAnnotations", "org.spongepowered.asm.mixin.Mixin")
+	}
 }
 
 if (project.hasProperty("curseForgeAPIKey")) {

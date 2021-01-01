@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2020 TheRandomLabs
+ * Copyright (c) 2020-2021 TheRandomLabs
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -68,6 +68,7 @@ public final class RPWindowHandler {
 	private static final class TitleLookup extends StrLookup<String> {
 		private static final TitleLookup INSTANCE = new TitleLookup();
 
+		@Nullable
 		@Override
 		public String lookup(String key) {
 			if (key.equals("mcversion")) {
@@ -106,6 +107,7 @@ public final class RPWindowHandler {
 
 	private static int rootNonLibraryMods;
 
+	@Nullable
 	private static String activity;
 	private static boolean enabled;
 
@@ -339,6 +341,7 @@ public final class RPWindowHandler {
 		updateWindowIcon(null, null);
 	}
 
+	@Nullable
 	private static ByteBuffer readImageToBuffer(
 			InputStream stream, IntBuffer x, IntBuffer y, IntBuffer channels, int size
 	) throws IOException {

@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2020 TheRandomLabs
+ * Copyright (c) 2020-2021 TheRandomLabs
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -41,6 +41,7 @@ import net.minecraft.world.ScheduledTick;
  */
 @SuppressWarnings({"rawtypes", "serial"})
 public final class ScheduledTickHashSet extends HashSet<ScheduledTick> {
+	@SuppressWarnings("NullAway")
 	private static final class ScheduledTickWrapper {
 		Object entry;
 

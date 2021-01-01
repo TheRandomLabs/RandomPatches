@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2020 TheRandomLabs
+ * Copyright (c) 2020-2021 TheRandomLabs
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -31,10 +31,11 @@ import com.mojang.datafixers.DSL;
 import com.mojang.datafixers.DataFixer;
 import com.mojang.datafixers.schemas.Schema;
 import com.mojang.datafixers.types.Type;
-import com.mojang.datafixers.types.templates.TaggedChoice;
+import com.mojang.datafixers.types.templates.TaggedChoice.TaggedChoiceType;
 import com.mojang.datafixers.types.templates.TypeTemplate;
 import com.mojang.serialization.Dynamic;
 import net.minecraft.SharedConstants;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 /**
  * A no-op {@link DataFixer}.
@@ -50,23 +51,27 @@ public final class FakeDataFixer implements DataFixer {
 			return ImmutableMap.of();
 		}
 
+		@Nullable
 		@Override
 		public Type<?> getTypeRaw(DSL.TypeReference type) {
 			return null;
 		}
 
+		@Nullable
 		@Override
 		public Type<?> getType(DSL.TypeReference type) {
 			return null;
 		}
 
+		@Nullable
 		@Override
 		public Type<?> getChoiceType(DSL.TypeReference type, String choiceName) {
 			return null;
 		}
 
+		@Nullable
 		@Override
-		public TaggedChoice.TaggedChoiceType<?> findChoiceType(DSL.TypeReference type) {
+		public TaggedChoiceType<?> findChoiceType(DSL.TypeReference type) {
 			return null;
 		}
 

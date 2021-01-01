@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2020 TheRandomLabs
+ * Copyright (c) 2020-2021 TheRandomLabs
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -25,6 +25,7 @@ package com.therandomlabs.randompatches.mixin.client.contributorcapes;
 
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.network.PlayerListEntry;
+import org.checkerframework.checker.nullness.qual.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
 import org.spongepowered.asm.mixin.gen.Invoker;
@@ -35,5 +36,5 @@ public interface AbstractClientPlayerEntityMixin {
 	PlayerListEntry invokeGetPlayerListEntry();
 
 	@Accessor
-	void setCachedScoreboardEntry(PlayerListEntry entry);
+	void setCachedScoreboardEntry(@Nullable PlayerListEntry entry);
 }

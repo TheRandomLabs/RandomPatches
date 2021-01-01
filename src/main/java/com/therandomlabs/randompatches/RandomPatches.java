@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2020 TheRandomLabs
+ * Copyright (c) 2020-2021 TheRandomLabs
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -31,6 +31,7 @@ import me.sargunvohra.mcmods.autoconfig1u.AutoConfig;
 import net.fabricmc.api.ModInitializer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 /**
  * The main class for RandomPatches.
@@ -47,6 +48,7 @@ public final class RandomPatches implements ModInitializer {
 	public static final Logger logger = LogManager.getLogger(MOD_ID);
 
 	@SuppressWarnings("PMD.NonThreadSafeSingleton")
+	@Nullable
 	private static TOMLConfigSerializer<RPConfig> serializer;
 
 	/**
@@ -74,6 +76,7 @@ public final class RandomPatches implements ModInitializer {
 	 *
 	 * @return an {@link RPConfig} object.
 	 */
+	@SuppressWarnings("NullAway")
 	public static RPConfig config() {
 		if (serializer == null) {
 			reloadConfig();
