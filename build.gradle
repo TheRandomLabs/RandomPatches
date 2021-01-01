@@ -42,10 +42,14 @@ if (project.hasProperty("curseForgeAPIKey")) {
 		project {
 			id = "396245"
 
-			addGameVersion "1.16.1"
-			addGameVersion "1.16.2"
-			addGameVersion "1.16.3"
+			addGameVersion "Fabric"
+			addGameVersion "Java 10"
+			addGameVersion "Java 9"
+			addGameVersion "Java 8"
 			addGameVersion "1.16.4"
+			addGameVersion "1.16.3"
+			addGameVersion "1.16.2"
+			addGameVersion "1.16.1"
 
 			mainArtifact(remapJar) {
 				changelogType = "markdown"
@@ -89,10 +93,10 @@ if (project.hasProperty("modrinthToken")) {
 		changelog = file("changelog.md")
 		uploadFile = remapJar
 		releaseType = "beta"
-		addGameVersion("1.16.1")
-		addGameVersion("1.16.2")
-		addGameVersion("1.16.3")
 		addGameVersion("1.16.4")
+		addGameVersion("1.16.3")
+		addGameVersion("1.16.2")
+		addGameVersion("1.16.1")
 		addLoader("fabric")
 		addFile(sourcesJar)
 		addFile(javadocJar)
