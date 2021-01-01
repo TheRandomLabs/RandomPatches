@@ -1,3 +1,5 @@
+import com.modrinth.minotaur.TaskModrinthUpload
+
 plugins {
 	id "java-library"
 	id "fabric-loom" version "0.5-SNAPSHOT"
@@ -75,5 +77,24 @@ if (project.hasProperty("curseForgeAPIKey")) {
 
 	afterEvaluate {
 		tasks.curseforge396245.dependsOn build
+	}
+}
+
+if (project.hasProperty("modrinthToken")) {
+	task publishModrinth(type: TaskModrinthUpload) {
+		token = project.modrinthToken
+		projectId = "JmtW1Cr5"
+		versionNumber = version
+		versionName = "RandomPatches ${version}"
+		changelog = file("changelog.md")
+		uploadFile = remapJar
+		releaseType = "beta"
+		addGameVersion("1.16.1")
+		addGameVersion("1.16.2")
+		addGameVersion("1.16.3")
+		addGameVersion("1.16.4")
+		addLoader("fabric")
+		addFile(sourcesJar)
+		addFile(javadocJar)
 	}
 }
