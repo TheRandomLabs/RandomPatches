@@ -51,10 +51,14 @@ if (project.hasProperty("curseForgeAPIKey")) {
 		project {
 			id = "285612"
 
-			addGameVersion "1.16.1"
-			addGameVersion "1.16.2"
-			addGameVersion "1.16.3"
+			addGameVersion "Fabric"
+			addGameVersion "Java 10"
+			addGameVersion "Java 9"
+			addGameVersion "Java 8"
 			addGameVersion "1.16.4"
+			addGameVersion "1.16.3"
+			addGameVersion "1.16.2"
+			addGameVersion "1.16.1"
 
 			mainArtifact(jar) {
 				changelogType = "markdown"
@@ -85,4 +89,24 @@ if (project.hasProperty("curseForgeAPIKey")) {
 	}
 
 	tasks.curseforge.dependsOn build
+}
+
+if (project.hasProperty("modrinthToken")) {
+	task publishModrinth(type: TaskModrinthUpload) {
+		token = project.modrinthToken
+		projectId = "JmtW1Cr5"
+		versionNumber = version
+		versionName = "RandomPatches ${version}"
+		changelog = file("changelog.md")
+		uploadFile = jar
+		releaseType = "beta"
+		addGameVersion("1.16.4")
+		addGameVersion("1.16.3")
+		addGameVersion("1.16.2")
+		addGameVersion("1.16.1")
+		addLoader("forge")
+		addFile(deobfJar)
+		addFile(sourcesJar)
+		addFile(javadocJar)
+	}
 }
