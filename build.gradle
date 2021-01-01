@@ -51,7 +51,7 @@ if (project.hasProperty("curseForgeAPIKey")) {
 		project {
 			id = "285612"
 
-			addGameVersion "Fabric"
+			addGameVersion "Forge"
 			addGameVersion "Java 10"
 			addGameVersion "Java 9"
 			addGameVersion "Java 8"
