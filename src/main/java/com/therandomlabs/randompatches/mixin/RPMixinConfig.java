@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2020 TheRandomLabs
+ * Copyright (c) 2020-2021 TheRandomLabs
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.therandomlabs.randompatches.RandomPatches;
+import org.checkerframework.checker.nullness.qual.Nullable;
 import org.objectweb.asm.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
@@ -46,6 +47,7 @@ public final class RPMixinConfig implements IMixinConfigPlugin {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Nullable
 	@Override
 	public String getRefMapperConfig() {
 		return null;
@@ -70,6 +72,7 @@ public final class RPMixinConfig implements IMixinConfigPlugin {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Nullable
 	@Override
 	public List<String> getMixins() {
 		return null;

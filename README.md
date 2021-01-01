@@ -104,6 +104,8 @@ following player speed limits to a higher value by default:
 * Maximum player elytra speed
 * Maximum player vehicle speed
 
+This fixes [MC-90062](https://bugs.mojang.com/browse/MC-90062).
+
 ### Boat options
 
 The following options related to boats can be modified:

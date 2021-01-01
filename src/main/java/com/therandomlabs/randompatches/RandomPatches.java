@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2020 TheRandomLabs
+ * Copyright (c) 2020-2021 TheRandomLabs
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -37,6 +37,7 @@ import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 /**
  * The main class for RandomPatches.
@@ -54,7 +55,8 @@ public final class RandomPatches {
 	 */
 	public static final Logger logger = LogManager.getLogger(MOD_ID);
 
-	@SuppressWarnings("PMD.NonThreadSafeSingleton")
+	@SuppressWarnings("PMD.NonThreadSafesingleton")
+	@Nullable
 	private static TOMLConfigSerializer<RPConfig> serializer;
 
 	/**
