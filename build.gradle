@@ -97,7 +97,7 @@ if (project.hasProperty("modrinthToken")) {
 		projectId = "JmtW1Cr5"
 		versionNumber = version
 		versionName = "RandomPatches ${version}"
-		changelog = file("changelog.md")
+		changelog = new File("changelog.md").getText()
 		uploadFile = jar
 		releaseType = "beta"
 		addGameVersion("1.16.4")
