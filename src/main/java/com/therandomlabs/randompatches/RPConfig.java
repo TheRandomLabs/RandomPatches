@@ -762,7 +762,10 @@ public final class RPConfig implements ConfigData {
 	@ConfigEntry.Gui.TransitiveObject
 	public PacketSizeLimits packetSizeLimits = new PacketSizeLimits();
 
-	@TOMLConfigSerializer.Comment("Options related to player speed limits.")
+	@TOMLConfigSerializer.Comment({
+			"Options related to player speed limits.",
+			"These options are used to fix MC-90062: https://bugs.mojang.com/browse/MC-90062"
+	})
 	@ConfigEntry.Category("player_speed_limits")
 	@ConfigEntry.Gui.TransitiveObject
 	public PlayerSpeedLimits playerSpeedLimits = new PlayerSpeedLimits();
