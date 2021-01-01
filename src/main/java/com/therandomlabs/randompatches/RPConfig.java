@@ -642,6 +642,11 @@ public final class RPConfig implements ConfigData {
 				return false;
 			}
 
+			if ("InputSlotFiller".equals(simpleName) &&
+					FabricLoader.getInstance().isModLoaded("nbtcrafting")) {
+				return false;
+			}
+
 			if ("ServerTickScheduler".equals(simpleName) && !bugFixes.fixTickSchedulerDesync) {
 				return false;
 			}
@@ -651,16 +656,6 @@ public final class RPConfig implements ConfigData {
 			}
 
 			return !mixinBlacklist.contains(simpleName);
-		}
-
-		private static boolean isLoaded(String className) {
-			try {
-				Class.forName(className, false, RPConfig.class.getClassLoader());
-			} catch (ClassNotFoundException ex) {
-				return false;
-			}
-
-			return true;
 		}
 	}
 

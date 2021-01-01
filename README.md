@@ -177,6 +177,9 @@ the crafting grid. RandomPatches fixes this issue.
 
 This bug is reported as [MC-129057](https://bugs.mojang.com/browse/MC-129057).
 
+This feature is disabled if
+[Nbt Crafting](https://www.curseforge.com/minecraft/mc-mods/nbt-crafting) is installed.
+
 ### Fix entities not being considered wet in cauldrons
 
 In vanilla Minecraft, entities are not considered wet in cauldrons filled with water. RandomPatches
