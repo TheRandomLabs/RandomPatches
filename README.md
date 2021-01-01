@@ -104,6 +104,8 @@ following player speed limits to a higher value by default:
 * Maximum player elytra speed
 * Maximum player vehicle speed
 
+This fixes [MC-90062](https://bugs.mojang.com/browse/MC-90062).
+
 ### Boat options
 
 The following options related to boats can be modified:
@@ -353,7 +355,7 @@ explanation.
 [Mod Menu](https://www.curseforge.com/minecraft/mc-mods/modmenu).
 * In case of unaddressed compatibility issues, individual mixins can be disabled through the mixin
 blacklist.
-* Most mixins are not automatically disabled when the features that depend on them are.
+  * Most mixins are not automatically disabled when the features that depend on them are.
   * This is done to allow features to be enabled or disabled in-game without the need for restarts.
   * A list of these mixins can be found in the comments for the mixin blacklist.
   * **Please report an issue if you need to use the mixin blacklist to resolve a conflict.**

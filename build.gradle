@@ -1,4 +1,5 @@
 plugins {
+	id "java-library"
 	id "fabric-loom" version "0.5-SNAPSHOT"
 	id "com.matthewprenger.cursegradle" version "1.4.0"
 	id "com.modrinth.minotaur" version "1.1.0"
@@ -18,10 +19,9 @@ ext {
 
 version = "2.1.1-fabric"
 group = "com.therandomlabs.randompatches"
+archivesBaseName = "randompatches"
 
 apply from: "https://raw.githubusercontent.com/TheRandomLabs/Common-Gradle/${project.commonGradleBranch}/fabric/1.16.4.gradle"
-
-archivesBaseName = "randompatches"
 
 repositories {
 	maven {
@@ -31,12 +31,6 @@ repositories {
 
 dependencies {
 	modImplementation "de.siphalor:amecsapi-1.16:1+"
-}
-
-tasks.withType(JavaCompile) {
-	options.errorprone {
-		option("NullAway:ExcludedClassAnnotations", "org.spongepowered.asm.mixin.Mixin")
-	}
 }
 
 if (project.hasProperty("curseForgeAPIKey")) {
