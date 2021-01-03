@@ -73,18 +73,18 @@ public final class KeyboardMixin implements SwitchF3StateAccessor {
 
 	@ModifyConstant(method = "onKey", constant = @Constant(intValue = GLFW.GLFW_KEY_B))
 	private int getToggleNarratorKey(int key) {
-		//We use -2 because certain keys (e.g. media keys) are detected as -1.
-		return RandomPatches.config().client.keyBindings.toggleNarrator ? -2 : key;
+		//We use Integer.MIN_VALUE because certain keys (e.g. media keys) are detected as -1.
+		return RandomPatches.config().client.keyBindings.toggleNarrator ? Integer.MIN_VALUE : key;
 	}
 
 	@ModifyConstant(method = "onKey", constant = @Constant(intValue = GLFW.GLFW_KEY_ESCAPE))
 	private int getPauseKey(int key) {
-		return RandomPatches.config().client.keyBindings.pause ? -2 : key;
+		return RandomPatches.config().client.keyBindings.pause ? Integer.MIN_VALUE : key;
 	}
 
 	@ModifyConstant(method = "onKey", constant = @Constant(intValue = GLFW.GLFW_KEY_F1))
 	private int getToggleGUIKey(int key) {
-		return RandomPatches.config().client.keyBindings.toggleGUI ? -2 : key;
+		return RandomPatches.config().client.keyBindings.toggleGUI ? Integer.MIN_VALUE : key;
 	}
 
 	@ModifyConstant(
@@ -99,6 +99,6 @@ public final class KeyboardMixin implements SwitchF3StateAccessor {
 			constant = @Constant(intValue = GLFW.GLFW_KEY_F3, ordinal = 0)
 	)
 	private int getToggleDebugInfoKey(int key) {
-		return RandomPatches.config().client.keyBindings.toggleDebugInfo ? -2 : key;
+		return RandomPatches.config().client.keyBindings.toggleDebugInfo ? Integer.MIN_VALUE : key;
 	}
 }
