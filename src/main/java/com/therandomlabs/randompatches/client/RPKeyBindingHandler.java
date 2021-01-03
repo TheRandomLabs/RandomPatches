@@ -158,11 +158,13 @@ public final class RPKeyBindingHandler {
 
 			if (config.toggleDebugInfo && action == GLFW.GLFW_RELEASE &&
 					matches(TOGGLE_DEBUG_INFO, key, scanCode)) {
-				final int toggleDebugInfoKeyCode =
-						((BoundKeyAccessor) TOGGLE_DEBUG_INFO).getBoundKey().getCode();
+				final InputUtil.Key toggleDebugInfoKey =
+						((BoundKeyAccessor) TOGGLE_DEBUG_INFO).getBoundKey();
 				final SwitchF3StateAccessor accessor = (SwitchF3StateAccessor) mc.keyboard;
 
-				if (toggleDebugInfoKeyCode == GLFW.GLFW_KEY_F3 && accessor.getSwitchF3State()) {
+				if (toggleDebugInfoKey.getCategory() == InputUtil.Type.KEYSYM &&
+						toggleDebugInfoKey.getCode() == GLFW.GLFW_KEY_F3 &&
+						accessor.getSwitchF3State()) {
 					accessor.setSwitchF3State(false);
 				} else {
 					mc.options.debugEnabled = !mc.options.debugEnabled;

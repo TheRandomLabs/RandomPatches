@@ -580,13 +580,13 @@ public final class RPConfig implements ConfigData {
 				"  - Required for making the forward movement key not conflict with the " +
 						"secondary sprint key.",
 				"  - Required for making the sneak key not conflict with the dismount key.",
-				"- Keyboard: Required for the narrator toggle, escape, GUI toggle and debug key " +
+				"- Keyboard: Required for the narrator toggle, pause, GUI toggle and debug key " +
 						"bindings.",
 				"- MinecraftClient:",
 				"  - Required for changing Minecraft window options.",
 				"  - Required for disabling the warning that displays when loading a world that " +
 						"uses experimental settings.",
-				"- Mouse: Required for using mouse buttons for the narrator toggle, escape, GUI " +
+				"- Mouse: Required for using mouse buttons for the narrator toggle, pause, GUI " +
 						"toggle and debug key bindings.",
 				"- Option: Required for modifying the framerate limit slider step size.",
 				"- PacketByteBuf: Required for setting the maximum NBT compound tag packet size.",
