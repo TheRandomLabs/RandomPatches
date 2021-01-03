@@ -560,12 +560,14 @@ public final class RPConfig implements ConfigData {
 				"  - Required for making the sneak key not conflict with the dismount key.",
 				"  - Required for making standalone modifier keys not conflict with key " +
 						"combinations with that modifier key.",
-				"- KeyboardListener: Required for the narrator toggle, escape, GUI toggle and " +
+				"- KeyboardListener: Required for the narrator toggle, pause, GUI toggle and " +
 						"debug key bindings.",
 				"- Minecraft:",
 				"  - Required for changing Minecraft window options.",
 				"  - Required for disabling the warning that displays when loading a world that " +
 						"uses experimental settings.",
+				"- MouseHelper: Required for using mouse buttons for the narrator toggle, pause, " +
+						"GUI toggle and debug key bindings.",
 				"- NettyCompressionDecoder: Required for setting the maximum compressed packet " +
 						"size.",
 				"- PacketBuffer: Required for setting the maximum NBT compound tag packet size.",

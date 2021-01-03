@@ -101,18 +101,20 @@ public final class RPKeyBindingHandler {
 
 		/**
 		 * Handles key events. This should only be called by
-		 * {@link com.therandomlabs.randompatches.mixin.client.keybindings.KeyboardListenerMixin}.
+		 * {@link com.therandomlabs.randompatches.mixin.client.keybindings.KeyboardListenerMixin}
+		 * and {@link com.therandomlabs.randompatches.mixin.client.keybindings.MouseHelperMixin}.
 		 *
 		 * @param key the key.
 		 * @param action the action.
-		 * @param scanCode the scan code.
+		 * @param scanCode the scan code. If this is a mouse event, this should be
+		 * {@link Integer#MIN_VALUE}.
 		 */
 		public static void onKeyEvent(int key, int action, int scanCode) {
 			final RPConfig.KeyBindings config = RandomPatches.config().client.keyBindings;
 
 			if (config.toggleNarrator && action != GLFW.GLFW_RELEASE &&
 					TOGGLE_NARRATOR.isConflictContextAndModifierActive() &&
-					TOGGLE_NARRATOR.matchesKey(key, scanCode)) {
+					matches(TOGGLE_NARRATOR, key, scanCode)) {
 				AbstractOption.NARRATOR.func_216722_a(mc.gameSettings, 1);
 
 				if (mc.currentScreen instanceof WithNarratorSettingsScreen) {
@@ -120,7 +122,7 @@ public final class RPKeyBindingHandler {
 				}
 			}
 
-			if (config.pause && action != GLFW.GLFW_RELEASE && PAUSE.matchesKey(key, scanCode)) {
+			if (config.pause && action != GLFW.GLFW_RELEASE && matches(PAUSE, key, scanCode)) {
 				if (mc.currentScreen == null) {
 					mc.displayInGameMenu(InputMappings.isKeyDown(
 							mc.getWindow().getHandle(), GLFW.GLFW_KEY_F3
@@ -135,13 +137,14 @@ public final class RPKeyBindingHandler {
 			}
 
 			if (config.toggleGUI && action != GLFW.GLFW_RELEASE &&
-					TOGGLE_GUI.matchesKey(key, scanCode)) {
+					matches(TOGGLE_GUI, key, scanCode)) {
 				mc.gameSettings.hideGUI = !mc.gameSettings.hideGUI;
 			}
 
 			if (config.toggleDebugInfo && action == GLFW.GLFW_RELEASE &&
-					TOGGLE_DEBUG_INFO.matchesKey(key, scanCode)) {
-				if (TOGGLE_DEBUG_INFO.getKey().getKeyCode() == GLFW.GLFW_KEY_F3 &&
+					matches(TOGGLE_DEBUG_INFO, key, scanCode)) {
+				if (TOGGLE_DEBUG_INFO.getKey().getType() == InputMappings.Type.KEYSYM &&
+						TOGGLE_DEBUG_INFO.getKey().getKeyCode() == GLFW.GLFW_KEY_F3 &&
 						mc.keyboardListener.actionKeyF3) {
 					mc.keyboardListener.actionKeyF3 = false;
 				} else {
@@ -152,6 +155,11 @@ public final class RPKeyBindingHandler {
 							mc.gameSettings.showDebugInfo && Screen.hasAltDown();
 				}
 			}
+		}
+
+		private static boolean matches(KeyBinding keyBinding, int key, int scanCode) {
+			return scanCode == Integer.MIN_VALUE ?
+					keyBinding.matchesMouseKey(key) : keyBinding.matchesKey(key, scanCode);
 		}
 
 		private static void register() {

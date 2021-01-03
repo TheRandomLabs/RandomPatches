@@ -37,6 +37,7 @@
 		"client.keybindings.ClientPlayNetHandlerMixin",
 		"client.keybindings.KeyBindingMixin",
 		"client.keybindings.KeyboardListenerMixin",
+		"client.keybindings.MouseHelperMixin",
 		"client.packetsizelimits.CCustomPayloadPacketMixin"
 	],
 	"injectors": {
