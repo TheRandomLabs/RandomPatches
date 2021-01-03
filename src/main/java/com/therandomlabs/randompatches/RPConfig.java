@@ -586,6 +586,8 @@ public final class RPConfig implements ConfigData {
 				"  - Required for changing Minecraft window options.",
 				"  - Required for disabling the warning that displays when loading a world that " +
 						"uses experimental settings.",
+				"- Mouse: Required for using mouse buttons for the narrator toggle, escape, GUI " +
+						"toggle and debug key bindings.",
 				"- Option: Required for modifying the framerate limit slider step size.",
 				"- PacketByteBuf: Required for setting the maximum NBT compound tag packet size.",
 				"- PacketInflater: Required for setting the maximum compressed packet size.",

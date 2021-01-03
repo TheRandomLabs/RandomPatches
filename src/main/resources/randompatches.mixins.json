@@ -44,6 +44,7 @@
 		"client.keybindings.GameOptionsMixin",
 		"client.keybindings.KeyBindingMixin",
 		"client.keybindings.KeyboardMixin",
+		"client.keybindings.MouseMixin",
 		"client.packetsizelimits.CustomPayloadC2SPacketMixin"
 	],
 	"injectors": {

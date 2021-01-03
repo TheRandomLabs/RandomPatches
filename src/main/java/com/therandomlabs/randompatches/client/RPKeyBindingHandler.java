@@ -116,18 +116,20 @@ public final class RPKeyBindingHandler {
 
 		/**
 		 * Handles key events. This should only be called by
-		 * {@link com.therandomlabs.randompatches.mixin.client.keybindings.KeyboardMixin}.
+		 * {@link com.therandomlabs.randompatches.mixin.client.keybindings.KeyboardMixin} and
+		 * {@link com.therandomlabs.randompatches.mixin.client.keybindings.MouseMixin}.
 		 *
 		 * @param key the key.
 		 * @param action the action.
-		 * @param scanCode the scan code.
+		 * @param scanCode the scan code. If this is a mouse event, this should be
+		 * {@link Integer#MIN_VALUE}.
 		 */
 		public static void onKeyEvent(int key, int action, int scanCode) {
 			final RPConfig.KeyBindings config = RandomPatches.config().client.keyBindings;
 
 			if (config.toggleNarrator && action != GLFW.GLFW_RELEASE &&
 					isNarratorKeyBindingContextActive() &&
-					TOGGLE_NARRATOR.matchesKey(key, scanCode)) {
+					matches(TOGGLE_NARRATOR, key, scanCode)) {
 				Option.NARRATOR.cycle(mc.options, 1);
 
 				if (mc.currentScreen instanceof NarratorOptionsScreen) {
@@ -135,7 +137,7 @@ public final class RPKeyBindingHandler {
 				}
 			}
 
-			if (config.pause && action != GLFW.GLFW_RELEASE && PAUSE.matchesKey(key, scanCode)) {
+			if (config.pause && action != GLFW.GLFW_RELEASE && matches(PAUSE, key, scanCode)) {
 				if (mc.currentScreen == null) {
 					mc.openPauseMenu(InputUtil.isKeyPressed(
 							mc.getWindow().getHandle(), GLFW.GLFW_KEY_F3
@@ -150,12 +152,12 @@ public final class RPKeyBindingHandler {
 			}
 
 			if (config.toggleGUI && action != GLFW.GLFW_RELEASE &&
-					TOGGLE_GUI.matchesKey(key, scanCode)) {
+					matches(TOGGLE_GUI, key, scanCode)) {
 				mc.options.hudHidden = !mc.options.hudHidden;
 			}
 
 			if (config.toggleDebugInfo && action == GLFW.GLFW_RELEASE &&
-					TOGGLE_DEBUG_INFO.matchesKey(key, scanCode)) {
+					matches(TOGGLE_DEBUG_INFO, key, scanCode)) {
 				final int toggleDebugInfoKeyCode =
 						((BoundKeyAccessor) TOGGLE_DEBUG_INFO).getBoundKey().getCode();
 				final SwitchF3StateAccessor accessor = (SwitchF3StateAccessor) mc.keyboard;
@@ -169,6 +171,11 @@ public final class RPKeyBindingHandler {
 					mc.options.debugTpsEnabled = mc.options.debugTpsEnabled && Screen.hasAltDown();
 				}
 			}
+		}
+
+		private static boolean matches(KeyBinding keyBinding, int key, int scanCode) {
+			return scanCode == Integer.MIN_VALUE ?
+					keyBinding.matchesMouse(key) : keyBinding.matchesKey(key, scanCode);
 		}
 
 		private static boolean isNarratorKeyBindingContextActive() {
