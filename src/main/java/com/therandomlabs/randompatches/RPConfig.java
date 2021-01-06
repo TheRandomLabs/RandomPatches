@@ -137,7 +137,7 @@ public final class RPConfig implements ConfigData {
 		 */
 		public boolean contributorCapes() {
 			final List<String> mixinBlacklist = RandomPatches.config().misc.mixinBlacklist;
-			return contributorCapes && !mixinBlacklist.contains("AbstractClientPlayerEntity") &&
+			return contributorCapes && !mixinBlacklist.contains("ClientPlayerEntity") &&
 					!mixinBlacklist.contains("PlayerEntityRendererContributorCapes") &&
 					!mixinBlacklist.contains("PlayerListEntry");
 		}
@@ -272,8 +272,9 @@ public final class RPConfig implements ConfigData {
 		 * @return {@code true} if the dismount key binding is enabled, or otherwise {@code false}.
 		 */
 		public boolean dismount() {
-			return dismount &&
-					!RandomPatches.config().misc.mixinBlacklist.contains("ClientPlayerEntity");
+			final List<String> mixinBlacklist = RandomPatches.config().misc.mixinBlacklist;
+			return dismount && !mixinBlacklist.contains("ClientPlayerEntity") &&
+					!mixinBlacklist.contains("PlayerInputC2SPacket");
 		}
 	}
 
@@ -591,6 +592,7 @@ public final class RPConfig implements ConfigData {
 				"- Option: Required for modifying the framerate limit slider step size.",
 				"- PacketByteBuf: Required for setting the maximum NBT compound tag packet size.",
 				"- PacketInflater: Required for setting the maximum compressed packet size.",
+				"- PlayerInputC2SPacket: Required for the dismount key binding.",
 				"- PotionItem: Required for removing the glowing effect from potions.",
 				"- RenderLayers: Required for fixing water in cauldrons rendering as opaque.",
 				"- ServerLoginNetworkHandler: Required for changing the login timeout.",
@@ -641,6 +643,11 @@ public final class RPConfig implements ConfigData {
 
 			if ("BambooBlock".equals(simpleName) &&
 					!RandomPatches.config().client.optimizeBambooRendering) {
+				return false;
+			}
+
+			if ("Option".equals(simpleName) &&
+					FabricLoader.getInstance().isModLoaded("optifabric")) {
 				return false;
 			}
 

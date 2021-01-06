@@ -193,7 +193,7 @@ public final class RPKeyBindingHandler {
 			register(SECONDARY_SPRINT, config.secondarySprint());
 			register(DISMOUNT, config.dismount());
 
-			if (!mixinBlacklist.contains("KeyboardListener")) {
+			if (!mixinBlacklist.contains("Keyboard")) {
 				register(TOGGLE_NARRATOR, config.toggleNarrator);
 				register(PAUSE, config.pause);
 				register(TOGGLE_GUI, config.toggleGUI);

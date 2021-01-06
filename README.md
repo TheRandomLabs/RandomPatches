@@ -339,6 +339,8 @@ experimental settings:
 In vanilla Minecraft, the framerate limit slider step size is 10.0. RandomPatches changes this to
 1.0 by default.
 
+This does not work when OptiFine is installed.
+
 ### Return to main menu after disconnect (client-sided)
 
 This feature makes Minecraft return to the main menu screen after disconnecting rather than the

@@ -38,7 +38,6 @@ import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(ClientPlayerEntity.class)
@@ -53,21 +52,13 @@ public abstract class ClientPlayerEntityMixin extends PlayerEntity {
 	 */
 	@Override
 	protected boolean shouldDismount() {
-		//We let the server handle the dismount logic.
-		return false;
+		//We let the server handle the dismount logic instead of the client if the dismount
+		//key binding is enabled.
+		return !RandomPatches.config().client.keyBindings.dismount() && super.shouldDismount();
 	}
 
 	@Shadow
 	public abstract void onRecipeDisplayed(Recipe<?> recipe);
-
-	@ModifyArg(method = "tick", at = @At(
-			value = "INVOKE",
-			target = "Lnet/minecraft/network/packet/c2s/play/PlayerInputC2SPacket;<init>(FFZZ)V"
-	), index = 3)
-	private boolean isSneaking(boolean sneaking) {
-		return RandomPatches.config().client.keyBindings.dismount ?
-				RPKeyBindingHandler.KeyBindings.DISMOUNT.isPressed() : sneaking;
-	}
 
 	@Redirect(
 			method = "tickMovement",
