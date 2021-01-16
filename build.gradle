@@ -32,7 +32,7 @@ repositories {
 }
 
 dependencies {
-	modImplementation "de.siphalor:amecsapi-1.16:1+"
+	modImplementation "de.siphalor:amecsapi-1.16:1.1.1+mc1.16-rc1"
 }
 
 if (project.hasProperty("curseForgeAPIKey")) {
