@@ -1,16 +1,17 @@
 apply plugin: "java-library"
 
-version = "2.1.5-forge"
+version = "2.1.9-forge"
 group = "com.therandomlabs.randompatches"
 archivesBaseName = "randompatches"
 
 ext {
 	commonGradleBranch = "master"
 	useMixin = true
-	forgeVersion = "35.1.13"
+	minecraftVersion = "1.16.5"
+	forgeVersion = "36.0.1"
 	mappingsChannel = "snapshot"
-	mappingsVersion = "20201220-mixed-1.16.4"
-	clothConfigVersion = "4.1.1"
+	mappingsVersion = "20210117-mixed-1.16.5"
+	clothConfigVersion = "4.1.3"
 	autoConfigVersion = "3.0"
 	autoConfigTOMLVersion = "autoconfig-3.x.x-forge-SNAPSHOT"
 }
@@ -42,7 +43,7 @@ buildscript {
 	}
 }
 
-apply from: "https://raw.githubusercontent.com/TheRandomLabs/Common-Gradle/${project.commonGradleBranch}/forge/1.16.4.gradle"
+apply from: "https://raw.githubusercontent.com/TheRandomLabs/Common-Gradle/${project.commonGradleBranch}/forge.gradle"
 
 if (project.hasProperty("curseForgeAPIKey")) {
 	curseforge {
@@ -55,6 +56,7 @@ if (project.hasProperty("curseForgeAPIKey")) {
 			addGameVersion "Java 10"
 			addGameVersion "Java 9"
 			addGameVersion "Java 8"
+			addGameVersion "1.16.5"
 			addGameVersion "1.16.4"
 			addGameVersion "1.16.3"
 			addGameVersion "1.16.2"
@@ -100,6 +102,7 @@ if (project.hasProperty("modrinthToken")) {
 		changelog = new File("changelog.md").getText()
 		uploadFile = jar
 		releaseType = "beta"
+		addGameVersion("1.16.5")
 		addGameVersion("1.16.4")
 		addGameVersion("1.16.3")
 		addGameVersion("1.16.2")
