@@ -9,9 +9,10 @@ plugins {
 
 ext {
 	commonGradleBranch = "master"
-	yarnMappings = "1.16.4+build.7"
-	loaderVersion = "0.10.8"
-	fabricAPIVersion = "0.28.1+1.16"
+	minecraftVersion = "1.16.5"
+	yarnMappings = "1.16.5+build.1"
+	loaderVersion = "0.11.1"
+	fabricAPIVersion = "0.29.3+1.16"
 	modMenuVersion = "1.14.13+build.19"
 	clothConfigVersion = "4.8.3"
 	autoConfigVersion = "3.3.1"
@@ -23,7 +24,7 @@ version = "2.1.9-fabric"
 group = "com.therandomlabs.randompatches"
 archivesBaseName = "randompatches"
 
-apply from: "https://raw.githubusercontent.com/TheRandomLabs/Common-Gradle/${project.commonGradleBranch}/fabric/1.16.4.gradle"
+apply from: "https://raw.githubusercontent.com/TheRandomLabs/Common-Gradle/${project.commonGradleBranch}/fabric.gradle"
 
 repositories {
 	maven {
