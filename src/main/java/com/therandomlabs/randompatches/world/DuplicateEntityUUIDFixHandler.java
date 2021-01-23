@@ -34,6 +34,9 @@ import net.minecraft.util.collection.TypeFilterableList;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.chunk.WorldChunk;
 
+/**
+ * Handles the duplicate entity UUID fix.
+ */
 public final class DuplicateEntityUUIDFixHandler {
 	private static final Random random = new Random();
 

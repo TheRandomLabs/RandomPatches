@@ -90,8 +90,6 @@
 	"text.autoconfig.randompatches.category.misc": "Miscellaneous",
 	"text.autoconfig.randompatches.option.misc.bugFixes": "Bug fixes",
 	"text.autoconfig.randompatches.option.misc.bugFixes.@Tooltip": "Miscellaneous bug fixes.",
-	"text.autoconfig.randompatches.option.misc.bugFixes.fixTickSchedulerDesync": "Fix tick scheduler desync",
-	"text.autoconfig.randompatches.option.misc.bugFixes.fixTickSchedulerDesync.@Tooltip": "Fixes the \"TickNextTick list out of synch\" IllegalStateException.",
 	"text.autoconfig.randompatches.option.misc.bugFixes.fixMC2025": "Fix MC-2025",
 	"text.autoconfig.randompatches.option.misc.bugFixes.fixMC2025.@Tooltip": "Fixes MC-2025.",
 	"text.autoconfig.randompatches.option.misc.bugFixes.fixAnimalBreedingHearts": "Fix animal breeding hearts",
