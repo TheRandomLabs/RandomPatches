@@ -633,10 +633,6 @@ public final class RPConfig implements ConfigData {
 				return false;
 			}
 
-			if ("ServerTickList".equals(simpleName) && !bugFixes.fixTickSchedulerDesync) {
-				return false;
-			}
-
 			if ("TemplateManager".equals(simpleName) && !bugFixes.fixMC149777) {
 				return false;
 			}
@@ -660,14 +656,6 @@ public final class RPConfig implements ConfigData {
 	}
 
 	public static final class MiscBugFixes {
-		@TOMLConfigSerializer.Comment({
-				"Fixes the \"TickNextTick list out of synch\" IllegalStateException.",
-				"For more information, see: https://github.com/SleepyTrousers/EnderCore/issues/105",
-				"This bug is reported as MC-28660: https://bugs.mojang.com/browse/MC-28660"
-		})
-		@ConfigEntry.Gui.Tooltip
-		public boolean fixTickSchedulerDesync = true;
-
 		@Path("fix_mc-2025")
 		@TOMLConfigSerializer.Comment({
 				"Fixes MC-2025: https://bugs.mojang.com/browse/MC-2025",
@@ -688,6 +676,8 @@ public final class RPConfig implements ConfigData {
 				"Fixes entities not being considered wet in cauldrons filled with water.",
 				"This allows players to use Riptide in cauldrons filled with water, " +
 						"fixing MC-145311: https://bugs.mojang.com/browse/MC-145311",
+				"The MC-145311 fix works client-side only, so please be mindful of server rules " +
+						"when using this feature.",
 				"This also allows players to receive the Conduit Power effect in cauldrons " +
 						"filled with water.",
 		})
@@ -713,6 +703,11 @@ public final class RPConfig implements ConfigData {
 		})
 		@ConfigEntry.Gui.Tooltip
 		public boolean fixDuplicateEntityUUIDs = true;
+
+		@Path("log_fixed_duplicate_entity_uuids")
+		@TOMLConfigSerializer.Comment("Logs fixed entity UUIDs.")
+		@ConfigEntry.Gui.Tooltip
+		public boolean logFixedDuplicateEntityUUIDs = true;
 
 		@TOMLConfigSerializer.Comment({
 				"Fixes the recipe book not automatically moving ingredients with NBT tags to the " +

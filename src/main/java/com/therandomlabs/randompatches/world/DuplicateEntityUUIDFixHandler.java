@@ -37,6 +37,9 @@ import net.minecraftforge.event.world.ChunkEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
+/**
+ * Handles the duplicate entity UUID fix.
+ */
 @Mod.EventBusSubscriber(modid = RandomPatches.MOD_ID)
 public final class DuplicateEntityUUIDFixHandler {
 	private static final Random random = new Random();
@@ -74,10 +77,13 @@ public final class DuplicateEntityUUIDFixHandler {
 				} while (world.getEntityByUuid(newUniqueID) != null);
 
 				entity.setUniqueId(uniqueID);
-				RandomPatches.logger.info(
-						"Changing UUID of duplicate entity {} from {} to {}",
-						entity.getType().getRegistryName(), uniqueID, newUniqueID
-				);
+
+				if (RandomPatches.config().misc.bugFixes.logFixedDuplicateEntityUUIDs) {
+					RandomPatches.logger.info(
+							"Changing UUID of duplicate entity {} from {} to {}",
+							entity.getType().getRegistryName(), uniqueID, newUniqueID
+					);
+				}
 			}
 		}
 	}

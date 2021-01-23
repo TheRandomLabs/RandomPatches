@@ -12,7 +12,6 @@
 		"EntityMixin",
 		"ServerPlayNetHandlerPlayerSpeedLimitsMixin",
 		"ServerRecipePlacerMixin",
-		"ServerTickListMixin",
 		"TemplateManagerMixin",
 		"datafixerupper.DataFixesManagerMixin",
 		"datafixerupper.MinecraftServerMixin",

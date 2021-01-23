@@ -141,15 +141,6 @@ To be clear, **RandomPatches is not responsible for any damage caused by this fe
 This feature does nothing if
 [DataFixerSlayer](https://www.curseforge.com/minecraft/mc-mods/datafixerslayer) is installed.
 
-### Fix tick scheduler desync
-
-In vanilla Minecraft, the tick scheduler occasionally becomes desynchronized, and as a result,
-Minecraft crashes, throwing an `IllegalStateException` with the message
-`TickNextTick list out of synch`. RandomPatches attempts to fix this issue using the solution
-described by malte0811 [here](https://github.com/SleepyTrousers/EnderCore/issues/105).
-
-This bug is reported as [MC-28660](https://bugs.mojang.com/browse/MC-28660).
-
 ### Fix [MC-2025](https://bugs.mojang.com/browse/MC-2025)
 
 Because of floating point precision errors, the bounding box of an entity can be calculated as
@@ -188,6 +179,9 @@ In vanilla Minecraft, entities are not considered wet in cauldrons filled with w
 fixes this issue, allowing players to use Riptide in cauldrons filled with water, fixing
 [MC-145311](https://bugs.mojang.com/browse/MC-145311). In addition, this fix allows players to
 receive the Conduit Power effect in cauldrons filled with water.
+
+It should be noted that the MC-145311 fix works client-side only. Please be mindful of server rules
+when using this feature.
 
 ### Fix player head stacking
 
