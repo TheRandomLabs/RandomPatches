@@ -12,7 +12,6 @@
 		"EntityMixin",
 		"InputSlotFillerMixin",
 		"ServerPlayNetworkHandlerPlayerSpeedLimitsMixin",
-		"ServerTickSchedulerMixin",
 		"ThreadedAnvilChunkStorageMixin",
 		"datafixerupper.MinecraftServerMixin",
 		"datafixerupper.SaveVersionInfoMixin",

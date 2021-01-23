@@ -122,14 +122,6 @@ public final class RPConfig implements ConfigData {
 		@ConfigEntry.Gui.Tooltip
 		public boolean contributorCapes = true;
 
-		@TOMLConfigSerializer.Comment({
-				"The name of the command that reloads this configuration from disk on the client.",
-				"Set this to an empty string to disable the command.",
-				"Changes to this option are applied after a game restart."
-		})
-		@ConfigEntry.Gui.Tooltip
-		public String configReloadCommand = "rpclientconfigreload";
-
 		/**
 		 * Returns whether contributor capes are enabled.
 		 *
@@ -722,6 +714,11 @@ public final class RPConfig implements ConfigData {
 		})
 		@ConfigEntry.Gui.Tooltip
 		public boolean fixDuplicateEntityUUIDs = true;
+
+		@Path("log_fixed_duplicate_entity_uuids")
+		@TOMLConfigSerializer.Comment("Logs fixed entity UUIDs.")
+		@ConfigEntry.Gui.Tooltip
+		public boolean logFixedDuplicateEntityUUIDs = true;
 
 		@TOMLConfigSerializer.Comment({
 				"Fixes the recipe book not automatically moving ingredients with NBT tags to the " +

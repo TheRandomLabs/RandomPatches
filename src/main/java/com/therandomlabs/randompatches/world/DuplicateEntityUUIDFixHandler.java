@@ -72,10 +72,13 @@ public final class DuplicateEntityUUIDFixHandler {
 				} while (world.getEntity(newUniqueID) != null);
 
 				entity.setUuid(uniqueID);
-				RandomPatches.logger.info(
-						"Changing UUID of duplicate entity {} from {} to {}",
-						entity.getType().getLootTableId(), uniqueID, newUniqueID
-				);
+
+				if (RandomPatches.config().misc.bugFixes.logFixedDuplicateEntityUUIDs) {
+					RandomPatches.logger.info(
+							"Changing UUID of duplicate entity {} from {} to {}",
+							entity.getType().getLootTableId(), uniqueID, newUniqueID
+					);
+				}
 			}
 		}
 	}
