@@ -19,7 +19,7 @@ ext {
 	autoConfigTOMLVersion = "autoconfig-3.x.x-fabric-SNAPSHOT"
 }
 
-version = "2.1.9-fabric"
+version = "2.2.0-fabric"
 group = "com.therandomlabs.randompatches"
 archivesBaseName = "randompatches"
 
