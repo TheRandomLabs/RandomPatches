@@ -170,7 +170,7 @@ public final class RPKeyBindingHandler {
 					mc.options.debugEnabled = !mc.options.debugEnabled;
 					mc.options.debugProfilerEnabled =
 							mc.options.debugEnabled && Screen.hasShiftDown();
-					mc.options.debugTpsEnabled = mc.options.debugTpsEnabled && Screen.hasAltDown();
+					mc.options.debugTpsEnabled = mc.options.debugEnabled && Screen.hasAltDown();
 				}
 			}
 		}
