@@ -54,11 +54,20 @@ public final class MinecraftMixin {
 		RPWindowHandler.updateWindowIcon(stream16, stream32);
 	}
 
+	@SuppressWarnings("UnresolvedMixinReference")
 	@Redirect(
-			method = "startIntegratedServer(Ljava/lang/String;" +
-					"Lnet/minecraft/util/registry/DynamicRegistries$Impl;" +
-					"Ljava/util/function/Function;Lcom/mojang/datafixers/util/Function4;" +
-					"ZLnet/minecraft/client/Minecraft$WorldSelectionType;)V",
+			method = {
+					//Before Forge 36.0.2.
+					"startIntegratedServer(Ljava/lang/String;" +
+							"Lnet/minecraft/util/registry/DynamicRegistries$Impl;" +
+							"Ljava/util/function/Function;Lcom/mojang/datafixers/util/Function4;" +
+							"ZLnet/minecraft/client/Minecraft$WorldSelectionType;)V",
+					//Forge 36.0.2+.
+					"loadWorld(Ljava/lang/String;" +
+							"Lnet/minecraft/util/registry/DynamicRegistries$Impl;" +
+							"Ljava/util/function/Function;Lcom/mojang/datafixers/util/Function4;" +
+							"ZLnet/minecraft/client/Minecraft$WorldSelectionType;Z)V"
+			},
 			at = @At(
 					value = "INVOKE",
 					target = "net/minecraft/world/storage/IServerConfiguration.getLifecycle()" +
