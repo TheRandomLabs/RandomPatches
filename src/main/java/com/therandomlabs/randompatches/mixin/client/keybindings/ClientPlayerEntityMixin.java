@@ -79,32 +79,11 @@ public abstract class ClientPlayerEntityMixin extends PlayerEntity {
 
 	@Redirect(method = "tickMovement", at = @At(
 			value = "INVOKE",
-			target = "Lnet/minecraft/client/options/KeyBinding;isPressed()Z"
-	))
-	private boolean isSprintKeyDown(KeyBinding sprintKeyBinding) {
-		if (sprintKeyBinding.isPressed()) {
-			return true;
-		}
-
-		if (!RandomPatches.config().client.keyBindings.secondarySprint) {
-			return false;
-		}
-
-		final InputUtil.Key forwardKey =
-				((BoundKeyAccessor) MinecraftClient.getInstance().options.keyForward).getBoundKey();
-		final InputUtil.Key secondarySprintKey =
-				((BoundKeyAccessor) RPKeyBindingHandler.KeyBindings.SECONDARY_SPRINT).getBoundKey();
-		return !secondarySprintKey.equals(forwardKey) &&
-				RPKeyBindingHandler.KeyBindings.SECONDARY_SPRINT.isPressed();
-	}
-
-	@Redirect(method = "tickMovement", at = @At(
-			value = "INVOKE",
 			target = "Lnet/minecraft/client/network/ClientPlayerEntity;setSprinting(Z)V",
 			ordinal = 0
 	))
 	private void enableSprintingThroughSecondarySprint(ClientPlayerEntity player, boolean flag) {
-		if (!RandomPatches.config().client.keyBindings.secondarySprint ||
+		if (!RandomPatches.config().client.keyBindings.secondarySprint() ||
 				RPKeyBindingHandler.KeyBindings.SECONDARY_SPRINT.isPressed()) {
 			player.setSprinting(true);
 		}
