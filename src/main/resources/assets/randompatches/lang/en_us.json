@@ -40,8 +40,6 @@
 	"text.autoconfig.randompatches.option.client.window.@Tooltip": "Options related to the Minecraft window.",
 	"text.autoconfig.randompatches.option.client.window.customTitle": "Custom title",
 	"text.autoconfig.randompatches.option.client.window.customTitle.@Tooltip": "Enables custom Minecraft window titles.",
-	"text.autoconfig.randompatches.option.client.window.simpleTitle": "Simple title",
-	"text.autoconfig.randompatches.option.client.window.simpleTitle.@Tooltip": "The simple Minecraft window title.",
 	"text.autoconfig.randompatches.option.client.window.title": "Title",
 	"text.autoconfig.randompatches.option.client.window.title.@Tooltip": "The Minecraft window title.",
 	"text.autoconfig.randompatches.option.client.window.titleWithActivity": "Title with activity",
