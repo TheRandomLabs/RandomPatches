@@ -59,11 +59,12 @@ public final class IngameMenuScreenMixin {
 	private Button.IPressable adjustOnPress(Button.IPressable onPress) {
 		return button -> {
 			final Minecraft mc = Minecraft.getInstance();
+			final boolean integratedServerRunning = mc.isIntegratedServerRunning();
 
 			button.active = false;
 			mc.world.sendQuittingDisconnectingPacket();
 
-			if (mc.isIntegratedServerRunning()) {
+			if (integratedServerRunning) {
 				mc.func_213231_b(new DirtMessageScreen(
 						new TranslationTextComponent("menu.savingLevel")
 				));
@@ -72,7 +73,7 @@ public final class IngameMenuScreenMixin {
 			}
 
 			if (RandomPatches.config().client.returnToMainMenuAfterDisconnect ||
-					mc.isIntegratedServerRunning()) {
+					integratedServerRunning) {
 				mc.displayGuiScreen(new MainMenuScreen());
 			} else if (mc.isConnectedToRealms()) {
 				new RealmsBridgeScreen().switchToRealms(new MainMenuScreen());
