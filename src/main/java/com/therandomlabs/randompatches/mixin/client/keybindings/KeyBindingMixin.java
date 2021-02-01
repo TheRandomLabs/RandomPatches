@@ -66,6 +66,7 @@ public final class KeyBindingMixin implements BoundKeyAccessor {
 				!RandomPatches.config().client.keyBindings.secondarySprint()) {
 			return;
 		}
+
 		final InputUtil.Key forwardKey =
 				((BoundKeyAccessor) MinecraftClient.getInstance().options.keyForward).getBoundKey();
 		final InputUtil.Key secondarySprintKey =

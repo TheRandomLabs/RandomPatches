@@ -282,6 +282,10 @@ public final class RPConfig implements ConfigData {
 				FabricLoader.getInstance().isDevelopmentEnvironment() ?
 						"../src/main/resources/assets/randompatches/icon.png" : "";
 
+		@TOMLConfigSerializer.Comment("Enables custom Minecraft window titles.")
+		@ConfigEntry.Gui.Tooltip
+		public boolean customTitle = true;
+
 		@TOMLConfigSerializer.Comment({
 				"The Minecraft window title.",
 				"The current activity is not available.",

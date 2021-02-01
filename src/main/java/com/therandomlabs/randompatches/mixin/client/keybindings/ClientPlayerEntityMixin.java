@@ -25,12 +25,8 @@ package com.therandomlabs.randompatches.mixin.client.keybindings;
 
 import com.mojang.authlib.GameProfile;
 import com.therandomlabs.randompatches.RandomPatches;
-import com.therandomlabs.randompatches.client.BoundKeyAccessor;
 import com.therandomlabs.randompatches.client.RPKeyBindingHandler;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.client.options.KeyBinding;
-import net.minecraft.client.util.InputUtil;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.util.math.BlockPos;
