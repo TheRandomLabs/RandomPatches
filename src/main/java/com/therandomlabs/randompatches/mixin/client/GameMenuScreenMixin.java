@@ -23,62 +23,21 @@
 
 package com.therandomlabs.randompatches.mixin.client;
 
-import com.therandomlabs.randompatches.RandomPatches;
-import net.minecraft.client.MinecraftClient;
+import com.therandomlabs.randompatches.client.DisconnectHandler;
 import net.minecraft.client.gui.screen.GameMenuScreen;
-import net.minecraft.client.gui.screen.SaveLevelScreen;
-import net.minecraft.client.gui.screen.TitleScreen;
-import net.minecraft.client.gui.screen.multiplayer.MultiplayerScreen;
 import net.minecraft.client.gui.widget.ButtonWidget;
-import net.minecraft.client.realms.gui.screen.RealmsBridgeScreen;
-import net.minecraft.text.TranslatableText;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.ModifyArg;
-import org.spongepowered.asm.mixin.injection.Slice;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(GameMenuScreen.class)
 public final class GameMenuScreenMixin {
-	@SuppressWarnings("ConstantConditions")
-	@ModifyArg(
-			method = "initWidgets",
-			slice = @Slice(
-					from = @At(
-							value = "INVOKE",
-							target = "Lnet/minecraft/client/MinecraftClient;" +
-									"isIntegratedServerRunning()Z"
-					)
-			),
-			at = @At(
-					value = "INVOKE",
-					target = "Lnet/minecraft/client/gui/widget/ButtonWidget;<init>" +
-							"(IIIILnet/minecraft/text/Text;" +
-							"Lnet/minecraft/client/gui/widget/ButtonWidget$PressAction;)V",
-					ordinal = 0 //We set the ordinal just in case. :P
-			)
-	)
-	private ButtonWidget.PressAction adjustOnPress(ButtonWidget.PressAction onPress) {
-		return button -> {
-			final MinecraftClient mc = MinecraftClient.getInstance();
-			final boolean integratedServerRunning = mc.isIntegratedServerRunning();
-
-			button.active = false;
-			mc.world.disconnect();
-
-			if (integratedServerRunning) {
-				mc.disconnect(new SaveLevelScreen(new TranslatableText("menu.savingLevel")));
-			} else {
-				mc.disconnect();
-			}
-
-			if (RandomPatches.config().client.returnToMainMenuAfterDisconnect ||
-					integratedServerRunning) {
-				mc.openScreen(new TitleScreen());
-			} else if (mc.isConnectedToRealms()) {
-				new RealmsBridgeScreen().switchToRealms(new TitleScreen());
-			} else {
-				mc.openScreen(new MultiplayerScreen(new TitleScreen()));
-			}
-		};
+	@SuppressWarnings("UnresolvedMixinReference")
+	@Inject(method = "method_19836", at = @At("HEAD"), cancellable = true)
+	public void disconnect(ButtonWidget button, CallbackInfo info) {
+		button.active = false;
+		DisconnectHandler.disconnect();
+		info.cancel();
 	}
 }

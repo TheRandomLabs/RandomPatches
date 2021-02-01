@@ -13,6 +13,7 @@
 		"InputSlotFillerMixin",
 		"ServerPlayNetworkHandlerPlayerSpeedLimitsMixin",
 		"ThreadedAnvilChunkStorageMixin",
+		"client.FinishQuitMixin",
 		"datafixerupper.MinecraftServerMixin",
 		"datafixerupper.SaveVersionInfoMixin",
 		"datafixerupper.SchemasMixin",

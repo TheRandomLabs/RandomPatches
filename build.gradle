@@ -29,10 +29,19 @@ repositories {
 	maven {
 		url "https://maven.siphalor.de/"
 	}
+
+	maven {
+		url "https://www.cursemaven.com"
+
+		content {
+			includeGroup "curse.maven"
+		}
+	}
 }
 
 dependencies {
 	modImplementation "de.siphalor:amecsapi-1.16:1.1.1+mc1.16-rc1"
+	modImplementation "curse.maven:seamless_loading_screen-429926:3161618"
 }
 
 if (project.hasProperty("curseForgeAPIKey")) {

@@ -573,8 +573,14 @@ public final class RPConfig implements ConfigData {
 				"  - Required for fixing MC-2025.",
 				"  - Required for fixing entities not being considered wet in cauldrons " +
 						"filled with water.",
-				"- GameMenuScreen: Required for making Minecraft show the main menu screen after " +
-						"disconnecting rather than the Realms or multiplayer screen.",
+				"- FinishQuit: Required for making Minecraft show the main menu screen after " +
+						"disconnecting rather than the Realms or multiplayer screen if Seamless " +
+						"Loading Screen is installed.",
+				"- GameMenuScreen:",
+				"  - Required for making Minecraft show the main menu screen after disconnecting " +
+						"rather than the Realms or multiplayer screen.",
+				"  - If Seamless Loading Screen is installed, this is disabled, and FinishQuit " +
+						"is used instead.",
 				"- GameOptions: Required for all key bindings added by RandomPatches.",
 				"- InputSlotFiller: Required for fixing the recipe book not moving " +
 						"ingredients with tags.",
@@ -643,6 +649,16 @@ public final class RPConfig implements ConfigData {
 
 			if ("BambooBlock".equals(simpleName) &&
 					!RandomPatches.config().client.optimizeBambooRendering) {
+				return false;
+			}
+
+			if ("FinishQuit".equals(simpleName) &&
+					!FabricLoader.getInstance().isModLoaded("seamless_loading_screen")) {
+				return false;
+			}
+
+			if ("GameMenuScreen".equals(simpleName) &&
+					FabricLoader.getInstance().isModLoaded("seamless_loading_screen")) {
 				return false;
 			}
 
