@@ -60,18 +60,19 @@ public final class GameMenuScreenMixin {
 	private ButtonWidget.PressAction adjustOnPress(ButtonWidget.PressAction onPress) {
 		return button -> {
 			final MinecraftClient mc = MinecraftClient.getInstance();
+			final boolean integratedServerRunning = mc.isIntegratedServerRunning();
 
 			button.active = false;
 			mc.world.disconnect();
 
-			if (mc.isIntegratedServerRunning()) {
+			if (integratedServerRunning) {
 				mc.disconnect(new SaveLevelScreen(new TranslatableText("menu.savingLevel")));
 			} else {
 				mc.disconnect();
 			}
 
 			if (RandomPatches.config().client.returnToMainMenuAfterDisconnect ||
-					mc.isIntegratedServerRunning()) {
+					integratedServerRunning) {
 				mc.openScreen(new TitleScreen());
 			} else if (mc.isConnectedToRealms()) {
 				new RealmsBridgeScreen().switchToRealms(new TitleScreen());
