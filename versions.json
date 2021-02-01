@@ -1,10 +1,12 @@
 {
     "homepage": "https://www.curseforge.com/minecraft/mc-mods/randompatches",
     "1.16.5": {
+        "2.3.0-forge": "The secondary sprint key now works with Baritone.\nAdded options to disable the custom window title and icon.\nFixed the server list opening after leaving a singleplayer world.",
         "2.2.1-forge": "Fixed compatibility with Forge 36.0.2+.",
         "2.2.0-forge": "Removed the non-functional tick scheduler desync fix.\nDocumented that the MC-145311 fix works client-only."
     },
     "1.16.4": {
+        "2.3.0-forge": "The secondary sprint key now works with Baritone.\nAdded options to disable the custom window title and icon.\nFixed the server list opening after leaving a singleplayer world.",
         "2.2.1-forge": "Fixed compatibility with Forge 36.0.2+.",
         "2.2.0-forge": "Removed the non-functional tick scheduler desync fix.\nDocumented that the MC-145311 fix works client-only.",
         "2.1.5-forge": "Fixed configuration resetting.",
@@ -18,6 +20,7 @@
         "1.16.4-1.22.1.9": "The default login timeout is now 1800 ticks (90 seconds)."
     },
     "1.16.3": {
+        "2.3.0-forge": "The secondary sprint key now works with Baritone.\nAdded options to disable the custom window title and icon.\nFixed the server list opening after leaving a singleplayer world.",
         "2.2.1-forge": "Fixed compatibility with Forge 36.0.2+.",
         "2.1.5-forge": "Fixed configuration resetting.",
         "2.1.4-forge": "Mouse buttons can now be used for the narrator toggle, pause, GUI toggle and debug key bindings.",
@@ -31,6 +34,7 @@
         "1.16.2-1.22.1.2": "Added a license to mods.toml."
     },
     "1.16.2": {
+        "2.3.0-forge": "The secondary sprint key now works with Baritone.\nAdded options to disable the custom window title and icon.\nFixed the server list opening after leaving a singleplayer world.",
         "2.2.1-forge": "Fixed compatibility with Forge 36.0.2+.",
         "2.1.5-forge": "Fixed configuration resetting.",
         "2.1.4-forge": "Mouse buttons can now be used for the narrator toggle, pause, GUI toggle and debug key bindings.",
@@ -44,6 +48,7 @@
         "1.16.2-1.22.1.2": "Added a license to mods.toml."
     },
     "1.16.1": {
+        "2.3.0-forge": "The secondary sprint key now works with Baritone.\nAdded options to disable the custom window title and icon.\nFixed the server list opening after leaving a singleplayer world.",
         "2.2.1-forge": "Fixed compatibility with Forge 36.0.2+.",
         "2.1.5-forge": "Fixed configuration resetting.",
         "2.1.4-forge": "Mouse buttons can now be used for the narrator toggle, pause, GUI toggle and debug key bindings.",
@@ -1111,16 +1116,16 @@
         "1.12.2-1.0.0.0": "Initial release."
     },
     "promos": {
-        "1.16.5-latest": "2.2.1-forge",
-        "1.16.5-recommended": "2.2.1-forge",
-        "1.16.4-latest": "2.2.1-forge",
-        "1.16.4-recommended": "2.2.1-forge",
-        "1.16.3-latest": "2.2.1-forge",
-        "1.16.3-recommended": "2.2.1-forge",
-        "1.16.2-latest": "2.2.1-forge",
-        "1.16.2-recommended": "2.2.1-forge",
-        "1.16.1-latest": "2.2.1-forge",
-        "1.16.1-recommended": "2.2.1-forge",
+        "1.16.5-latest": "2.3.0-forge",
+        "1.16.5-recommended": "2.3.0-forge",
+        "1.16.4-latest": "2.3.0-forge",
+        "1.16.4-recommended": "2.3.0-forge",
+        "1.16.3-latest": "2.3.0-forge",
+        "1.16.3-recommended": "2.3.0-forge",
+        "1.16.2-latest": "2.3.0-forge",
+        "1.16.2-recommended": "2.3.0-forge",
+        "1.16.1-latest": "2.3.0-forge",
+        "1.16.1-recommended": "2.3.0-forge",
         "1.15.2-latest": "1.15.2-1.22.1.1",
         "1.15.2-recommended": "1.15.2-1.22.1.1",
         "1.14.4-latest": "1.14.4-1.22.1.1",
