@@ -178,7 +178,8 @@ public final class RPWindowHandler {
 	public static void updateWindowIcon(
 			@Nullable InputStream vanillaIcon16, @Nullable InputStream vanillaIcon32
 	) {
-		if (FMLEnvironment.dist == Dist.CLIENT && enabled) {
+		if (FMLEnvironment.dist == Dist.CLIENT && enabled &&
+				RandomPatches.config().client.window.customIcon) {
 			updateWindowIcon(
 					vanillaIcon16, vanillaIcon32, Minecraft.getInstance().getWindow().getHandle()
 			);
@@ -196,7 +197,8 @@ public final class RPWindowHandler {
 	public static void updateWindowIcon(
 			@Nullable InputStream vanillaIcon16, @Nullable InputStream vanillaIcon32, long window
 	) {
-		if (FMLEnvironment.dist != Dist.CLIENT || !enabled) {
+		if (FMLEnvironment.dist != Dist.CLIENT || !enabled ||
+				!RandomPatches.config().client.window.customIcon) {
 			return;
 		}
 
@@ -333,7 +335,10 @@ public final class RPWindowHandler {
 	}
 
 	private static void applySettings() {
-		Minecraft.getInstance().updateWindowTitle();
+		if (RandomPatches.config().client.window.customTitle) {
+			Minecraft.getInstance().updateWindowTitle();
+		}
+
 		updateWindowIcon(null, null);
 	}
 

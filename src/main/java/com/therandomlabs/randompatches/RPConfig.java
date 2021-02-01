@@ -238,12 +238,13 @@ public final class RPConfig implements ConfigData {
 
 		/**
 		 * Returns whether the secondary sprint key binding is enabled.
-		 * @return {@code true} if the secondary sprint key binding is enabled, or otherwise
-		 * {@code false}.
+		 * @return {@code true} if the secondary sprint key binding is enabled,
+		 * or otherwise {@code false}.
 		 */
 		public boolean secondarySprint() {
 			return secondarySprint &&
-					!RandomPatches.config().misc.mixinBlacklist.contains("ClientPlayerEntity");
+					!RandomPatches.config().misc.mixinBlacklist.contains("ClientPlayerEntity") &&
+					!RandomPatches.config().misc.mixinBlacklist.contains("ToggleableKeyBinding");
 		}
 
 		/**
@@ -264,6 +265,10 @@ public final class RPConfig implements ConfigData {
 		@ConfigEntry.Gui.Excluded
 		private static final String DEFAULT_ICON =
 				FMLEnvironment.production ? "" : "../src/main/resources/logo.png";
+
+		@TOMLConfigSerializer.Comment("Enables custom Minecraft window titles.")
+		@ConfigEntry.Gui.Tooltip
+		public boolean customTitle = true;
 
 		@TOMLConfigSerializer.Comment({
 				"The simple Minecraft window title.",
@@ -305,6 +310,10 @@ public final class RPConfig implements ConfigData {
 		public String titleWithActivity = FMLEnvironment.production ?
 				"Minecraft ${mcversion} - ${activity}" :
 				"RandomPatches (${username}) - ${modsloaded} mods loaded - ${activity}";
+
+		@TOMLConfigSerializer.Comment("Enables custom Minecraft window icons.")
+		@ConfigEntry.Gui.Tooltip
+		public boolean customIcon = true;
 
 		@Path("icon_16x16")
 		@TOMLConfigSerializer.Comment({
@@ -579,6 +588,7 @@ public final class RPConfig implements ConfigData {
 						"limits.",
 				"- ServerRecipePlacer: Required for fixing the recipe book not moving " +
 						"ingredients with tags.",
+				"- ToggleableKeyBinding: Required for the secondary sprint key binding.",
 				"This option is both client and server-sided.",
 				"Changes to this option are applied after a game restart."
 		})

@@ -42,7 +42,10 @@ public final class MinecraftMixin {
 	@Inject(method = "getWindowTitle", at = @At("HEAD"), cancellable = true)
 	private void getWindowTitle(CallbackInfoReturnable<String> info) {
 		RPWindowHandler.enable();
-		info.setReturnValue(RPWindowHandler.getWindowTitle());
+
+		if (RandomPatches.config().client.window.customTitle) {
+			info.setReturnValue(RPWindowHandler.getWindowTitle());
+		}
 	}
 
 	@Redirect(method = "<init>", at = @At(

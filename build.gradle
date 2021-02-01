@@ -1,6 +1,6 @@
 apply plugin: "java-library"
 
-version = "2.2.1-forge"
+version = "2.3.0-forge"
 group = "com.therandomlabs.randompatches"
 archivesBaseName = "randompatches"
 

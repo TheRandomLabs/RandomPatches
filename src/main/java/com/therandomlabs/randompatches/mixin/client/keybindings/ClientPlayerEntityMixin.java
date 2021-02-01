@@ -26,10 +26,7 @@ package com.therandomlabs.randompatches.mixin.client.keybindings;
 import com.mojang.authlib.GameProfile;
 import com.therandomlabs.randompatches.RandomPatches;
 import com.therandomlabs.randompatches.client.RPKeyBindingHandler;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
-import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.client.util.InputMappings;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -81,30 +78,11 @@ public abstract class ClientPlayerEntityMixin extends PlayerEntity {
 
 	@Redirect(method = "livingTick", at = @At(
 			value = "INVOKE",
-			target = "net/minecraft/client/settings/KeyBinding.isKeyDown()Z"
-	))
-	private boolean isSprintKeyDown(KeyBinding sprintKeyBinding) {
-		if (sprintKeyBinding.isKeyDown()) {
-			return true;
-		}
-
-		if (!RandomPatches.config().client.keyBindings.secondarySprint) {
-			return false;
-		}
-
-		final InputMappings.Input forwardKey =
-				Minecraft.getInstance().gameSettings.keyBindForward.getKey();
-		return !RPKeyBindingHandler.KeyBindings.SECONDARY_SPRINT.getKey().equals(forwardKey) &&
-				RPKeyBindingHandler.KeyBindings.SECONDARY_SPRINT.isKeyDown();
-	}
-
-	@Redirect(method = "livingTick", at = @At(
-			value = "INVOKE",
 			target = "net/minecraft/client/entity/player/ClientPlayerEntity.setSprinting(Z)V",
 			ordinal = 0
 	))
 	private void enableSprintingThroughSecondarySprint(ClientPlayerEntity player, boolean flag) {
-		if (!RandomPatches.config().client.keyBindings.secondarySprint ||
+		if (!RandomPatches.config().client.keyBindings.secondarySprint() ||
 				RPKeyBindingHandler.KeyBindings.SECONDARY_SPRINT.isKeyDown()) {
 			player.setSprinting(true);
 		}

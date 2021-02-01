@@ -37,6 +37,7 @@
 		"client.keybindings.KeyBindingMixin",
 		"client.keybindings.KeyboardListenerMixin",
 		"client.keybindings.MouseHelperMixin",
+		"client.keybindings.ToggleableKeyBindingMixin",
 		"client.packetsizelimits.CCustomPayloadPacketMixin"
 	],
 	"injectors": {
