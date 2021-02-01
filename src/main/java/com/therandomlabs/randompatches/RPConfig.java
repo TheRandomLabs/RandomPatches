@@ -256,7 +256,7 @@ public final class RPConfig implements ConfigData {
 		public boolean secondarySprint() {
 			return secondarySprint &&
 					!RandomPatches.config().misc.mixinBlacklist.contains("ClientPlayerEntity") &&
-					!RandomPatches.config().misc.mixinBlacklist.contains("ToggleableKeyBinding");
+					!RandomPatches.config().misc.mixinBlacklist.contains("KeyBinding");
 		}
 
 		/**
@@ -279,28 +279,8 @@ public final class RPConfig implements ConfigData {
 
 		@ConfigEntry.Gui.Excluded
 		private static final String DEFAULT_ICON =
-<<<<<<< HEAD
 				FabricLoader.getInstance().isDevelopmentEnvironment() ?
 						"../src/main/resources/assets/randompatches/icon.png" : "";
-=======
-				FMLEnvironment.production ? "" : "../src/main/resources/logo.png";
-
-		@TOMLConfigSerializer.Comment("Enables custom Minecraft window titles.")
-		@ConfigEntry.Gui.Tooltip
-		public boolean customTitle = true;
-
-		@TOMLConfigSerializer.Comment({
-				"The simple Minecraft window title.",
-				"The current activity, the number of mods loaded and mod versions are not " +
-						"available.",
-				"Variables:",
-				" - ${mcversion}: The Minecraft version",
-				" - ${username}: The username.",
-				"'$' can be escaped by using an extra '$'."
-		})
-		@ConfigEntry.Gui.Tooltip
-		public String simpleTitle = DEFAULT_TITLE;
->>>>>>> 7709c3a (Fixes #184 and #185)
 
 		@TOMLConfigSerializer.Comment({
 				"The Minecraft window title.",
@@ -595,8 +575,7 @@ public final class RPConfig implements ConfigData {
 				"- InputSlotFiller: Required for fixing the recipe book not moving " +
 						"ingredients with tags.",
 				"- KeyBinding:",
-				"  - Required for making the forward movement key not conflict with the " +
-						"secondary sprint key.",
+				"  - Required for the secondary sprint key.",
 				"  - Required for making the sneak key not conflict with the dismount key.",
 				"- Keyboard: Required for the narrator toggle, pause, GUI toggle and debug key " +
 						"bindings.",
@@ -617,13 +596,7 @@ public final class RPConfig implements ConfigData {
 						"settings.",
 				"- ServerPlayNetworkHandlerPlayerSpeedLimits: Required for changing player speed " +
 						"limits.",
-<<<<<<< HEAD
 				"- ThreadedAnvilChunkStorageMixin: Required for fixing duplicate entity UUIDs.",
-=======
-				"- ServerRecipePlacer: Required for fixing the recipe book not moving " +
-						"ingredients with tags.",
-				"- ToggleableKeyBinding: Required for the secondary sprint key binding.",
->>>>>>> 7709c3a (Fixes #184 and #185)
 				"This option is both client and server-sided.",
 				"Changes to this option are applied after a game restart."
 		})

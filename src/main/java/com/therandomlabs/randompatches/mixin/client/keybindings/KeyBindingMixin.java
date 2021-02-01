@@ -43,11 +43,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(KeyBinding.class)
 public final class KeyBindingMixin implements BoundKeyAccessor {
 	@Shadow
-	private InputUtil.Key boundKey;
-
-	@Shadow
 	@Final
 	private static Map<String, KeyBinding> keysById;
+
+	@Shadow
+	private InputUtil.Key boundKey;
 
 	/**
 	 * {@inheritDoc}
@@ -55,6 +55,25 @@ public final class KeyBindingMixin implements BoundKeyAccessor {
 	@Override
 	public InputUtil.Key getBoundKey() {
 		return boundKey;
+	}
+
+	@SuppressWarnings("ConstantConditions")
+	@Inject(method = "isPressed", at = @At("RETURN"), cancellable = true)
+	private void isKeyDown(CallbackInfoReturnable<Boolean> info) {
+		final KeyBinding sprint = MinecraftClient.getInstance().options.keySprint;
+
+		if ((Object) this != sprint || info.getReturnValue() ||
+				!RandomPatches.config().client.keyBindings.secondarySprint()) {
+			return;
+		}
+		final InputUtil.Key forwardKey =
+				((BoundKeyAccessor) MinecraftClient.getInstance().options.keyForward).getBoundKey();
+		final InputUtil.Key secondarySprintKey =
+				((BoundKeyAccessor) RPKeyBindingHandler.KeyBindings.SECONDARY_SPRINT).getBoundKey();
+		info.setReturnValue(
+				!secondarySprintKey.equals(forwardKey) &&
+						RPKeyBindingHandler.KeyBindings.SECONDARY_SPRINT.isPressed()
+		);
 	}
 
 	@SuppressWarnings({"ConstantConditions", "PMD.CompareObjectsWithEquals"})
