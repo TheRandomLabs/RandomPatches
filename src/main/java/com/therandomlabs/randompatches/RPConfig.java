@@ -606,7 +606,7 @@ public final class RPConfig implements ConfigData {
 						"settings.",
 				"- ServerPlayNetworkHandlerPlayerSpeedLimits: Required for changing player speed " +
 						"limits.",
-				"- ThreadedAnvilChunkStorageMixin: Required for fixing duplicate entity UUIDs.",
+				"- ThreadedAnvilChunkStorage: Required for fixing duplicate entity UUIDs.",
 				"This option is both client and server-sided.",
 				"Changes to this option are applied after a game restart."
 		})

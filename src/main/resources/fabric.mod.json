@@ -21,9 +21,6 @@
 		],
 		"modmenu": [
 			"com.therandomlabs.randompatches.RPModMenuEntryPoint"
-		],
-		"cotton-client-commands": [
-			"com.therandomlabs.randompatches.RPClientCommands"
 		]
 	},
 	"mixins": [
