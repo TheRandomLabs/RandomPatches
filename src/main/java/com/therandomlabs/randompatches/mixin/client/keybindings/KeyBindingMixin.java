@@ -59,7 +59,7 @@ public final class KeyBindingMixin implements BoundKeyAccessor {
 
 	@SuppressWarnings("ConstantConditions")
 	@Inject(method = "isPressed", at = @At("RETURN"), cancellable = true)
-	private void isKeyDown(CallbackInfoReturnable<Boolean> info) {
+	private void isPressed(CallbackInfoReturnable<Boolean> info) {
 		final KeyBinding sprint = MinecraftClient.getInstance().options.keySprint;
 
 		if ((Object) this != sprint || info.getReturnValue() ||
@@ -104,11 +104,12 @@ public final class KeyBindingMixin implements BoundKeyAccessor {
 	}
 
 	@SuppressWarnings("ConstantConditions")
-	@Inject(method = "setKeyPressed", at = @At("HEAD"))
+	@Inject(method = "setKeyPressed", at = @At("HEAD"), cancellable = true)
 	private static void setKeyPressed(InputUtil.Key key, boolean pressed, CallbackInfo info) {
 		//In vanilla, setPressed is only called on the most recently registered KeyBinding.
 		keysById.values().stream().filter(keyBinding -> key.equals(
 				((KeyBindingMixin) (Object) keyBinding).getBoundKey())
 		).forEach(keyBinding -> keyBinding.setPressed(pressed));
+		info.cancel();
 	}
 }
