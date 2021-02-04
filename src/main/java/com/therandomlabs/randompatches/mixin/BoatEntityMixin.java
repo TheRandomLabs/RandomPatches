@@ -64,13 +64,13 @@ public final class BoatEntityMixin {
 		return newDelay == -1 ? Float.MAX_VALUE : newDelay;
 	}
 
-	@Redirect(method = "fall", at = @At(
+	@Redirect(method = "updateFallState", at = @At(
 			value = "FIELD",
-			target = "Lnet/minecraft/entity/vehicle/BoatEntity;" +
-					"location:Lnet/minecraft/entity/vehicle/BoatEntity$Location;"
+			target = "Lnet/minecraft/entity/item/BoatEntity;" +
+					"status:Lnet/minecraft/entity/item/BoatEntity$Status;"
 	))
-	private BoatEntity.Location getLocation(BoatEntity boat) {
+	private BoatEntity.Status getLocation(BoatEntity boat) {
 		return RandomPatches.config().misc.bugFixes.fixBoatFallDamage ?
-				BoatEntity.Location.ON_LAND : location;
+				BoatEntity.Status.ON_LAND : status;
 	}
 }
