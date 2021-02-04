@@ -718,6 +718,14 @@ public final class RPConfig implements ConfigData {
 		public boolean fixMobsNotCrossingRails = true;
 
 		@TOMLConfigSerializer.Comment({
+				"Fixes boats and players in boats not taking fall damage.",
+				"This bug is reported as both MC-98160: https://bugs.mojang.com/browse/MC-98160",
+				"and MC-105103: https://bugs.mojang.com/browse/MC-105103"
+		})
+		@ConfigEntry.Gui.Tooltip
+		public boolean fixBoatFallDamage = true;
+
+		@TOMLConfigSerializer.Comment({
 				"Fixes player heads from the same player sometimes not stacking.",
 				"DISABLED: Disables this fix.",
 				"REQUIRE_SAME_PLAYER_AND_TEXTURE_URL: Player heads can stack if they are from " +

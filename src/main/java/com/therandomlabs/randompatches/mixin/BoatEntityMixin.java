@@ -33,6 +33,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(BoatEntity.class)
@@ -61,5 +62,15 @@ public final class BoatEntityMixin {
 	private float getUnderwaterBoatPassengerEjectionDelay(float delay) {
 		final int newDelay = RandomPatches.config().misc.underwaterBoatPassengerEjectionDelayTicks;
 		return newDelay == -1 ? Float.MAX_VALUE : newDelay;
+	}
+
+	@Redirect(method = "fall", at = @At(
+			value = "FIELD",
+			target = "Lnet/minecraft/entity/vehicle/BoatEntity;" +
+					"location:Lnet/minecraft/entity/vehicle/BoatEntity$Location;"
+	))
+	private BoatEntity.Location getLocation(BoatEntity boat) {
+		return RandomPatches.config().misc.bugFixes.fixBoatFallDamage ?
+				BoatEntity.Location.ON_LAND : location;
 	}
 }
