@@ -183,6 +183,13 @@ receive the Conduit Power effect in cauldrons filled with water.
 It should be noted that the MC-145311 fix works client-side only. Please be mindful of server rules
 when using this feature.
 
+### Fix mobs not crossing rails
+
+In vanilla Minecraft, mobs are unable to cross rails. RandomPatches fixes this issue.
+
+This bug is reported as [MC-33359](https://bugs.mojang.com/browse/MC-33359), and has been marked as
+"Works as Intended".
+
 ### Fix player head stacking
 
 In vanilla Minecraft, player heads from the same player sometimes do not stack. RandomPatches

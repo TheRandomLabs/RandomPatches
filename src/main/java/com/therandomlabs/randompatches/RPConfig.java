@@ -589,6 +589,7 @@ public final class RPConfig implements ConfigData {
 				"  - Required for making the sneak key not conflict with the dismount key.",
 				"- Keyboard: Required for the narrator toggle, pause, GUI toggle and debug key " +
 						"bindings.",
+				"- LandPathNodeMaker: Required for fixing mobs not being able to cross rails.",
 				"- MinecraftClient:",
 				"  - Required for changing Minecraft window options.",
 				"  - Required for disabling the warning that displays when loading a world that " +
@@ -708,6 +709,13 @@ public final class RPConfig implements ConfigData {
 		})
 		@ConfigEntry.Gui.Tooltip
 		public boolean fixEntitiesNotBeingConsideredWetInCauldrons = true;
+
+		@TOMLConfigSerializer.Comment({
+				"Fixes mobs not being able to cross rails.",
+				"This bug is reported as MC-33359: https://bugs.mojang.com/browse/MC-33359"
+		})
+		@ConfigEntry.Gui.Tooltip
+		public boolean fixMobsNotCrossingRails = true;
 
 		@TOMLConfigSerializer.Comment({
 				"Fixes player heads from the same player sometimes not stacking.",
