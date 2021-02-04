@@ -24,26 +24,26 @@
 package com.therandomlabs.randompatches.mixin;
 
 import com.therandomlabs.randompatches.RandomPatches;
-import net.minecraft.entity.ai.pathing.LandPathNodeMaker;
-import net.minecraft.entity.ai.pathing.PathNodeType;
-import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.world.BlockView;
+import net.minecraft.entity.MobEntity;
+import net.minecraft.pathfinding.PathNodeType;
+import net.minecraft.pathfinding.WalkNodeProcessor;
+import net.minecraft.world.IBlockReader;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(LandPathNodeMaker.class)
+@Mixin(WalkNodeProcessor.class)
 public final class LandPathNodeMakerMixin {
 	@Inject(
-			method = "getNodeType(Lnet/minecraft/world/BlockView;" +
-					"IIILnet/minecraft/entity/mob/MobEntity;IIIZZ)" +
-					"Lnet/minecraft/entity/ai/pathing/PathNodeType;",
+			method = "getPathNodeType(Lnet/minecraft/world/IBlockReader;" +
+					"IIILnet/minecraft/entity/MobEntity;IIIZZ)" +
+					"Lnet/minecraft/pathfinding/PathNodeType;",
 			at = @At("RETURN"),
 			cancellable = true
 	)
 	private void getNodeType(
-			BlockView world, int x, int y, int z, MobEntity mob, int sizeX, int sizeY, int sizeZ,
+			IBlockReader world, int x, int y, int z, MobEntity mob, int sizeX, int sizeY, int sizeZ,
 			boolean canOpenDoors, boolean canEnterOpenDoors,
 			CallbackInfoReturnable<PathNodeType> info
 	) {
