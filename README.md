@@ -190,6 +190,14 @@ In vanilla Minecraft, mobs are unable to cross rails. RandomPatches fixes this i
 This bug is reported as [MC-33359](https://bugs.mojang.com/browse/MC-33359), and has been marked as
 "Works as Intended".
 
+### Fix boat fall damage
+
+In vanilla Minecraft, boats and players in boats do not take fall damage.
+RandomPatches fixes this issue.
+
+This bug is reported as both [MC-98160](https://bugs.mojang.com/browse/MC-98160) and
+[MC-105103](https://bugs.mojang.com/browse/MC-105103).
+
 ### Fix player head stacking
 
 In vanilla Minecraft, player heads from the same player sometimes do not stack. RandomPatches
