@@ -571,7 +571,6 @@ public final class RPConfig implements ConfigData {
 						"combinations with that modifier key.",
 				"- KeyboardListener: Required for the narrator toggle, pause, GUI toggle and " +
 						"debug key bindings.",
-				"- LandPathNodeMaker: Required for fixing mobs not being able to cross rails.",
 				"- Minecraft:",
 				"  - Required for changing Minecraft window options.",
 				"  - Required for disabling the warning that displays when loading a world that " +
@@ -590,6 +589,7 @@ public final class RPConfig implements ConfigData {
 				"- ServerRecipePlacer: Required for fixing the recipe book not moving " +
 						"ingredients with tags.",
 				"- ToggleableKeyBinding: Required for the secondary sprint key binding.",
+				"- WalkNodeProcessor: Required for fixing mobs not being able to cross rails.",
 				"This option is both client and server-sided.",
 				"Changes to this option are applied after a game restart."
 		})

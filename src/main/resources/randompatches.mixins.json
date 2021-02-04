@@ -13,6 +13,7 @@
 		"ServerPlayNetHandlerPlayerSpeedLimitsMixin",
 		"ServerRecipePlacerMixin",
 		"TemplateManagerMixin",
+		"WalkNodeProcessorMixin",
 		"datafixerupper.DataFixesManagerMixin",
 		"datafixerupper.MinecraftServerMixin",
 		"packetsizelimits.NettyCompressionDecoderMixin",

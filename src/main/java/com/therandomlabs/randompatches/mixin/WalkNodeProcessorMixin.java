@@ -34,7 +34,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(WalkNodeProcessor.class)
-public final class LandPathNodeMakerMixin {
+public final class WalkNodeProcessorMixin {
 	@Inject(
 			method = "getPathNodeType(Lnet/minecraft/world/IBlockReader;" +
 					"IIILnet/minecraft/entity/MobEntity;IIIZZ)" +
