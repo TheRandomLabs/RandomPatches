@@ -34,7 +34,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(FinishQuit.class)
 public final class FinishQuitMixin {
 	@Inject(method = "quit", at = @At("HEAD"), cancellable = true, remap = false)
-	private void quit(MinecraftClient mc, CallbackInfo info) {
+	private static void quit(MinecraftClient mc, CallbackInfo info) {
 		DisconnectHandler.disconnect();
 		info.cancel();
 	}

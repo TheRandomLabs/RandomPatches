@@ -19,7 +19,7 @@ ext {
 	autoConfigTOMLVersion = "autoconfig-3.x.x-fabric-SNAPSHOT"
 }
 
-version = "2.4.0-fabric"
+version = "2.4.1-fabric"
 group = "com.therandomlabs.randompatches"
 archivesBaseName = "randompatches"
 
@@ -41,7 +41,7 @@ repositories {
 
 dependencies {
 	modImplementation "de.siphalor:amecsapi-1.16:1.1.1+mc1.16-rc1"
-	modImplementation "curse.maven:seamless_loading_screen-429926:3161618"
+	modImplementation "curse.maven:seamless_loading_screen-429926:3199283"
 }
 
 if (project.hasProperty("curseForgeAPIKey")) {
