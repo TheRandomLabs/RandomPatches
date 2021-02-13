@@ -24,6 +24,7 @@
 package com.therandomlabs.randompatches.mixin.client;
 
 import com.minenash.seamless_loading_screen.FinishQuit;
+import com.minenash.seamless_loading_screen.SeamlessLoadingScreen;
 import com.therandomlabs.randompatches.client.DisconnectHandler;
 import net.minecraft.client.MinecraftClient;
 import org.spongepowered.asm.mixin.Mixin;
@@ -35,6 +36,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public final class FinishQuitMixin {
 	@Inject(method = "quit", at = @At("HEAD"), cancellable = true, remap = false)
 	private static void quit(MinecraftClient mc, CallbackInfo info) {
+		SeamlessLoadingScreen.isDisconnecting = true;
 		DisconnectHandler.disconnect();
 		info.cancel();
 	}
