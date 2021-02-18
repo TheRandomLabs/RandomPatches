@@ -93,6 +93,13 @@ the vanilla limits:
   * Setting this to a higher value than the vanilla limit may prevent the client from being
   disconnected.
 
+This feature makes [XL Packets](https://www.curseforge.com/minecraft/mc-mods/xl-packets-fabric)
+redundant, but the maximum compressed packet size and maximum NBT compound tag packet size cannot
+be configured when XL Packets is installed.
+
+This feature is made redundant by [Krypton](https://github.com/astei/krypton), a network
+optimization mod. Check it out if you want!
+
 ### Player speed limits
 
 In vanilla Minecraft, the player speed limits are hardcoded, and set to values that are often

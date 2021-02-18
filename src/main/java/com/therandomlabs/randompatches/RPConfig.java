@@ -673,6 +673,11 @@ public final class RPConfig implements ConfigData {
 				return false;
 			}
 
+			if (("PacketByteBuf".equals(simpleName) || "PacketInflater".equals(simpleName) &&
+					FabricLoader.getInstance().isModLoaded("xlpackets"))) {
+				return false;
+			}
+
 			if (mixinClassName.contains("datafixerupper") && !disableDataFixerUpper) {
 				return false;
 			}
