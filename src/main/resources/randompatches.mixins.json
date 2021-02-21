@@ -47,7 +47,8 @@
 		"client.keybindings.KeyboardMixin",
 		"client.keybindings.MouseMixin",
 		"client.keybindings.PlayerInputC2SPacketMixin",
-		"client.packetsizelimits.CustomPayloadC2SPacketMixin"
+		"client.packetsizelimits.CustomPayloadC2SPacketMixin",
+		"client.ThirdPersonMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1,
