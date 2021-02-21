@@ -27,7 +27,6 @@ import java.util.List;
 
 import com.therandomlabs.randompatches.RPConfig;
 import com.therandomlabs.randompatches.RandomPatches;
-import com.therandomlabs.randompatches.mixin.client.keybindings.GameOptionsMixin;
 import de.siphalor.amecs.api.AmecsKeyBinding;
 import de.siphalor.amecs.api.KeyModifiers;
 import de.siphalor.amecs.impl.AmecsAPI;
@@ -204,7 +203,7 @@ public final class RPKeyBindingHandler {
 		private static void register(KeyBinding keyBinding, boolean enabled) {
 			if (enabled) {
 				if (!ArrayUtils.contains(mc.options.keysAll, keyBinding)) {
-					((GameOptionsMixin) mc.options).setKeysAll(
+					((KeysAccessor) mc.options).setKeys(
 							ArrayUtils.add(mc.options.keysAll, keyBinding)
 					);
 				}
@@ -212,7 +211,7 @@ public final class RPKeyBindingHandler {
 				final int index = ArrayUtils.indexOf(mc.options.keysAll, keyBinding);
 
 				if (index != ArrayUtils.INDEX_NOT_FOUND) {
-					((GameOptionsMixin) mc.options).setKeysAll(
+					((KeysAccessor) mc.options).setKeys(
 							ArrayUtils.remove(mc.options.keysAll, index)
 					);
 				}

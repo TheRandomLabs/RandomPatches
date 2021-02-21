@@ -26,7 +26,6 @@ package com.therandomlabs.randompatches;
 import com.therandomlabs.autoconfigtoml.TOMLConfigSerializer;
 import com.therandomlabs.randompatches.client.CauldronWaterTranslucencyHandler;
 import com.therandomlabs.randompatches.client.RPContributorCapeHandler;
-import com.therandomlabs.randompatches.client.RPKeyBindingHandler;
 import me.sargunvohra.mcmods.autoconfig1u.AutoConfig;
 import net.fabricmc.api.ModInitializer;
 import org.apache.logging.log4j.LogManager;
@@ -64,7 +63,6 @@ public final class RandomPatches implements ModInitializer {
 	 */
 	public static void postClientInit() {
 		CauldronWaterTranslucencyHandler.enable();
-		RPKeyBindingHandler.enable();
 
 		if (RandomPatches.config().client.contributorCapes) {
 			RPContributorCapeHandler.downloadContributorList();
