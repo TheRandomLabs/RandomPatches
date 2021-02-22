@@ -38,11 +38,13 @@ import net.minecraft.client.gui.screen.GameMenuScreen;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.options.NarratorOptionsScreen;
 import net.minecraft.client.gui.widget.TextFieldWidget;
+import net.minecraft.client.options.GameOptions;
 import net.minecraft.client.options.KeyBinding;
 import net.minecraft.client.options.Option;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.util.Identifier;
 import org.apache.commons.lang3.ArrayUtils;
+import org.checkerframework.checker.nullness.qual.Nullable;
 import org.lwjgl.glfw.GLFW;
 
 /**
@@ -185,34 +187,36 @@ public final class RPKeyBindingHandler {
 					!((TextFieldWidget) screen.getFocused()).isActive();
 		}
 
-		private static void register() {
+		private static void register(GameOptions gameOptions) {
 			final RPConfig.KeyBindings config = RandomPatches.config().client.keyBindings;
 			final List<String> mixinBlacklist = RandomPatches.config().misc.mixinBlacklist;
 
-			register(SECONDARY_SPRINT, config.secondarySprint());
-			register(DISMOUNT, config.dismount());
+			register(gameOptions, SECONDARY_SPRINT, config.secondarySprint());
+			register(gameOptions, DISMOUNT, config.dismount());
 
 			if (!mixinBlacklist.contains("Keyboard")) {
-				register(TOGGLE_NARRATOR, config.toggleNarrator);
-				register(PAUSE, config.pause);
-				register(TOGGLE_GUI, config.toggleGUI);
-				register(TOGGLE_DEBUG_INFO, config.toggleDebugInfo);
+				register(gameOptions, TOGGLE_NARRATOR, config.toggleNarrator);
+				register(gameOptions, PAUSE, config.pause);
+				register(gameOptions, TOGGLE_GUI, config.toggleGUI);
+				register(gameOptions, TOGGLE_DEBUG_INFO, config.toggleDebugInfo);
 			}
 		}
 
-		private static void register(KeyBinding keyBinding, boolean enabled) {
+		private static void register(
+				GameOptions gameOptions, KeyBinding keyBinding, boolean enabled
+		) {
 			if (enabled) {
-				if (!ArrayUtils.contains(mc.options.keysAll, keyBinding)) {
-					((KeysAccessor) mc.options).setKeys(
-							ArrayUtils.add(mc.options.keysAll, keyBinding)
+				if (!ArrayUtils.contains(gameOptions.keysAll, keyBinding)) {
+					((KeysAccessor) gameOptions).setKeys(
+							ArrayUtils.add(gameOptions.keysAll, keyBinding)
 					);
 				}
 			} else {
-				final int index = ArrayUtils.indexOf(mc.options.keysAll, keyBinding);
+				final int index = ArrayUtils.indexOf(gameOptions.keysAll, keyBinding);
 
 				if (index != ArrayUtils.INDEX_NOT_FOUND) {
-					((KeysAccessor) mc.options).setKeys(
-							ArrayUtils.remove(mc.options.keysAll, index)
+					((KeysAccessor) gameOptions).setKeys(
+							ArrayUtils.remove(gameOptions.keysAll, index)
 					);
 				}
 			}
@@ -234,21 +238,28 @@ public final class RPKeyBindingHandler {
 
 	/**
 	 * Enables this class's functionality if it has not already been enabled.
+	 *
+	 * @param gameOptions the {@link GameOptions}.
 	 */
-	public static void enable() {
+	public static void enable(GameOptions gameOptions) {
 		if (!enabled && !RandomPatches.config().misc.mixinBlacklist.contains("GameOptions")) {
 			enabled = true;
-			onConfigReload();
+			onConfigReload(gameOptions);
 		}
 	}
 
 	/**
 	 * Called by {@link com.therandomlabs.randompatches.RPConfig.KeyBindings} when the RandomPatches
 	 * configuration is reloaded.
+	 *
+	 * @param gameOptions the {@link GameOptions}. If this is {@code null}, it is found
+	 * automatically.
 	 */
-	public static void onConfigReload() {
+	public static void onConfigReload(@Nullable GameOptions gameOptions) {
 		if (enabled) {
-			KeyBindings.register();
+			KeyBindings.register(
+					gameOptions == null ? MinecraftClient.getInstance().options : gameOptions
+			);
 		}
 	}
 }

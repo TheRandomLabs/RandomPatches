@@ -243,7 +243,7 @@ public final class RPConfig implements ConfigData {
 		@Override
 		public void validatePostLoad() {
 			if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
-				RPKeyBindingHandler.onConfigReload();
+				RPKeyBindingHandler.onConfigReload(null);
 			}
 		}
 
