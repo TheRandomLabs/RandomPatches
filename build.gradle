@@ -19,7 +19,7 @@ ext {
 	autoConfigTOMLVersion = "autoconfig-3.x.x-fabric-SNAPSHOT"
 }
 
-version = "2.4.4-fabric"
+version = "2.4.5-fabric"
 group = "com.therandomlabs.randompatches"
 archivesBaseName = "randompatches"
 
@@ -64,7 +64,7 @@ if (project.hasProperty("curseForgeAPIKey")) {
 				changelogType = "markdown"
 				changelog = file("changelog.md")
 				displayName = "RandomPatches ${version}"
-				releaseType = "beta"
+				releaseType = "release"
 
 				relations {
 					optionalDependency "amecs"
@@ -100,7 +100,7 @@ if (project.hasProperty("modrinthToken")) {
 		versionName = "RandomPatches ${version}"
 		changelog = new File("changelog.md").getText()
 		uploadFile = remapJar
-		releaseType = "beta"
+		releaseType = "release"
 		addGameVersion("1.16.5")
 		addGameVersion("1.16.4")
 		addGameVersion("1.16.3")

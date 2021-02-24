@@ -52,6 +52,6 @@ public class GameOptionsMixin implements KeysAccessor {
 
 	@Inject(method = "load()V", at = @At("HEAD"))
 	private void load(CallbackInfo info) {
-		RPKeyBindingHandler.enable();
+		RPKeyBindingHandler.enable((GameOptions) (Object) this);
 	}
 }
