@@ -23,7 +23,7 @@
 
 package com.therandomlabs.randompatches.mixin.client.datafixerupper;
 
-import net.minecraft.class_5489;
+import net.minecraft.client.font.MultilineText;
 import net.minecraft.client.gui.screen.BackupPromptScreen;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ScreenTexts;
@@ -63,7 +63,7 @@ public final class BackupPromptScreenMixin extends Screen {
 	private boolean showEraseCacheCheckbox;
 
 	@Shadow
-	private class_5489 wrappedText;
+	private MultilineText wrappedText;
 
 	@Shadow
 	private CheckboxWidget eraseCacheCheckbox;
@@ -100,10 +100,10 @@ public final class BackupPromptScreenMixin extends Screen {
 		modifiedTitle = new TranslatableText("selectWorld.unableToLoad");
 		subtitle = new TranslatableText("selectWorld.dataFixerUpperDisabled");
 
-		wrappedText = class_5489.method_30890(textRenderer, subtitle, width - 50);
+		wrappedText = MultilineText.create(textRenderer, subtitle, width - 50);
 
 		addButton(new ButtonWidget(
-				width / 2 - 155 + 80, 124 + (wrappedText.method_30887() + 1) * 9, 150, 20,
+				width / 2 - 155 + 80, 124 + (wrappedText.count() + 1) * 9, 150, 20,
 				ScreenTexts.BACK, button -> client.openScreen(parent)
 		));
 	}
