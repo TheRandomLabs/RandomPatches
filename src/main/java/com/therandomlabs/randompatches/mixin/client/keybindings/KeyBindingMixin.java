@@ -29,6 +29,7 @@ import com.therandomlabs.randompatches.RPConfig;
 import com.therandomlabs.randompatches.RandomPatches;
 import com.therandomlabs.randompatches.client.BoundKeyAccessor;
 import com.therandomlabs.randompatches.client.RPKeyBindingHandler;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.options.KeyBinding;
 import net.minecraft.client.util.InputUtil;
@@ -106,6 +107,11 @@ public final class KeyBindingMixin implements BoundKeyAccessor {
 	@SuppressWarnings("ConstantConditions")
 	@Inject(method = "setKeyPressed", at = @At("HEAD"), cancellable = true)
 	private static void setKeyPressed(InputUtil.Key key, boolean pressed, CallbackInfo info) {
+		// Amecs implements the same fix. Performing it twice breaks sticky key bindings
+		if (FabricLoader.getInstance().isModLoaded("amecsapi")) {
+			return;
+		}
+
 		//In vanilla, setPressed is only called on the most recently registered KeyBinding.
 		keysById.values().stream().filter(keyBinding -> key.equals(
 				((KeyBindingMixin) (Object) keyBinding).getBoundKey())
