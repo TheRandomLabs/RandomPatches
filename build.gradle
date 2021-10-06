@@ -29,7 +29,9 @@ repositories {
 	maven {
 		url "https://maven.siphalor.de/"
 	}
-
+	maven {
+		url "https://maven.terraformersmc.com/releases"
+	}
 	maven {
 		url "https://www.cursemaven.com"
 

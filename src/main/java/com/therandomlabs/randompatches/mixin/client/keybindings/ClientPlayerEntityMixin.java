@@ -31,6 +31,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -56,19 +57,11 @@ public abstract class ClientPlayerEntityMixin extends PlayerEntity {
 	@Shadow
 	public abstract void onRecipeDisplayed(Recipe<?> recipe);
 
-	@Redirect(
-			method = "tickMovement",
-			at = @At(
-					value = "INVOKE",
-					target = "Lnet/minecraft/client/network/ClientPlayerEntity;" +
-							"isSubmergedInWater()Z",
-					ordinal = 0
-			)
-	)
-	private boolean isSubmergedInWater(ClientPlayerEntity player) {
+	@Redirect(method = "tickMovement", at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, ordinal = 0, target = "Lnet/minecraft/client/network/ClientPlayerEntity;onGround:Z"))
+	private boolean isOnGround(ClientPlayerEntity player) {
 		//Minecraft only allows double-tap sprinting when the player is either on the ground
-		//or swimming. We combat this by redirecting the swimming check.
-		return player.isSubmergedInWater() ||
+		//or swimming. We combat this by redirecting the on ground check.
+		return this.onGround ||
 				(RandomPatches.config().client.keyBindings.doubleTapSprintingWhileFlying &&
 						player.abilities.flying);
 	}
